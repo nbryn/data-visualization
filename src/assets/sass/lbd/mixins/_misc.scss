@@ -1,0 +1,61 @@
+@mixin input-size($padding-vertical, $padding-horizontal, $height){
+    padding: $padding-vertical $padding-horizontal;
+    height: $height;
+}
+
+@mixin placeholder($color, $opacity){
+   color: $color;
+   @include opacity(1);
+}
+
+@mixin light-form(){
+    border-radius: 0;
+    border:0;
+    padding: 0;
+    background-color: transparent;
+
+}
+
+@mixin icon-background ($icon-url){
+	background-image : url($icon-url);
+		
+}
+
+@mixin icon-shape ($size, $padding, $border-radius) {
+	height: $size;
+	width: $size;
+	padding: $padding;
+	border-radius: $border-radius;
+	display: inline-table;
+
+}
+
+@mixin navbar-color($color){
+    background-color: $color;
+}
+
+@mixin center-item(){
+    left: 0;
+    right: 0;
+    margin-right: auto;
+    margin-left: auto;
+    position: absolute;
+}
+
+@mixin opacity($opacity) {
+    opacity: $opacity;
+    $opacity-ie: ($opacity * 100);
+    filter: #{alpha(opacity=$opacity-ie)};
+  }
+  
+  @mixin black-filter($opacity){
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      background-color: rgba(17,17,17,$opacity);
+      display: block;
+      content: "";
+      z-index: 1; 
+  }

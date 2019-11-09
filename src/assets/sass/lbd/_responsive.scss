@@ -84,48 +84,6 @@
       height: calc(100vh - 61px);
       width: 100%;
     }
-
-    &::before {
-      top: 0;
-      left: 0;
-      height: 100%;
-      width: 100%;
-      position: absolute;
-      background-color: #282828;
-      display: block;
-      content: "";
-      z-index: 1;
-    }
-
-    .sidebar-wrapper {
-      .dropdown-menu {
-        & > li:first-child > a,
-        & > li:last-child > a {
-          border-radius: 4px;
-        }
-
-        & > li > a:hover,
-        & > li > a:focus {
-          color: white;
-        }
-      }
-
-      & > .nav > div {
-        .nav {
-          margin-top: 10px;
-          float: none !important;
-
-          & > li > a {
-            margin: 0;
-            line-height: 30px;
-            font-size: 12px;
-            font-weight: 600;
-            text-transform: uppercase;
-            margin: 5px 15px;
-          }
-        }
-      }
-    }
   }
 
   .form-control + .form-control-feedback {
@@ -134,9 +92,6 @@
   .navbar-toggle:hover,
   .navbar-toggle:focus {
     background-color: transparent !important;
-  }
-  .btn.dropdown-toggle {
-    margin-bottom: 0;
   }
 
   .navbar-collapse.collapse {

@@ -1,5 +1,3 @@
-//## For each of Bootstrap's buttons, define text, background and border color.
-
 $none:                       0   !default;
 $border-thin:                1px !default;
 $border-thick:               2px !default;
@@ -50,17 +48,6 @@ $danger-states-color:        #EE2D20 !default;
 
 $link-disabled-color:        #666666 !default;
 
-
-/*      light colors         */
-$light-blue:                 rgba($primary-color, .2);
-$light-azure:                rgba($info-color, .2);
-$light-green:                rgba($success-color, .2);
-$light-orange:               rgba($warning-color, .2);
-$light-red:                  rgba($danger-color, .2);
-
-
-//== Components
-//
 
 $padding-base-vertical:         8px !default;
 $padding-base-horizontal:      16px !default;
@@ -145,13 +132,6 @@ $ultra-fast-transition-time:     100ms  !default;
 
 $select-coordinates:         50% -40px !default;
 
-$transition-linear:                                   linear !default;
-$transition-bezier:         cubic-bezier(0.34, 1.61, 0.7, 1) !default;
-$transition-ease:           ease 0s;
-$transition-ease-in:              ease-in !default;
-$transition-ease-out:             ease-out !default;
-
-
 $navbar-padding-a:               10px 15px;
 $navbar-margin-a:                10px  3px;
 
@@ -216,20 +196,6 @@ $pink-color-bottom: 	            #ff2e2e;
 
 $black-color-top:	 	            #282828;
 $black-color-bottom: 	            #111;
-
-$social-facebook: 			#3b5998;
-$social-twitter: 			#55acee;
-$social-pinterest: 			#cc2127;
-$social-google: 			#dd4b39;
-$social-linkedin: 			#0976b4;
-$social-dribbble: 			#ea4c89;
-$social-github: 			#333333;
-$social-youtube: 			#e52d27;
-$social-stumbleupon: 		#eb4924;
-$social-reddit: 			#ff4500;
-$social-tumblr: 			#35465c;
-$social-behance: 			#1769ff;
-
 
 $filter-blue:         darken($primary-color, 10%);
 $filter-azure:        darken($info-color, 10%);

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "dependencies": {
     "bootstrap": "3.3.7",
-    "node-sass": "4.12.0",
+    "node-sass": "4.13.0",
     "react": "16.8.6",
     "react-bootstrap": "0.32.4",
     "react-dom": "16.8.6",
@@ -15,10 +15,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm install && npm start",
     "compile-sass": "node-sass src/assets/sass/dashboard.scss src/assets/css/dashboard.css",
-    "minify-sass": "node-sass src/assets/sass/dashboard.scss src/assets/css/dashboard.min.css --output-style compressed",
-    "map-sass": "node-sass src/assets/sass/dashboard.scss src/assets/css/dashboard.css --source-map true"
+    "minify-sass": "node-sass src/assets/sass/dashboard.scss src/assets/css/dashboard.min.css --output-style compressed"
   },
   "browserslist": {
     "production": [

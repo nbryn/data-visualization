@@ -1,8 +1,11 @@
 {
   "name": "dashboard",
   "version": "1.0.0",
+  "proxy": "https://anpjwd4bz4.execute-api.eu-central-1.amazonaws.com",
   "dependencies": {
+    "axios": "^0.19.0",
     "bootstrap": "3.3.7",
+    "http-proxy-middleware": "^0.20.0",
     "node-sass": "4.13.0",
     "react": "16.8.6",
     "react-bootstrap": "0.32.4",

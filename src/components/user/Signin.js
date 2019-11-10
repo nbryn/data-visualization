@@ -1,24 +1,37 @@
 import React, { Component } from "react";
 
-class SignIn extends Component {
-  constructor() {
-    super();
+import { login } from "../../actions/UserActions";
+import { throwStatement } from "@babel/types";
+
+class Signin extends Component {
+  constructor(props) {
+    super(props);
 
     this.state = {
-      username: "",
+      email: "",
       password: ""
     };
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  onSubmit = event => {
-    event.preventDefualt();
-  };
-
-  onChange = event => {
+  handleChange(event) {
     this.setState({
       [event.target.name]: event.target.value
     });
-  };
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+
+    const email = this.state.email;
+    const password = this.state.password;
+
+    login(email, password);
+  }
+
+  
   render() {
     return (
       <div className="container">
@@ -27,29 +40,31 @@ class SignIn extends Component {
             <div className="card card-signin my-5">
               <div className="card-body">
                 <h3 className="card-title text-center">Sign In</h3>
-                <form onSubmit={this.onSubmit} autoComplete="off">
+                <form onSubmit={this.handleSubmit} autoComplete="off">
                   <div className="form-label-group">
                     <input
                       type="email"
                       id="inputEmail"
+                      name="email"
                       className="form-control"
                       placeholder="Email address"
                       required
-                      onChange={this.onChange}
+                      onChange={this.handleChange}
                     />
-                    <label for="inputEmail">Email address</label>
+                    <label htmlFor="inputEmail">Email address</label>
                   </div>
 
                   <div className="form-label-group">
                     <input
                       type="password"
                       id="inputPassword"
+                      name="password"
                       className="form-control"
                       placeholder="Password"
                       required
-                      onChange={this.onChange}
+                      onChange={this.handleChange}
                     />
-                    <label for="inputPassword">Password</label>
+                    <label htmlFor="inputPassword">Password</label>
                   </div>
 
                   <button
@@ -69,4 +84,4 @@ class SignIn extends Component {
   }
 }
 
-export default SignIn;
+export default Signin;

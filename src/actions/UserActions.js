@@ -3,8 +3,7 @@ import axios from "axios";
 const url =
   "https://anpjwd4bz4.execute-api.eu-central-1.amazonaws.com/dev/graphql";
 
-export const login = async (username, password) => {
-  
+export const login = async (username, password, history) => {
   const data = `mutation {
         signin(input: {
           channel: ANDROID
@@ -52,5 +51,16 @@ export const login = async (username, password) => {
   } catch (err) {
     console.log(err);
   }
-  console.log(result);
+
+  if (Array.isArray(result.data.data.signin.result)) {
+    return result.data.data.signin.result[0].errors;
+  } else {
+    //console.log(result);
+    history.push({
+      pathname: "/dashboard",
+      state: {
+        userInfo: result.data.data.signin.user
+      }
+    });
+  }
 };

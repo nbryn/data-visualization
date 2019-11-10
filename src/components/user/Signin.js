@@ -9,29 +9,36 @@ class Signin extends Component {
 
     this.state = {
       email: "",
-      password: ""
+      password: "",
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleChange(event) {
+  handleChange = event => {
     this.setState({
       [event.target.name]: event.target.value
     });
   }
 
-  handleSubmit(event) {
+  handleSubmit = async event => {
     event.preventDefault();
 
     const email = this.state.email;
     const password = this.state.password;
 
-    login(email, password);
+    // Login returns error if login fails
+    const loginError = await login(email, password, this.props.history);
+
+    if (loginError) {
+      this.setState({
+        email: loginError,
+        password: "",
+      });
+    }
   }
 
-  
   render() {
     return (
       <div className="container">
@@ -43,11 +50,11 @@ class Signin extends Component {
                 <form onSubmit={this.handleSubmit} autoComplete="off">
                   <div className="form-label-group">
                     <input
-                      type="email"
                       id="inputEmail"
                       name="email"
                       className="form-control"
                       placeholder="Email address"
+                      value={this.state.email}
                       required
                       onChange={this.handleChange}
                     />
@@ -61,6 +68,7 @@ class Signin extends Component {
                       name="password"
                       className="form-control"
                       placeholder="Password"
+                      value={this.state.password}
                       required
                       onChange={this.handleChange}
                     />

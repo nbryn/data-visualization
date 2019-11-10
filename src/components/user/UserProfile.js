@@ -64,7 +64,7 @@ class ProfileLayout extends Component {
                         <Row>
                           <div className="col-md-6">
                             <FormGroup>
-                              <ControlLabel>Phonenumber</ControlLabel>
+                              <ControlLabel>PHONE NUMBER</ControlLabel>
                               <FormControl
                                 type="text"
                                 bsClass="form-control"

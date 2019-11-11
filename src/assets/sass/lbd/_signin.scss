@@ -8,6 +8,11 @@
   background-image: linear-gradient(to right, #1da1f2, #011e6a)
 }
 
+.col-sm-9.col-md-7.col-lg-5.mx-auto {
+  left: 260px;
+  top: 75px;
+}
+
 .pageName{
 position: fixed;
 top: 14px;
@@ -35,7 +40,7 @@ right: 10px;
 .card-signin .card-title {
   margin-bottom: 2rem;
   font-weight: 300;
-  font-size: 1.5rem;
+  font-size: 3.5rem;
 }
 
 .card-signin .card-body {
@@ -77,7 +82,7 @@ right: 10px;
   display: block;
   width: 100%;
   margin-bottom: 0;
-  /* Override default `<label>` margin */
+
   line-height: 1.5;
   color: #495057;
   border: 1px solid transparent;

@@ -1,13 +1,19 @@
 import React, { Component } from "react";
+import PropTypes from 'prop-types';
+
+import { connect } from "react-redux";
 import { Grid, Row, Col, Button } from "react-bootstrap";
 import { FormGroup, ControlLabel, FormControl } from "react-bootstrap";
 
 import Sidebar from "../navigation/Sidebar.js";
 import Header from "../navigation/Header.js";
 
-class ProfileLayout extends Component {
-  
+class UserProfile extends Component {
+  componentDidMount() {
+    console.log(this.props.user.user);
+  }
   render() {
+    const user = this.props.user.user;
     return (
       <div className="wrapper">
         <Sidebar />
@@ -31,7 +37,7 @@ class ProfileLayout extends Component {
                                 type="text"
                                 bsClass="form-control"
                                 placeholder="Email"
-                                
+                                value={user.email}
                               />
                             </FormGroup>
                           </div>
@@ -45,7 +51,7 @@ class ProfileLayout extends Component {
                                 type="text"
                                 bsClass="form-control"
                                 placeholder="First Name"
-                                
+                                value={user.firstName}
                               />
                             </FormGroup>
                           </div>
@@ -56,7 +62,7 @@ class ProfileLayout extends Component {
                                 type="text"
                                 bsClass="form-control"
                                 placeholder="Last Name"
-                                
+                                value={user.lastName}
                               />
                             </FormGroup>
                           </div>
@@ -69,7 +75,33 @@ class ProfileLayout extends Component {
                                 type="text"
                                 bsClass="form-control"
                                 placeholder="Phonenumber"
-                                
+                                value={user.phoneNumber}
+                              />
+                            </FormGroup>
+                          </div>
+                        </Row>
+                        <Row>
+                          <div className="col-md-6">
+                            <FormGroup>
+                              <ControlLabel>GENDER</ControlLabel>
+                              <FormControl
+                                type="text"
+                                bsClass="form-control"
+                                placeholder="Phonenumber"
+                                value={user.gender}
+                              />
+                            </FormGroup>
+                          </div>
+                        </Row>
+                        <Row>
+                          <div className="col-md-6">
+                            <FormGroup>
+                              <ControlLabel>Verified</ControlLabel>
+                              <FormControl
+                                type="text"
+                                bsClass="form-control"
+                                placeholder="Phonenumber"
+                                value={user.verified}
                               />
                             </FormGroup>
                           </div>
@@ -92,4 +124,12 @@ class ProfileLayout extends Component {
   }
 }
 
-export default ProfileLayout;
+UserProfile.propTypes = {
+  user: PropTypes.object.isRequired
+}
+
+const mapStateToProps = state => ({
+  user: state.user
+});
+
+export default connect(mapStateToProps)(UserProfile);

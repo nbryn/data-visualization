@@ -1,7 +1,7 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { login } from "../../redux/actions/UserActions";
 
-import { login } from "../../actions/UserActions";
-import { throwStatement } from "@babel/types";
 
 class Signin extends Component {
   constructor(props) {
@@ -29,7 +29,7 @@ class Signin extends Component {
     const password = this.state.password;
 
     // Login returns error if login fails
-    const loginError = await login(email, password, this.props.history);
+    const loginError = await this.props.login(email, password, this.props.history);
 
     if (loginError) {
       this.setState({
@@ -92,4 +92,8 @@ class Signin extends Component {
   }
 }
 
-export default Signin;
+const mapStateToProps = state => ({
+  user: state.user,
+});
+
+export default connect(mapStateToProps, {login})(Signin);

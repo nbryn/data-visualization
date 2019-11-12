@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import PropTypes from 'prop-types';
 
 import { connect } from "react-redux";
 import { Grid, Row, Col, Button } from "react-bootstrap";
@@ -122,10 +121,6 @@ class UserProfile extends Component {
       </div>
     );
   }
-}
-
-UserProfile.propTypes = {
-  user: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => ({

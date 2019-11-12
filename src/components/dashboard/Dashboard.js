@@ -1,11 +1,12 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 
 import Header from "../navigation/Header.js";
 import Sidebar from "../navigation/Sidebar.js";
 import KPIView from "./KPIView.js";
 
+
 class DashBoard extends Component {
-  componentDidMount() {}
 
   render() {
     return (
@@ -19,5 +20,6 @@ class DashBoard extends Component {
     );
   }
 }
+
 
 export default DashBoard;

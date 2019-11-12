@@ -1,9 +1,40 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+
 import { Grid, Row, Col } from "react-bootstrap";
 import { KPICard } from "./KPICard.js";
 
+import { getUsersTotal } from "../../redux/actions/KPIActions";
+
 class KPIView extends Component {
-  
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      usersTotal: "",
+      usersToday: "",
+      $Total: ""
+    };
+  }
+  async componentDidMount() {
+    // Error handling when not authenticated?
+    const t = await this.props.getUsersTotal();
+
+    this.setState({
+      usersTotal: this.props.usersTotal.numberOfUsers
+    });
+
+    // Reload KPI data
+    setInterval(async () => {
+      // Error handling when not authenticated?
+      const m = await this.props.getUsersTotal();
+
+      this.setState({
+        usersTotal: this.props.usersTotal.numberOfUsers
+      });
+    }, 10000);
+  }
+
   render() {
     return (
       <div className="content">
@@ -13,7 +44,7 @@ class KPIView extends Component {
               <KPICard
                 bigIcon={<i className="pe-7s-user text-warning" />}
                 statsText="Total Users"
-                statsValue="105"
+                statsValue={this.state.usersTotal}
                 statsIcon={<i className="fa fa-refresh" />}
                 statsIconText="Updated now"
               />
@@ -52,4 +83,10 @@ class KPIView extends Component {
   }
 }
 
-export default KPIView;
+const mapStateToProps = state => {
+  return {
+    usersTotal: state.KPI.usersTotal
+  };
+};
+
+export default connect(mapStateToProps, { getUsersTotal })(KPIView);

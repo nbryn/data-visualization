@@ -2,25 +2,33 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { login } from "../../redux/actions/UserActions";
 
-
 class Signin extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       email: "",
-      password: "",
+      password: ""
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  componentDidMount() {
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      // Validate token here
+      //this.props.history.push("/dashboard");
+    }
+  }
+
   handleChange = event => {
     this.setState({
       [event.target.name]: event.target.value
     });
-  }
+  };
 
   handleSubmit = async event => {
     event.preventDefault();
@@ -29,15 +37,19 @@ class Signin extends Component {
     const password = this.state.password;
 
     // Login returns error if login fails
-    const loginError = await this.props.login(email, password, this.props.history);
+    const loginError = await this.props.login(
+      email,
+      password,
+      this.props.history
+    );
 
     if (loginError) {
       this.setState({
         email: loginError,
-        password: "",
+        password: ""
       });
     }
-  }
+  };
 
   render() {
     return (
@@ -93,7 +105,7 @@ class Signin extends Component {
 }
 
 const mapStateToProps = state => ({
-  user: state.user,
+  user: state.user
 });
 
-export default connect(mapStateToProps, {login})(Signin);
+export default connect(mapStateToProps, { login })(Signin);

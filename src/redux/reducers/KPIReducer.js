@@ -1,10 +1,10 @@
-import { LOGIN } from "../actions/ActionTypes";
+import { USERS_TOTAL } from "../actions/ActionTypes";
 
 export default function(state = {}, action) {
   switch (action.type) {
-    case LOGIN:
+    case USERS_TOTAL:
       return Object.assign({}, state, {
-        user: action.payload
+        usersTotal: action.payload
       });
     default:
       return state;

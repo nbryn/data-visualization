@@ -39,29 +39,36 @@ export const login = (username, password, history) => async dispatch => {
         }
       }`;
 
-  let result;
+  let response;
 
   try {
-    result = await axios({
+    response = await axios({
       url,
       method: "post",
       data: {
         query: data
       }
     });
+
+    // Flag for error in DB?
+    if (response.data.data.signin.result) {
+      return response.data.data.signin.result[0].errors;
+    } else {
+      dispatch({
+        type: LOGIN,
+        payload: response.data.data.signin.user
+      });
+
+      const token = response.data.data.signin.token;
+      
+      localStorage.setItem("Token", token);
+
+      history.push("/dashboard");
+    }
+
+    // Need better handling of network errors here
   } catch (err) {
     console.log(err);
-  }
-
-  // Flag for error in DB?
-  if (Array.isArray(result.data.data.signin.result)) {
-    return result.data.data.signin.result[0].errors;
-  } else {
-    dispatch({
-      type: LOGIN,
-      payload: result.data.data.signin.user
-    });
-
-    history.push("/dashboard");
+    return "Connection problem";
   }
 };

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 
+
 class Sidebar extends Component {
   render() {
     return (
@@ -8,9 +9,12 @@ class Sidebar extends Component {
         id="sidebar"
         className="sidebar"
         data-color="black"
-        data-image="../../assets/img/sidebar-3.jpg"
+        data-image="../../assets/img/jamiipay.jpeg"
       >
-        <div className="logo"></div>
+        <div className="logo">
+          <img src="../../assets/img/jamiipay.jpeg" />
+        </div>
+
         <div className="sidebar-wrapper">
           <ul className="nav">
             <li>

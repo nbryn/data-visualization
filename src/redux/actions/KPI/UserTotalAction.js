@@ -1,4 +1,4 @@
-import { USERS_TOTAL } from "./ActionTypes";
+import { USERS_TOTAL } from "../ActionTypes";
 import axios from "axios";
 
 const url =

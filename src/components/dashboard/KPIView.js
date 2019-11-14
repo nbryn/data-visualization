@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-
 import { Grid, Row, Col } from "react-bootstrap";
+
 import { KPICard } from "./KPICard.js";
 import UserLastMonth from "./Graph/UserLastMonth";
 import MoneyTotal from "./Graph/MoneyTotal";
 import UserTotal from "./Graph/UserTotal";
 
-import { getUsersTotal } from "../../redux/actions/KPIActions";
+import { getUsersTotal } from "../../redux/actions/KPI/UserTotalAction";
 
 class KPIView extends Component {
   constructor(props) {
@@ -15,6 +15,7 @@ class KPIView extends Component {
 
     this.state = {
       usersTotal: "",
+      usersTotalUpdate: "",
       usersToday: "",
       $Total: ""
     };
@@ -23,8 +24,17 @@ class KPIView extends Component {
     // Error handling when not authenticated?
     const t = await this.props.getUsersTotal();
 
+    let date = new Date();
+    let minutes = date.getMinutes();
+    let hours = date.getHours();
+    let day = date.getDate();
+    let month = date.getMonth();
+
+    let lastUpdatedAt = day + "/" + month + " at " + hours + ":" + minutes;
+
     this.setState({
-      usersTotal: this.props.usersTotal.numberOfUsers
+      usersTotal: this.props.usersTotal.numberOfUsers,
+      usersTotalUpdate: lastUpdatedAt
     });
 
     // Reload KPI data
@@ -32,10 +42,19 @@ class KPIView extends Component {
       // Error handling when not authenticated?
       const m = await this.props.getUsersTotal();
 
+      let date = new Date();
+      let minutes = date.getMinutes();
+      let hours = date.getHours();
+      let day = date.getDate();
+      let month = date.getMonth();
+
+      let lastUpdatedAt = day + "/" + month + " at " + hours + ":" + minutes;
+
       this.setState({
-        usersTotal: this.props.usersTotal.numberOfUsers
+        usersTotal: this.props.usersTotal.numberOfUsers,
+        usersTotalUpdate: lastUpdatedAt
       });
-    }, 1000000000);
+    }, 10000);
   }
 
   render() {
@@ -49,7 +68,7 @@ class KPIView extends Component {
                 statsText="Total Users"
                 statsValue={this.state.usersTotal}
                 statsIcon={<i className="fa fa-refresh" />}
-                statsIconText="Updated now"
+                statsIconText={`Last Update: ${this.state.usersTotalUpdate}`}
               />
             </Col>
             <Col lg={3} sm={6}>

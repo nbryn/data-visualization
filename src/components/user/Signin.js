@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { login } from "../../redux/actions/UserActions";
+import { login } from "../../redux/actions/User/LoginAction";
 
 class Signin extends Component {
   constructor(props) {
@@ -19,8 +19,7 @@ class Signin extends Component {
     const token = localStorage.getItem("token");
 
     if (token) {
-      // Validate token here
-      //this.props.history.push("/dashboard");
+      this.props.history.push("/dashboard");
     }
   }
 

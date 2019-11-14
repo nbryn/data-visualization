@@ -59,8 +59,7 @@ export const login = (username, password, history) => async dispatch => {
         payload: response.data.data.signin.user
       });
 
-      const token = response.data.data.signin.token;
-      
+      const token = response.data.data.signin.token; 
       localStorage.setItem("Token", token);
 
       history.push("/dashboard");

@@ -1,0 +1,62 @@
+.card-graph {
+    border-radius: $border-radius-base;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(63, 63, 68, 0.1);
+    background-color: #ffffff;
+    margin-bottom: 30px;
+  
+    .content {
+      padding: 20px 15px 10px 15px;
+    }
+    .header {
+      padding: 15px 15px 0;
+    }
+    .category,
+    label {
+      font-size: $font-size-base;
+      font-weight: $font-weight-normal;
+      color: $dark-gray;
+      margin-bottom: 0px;
+  
+      i {
+        font-size: $font-paragraph;
+      }
+    }
+  
+    label {
+      font-size: $font-size-small;
+      margin-bottom: 5px;
+      text-transform: uppercase;
+    }
+  
+    .title {
+      margin: $none;
+      color: $black-color;
+      font-weight: $font-weight-light;
+    }
+  
+    .description {
+      font-size: $font-size-base;
+      color: #333;
+    }
+    .footer {
+      padding: 0;
+      background-color: $transparent-bg;
+      line-height: 30px;
+  
+      hr {
+        margin-top: 5px;
+        margin-bottom: 5px;
+      }
+    }
+    .stats {
+      color: #a9a9a9;
+    }
+    .footer div {
+      display: inline-block;
+    }
+  
+    h6 {
+      font-size: $font-size-small;
+      margin: 0;
+    }
+  }

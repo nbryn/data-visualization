@@ -3,6 +3,9 @@ import { connect } from "react-redux";
 
 import { Grid, Row, Col } from "react-bootstrap";
 import { KPICard } from "./KPICard.js";
+import UserLastMonth from "./Graph/UserLastMonth";
+import MoneyTotal from "./Graph/MoneyTotal";
+import UserTotal from "./Graph/UserTotal";
 
 import { getUsersTotal } from "../../redux/actions/KPIActions";
 
@@ -75,6 +78,18 @@ class KPIView extends Component {
                 statsIcon={<i className="fa fa-refresh" />}
                 statsIconText="Updated now"
               />
+            </Col>
+          </Row>
+
+          <Row>
+            <Col lg={4} sm={6}>
+              <UserTotal />
+            </Col>
+            <Col lg={4} sm={6}>
+              <UserLastMonth />
+            </Col>
+            <Col lg={4} sm={6}>
+              <MoneyTotal />
             </Col>
           </Row>
         </Grid>

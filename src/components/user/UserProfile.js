@@ -34,7 +34,6 @@ class UserProfile extends Component {
                               <ControlLabel>Email</ControlLabel>
                               <FormControl
                                 type="text"
-                                bsClass="form-control"
                                 placeholder="Email"
                                 value={user.email}
                               />
@@ -48,7 +47,6 @@ class UserProfile extends Component {
                               <ControlLabel>FIRST NAME</ControlLabel>
                               <FormControl
                                 type="text"
-                                bsClass="form-control"
                                 placeholder="First Name"
                                 value={user.firstName}
                               />
@@ -59,7 +57,6 @@ class UserProfile extends Component {
                               <ControlLabel>LAST NAME</ControlLabel>
                               <FormControl
                                 type="text"
-                                bsClass="form-control"
                                 placeholder="Last Name"
                                 value={user.lastName}
                               />
@@ -72,7 +69,6 @@ class UserProfile extends Component {
                               <ControlLabel>PHONE NUMBER</ControlLabel>
                               <FormControl
                                 type="text"
-                                bsClass="form-control"
                                 placeholder="Phonenumber"
                                 value={user.phoneNumber}
                               />
@@ -85,7 +81,6 @@ class UserProfile extends Component {
                               <ControlLabel>GENDER</ControlLabel>
                               <FormControl
                                 type="text"
-                                bsClass="form-control"
                                 placeholder="Phonenumber"
                                 value={user.gender}
                               />
@@ -98,7 +93,6 @@ class UserProfile extends Component {
                               <ControlLabel>Verified</ControlLabel>
                               <FormControl
                                 type="text"
-                                bsClass="form-control"
                                 placeholder="Phonenumber"
                                 value={user.verified}
                               />

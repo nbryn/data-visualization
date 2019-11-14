@@ -32,7 +32,7 @@ class KPIView extends Component {
       this.setState({
         usersTotal: this.props.usersTotal.numberOfUsers
       });
-    }, 10000);
+    }, 1000000000);
   }
 
   render() {

@@ -1,6 +1,8 @@
 import { USERS_TOTAL } from "../ActionTypes";
 import axios from "axios";
 
+import {setTokenOnApiRequest} from "../../../security/Token";
+
 const url =
   "https://anpjwd4bz4.execute-api.eu-central-1.amazonaws.com/dev/graphql";
 
@@ -12,8 +14,7 @@ export const getUsersTotal = () => async dispatch => {
         }
         }`;
 
-  const token = localStorage.getItem("Token");
-  axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+  setTokenOnApiRequest();
 
   let response;
 
@@ -35,7 +36,7 @@ export const getUsersTotal = () => async dispatch => {
       });
     }
 
-    console.log(response.data.data.userStats.numberOfUsers)
+    console.log(response.data.data.userStats.numberOfUsers);
 
     return response.data.data.userStats;
   } catch (err) {

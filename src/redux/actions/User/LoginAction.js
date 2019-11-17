@@ -1,6 +1,8 @@
 import { LOGIN } from "../ActionTypes";
 import axios from "axios";
 
+import {setTokenOnLogin} from "../../../security/Token";
+
 const url =
   "https://anpjwd4bz4.execute-api.eu-central-1.amazonaws.com/dev/graphql";
 
@@ -59,8 +61,7 @@ export const login = (username, password, history) => async dispatch => {
         payload: response.data.data.signin.user
       });
 
-      const token = response.data.data.signin.token; 
-      localStorage.setItem("Token", token);
+      setTokenOnLogin(response);
 
       history.push("/dashboard");
     }

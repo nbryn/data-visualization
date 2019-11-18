@@ -12,8 +12,8 @@ class UserLastMonth extends Component {
       fourth: "47",
       fifth: "61",
       sixth: "83",
-      seventh: "101",
-      eighth: "113"
+      seventh: "95",
+      eighth: "99"
     };
   }
   render() {

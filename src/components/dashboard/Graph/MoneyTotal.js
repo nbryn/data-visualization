@@ -14,8 +14,8 @@ class MoneyTotal extends Component {
       fourth: "469",
       fifth: "767",
       sixth: "897",
-      seventh: "1003",
-      eighth: "1231"
+      seventh: "900",
+      eighth: "950"
     };
   }
   async componentDidMount() {

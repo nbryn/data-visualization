@@ -7,12 +7,36 @@ import { FormGroup, ControlLabel, FormControl } from "react-bootstrap";
 import Sidebar from "../navigation/Sidebar.js";
 import Header from "../navigation/Header.js";
 
+import { setUser } from "../../redux/actions/User/SetUserAction";
+
 class UserProfile extends Component {
-  componentDidMount() {
-    console.log(this.props.user.user);
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      email: "",
+      firstName: "",
+      lastName: "",
+      phoneNumber: "",
+      gender: "",
+      verified: ""
+    };
+  }
+  async componentDidMount() {
+    const temp = await this.props.setUser();
+
+    const user = this.props.user.currentUser;
+
+    this.setState({
+      email: user.email,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      phoneNumber: user.phoneNumber,
+      gender: user.gender,
+      verified: user.verified
+    });
   }
   render() {
-    const user = this.props.user.user;
     return (
       <div className="wrapper">
         <Sidebar />
@@ -35,7 +59,7 @@ class UserProfile extends Component {
                               <FormControl
                                 type="text"
                                 placeholder="Email"
-                                value={user.email}
+                                value={this.state.email}
                               />
                             </FormGroup>
                           </div>
@@ -48,7 +72,7 @@ class UserProfile extends Component {
                               <FormControl
                                 type="text"
                                 placeholder="First Name"
-                                value={user.firstName}
+                                value={this.state.firstName}
                               />
                             </FormGroup>
                           </div>
@@ -58,7 +82,7 @@ class UserProfile extends Component {
                               <FormControl
                                 type="text"
                                 placeholder="Last Name"
-                                value={user.lastName}
+                                value={this.state.lastName}
                               />
                             </FormGroup>
                           </div>
@@ -70,7 +94,7 @@ class UserProfile extends Component {
                               <FormControl
                                 type="text"
                                 placeholder="Phonenumber"
-                                value={user.phoneNumber}
+                                value={this.state.phoneNumber}
                               />
                             </FormGroup>
                           </div>
@@ -82,7 +106,7 @@ class UserProfile extends Component {
                               <FormControl
                                 type="text"
                                 placeholder="Phonenumber"
-                                value={user.gender}
+                                value={this.state.gender}
                               />
                             </FormGroup>
                           </div>
@@ -94,7 +118,7 @@ class UserProfile extends Component {
                               <FormControl
                                 type="text"
                                 placeholder="Phonenumber"
-                                value={user.verified}
+                                value={this.state.verified}
                               />
                             </FormGroup>
                           </div>
@@ -119,8 +143,8 @@ class UserProfile extends Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.user
+    currentUser: state.currentUser
   };
 };
 
-export default connect(mapStateToProps)(UserProfile);
+export default connect(mapStateToProps, { setUser })(UserProfile);

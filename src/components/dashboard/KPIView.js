@@ -22,13 +22,13 @@ class KPIView extends Component {
   }
   async componentDidMount() {
     // Error handling when not authenticated?
-    const t = await this.props.getUsersTotal();
+    const temp = await this.props.getUsersTotal();
 
     let date = new Date();
     let minutes = date.getMinutes();
     let hours = date.getHours();
     let day = date.getDate();
-    let month = date.getMonth();
+    let month = date.getMonth() + 1;
 
     let lastUpdatedAt = day + "/" + month + " at " + hours + ":" + minutes;
 
@@ -46,7 +46,7 @@ class KPIView extends Component {
       let minutes = date.getMinutes();
       let hours = date.getHours();
       let day = date.getDate();
-      let month = date.getMonth();
+      let month = date.getMonth() + 1;
 
       let lastUpdatedAt = day + "/" + month + " at " + hours + ":" + minutes;
 
@@ -54,7 +54,7 @@ class KPIView extends Component {
         usersTotal: this.props.usersTotal.numberOfUsers,
         usersTotalUpdate: lastUpdatedAt
       });
-    }, 10000);
+    }, 100000);
   }
 
   render() {

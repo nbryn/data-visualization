@@ -8,6 +8,7 @@ import MoneyTotal from "./Graph/MoneyTotal";
 import UserTotal from "./Graph/UserTotal";
 
 import { getUsersTotal } from "../../redux/actions/KPI/UserTotalAction";
+import { getTime } from "./Graph/Date";
 
 class KPIView extends Component {
   constructor(props) {
@@ -24,13 +25,7 @@ class KPIView extends Component {
     // Error handling when not authenticated?
     const temp = await this.props.getUsersTotal();
 
-    let date = new Date();
-    let minutes = date.getMinutes();
-    let hours = date.getHours();
-    let day = date.getDate();
-    let month = date.getMonth() + 1;
-
-    let lastUpdatedAt = day + "/" + month + " at " + hours + ":" + minutes;
+    let lastUpdatedAt = getTime();
 
     this.setState({
       usersTotal: this.props.usersTotal.numberOfUsers,
@@ -42,13 +37,7 @@ class KPIView extends Component {
       // Error handling when not authenticated?
       const m = await this.props.getUsersTotal();
 
-      let date = new Date();
-      let minutes = date.getMinutes();
-      let hours = date.getHours();
-      let day = date.getDate();
-      let month = date.getMonth() + 1;
-
-      let lastUpdatedAt = day + "/" + month + " at " + hours + ":" + minutes;
+      let lastUpdatedAt = getTime();
 
       this.setState({
         usersTotal: this.props.usersTotal.numberOfUsers,

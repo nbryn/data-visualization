@@ -117,8 +117,10 @@ class UserProfile extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  user: state.user
-});
+const mapStateToProps = state => {
+  return {
+    user: state.user
+  };
+};
 
 export default connect(mapStateToProps)(UserProfile);

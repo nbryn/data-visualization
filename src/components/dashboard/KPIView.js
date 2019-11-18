@@ -15,7 +15,7 @@ class KPIView extends Component {
 
     this.state = {
       usersTotal: "",
-      usersTotalUpdate: "",
+      usersTotalLastUpdate: "",
       usersToday: "",
       $Total: ""
     };
@@ -34,7 +34,7 @@ class KPIView extends Component {
 
     this.setState({
       usersTotal: this.props.usersTotal.numberOfUsers,
-      usersTotalUpdate: lastUpdatedAt
+      usersTotalLastUpdate: lastUpdatedAt
     });
 
     // Reload KPI data
@@ -68,7 +68,7 @@ class KPIView extends Component {
                 statsText="Total Users"
                 statsValue={this.state.usersTotal}
                 statsIcon={<i className="fa fa-refresh" />}
-                statsIconText={`Last Update: ${this.state.usersTotalUpdate}`}
+                statsIconText={`Last Update: ${this.state.usersTotalLastUpdate}`}
               />
             </Col>
             <Col lg={3} sm={6}>

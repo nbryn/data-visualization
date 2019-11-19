@@ -1,7 +1,7 @@
 import { LOGIN } from "../ActionTypes";
 import axios from "axios";
 
-import {setTokenOnLogin} from "../../../security/Token";
+import { setTokenOnLogin } from "../../../security/Token";
 
 const url =
   "https://anpjwd4bz4.execute-api.eu-central-1.amazonaws.com/dev/graphql";
@@ -26,16 +26,6 @@ export const login = (username, password, history) => async dispatch => {
             deviceId
             user {
               email
-              phoneCode
-              phoneNumber
-              username
-              firstName
-              lastName
-              image
-              gender
-              language
-              active
-              verified
             }  
           }
         }
@@ -56,11 +46,6 @@ export const login = (username, password, history) => async dispatch => {
     if (response.data.data.signin.result) {
       return response.data.data.signin.result[0].errors;
     } else {
-      dispatch({
-        type: LOGIN,
-        payload: response.data.data.signin.user
-      });
-
       setTokenOnLogin(response);
 
       history.push("/dashboard");

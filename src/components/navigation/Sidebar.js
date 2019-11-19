@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 
+import Logo from "../../assets/img/jamiipay.png";
 
 class Sidebar extends Component {
   render() {
@@ -12,7 +13,7 @@ class Sidebar extends Component {
         data-image="../../assets/img/jamiipay.jpeg"
       >
         <div className="logo">
-          <img src="../../assets/img/jamiipay.jpeg" />
+          <img src={Logo} />
         </div>
 
         <div className="sidebar-wrapper">

@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Navbar, NavItem, Nav } from "react-bootstrap";
 
+import { signOut } from "../../redux/actions/User/SignoutAction";
+
 class Header extends Component {
   constructor(props) {
     super(props);
@@ -9,6 +11,7 @@ class Header extends Component {
       sidebarExists: false
     };
   }
+
   mobileSidebarToggle(e) {
     if (this.state.sidebarExists === false) {
       this.setState({
@@ -43,7 +46,9 @@ class Header extends Component {
             </Nav>
             <Nav pullRight>
               <NavItem href="#">Account</NavItem>
-              <NavItem href="#">Log out</NavItem>
+              <NavItem href="#/" onClick={signOut}>
+                Log out
+              </NavItem>
             </Nav>
           </div>
         </Navbar.Collapse>

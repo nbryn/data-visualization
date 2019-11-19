@@ -11,16 +11,20 @@ import Dashboard from "./components/dashboard/Dashboard.js";
 import Signin from "./components/user/Signin.js";
 import Profile from "./components/user/UserProfile.js";
 import SecureRoute from "./security/SecureRoute";
+import NotFound from "./components/navigation/NotFound";
 
 class App extends Component {
   render() {
     return (
       <Provider store={Store}>
         <Router>
-          <Route exact path="/" component={Signin} />
           <Switch>
+            <Route exact path="/" component={Signin} />
+
             <SecureRoute exact path="/dashboard" component={Dashboard} />
             <SecureRoute exact path="/profile" component={Profile} />
+
+            <Route path="*" component={NotFound} />
           </Switch>
         </Router>
       </Provider>

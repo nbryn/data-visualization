@@ -9,3 +9,7 @@ export const setTokenOnApiRequest = () => {
   const token = localStorage.getItem("Token");
   axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 };
+
+export const removeTokenOnLogout = () => {
+localStorage.removeItem("Token");
+}

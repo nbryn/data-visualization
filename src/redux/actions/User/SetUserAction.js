@@ -1,12 +1,12 @@
-import { SET_USER } from "../ActionTypes";
+import { SET_CURRENT_USER } from "../ActionTypes";
 import axios from "axios";
 
-import { setTokenOnApiRequest } from "../../../security/Token";
+import { setTokenInHeader } from "../../../security/Token";
 
 const url =
   "https://anpjwd4bz4.execute-api.eu-central-1.amazonaws.com/dev/graphql";
 
-export const setUser = () => async dispatch => {
+export const setCurrentUser = () => async dispatch => {
   const data = `query{
         me{
           id
@@ -25,7 +25,7 @@ export const setUser = () => async dispatch => {
         }
       }`;
 
-  setTokenOnApiRequest();
+  setTokenInHeader();
 
   let response;
 
@@ -43,7 +43,7 @@ export const setUser = () => async dispatch => {
 
     console.log(response.data.data.me);
     dispatch({
-      type: SET_USER,
+      type: SET_CURRENT_USER,
       payload: response.data.data.me
     });
 

@@ -1,7 +1,7 @@
 import { USERS_TOTAL } from "../ActionTypes";
 import axios from "axios";
 
-import { setTokenOnApiRequest } from "../../../security/Token";
+import { setTokenInHeader } from "../../../security/Token";
 
 const url =
   "https://anpjwd4bz4.execute-api.eu-central-1.amazonaws.com/dev/graphql";
@@ -14,7 +14,7 @@ export const getUsersTotal = () => async dispatch => {
         }
         }`;
 
-  setTokenOnApiRequest();
+  setTokenInHeader();
 
   let response;
 

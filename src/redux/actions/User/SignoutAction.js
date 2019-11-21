@@ -1,7 +1,7 @@
-import { removeTokenOnLogout } from "../../../security/Token";
+import { removeTokenFromLocalStorage } from "../../../security/Token";
 
 export const signOut = () => {
-  removeTokenOnLogout();
+  removeTokenFromLocalStorage();
 
   window.location.href = "/";
 };

@@ -7,7 +7,7 @@ import { FormGroup, ControlLabel, FormControl } from "react-bootstrap";
 import Sidebar from "../navigation/Sidebar.js";
 import Header from "../navigation/Header.js";
 
-import { setUser } from "../../redux/actions/User/SetUserAction";
+import { setCurrentUser } from "../../redux/actions/User/SetUserAction";
 
 class UserProfile extends Component {
   constructor(props) {
@@ -23,7 +23,7 @@ class UserProfile extends Component {
     };
   }
   async componentDidMount() {
-    const temp = await this.props.setUser();
+    const temp = await this.props.setCurrentUser();
 
     const user = this.props.user.currentUser;
 
@@ -147,4 +147,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, { setUser })(UserProfile);
+export default connect(mapStateToProps, { setCurrentUser })(UserProfile);

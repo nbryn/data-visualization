@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import {Alert} from "react-bootstrap";
+
 import { connect } from "react-redux";
 import { login } from "../../redux/actions/User/LoginAction";
 
@@ -8,7 +10,9 @@ class Signin extends Component {
 
     this.state = {
       email: "",
-      password: ""
+      password: "",
+      showAlert: false,
+      error: ""
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -44,62 +48,125 @@ class Signin extends Component {
 
     if (loginError) {
       this.setState({
-        email: loginError,
-        password: ""
+        email: "",
+        password: "",
+        showAlert: true,
+        error: loginError
       });
     }
   };
 
   render() {
-    return (
-      <div className="container">
-        <div className="row">
-          <div className="col-sm-9 col-md-7 col-lg-5 mx-auto">
-            <div className="card card-signin my-5">
-              <div className="card-body">
-                <h3 className="card-title text-center">Sign In</h3>
-                <form onSubmit={this.handleSubmit} autoComplete="off">
-                  <div className="form-label-group">
-                    <input
-                      id="inputEmail"
-                      name="email"
-                      className="form-control"
-                      placeholder="Email address"
-                      value={this.state.email}
-                      required
-                      onChange={this.handleChange}
-                    />
-                    <label htmlFor="inputEmail">Email address</label>
-                  </div>
+    let signIn;
+    if (!this.state.showAlert) {
+      signIn = (
+        <div className="container">
+          <div className="row">
+            <div className="col-sm-9 col-md-7 col-lg-5 mx-auto">
+              <div className="card card-signin my-5">
+                <div className="card-body">
+                  <h3 className="card-title text-center">Sign In</h3>
+                  <form onSubmit={this.handleSubmit} autoComplete="off">
+                    <div className="form-label-group">
+                      <input
+                        id="inputEmail"
+                        name="email"
+                        className="form-control"
+                        placeholder="Email address"
+                        value={this.state.email}
+                        required
+                        onChange={this.handleChange}
+                      />
+                      <label htmlFor="inputEmail">Email address</label>
+                    </div>
 
-                  <div className="form-label-group">
-                    <input
-                      type="password"
-                      id="inputPassword"
-                      name="password"
-                      className="form-control"
-                      placeholder="Password"
-                      value={this.state.password}
-                      required
-                      onChange={this.handleChange}
-                    />
-                    <label htmlFor="inputPassword">Password</label>
-                  </div>
+                    <div className="form-label-group">
+                      <input
+                        type="password"
+                        id="inputPassword"
+                        name="password"
+                        className="form-control"
+                        placeholder="Password"
+                        value={this.state.password}
+                        required
+                        onChange={this.handleChange}
+                      />
+                      <label htmlFor="inputPassword">Password</label>
+                    </div>
 
-                  <button
-                    className="btn btn-lg btn-primary btn-block text-uppercase"
-                    type="submit"
-                  >
-                    Sign in
-                  </button>
-                  <hr className="my-4" />
-                </form>
+                    <button
+                      className="btn btn-lg btn-primary btn-block text-uppercase"
+                      type="submit"
+                    >
+                      Sign in
+                    </button>
+                    <hr className="my-4" />
+                  </form>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    );
+      );
+    } else {
+      signIn = (
+        <div className="container">
+          <div className="row">
+            
+            <div className="col-sm-9 col-md-7 col-lg-5 mx-auto">
+            <Alert bsStyle="danger">
+              <h4 style={{textAlign: "center"}}>Error</h4>
+             
+              <p style={{textAlign: "center"}}>{this.state.error} - Please try again</p>
+            </Alert>
+              <div className="card card-signin my-5">
+                <div className="card-body">
+                  <h3 className="card-title text-center">Sign In</h3>
+                  <form onSubmit={this.handleSubmit} autoComplete="off">
+                    <div className="form-label-group">
+                      <input
+                        id="inputEmail"
+                        name="email"
+                        className="form-control"
+                        placeholder="Email address"
+                        value={this.state.email}
+                        required
+                        onChange={this.handleChange}
+                      />
+                      <label htmlFor="inputEmail">Email address</label>
+                    </div>
+
+                    <div className="form-label-group">
+                      <input
+                        type="password"
+                        id="inputPassword"
+                        name="password"
+                        className="form-control"
+                        placeholder="Password"
+                        value={this.state.password}
+                        required
+                        onChange={this.handleChange}
+                      />
+                      <label htmlFor="inputPassword">Password</label>
+                    </div>
+
+                    <button
+                      className="btn btn-lg btn-primary btn-block text-uppercase"
+                      type="submit"
+                    >
+                      Sign in
+                    </button>
+                    <hr className="my-4" />
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    return <div>{signIn}</div>;
   }
 }
 

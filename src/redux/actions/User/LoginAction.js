@@ -1,7 +1,6 @@
-import { LOGIN } from "../ActionTypes";
 import axios from "axios";
 
-import { setTokenOnLogin } from "../../../security/Token";
+import { setTokenInLocalStorage } from "../../../security/Token";
 
 const url =
   "https://anpjwd4bz4.execute-api.eu-central-1.amazonaws.com/dev/graphql";
@@ -43,10 +42,15 @@ export const login = (username, password, history) => async dispatch => {
     });
 
     // Flag for error in DB?
-    if (response.data.data.signin.result) {
-      return response.data.data.signin.result[0].errors;
+    const error = response.data.data.signin.result;
+    if (error) {
+      if (error[0].errors[0] == "NO_SEARCH" || error[0].errors[0] == "TO_SHORT") {
+      return "Wrong Email/Username";
+      } else {
+        return "Wrong Password"
+      }
     } else {
-      setTokenOnLogin(response);
+      setTokenInLocalStorage(response);
 
       history.push("/dashboard");
     }

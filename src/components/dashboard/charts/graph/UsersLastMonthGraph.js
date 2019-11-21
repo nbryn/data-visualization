@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import Graph from "./Graph.js";
+import GraphChart from "./GraphChart.js";
 
-class UserLastMonth extends Component {
+class UsersLastMonthGraph extends Component {
   constructor(props) {
     super(props);
 
@@ -22,43 +22,36 @@ class UserLastMonth extends Component {
     const data = [
       {
         name: "0",
-        uv: this.state.first,
-        amt: 2400
+        value: this.state.first
       },
       {
         name: "5",
-        uv: this.state.second,
-        amt: 2210
+        value: this.state.second
       },
       {
         name: "10",
-        uv: this.state.third,
-        amt: 2290
+        value: this.state.third
       },
       {
         name: "15",
-        uv: this.state.fourth,
-        amt: 2000
+        value: this.state.fourth
       },
       {
         name: "20",
-        uv: this.state.sixth,
-        amt: 2181
+        value: this.state.sixth
       },
       {
         name: "25",
-        uv: this.state.seventh,
-        amt: 2500
+        value: this.state.seventh
       },
       {
         name: "30",
-        uv: this.state.eighth,
-        amt: 2100
+        value: this.state.eighth
       }
     ];
     return (
       <div>
-        <Graph
+        <GraphChart
           title="Users Last Month"
           data={data}
           xLabel={xLabel}
@@ -70,4 +63,4 @@ class UserLastMonth extends Component {
   }
 }
 
-export default UserLastMonth;
+export default UsersLastMonthGraph;

@@ -44,7 +44,7 @@ export const login = (username, password, history) => async dispatch => {
     // Flag for error in DB?
     const error = response.data.data.signin.result;
     if (error) {
-      if (error[0].errors[0] == "NO_SEARCH" || error[0].errors[0] == "TO_SHORT") {
+      if (error[0].errors[0] === "NO_SEARCH" || error[0].errors[0] === "TO_SHORT") {
       return "Wrong Email/Username";
       } else {
         return "Wrong Password"

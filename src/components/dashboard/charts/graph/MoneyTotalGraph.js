@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import Graph from "../Graph/Graph";
+import GraphChart from "./GraphChart";
 
-import { getMoneyTotal } from "../../../redux/actions/KPI/MoneyTotalAction";
+// import { getMoneyTotal } from "../../../../redux/actions/KPI/MoneyTotalAction";
 
-class MoneyTotal extends Component {
+class MoneyTotalGraph extends Component {
   constructor(props) {
     super(props);
 
@@ -37,43 +37,36 @@ class MoneyTotal extends Component {
     const data = [
       {
         name: "0",
-        uv: this.state.first,
-        amt: 2400
+        value: this.state.first
       },
       {
         name: "5",
-        uv: this.state.second,
-        amt: 2210
+        value: this.state.second
       },
       {
         name: "10",
-        uv: this.state.third,
-        amt: 2290
+        value: this.state.third
       },
       {
         name: "15",
-        uv: this.state.fourth,
-        amt: 2000
+        value: this.state.fourth
       },
       {
         name: "20",
-        uv: this.state.sixth,
-        amt: 2181
+        value: this.state.sixth
       },
       {
         name: "25",
-        uv: this.state.seventh,
-        amt: 2500
+        value: this.state.seventh
       },
       {
         name: "30",
-        uv: this.state.eighth,
-        amt: 2100
+        value: this.state.eighth
       }
     ];
     return (
       <div>
-        <Graph
+        <GraphChart
           title="Amount Registrered"
           data={data}
           yLabel={yLabel}
@@ -85,4 +78,4 @@ class MoneyTotal extends Component {
   }
 }
 
-export default MoneyTotal;
+export default MoneyTotalGraph;

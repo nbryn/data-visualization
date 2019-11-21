@@ -3,12 +3,15 @@ import { connect } from "react-redux";
 import { Grid, Row, Col } from "react-bootstrap";
 
 import { KPICard } from "./KPICard.js";
-import UserLastMonth from "./Graph/UserLastMonth";
-import MoneyTotal from "./Graph/MoneyTotal";
-import UserTotal from "./Graph/UserTotal";
+
+import UsersLastMonthGraph from "./charts/graph/UsersLastMonthGraph";
+import MoneyTotalGraph from "./charts/graph/MoneyTotalGraph";
+import UsersTotalGraph from "./charts/graph/UsersTotalGraph";
+
+import SoMeCircleChart from "./charts/circle/SoMeCircleChart";
 
 import { getUsersTotal } from "../../redux/actions/KPI/UserTotalAction";
-import { getTime } from "./Graph/Date";
+import { getTime } from "../../util/Date";
 
 class KPIView extends Component {
   constructor(props) {
@@ -91,13 +94,18 @@ class KPIView extends Component {
 
           <Row>
             <Col lg={4} sm={6}>
-              <UserTotal />
+              <UsersTotalGraph />
             </Col>
             <Col lg={4} sm={6}>
-              <UserLastMonth />
+              <UsersLastMonthGraph />
             </Col>
             <Col lg={4} sm={6}>
-              <MoneyTotal />
+              <MoneyTotalGraph />
+            </Col>
+          </Row>
+          <Row>
+            <Col lg={4} sm={6}>
+              <SoMeCircleChart />
             </Col>
           </Row>
         </Grid>

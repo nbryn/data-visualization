@@ -9,6 +9,7 @@ import MoneyTotalGraph from "./charts/graph/MoneyTotalGraph";
 import UsersTotalGraph from "./charts/graph/UsersTotalGraph";
 
 import SoMeCircleChart from "./charts/circle/SoMeCircleChart";
+import GroupSizeChart from "./charts/circle/GroupSizeChart";
 
 import { getUsersTotal } from "../../redux/actions/KPI/UserTotalAction";
 import { getTime } from "../../util/Date";
@@ -106,6 +107,9 @@ class KPIView extends Component {
           <Row>
             <Col lg={4} sm={6}>
               <SoMeCircleChart />
+            </Col>
+            <Col lg={4} sm={6}>
+              <GroupSizeChart />
             </Col>
           </Row>
         </Grid>

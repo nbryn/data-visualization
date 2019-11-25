@@ -8,6 +8,18 @@ class MoneyTotalGraph extends Component {
     super(props);
 
     this.state = {
+      first: "",
+      second: "",
+      third: "",
+      fourth: "",
+      fifth: "",
+      sixth: "",
+      seventh: "",
+      eighth: ""
+    };
+  }
+  async componentDidMount() {
+    this.setState({
       first: "0",
       second: "257",
       third: "338",
@@ -16,20 +28,7 @@ class MoneyTotalGraph extends Component {
       sixth: "897",
       seventh: "900",
       eighth: "950"
-    };
-  }
-  async componentDidMount() {
-    // const t = await getMoneyTotal();
-    // this.setState({
-    //   first: this.props.firstMoney,
-    //   second: this.props.secondMoney,
-    //   third: this.props.thirdMoney,
-    //   fourth: this.props.fourthMoney,
-    //   fifth: this.props.fifthMoney,
-    //   sixth: this.props.sixthMoney,
-    //   seventh: this.props.seventhMoney,
-    //   eighth: this.props.eighthMoney
-    // })
+    })
   }
   render() {
     const yLabel = { value: "Dollars", angle: -90, position: "insideLeft" };

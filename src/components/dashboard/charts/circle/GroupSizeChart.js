@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import CircleChart from "./CircleChart";
 
-class SoMeCircleChart extends Component {
+class GroupSizeChart extends Component {
   constructor(props) {
     super(props);
 
@@ -11,7 +11,7 @@ class SoMeCircleChart extends Component {
       second: "",
       third: "",
       fourth: "",
-      colors: []
+      
     };
   }
 
@@ -20,7 +20,7 @@ class SoMeCircleChart extends Component {
       first: 100,
       second: 200,
       third: 300,
-      fourth: 400
+      fourth: 400,
     });
   }
 
@@ -45,20 +45,24 @@ class SoMeCircleChart extends Component {
     ];
 
     const colors = [
-      "#8884d8",
-      "#83a6ed",
-      "#d0ed57",
-      "#a4de6c",
-      "#8ddlel",
-      "#82ca9d"
+      "#2964d8",
+      "#67b6ed",
+      "#75ad57",
+      "#d9ae6c",
+      "#9edlel",
+      "#42cb7d"
     ];
 
     return (
       <div>
-        <CircleChart title="SoMe Followers" data={data} colors={colors} />
+        <CircleChart
+          title="Group Size"
+          data={data}
+          colors={colors}
+        />
       </div>
     );
   }
 }
 
-export default SoMeCircleChart;
+export default GroupSizeChart;

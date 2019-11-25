@@ -6,6 +6,19 @@ class UsersLastMonthGraph extends Component {
     super(props);
 
     this.state = {
+      first: "",
+      second: "",
+      third: "",
+      fourth: "",
+      fifth: "",
+      sixth: "",
+      seventh: "",
+      eighth: ""
+    };
+  }
+
+  componentDidMount() {
+    this.setState({
       first: "0",
       second: "21",
       third: "34",
@@ -14,7 +27,7 @@ class UsersLastMonthGraph extends Component {
       sixth: "83",
       seventh: "95",
       eighth: "99"
-    };
+    })
   }
   render() {
     const yLabel = { value: "Users", angle: -90, position: "insideLeft" };

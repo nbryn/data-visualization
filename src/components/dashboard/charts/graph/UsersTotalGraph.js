@@ -6,6 +6,18 @@ class UsersTotalGraph extends Component {
     super(props);
 
     this.state = {
+      first: "",
+      second: "",
+      third: "",
+      fourth: "",
+      fifth: "",
+      sixth: "",
+      seventh: "",
+      eighth: ""
+    };
+  }
+  componentDidMount() {
+    this.setState({
       first: "0",
       second: "105",
       third: "169",
@@ -14,7 +26,7 @@ class UsersTotalGraph extends Component {
       sixth: "499",
       seventh: "512",
       eighth: "748"
-    };
+    })
   }
   render() {
     const yLabel = { value: "Users", angle: -90, position: "insideLeft" };

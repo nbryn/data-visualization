@@ -5,16 +5,21 @@ import { Col } from "react-bootstrap";
 import { ResponsiveContainer, Cell, PieChart, Pie } from "recharts";
 
 class CircleChart extends Component {
-  render() {
-    const colors = [
-      "#8884d8",
-      "#83a6ed",
-      "#d0ed57",
-      "#a4de6c",
-      "#8ddlel",
-      "#82ca9d"
-    ];
+  constructor(props) {
+    super(props);
 
+    this.state = {
+      colors: ""
+    };
+  }
+
+  componentDidMount() {
+    this.setState({
+      colors: this.props.colors
+    });
+    console.log(this.props);
+  }
+  render() {
     return (
       <ResponsiveContainer width={400} height="80%">
         <div className="card-circle card-stats">
@@ -35,7 +40,7 @@ class CircleChart extends Component {
                 fill="#82ca9d"
               >
                 {this.props.data.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={colors[index]} />
+                  <Cell key={`cell-${index}`} fill={this.state.colors[index]} />
                 ))}
               </Pie>
             </PieChart>

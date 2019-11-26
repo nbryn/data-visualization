@@ -1,115 +1,79 @@
-// const userSchema = `
-//   directive @auth(
-//     requires: Role = ADMIN,
-//   ) on OBJECT | FIELD_DEFINITION
-  
-//   enum Role {
-//     ALL
-//     SIGNUP
-//     USER
-//   }
-  
-//   scalar Date
+const { gql } = require("apollo-server");
 
-//   enum UserGender {
-//     NOT_SET
-//     MALE
-//     FEMALE
-//   }
+const UserSchema = gql`
+  enum UserGender {
+    NOT_SET
+    MALE
+    FEMALE
+  }
 
-//   type ValidationFieldError {
-//     field: String!
-//     errors: [String]!
-//   }
+  type ValidationFieldError {
+    field: String!
+    errors: [String]!
+  }
 
-//   type ValidationError {
-//     result: [ValidationFieldError]!
-//   }
+  type ValidationError {
+    result: [ValidationFieldError]!
+  }
 
-//   type User {
-//     id: String!
-//     updatedAt: Date!    
-//     email: String
-//     phoneCode: String
-//     phoneNumber: String
-//     username: String
-//     firstName: String
-//     lastName: String
-//     image: String
-//     gender: UserGender
-//     active: Boolean
-//     verified: Boolean
-//     language: String
-//   }
+  type User {
+    id: String!
+    email: String
+    phoneCode: String
+    phoneNumber: String
+    username: String
+    firstName: String
+    lastName: String
+    image: String
+    gender: UserGender
+    active: Boolean
+    verified: Boolean
+    language: String
+  }
 
-//   type Login {
-//     token: String!
-//     refreshToken: String!
-//     deviceId: String!
-//     user: User!
-//   }
+  type UserSearchResult {
+    users: [User]!
+  }
 
-//   type Signup {
-//     token: String!
-//   }
+  type Day {
+    year: Float!
+    month: Float!
+    day: Float!
+  }
 
-//   type UserSearchResult {
-//     users: [User]!
-//   }
+  type UserNumberDay {
+    day: Day!
+    count: Float!
+  }
 
-//   type Day {
-//     year: Float!
-//     month: Float!
-//     day: Float!
-//   }
+  type UserStats {
+    numberOfUsers: Float!
+    signups: [UserNumberDay]!
+  }
 
-//   type UserNumberDay {
-//     day: Day!
-//     count: Float!
-//   }
+  input SigninInput {
+    username: String!
+    password: String!
+  }
 
-//   type UserStats {
-//     numberOfUsers: Float!
-//     signups: [UserNumberDay]!
-//   }
+  type Login {
+    token: String!
+    refreshToken: String!
+    deviceId: String!
+    user: User!
+  }
 
-//   input UserSearchInput {
-//     search: String!
-//   }
+  scalar JSON
 
-//   union UsersType = UserSearchResult | ValidationError
+  type Query {
+    me: User
+    user: User
+    userStats: UserStats
+  }
 
-//   input SigninInput {
-//     channel: Channel!
-//     username: String!
-//     password: String!
-//   }
+  type Mutation {
+    signin(input: SigninInput!): JSON
+  }
+`;
 
-//   input RefreshInput {
-//     token: String!
-//     refresh: String!
-//   }
-
-//   type Succeed {
-//     succeed: Boolean!
-//   }
-
-//   union SucceedType = Succeed | ValidationError
-
-//   union LoginType = ValidationError | Login
-//   union SignupType = ValidationError | Signup
-//   union UserType = User | ValidationError
-
-//   type Mutation {
-//     signin(input: SigninInput!): LoginType
-//     refresh(input: RefreshInput!): LoginType
-//   }
-
-//   type Query {
-//     me: User @auth(requires: USER)
-//     user(input: UserSearchInput!): UsersType @auth(requires: USER)
-//     userStats: UserStats @auth(requires: USER)
-//   }
-// `;
-
-// module.exports = userSchema;
+module.exports = UserSchema;

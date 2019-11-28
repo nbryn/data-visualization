@@ -25,7 +25,7 @@ class UserProfile extends Component {
   async componentDidMount() {
     const temp = await this.props.setCurrentUser();
 
-    const user = this.props.user.currentUser;
+    const user = this.props.user.currentUser.me;
 
     this.setState({
       email: user.email,

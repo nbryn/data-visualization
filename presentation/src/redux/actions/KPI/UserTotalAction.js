@@ -3,15 +3,11 @@ import axios from "axios";
 
 import { setTokenInHeader } from "../../../security/Token";
 
-const url =
-  "https://anpjwd4bz4.execute-api.eu-central-1.amazonaws.com/dev/graphql";
+const url = "http://localhost:4000/graphql";
 
 export const getUsersTotal = () => async dispatch => {
   const data = `query {
-        userStats{
-          numberOfUsers
-          signups { count }    
-        }
+        userStats   
         }`;
 
   setTokenInHeader();
@@ -27,6 +23,7 @@ export const getUsersTotal = () => async dispatch => {
       }
     });
 
+
     if (response.data.errors) {
       return response.data.errors[0].extensions.code;
     } else {
@@ -35,8 +32,6 @@ export const getUsersTotal = () => async dispatch => {
         payload: response.data.data.userStats
       });
     }
-
-    console.log(response.data.data.userStats.numberOfUsers);
 
     return response.data.data.userStats;
   } catch (err) {

@@ -26,16 +26,13 @@ export const login = (username, password, history) => async dispatch => {
 
     console.log(response);
 
-    // Flag for error in DB?
     const error = response.data.data.data.error;
+
     if (error) {
-      if (error === "NO_SEARCH" || error === "TO_SHORT") {
-        return "Wrong Email/Username";
-      } else {
-        return "Wrong Password";
-      }
+      return "Wrong Email/Username";
     } else {
       setTokenInLocalStorage(response);
+
 
       history.push("/dashboard");
     }

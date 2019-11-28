@@ -4,15 +4,17 @@ import { Grid, Row, Col } from "react-bootstrap";
 
 import { KPICard } from "./KPICard.js";
 
-import UsersLastMonthGraph from "./charts/graph/UsersLastMonthGraph";
+import TotalGroupsGraph from "./charts/graph/TotalGroupsGraph";
 import MoneyTotalGraph from "./charts/graph/MoneyTotalGraph";
 import UsersTotalGraph from "./charts/graph/UsersTotalGraph";
 
 import SoMeCircleChart from "./charts/circle/SoMeCircleChart";
 import GroupSizeChart from "./charts/circle/GroupSizeChart";
 
-import { getUsersTotal } from "../../redux/actions/KPI/UserTotalAction";
-import { getTime } from "../../util/Date";
+import UsersLastMonthBarChart from "./charts/bar/UsersLastMonthBarChart";
+
+import { getUserStats } from "../../redux/actions/KPI/UserStatsAction";
+import { getCurrentTime } from "../../util/Date";
 
 class KPIView extends Component {
   constructor(props) {
@@ -22,29 +24,34 @@ class KPIView extends Component {
       usersTotal: "",
       usersTotalLastUpdate: "",
       usersToday: "",
+      usersTodayLastUpdate: "",
       $Total: ""
     };
   }
   async componentDidMount() {
     // Error handling when not authenticated?
-    const temp = await this.props.getUsersTotal();
+    const temp = await this.props.getUserStats();
 
-    let lastUpdatedAt = getTime();
+   const userStats = this.props.userStats;
+
+    let lastUpdatedAt = getCurrentTime();
 
     this.setState({
-      usersTotal: this.props.usersTotal.numberOfUsers,
-      usersTotalLastUpdate: lastUpdatedAt
+      usersTotal: userStats.numberOfUsers,
+      usersTotalLastUpdate: lastUpdatedAt,
+      usersToday: userStats.signups[10].count,
+      usersTodayLastUpdate: lastUpdatedAt
     });
 
     // Reload KPI data
     setInterval(async () => {
       // Error handling when not authenticated?
-      const m = await this.props.getUsersTotal();
+      const m = await this.props.getUserStats();
 
-      let lastUpdatedAt = getTime();
+      let lastUpdatedAt = getCurrentTime();
 
       this.setState({
-        usersTotal: this.props.usersTotal.numberOfUsers,
+        usersTotal: this.props.userStats.numberOfUsers,
         usersTotalUpdate: lastUpdatedAt
       });
     }, 100000);
@@ -64,6 +71,16 @@ class KPIView extends Component {
                 statsIconText={`Last Update: ${this.state.usersTotalLastUpdate}`}
               />
             </Col>
+            
+            <Col lg={3} sm={6}>
+              <KPICard
+                bigIcon={<i className="pe-7s-graph1 text-danger" />}
+                statsText="New Users Today"
+                statsValue={this.state.usersToday}
+                statsIcon={<i className="fa fa-clock-o" />}
+                statsIconText={`Last Update: ${this.state.usersTodayLastUpdate}`}
+              />
+            </Col>
             <Col lg={3} sm={6}>
               <KPICard
                 bigIcon={<i className="pe-7s-wallet text-success" />}
@@ -73,15 +90,7 @@ class KPIView extends Component {
                 statsIconText="Last day"
               />
             </Col>
-            <Col lg={3} sm={6}>
-              <KPICard
-                bigIcon={<i className="pe-7s-graph1 text-danger" />}
-                statsText="New Users Today"
-                statsValue="23"
-                statsIcon={<i className="fa fa-clock-o" />}
-                statsIconText="In the last hour"
-              />
-            </Col>
+            
             <Col lg={3} sm={6}>
               <KPICard
                 bigIcon={<i className="fa fa-twitter text-info" />}
@@ -98,7 +107,7 @@ class KPIView extends Component {
               <UsersTotalGraph />
             </Col>
             <Col lg={4} sm={6}>
-              <UsersLastMonthGraph />
+              <TotalGroupsGraph  />
             </Col>
             <Col lg={4} sm={6}>
               <MoneyTotalGraph />
@@ -108,6 +117,10 @@ class KPIView extends Component {
             <Col lg={4} sm={6}>
               <SoMeCircleChart />
             </Col>
+            <Col lg={4} sm={6}>
+              <UsersLastMonthBarChart  />
+            </Col>
+            
             <Col lg={4} sm={6}>
               <GroupSizeChart />
             </Col>
@@ -120,8 +133,8 @@ class KPIView extends Component {
 
 const mapStateToProps = state => {
   return {
-    usersTotal: state.KPI.usersTotal
+    userStats: state.KPI.userStats
   };
 };
 
-export default connect(mapStateToProps, { getUsersTotal })(KPIView);
+export default connect(mapStateToProps, { getUserStats })(KPIView);

@@ -5,7 +5,7 @@ import { setTokenInHeader } from "../../../security/Token";
 
 const url = "http://localhost:4000/graphql";
 
-export const getUsersTotal = () => async dispatch => {
+export const getUserStats = () => async dispatch => {
   const data = `query {
         userStats   
         }`;
@@ -22,7 +22,6 @@ export const getUsersTotal = () => async dispatch => {
         query: data
       }
     });
-
 
     if (response.data.errors) {
       return response.data.errors[0].extensions.code;

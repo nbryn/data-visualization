@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import GraphChart from "./GraphChart.js";
 
-class UsersLastMonthGraph extends Component {
+class TotalGroupsGraph extends Component {
   constructor(props) {
     super(props);
 
@@ -31,7 +31,7 @@ class UsersLastMonthGraph extends Component {
   }
   render() {
     const yLabel = { value: "Users", angle: -90, position: "insideLeft" };
-    const xLabel = { value: "Days", position: "insideMiddle", dy: 10 };
+    const xLabel = { value: "Months", position: "insideMiddle", dy: 10 };
     const data = [
       {
         name: "0",
@@ -65,7 +65,7 @@ class UsersLastMonthGraph extends Component {
     return (
       <div>
         <GraphChart
-          title="Users Last Month"
+          title="Total Groups"
           data={data}
           xLabel={xLabel}
           yLabel={yLabel}
@@ -76,4 +76,4 @@ class UsersLastMonthGraph extends Component {
   }
 }
 
-export default UsersLastMonthGraph;
+export default TotalGroupsGraph;

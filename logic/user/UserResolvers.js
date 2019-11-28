@@ -79,7 +79,7 @@ const UserResolvers = {
               query: data
             }
           });
-  
+
           if (response.data.errors) {
             return response.data.errors[0].extensions.code;
           } else {

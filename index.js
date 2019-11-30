@@ -38,15 +38,12 @@ async function connectToDB() {
 
   connection.once("open", () => {
     console.log("Connection Open");
-    connection.db.collection("user", async (err, collection) => {
-      let result;
-      try {
-        collection.find().toArray(function(err, data) {
-          console.log(data);
-        });
-      } catch (err) {
-        console.log(err);
-      }
+    connection.db.listCollections().toArray((err, names) => {
+      console.log(names);
+    });
+    connection.db.collection("users", async (err, collection) => {
+      const user = await collection.findOne({ email: "dap_dk@hotmail.com" });
+      console.log(user);
     });
   });
 }
@@ -59,5 +56,5 @@ server.applyMiddleware({
 connectToDB();
 
 app.listen({ port: 4000 }, () =>
-  console.log(`🚀 Server ready at http://localhost:4000/graphql`)
+  console.log(`Server ready at http://localhost:4000/graphql`)
 );

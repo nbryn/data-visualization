@@ -1,13 +1,14 @@
 const { gql } = require("apollo-server");
 
 const GroupSchema = gql`
-  type GroupNumberDay {
-    day: Day!
+
+  type GroupNumberMonth {
+    month: Float!
     count: Float!
   }
 
   type GroupStats {
-    signups: [GroupNumberDay]!
+    signups: [GroupNumberMonth]!
   }
 
   extend type Query {

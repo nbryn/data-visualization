@@ -3,8 +3,6 @@ const { merge } = require("lodash");
 const { makeExecutableSchema } = require("graphql-tools");
 const express = require("express");
 
-require("dotenv").config();
-
 const DefSchema = require("./logic/index");
 const UserSchema = require("./logic/user/UserSchema");
 const GroupSchema = require("./logic/group/GroupSchema");

@@ -1,14 +1,14 @@
 const moment = require("moment");
 const { connectToDB } = require("../connection");
 
-async function getGroupSignups(days) {
+async function getGroupsLastMonth() {
   const connection = await connectToDB();
   return new Promise((resolve, reject) => {
     try {
       connection.db.collection("groups", async (err, collection) => {
         const since = moment()
           .startOf("day")
-          .subtract(days, "days")
+          .subtract(60, "days")
           .toDate();
 
         const signupsInPeriod = await collection
@@ -43,6 +43,8 @@ async function getGroupSignups(days) {
           };
         });
 
+        console.log(signups);
+
         if (signups) {
           resolve(signups);
         }
@@ -53,4 +55,4 @@ async function getGroupSignups(days) {
   });
 }
 
-module.exports = { getGroupSignups };
+module.exports = { getGroupsLastMonth };

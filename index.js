@@ -1,16 +1,26 @@
 const { ApolloServer } = require("apollo-server-express");
 const express = require("express");
 const mongoose = require("mongoose");
+const { merge } = require("lodash");
+const { makeExecutableSchema } = require("graphql-tools");
 
 require("dotenv").config();
 
 const UserSchema = require("./logic/user/UserSchema");
-const UserResolvers = require("./logic/user/UserResolvers");
-
-const typeDefs = UserSchema;
-const resolvers = UserResolvers;
+const GroupSchema = require("./logic/group/GroupSchema");
+const userResolvers = require("./logic/user/UserResolvers");
+const groupResolvers = require("./logic/group/GroupResolvers");
+const DefSchema = require("./logic/index");
 
 const app = express();
+
+const resolvers = merge(userResolvers, groupResolvers);
+
+
+const schema = makeExecutableSchema({
+  typeDefs: [DefSchema, UserSchema, GroupSchema],
+  resolvers
+});
 
 const corsOptions = {
   origin: "http://localhost:3000",
@@ -18,34 +28,18 @@ const corsOptions = {
 };
 
 const server = new ApolloServer({
-  typeDefs,
-  resolvers,
+  schema: schema,
   context: async ({ req }) => ({
     token: req.headers["authorization"]
   })
 });
 
-let isConnected;
-
 async function connectToDB() {
-  if (isConnected) {
-    return;
-  }
-  mongoose.connect(process.env.MONGODB_URI, {
+  await mongoose.connect(process.env.MONGODB_URI_DEV, {
     useNewUrlParser: true
   });
-  const connection = mongoose.connection;
 
-  connection.once("open", () => {
-    console.log("Connection Open");
-    connection.db.listCollections().toArray((err, names) => {
-      console.log(names);
-    });
-    connection.db.collection("users", async (err, collection) => {
-      const user = await collection.findOne({ email: "dap_dk@hotmail.com" });
-      console.log(user);
-    });
-  });
+  return mongoose.connection;
 }
 
 server.applyMiddleware({

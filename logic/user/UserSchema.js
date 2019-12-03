@@ -1,12 +1,6 @@
 const { gql } = require("apollo-server");
 
 const UserSchema = gql`
-  type Day {
-    year: Float!
-    month: Float!
-    day: Float!
-  }
-
   type UserNumberDay {
     day: Day!
     count: Float!
@@ -24,7 +18,7 @@ const UserSchema = gql`
 
   scalar JSON
 
-  type Query {
+  extend type Query {
     me: JSON
     userStats: JSON
   }

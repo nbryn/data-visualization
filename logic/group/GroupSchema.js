@@ -7,12 +7,15 @@ const GroupSchema = gql`
   }
 
   type GroupStats {
-    numberOfUsers: Float!
-    signups: [UserNumberDay]!
+    signups: [GroupNumberDay]!
   }
 
   extend type Query {
-    groupStats: GroupStats
+    groupsTotal: Float!
+    groupsLastMonth: GroupStats
+    groupsLastThreeMonths: GroupStats
+    groupsLastSixMonths: GroupStats
+    groupsLastYear: GroupStats
   }
 `;
 

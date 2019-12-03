@@ -1,21 +1,21 @@
 const { ApolloServer } = require("apollo-server-express");
-const express = require("express");
-const mongoose = require("mongoose");
 const { merge } = require("lodash");
 const { makeExecutableSchema } = require("graphql-tools");
+const express = require("express");
 
 require("dotenv").config();
 
+const DefSchema = require("./logic/index");
 const UserSchema = require("./logic/user/UserSchema");
 const GroupSchema = require("./logic/group/GroupSchema");
+
 const userResolvers = require("./logic/user/UserResolvers");
 const groupResolvers = require("./logic/group/GroupResolvers");
-const DefSchema = require("./logic/index");
+
 
 const app = express();
 
 const resolvers = merge(userResolvers, groupResolvers);
-
 
 const schema = makeExecutableSchema({
   typeDefs: [DefSchema, UserSchema, GroupSchema],
@@ -34,20 +34,10 @@ const server = new ApolloServer({
   })
 });
 
-async function connectToDB() {
-  await mongoose.connect(process.env.MONGODB_URI_DEV, {
-    useNewUrlParser: true
-  });
-
-  return mongoose.connection;
-}
-
 server.applyMiddleware({
   app,
   cors: corsOptions
 });
-
-connectToDB();
 
 app.listen({ port: 4000 }, () =>
   console.log(`Server ready at http://localhost:4000/graphql`)

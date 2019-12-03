@@ -1,20 +1,17 @@
 const mongoose = require("mongoose");
 
-require("dotenv").config();
-
 async function connectToDB() {
-  mongoose.connect(process.env.MONGODB_URI, {
-    useNewUrlParser: true
-  });
-  const connection = mongoose.connection;
+  try {
+    await mongoose.connect(process.env.MONGODB_URI_DEV, {
+      useNewUrlParser: true
+    });
 
-  connection.once("open", () => {
-    console.log("Connection Open");
-  });
+    const connection = mongoose.connection;
 
-  return connection;
+    return connection;
+  } catch (err) {
+    console.log(err);
+  }
 }
-
-connectToDB();
 
 module.exports = { connectToDB };

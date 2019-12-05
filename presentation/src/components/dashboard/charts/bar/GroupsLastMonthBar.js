@@ -1,17 +1,15 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { getUserStats } from "../../../../redux/actions/KPI/UserStatsAction";
-import { getMonth } from "../../../../util/Date";
+import { fetchGroupsLastMonth } from "../../../../redux/actions/KPI/GroupsLastMonthAction";
 
 import Barr from "./Bar";
 
-class UsersLastMonthBarChart extends Component {
+class GroupsLastMonthBar extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      month: "",
       first: "",
       second: "",
       third: "",
@@ -27,27 +25,26 @@ class UsersLastMonthBarChart extends Component {
   }
 
   async componentDidMount() {
-    const temp = await this.props.getUserStats();
+    await this.props.fetchGroupsLastMonth();
 
-    const signups = this.props.userStats.signups;
+    const signups = this.props.groupsLastMonth.signups;
 
     this.setState({
-      month: getMonth(false),
-      first: signups[0].count,
-      second: signups[1].count,
-      third: signups[2].count,
-      fourth: signups[3].count,
-      fifth: signups[4].count,
-      sixth: signups[5].count,
-      seventh: signups[6].count,
-      eighth: signups[7].count,
-      ninth: signups[8].count,
-      tenth: signups[9].count,
-      eleventh: signups[10].count
+      first: signups[0] ? signups[0].count : "",
+      second: signups[1] ? signups[1].count : "",
+      third: signups[2] ? signups[2].count : "",
+      fourth: signups[3] ? signups[3].count : "",
+      fifth: signups[4] ? signups[4].count : "",
+      sixth: signups[5] ? signups[5].count : "",
+      seventh: signups[6] ? signups[6].count : "",
+      eighth: signups[7] ? signups[7].count : "",
+      ninth: signups[8] ? signups[8].count : "",
+      tenth: signups[9] ? signups[9].count : "",
+      eleventh: signups[10] ? signups[10].count : "",
     });
   }
   render() {
-    const title = `New Users In ${this.state.month}`;
+    const title = "Groups Last Month";
     const yLabel = { value: "Users", angle: -90, position: "insideLeft" };
     const data = [
       {
@@ -102,10 +99,8 @@ class UsersLastMonthBarChart extends Component {
 
 const mapStateToProps = state => {
   return {
-    userStats: state.KPI.userStats
+    groupsLastMonth: state.KPI.groupsLastMonth
   };
 };
 
-export default connect(mapStateToProps, { getUserStats })(
-  UsersLastMonthBarChart
-);
+export default connect(mapStateToProps, { fetchGroupsLastMonth })(GroupsLastMonthBar);

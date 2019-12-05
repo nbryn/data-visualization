@@ -5,7 +5,7 @@ import { setTokenInHeader } from "../../../security/Token";
 
 const url = "http://localhost:4000/graphql";
 
-export const getUserStats = () => async dispatch => {
+export const fetchUserStats = () => async dispatch => {
   const data = `query {
         userStats   
         }`;

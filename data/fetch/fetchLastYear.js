@@ -30,16 +30,12 @@ async function fetchLastYear(collectionToFetch, matchString) {
           ])
           .toArray();
 
-        console.log(signupsInPeriod);
-
         const signups = signupsInPeriod.map(element => {
           return {
             month: element._id.month,
             count: element.count
           };
         });
-
-        console.log(signups);
 
         if (signups) {
           resolve(signups);

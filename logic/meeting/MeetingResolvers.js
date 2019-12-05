@@ -4,7 +4,7 @@ const { fetchMeetingsLastYear } = require("../../data/actions/MeetingActions");
 
 const meetingResolvers = {
   Query: {
-    meetingsTotal: async (parent, args, context, info) => {
+    meetingTotal: async (parent, args, context, info) => {
       const result = await fetchMeetingTotal();
 
 

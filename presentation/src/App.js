@@ -7,7 +7,11 @@ import "./assets/sass/dashboard.scss?v=1.3.0";
 import "./assets/fonts/pe-icon-7-stroke.css";
 
 import Store from "./Store";
+
 import Dashboard from "./components/dashboard/Dashboard.js";
+import Groupboard from "./components/dashboard/Groupboard";
+import Userboard from "./components/dashboard/Userboard";
+
 import Signin from "./components/user/Signin.js";
 import Profile from "./components/user/UserProfile.js";
 import SecureRoute from "./security/SecureRoute";
@@ -22,6 +26,8 @@ class App extends Component {
             <Route exact path="/" component={Signin} />
 
             <SecureRoute exact path="/dashboard" component={Dashboard} />
+            <SecureRoute exact path="/groups" component={Groupboard} />
+            <SecureRoute exact path="/users" component={Userboard} />
             <SecureRoute exact path="/profile" component={Profile} />
 
             <Route path="*" component={NotFound} />

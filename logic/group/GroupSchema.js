@@ -20,7 +20,7 @@ const GroupSchema = gql`
   }
 
   extend type Query {
-    groupsTotal: Float!
+    groupTotal: Float!
     groupsLastMonth: GroupLastMonth
     groupsLastYear: GroupLastYear
   }

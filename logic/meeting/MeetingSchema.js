@@ -20,7 +20,7 @@ const MeetingSchema = gql`
   }
 
   extend type Query {
-    meetingsTotal: Float!
+    meetingTotal: Float!
     meetingsLastMonth: MeetingLastMonth
     meetingsLastYear: MeetingLastYear
   }

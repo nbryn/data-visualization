@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import Header from "../navigation/Header.js";
 import Sidebar from "../navigation/Sidebar.js";
-import KPIView from "./KPIView.js";
+import KPIView from "./views/KPIView";
 
 
 class DashBoard extends Component {

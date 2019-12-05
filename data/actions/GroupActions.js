@@ -21,4 +21,4 @@ async function fetchGroupsLastYear() {
   return result;
 }
 
-module.exports = { fetchGroupTotal, fetchGroupsLastMonth, fetchLastYear };
+module.exports = { fetchGroupTotal, fetchGroupsLastMonth, fetchGroupsLastYear };

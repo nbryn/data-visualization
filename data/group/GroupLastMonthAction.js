@@ -1,7 +1,7 @@
 const moment = require("moment");
 const { connectToDB } = require("../connection");
 
-async function getGroupsLastMonth() {
+async function fetchGroupsLastMonth() {
   const connection = await connectToDB();
   return new Promise((resolve, reject) => {
     try {
@@ -43,7 +43,6 @@ async function getGroupsLastMonth() {
           };
         });
 
-        console.log(signups);
 
         if (signups) {
           resolve(signups);
@@ -55,4 +54,4 @@ async function getGroupsLastMonth() {
   });
 }
 
-module.exports = { getGroupsLastMonth };
+module.exports = { fetchGroupsLastMonth };

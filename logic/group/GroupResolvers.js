@@ -1,16 +1,16 @@
-const { getGroupsLastMonth } = require("../../data/group/GroupLastMonthAction");
-const { getGroupTotal } = require("../../data/group/GroupTotalAction");
-const { getGroupsLastYear } = require("../../data/group/GroupLastYearAction");
+const { fetchGroupsLastMonth } = require("../../data/group/GroupLastMonthAction");
+const { fetchGroupTotal } = require("../../data/group/GroupTotalAction");
+const { fetchGroupsLastYear } = require("../../data/group/GroupLastYearAction");
 
 const groupResolvers = {
   Query: {
     groupsTotal: async (parent, args, context, info) => {
-      const result = await getGroupTotal();
+      const result = await fetchGroupTotal();
 
       return result;
     },
     groupsLastMonth: async (parent, args, context, info) => {
-      const result = await getGroupsLastMonth();
+      const result = await fetchGroupsLastMonth();
 
       return {
         signups: result
@@ -18,7 +18,7 @@ const groupResolvers = {
     },
 
     groupsLastYear: async (parent, args, context, info) => {
-      const result = await getGroupsLastYear();
+      const result = await fetchGroupsLastYear();
 
       return {
         signups: result

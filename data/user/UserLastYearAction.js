@@ -1,11 +1,11 @@
 const moment = require("moment");
 const { connectToDB } = require("../connection");
 
-async function fetchGroupsLastYear() {
+async function fetchUsersLastYear() {
   const connection = await connectToDB();
   return new Promise((resolve, reject) => {
     try {
-      connection.db.collection("groups", async (err, collection) => {
+      connection.db.collection("users", async (err, collection) => {
         const since = moment()
           .startOf("day")
           .subtract(365, "days")
@@ -15,13 +15,13 @@ async function fetchGroupsLastYear() {
           .aggregate([
             {
               $match: {
-                registrationDate: { $gt: since }
+                signupDate: { $gt: since }
               }
             },
             {
               $group: {
                 _id: {
-                  month: { $month: "$registrationDate" }
+                  month: { $month: "$signupDate" }
                 },
                 count: { $sum: 1 }
               }
@@ -47,4 +47,4 @@ async function fetchGroupsLastYear() {
   });
 }
 
-module.exports = { fetchGroupsLastYear };
+module.exports = { fetchUsersLastYear };

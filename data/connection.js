@@ -1,18 +1,26 @@
 const mongoose = require("mongoose");
 
-require("dotenv").config()
+require("dotenv").config();
+
+let connection;
+let isConnected;
 
 async function connectToDB() {
-  try {
-    await mongoose.connect(process.env.MONGODB_URI_DEV, {
-      useNewUrlParser: true
-    });
-
-    const connection = mongoose.connection;
-
+  if (isConnected) {
     return connection;
-  } catch (err) {
-    console.log(err);
+  } else {
+    try {
+      await mongoose.connect(process.env.MONGODB_URI_DEV, {
+        useNewUrlParser: true
+      });
+
+      connection = mongoose.connection;
+      isConnected = true;
+
+      return connection;
+    } catch (err) {
+      console.log(err);
+    }
   }
 }
 

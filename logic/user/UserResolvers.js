@@ -1,9 +1,9 @@
 const { GraphQLJSON } = require("graphql-type-json");
 
-const { validateLogin } = require("../../data/user/UserSigninAction");
-const { fetchUserStats } = require("../../data/user/UserStatsAction");
-const { fetchCurrentUser } = require("../../data/user/UserCurrentAction");
-const { fetchUsersLastYear } = require("../../data/user/UserLastYearAction");
+const { validateLogin } = require("../../data/actions/UserActions");
+const { fetchUserStats } = require("../../data/actions/UserActions");
+const { fetchCurrentUser } = require("../../data/actions/UserActions");
+const { fetchUsersLastYear } = require("../../data/actions/UserActions");
 
 const userResolvers = {
   JSON: GraphQLJSON,

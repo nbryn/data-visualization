@@ -1,14 +1,14 @@
 const moment = require("moment");
-const { connectToDB } = require("./connection");
+const { connectToDB } = require("../connection");
 
-async function fetchLastYear(collectionToFetch, matchString) {
+async function fetchLastMonth(collectionToFetch, matchString) {
   const connection = await connectToDB();
   return new Promise((resolve, reject) => {
     try {
       connection.db.collection(collectionToFetch, async (err, collection) => {
         const since = moment()
           .startOf("day")
-          .subtract(365, "days")
+          .subtract(30, "days")
           .toDate();
 
         const signupsInPeriod = await collection
@@ -21,7 +21,9 @@ async function fetchLastYear(collectionToFetch, matchString) {
             {
               $group: {
                 _id: {
-                  month: { $month: "$" + matchString }
+                  year: { $year: "$" + matchString },
+                  month: { $month: "$" + matchString },
+                  day: { $dayOfMonth: "$" +  matchString }
                 },
                 count: { $sum: 1 }
               }
@@ -30,16 +32,17 @@ async function fetchLastYear(collectionToFetch, matchString) {
           ])
           .toArray();
 
-        console.log(signupsInPeriod);
-
         const signups = signupsInPeriod.map(element => {
           return {
-            month: element._id.month,
+            day: {
+              year: element._id.year,
+              month: element._id.month,
+              day: element._id.day
+            },
             count: element.count
           };
         });
 
-        console.log(signups);
 
         if (signups) {
           resolve(signups);
@@ -51,4 +54,4 @@ async function fetchLastYear(collectionToFetch, matchString) {
   });
 }
 
-module.exports = { fetchLastYear };
+module.exports = { fetchLastMonth };

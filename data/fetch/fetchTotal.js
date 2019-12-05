@@ -1,4 +1,4 @@
-const { connectToDB } = require("./connection");
+const { connectToDB } = require("../connection");
 
 async function fetchTotal(collectionString) {
   const connection = await connectToDB();

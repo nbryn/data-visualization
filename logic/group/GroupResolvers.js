@@ -1,6 +1,6 @@
-const { fetchGroupsLastMonth } = require("../../data/group/GroupLastMonthAction");
-const { fetchGroupTotal } = require("../../data/group/GroupTotalAction");
-const { fetchGroupsLastYear } = require("../../data/group/GroupLastYearAction");
+const { fetchGroupsLastMonth } = require("../../data/actions/GroupActions");
+const { fetchGroupTotal } = require("../../data/actions/GroupActions");
+const { fetchGroupsLastYear } = require("../../data/actions/GroupActions");
 
 const groupResolvers = {
   Query: {

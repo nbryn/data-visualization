@@ -1,6 +1,6 @@
-const { fetchMeetingsLastMonth } = require("../../data/meeting/MeetingLastMonthAction");
-const { fetchMeetingTotal } = require("../../data/meeting/MeetingTotalAction");
-const { fetchMeetingsLastYear } = require("../../data/meeting/MeetingLastYearAction");
+const { fetchMeetingsLastMonth } = require("../../data/actions/MeetingActions");
+const { fetchMeetingTotal } = require("../../data/actions/MeetingActions");
+const { fetchMeetingsLastYear } = require("../../data/actions/MeetingActions");
 
 const meetingResolvers = {
   Query: {

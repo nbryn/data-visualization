@@ -1,6 +1,6 @@
 const { gql } = require("apollo-server");
 
-const DefSchema = gql`
+const DefaultSchema = gql`
   type Day {
     year: Float!
     month: Float!
@@ -11,4 +11,4 @@ const DefSchema = gql`
   }
 `;
 
-module.exports = DefSchema;
+module.exports = DefaultSchema;

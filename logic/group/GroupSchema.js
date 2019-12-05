@@ -11,18 +11,18 @@ const GroupSchema = gql`
     count: Float!
   }
 
-  type GroupLastMonthStats {
+  type GroupLastMonth {
     signups: [GroupNumberDay]!
   }
 
-  type GroupLastYearStats {
+  type GroupLastYear {
     signups: [GroupNumberMonth]!
   }
 
   extend type Query {
     groupsTotal: Float!
-    groupsLastMonth: GroupLastMonthStats
-    groupsLastYear: GroupLastYearStats
+    groupsLastMonth: GroupLastMonth
+    groupsLastYear: GroupLastYear
   }
 `;
 

@@ -1,16 +1,9 @@
-const { connectToDB } = require("../connection");
+const { fetchTotal } = require("../fetchTotal");
 
 async function fetchGroupTotal() {
-  const connection = await connectToDB();
-  return new Promise((resolve, reject) => {
-    connection.db.collection("groups", async (err, collection) => {
-      const numberOfGroups = await collection.countDocuments("");
+  const result = await fetchTotal("groups");
 
-      if (numberOfGroups) {
-        resolve(numberOfGroups);
-      }
-    });
-  });
+  return result;
 }
 
 module.exports = { fetchGroupTotal };

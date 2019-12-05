@@ -11,7 +11,7 @@ const UserSchema = gql`
     count: Float!
   }
 
-  type UserLastYearStats {
+  type UserLastYear {
     signups: [UserNumberMonth]!
   }
 
@@ -30,7 +30,7 @@ const UserSchema = gql`
   extend type Query {
     me: JSON
     userStats: JSON
-    usersLastYear: UserLastYearStats
+    usersLastYear: UserLastYear
   }
 
   type Mutation {

@@ -3,20 +3,21 @@ const { merge } = require("lodash");
 const { makeExecutableSchema } = require("graphql-tools");
 const express = require("express");
 
-const DefSchema = require("./logic/index");
+const DefaultSchema = require("./logic/index");
 const UserSchema = require("./logic/user/UserSchema");
 const GroupSchema = require("./logic/group/GroupSchema");
+const MeetingSchema = require("./logic/meeting/MeetingSchema");
 
 const userResolvers = require("./logic/user/UserResolvers");
 const groupResolvers = require("./logic/group/GroupResolvers");
-
+const meetingResolvers = require("./logic/meeting/MeetingResolvers");
 
 const app = express();
 
-const resolvers = merge(userResolvers, groupResolvers);
+const resolvers = merge(userResolvers, groupResolvers, meetingResolvers);
 
 const schema = makeExecutableSchema({
-  typeDefs: [DefSchema, UserSchema, GroupSchema],
+  typeDefs: [DefaultSchema, UserSchema, GroupSchema, MeetingSchema],
   resolvers
 });
 

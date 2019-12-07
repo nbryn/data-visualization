@@ -1,28 +1,14 @@
 const { gql } = require("apollo-server");
 
 const MeetingSchema = gql`
-  type MeetingNumberDay {
-    day: Day!
-    count: Float!
-  }
-
-  type MeetingNumberMonth {
-    month: JSON
-    count: Float!
-  }
-
-  type MeetingLastMonth {
-    signups: [MeetingNumberDay]!
-  }
-
-  type MeetingLastYear {
-    signups: [MeetingNumberMonth]!
+  type MeetingStats {
+    meetingTotal: Float
+    meetingsLastMonth: LastMonth
+    meetingsLastYear: LastYear
   }
 
   extend type Query {
-    meetingTotal: Float!
-    meetingsLastMonth: MeetingLastMonth
-    meetingsLastYear: MeetingLastYear
+    meetingStats: MeetingStats
   }
 `;
 

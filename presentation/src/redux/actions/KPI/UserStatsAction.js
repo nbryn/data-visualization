@@ -1,4 +1,4 @@
-import { USERS_TOTAL } from "../ActionTypes";
+import { USERS_STATS } from "../ActionTypes";
 import axios from "axios";
 
 import { setTokenInHeader } from "../../../security/Token";
@@ -27,7 +27,7 @@ export const fetchUserStats = () => async dispatch => {
       return response.data.errors[0].extensions.code;
     } else {
       dispatch({
-        type: USERS_TOTAL,
+        type: USERS_STATS,
         payload: response.data.data.userStats
       });
     }

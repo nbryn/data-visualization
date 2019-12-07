@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 
 import GraphChart from "./GraphChart.js";
 
-import { fetchGroupsLastYear } from "../../../../redux/actions/KPI/GroupsLastYearAction";
+import { fetchGroupStats } from "../../../../redux/actions/KPI/GroupStatsAction";
 
 class GroupTotalGraph extends Component {
   constructor(props) {
@@ -26,7 +26,7 @@ class GroupTotalGraph extends Component {
   }
 
   async componentDidMount() {
-    const temp = await this.props.fetchGroupsLastYear();
+    const temp = await this.props.fetchGroupStats();
     const signups = this.props.groupsLastYear.signups;
 
     this.setState({
@@ -219,10 +219,10 @@ class GroupTotalGraph extends Component {
 
 const mapStateToProps = state => {
   return {
-    groupsLastYear: state.KPI.groupsLastYear
+    groupStats: state.KPI.groupStats
   };
 };
 
-export default connect(mapStateToProps, { fetchGroupsLastYear })(
+export default connect(mapStateToProps, { fetchGroupStats })(
   GroupTotalGraph
 );

@@ -10,8 +10,7 @@ import GroupSizeChart from "../charts/circle/GroupSizeChart";
 
 import GroupsLastMonthBar from "../charts/bar/GroupsLastMonthBar";
 
-import { fetchGroupsLastMonth } from "../../../redux/actions/KPI/GroupsLastMonthAction";
-import { fetchGroupTotal } from "../../../redux/actions/KPI/GroupTotalAction";
+import { fetchGroupStats } from "../../../redux/actions/KPI/GroupStatsAction";
 
 import { getCurrentTime } from "../../../util/Date";
 
@@ -29,7 +28,7 @@ class KPIView extends Component {
   async componentDidMount() {
     // Error handling when not authenticated?
     await this.props.fetchGroupTotal();
-    await this.props.fetchGroupsLastMonth();
+    await this.props.fetchGroupStats();
 
     const groupTotal = this.props.groupTotal;
     const signups = this.props.groupsLastMonth.signups;
@@ -46,7 +45,7 @@ class KPIView extends Component {
     // Reload KPI data
     setInterval(async () => {
       // Error handling when not authenticated?
-      const temp1 = await this.props.fetchGroupTotal();
+      await this.props.fetchGroupStats();
 
       const groupTotal = this.props.groupTotal;
       const signups = this.props.groupsLastMonth.signups;
@@ -132,4 +131,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, { fetchGroupTotal, fetchGroupsLastMonth })(KPIView);
+export default connect(mapStateToProps, { fetchGroupStats })(KPIView);

@@ -4,25 +4,17 @@ const { fetchMeetingsLastYear } = require("../../data/actions/MeetingActions");
 
 const meetingResolvers = {
   Query: {
-    meetingTotal: async (parent, args, context, info) => {
-      const result = await fetchMeetingTotal();
+    meetingStats: async (parent, args, context, info) => {    
+      const meetingTotal = await fetchMeetingTotal();
 
+      const meetingsPrevMonth = await fetchMeetingsLastMonth();
 
-      return result;
-    },
-    meetingsLastMonth: async (parent, args, context, info) => {
-      const result = await fetchMeetingsLastMonth();
+      const meetingsPrevYear = await fetchMeetingsLastYear();
 
       return {
-        signups: result
-      };
-    },
-
-    meetingsLastYear: async (parent, args, context, info) => {
-      const result = await fetchMeetingsLastYear();
-
-      return {
-        signups: result
+        meetingTotal,
+        meetingsLastMonth: { result: meetingsPrevMonth },
+        meetingsLastYear: { result: meetingsPrevYear }
       };
     }
   }

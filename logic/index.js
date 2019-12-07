@@ -6,6 +6,25 @@ const DefaultSchema = gql`
     month: Float!
     day: Float!
   }
+
+  type NumberDay {
+    day: Day!
+    count: Float!
+  }
+
+  type NumberMonth {
+    month: JSON
+    count: Float!
+  }
+
+  type LastMonth {
+    result: [NumberDay]!
+  }
+
+  type LastYear {
+    result: [NumberMonth]!
+  }
+
   type Query {
     _empty: String
   }

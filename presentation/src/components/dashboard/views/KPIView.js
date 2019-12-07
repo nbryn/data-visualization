@@ -15,8 +15,8 @@ import UsersLastMonthBar from "../charts/bar/UsersLastMonthBar";
 import UsersLastYearBar from "../charts/bar/UsersLastYearBar";
 
 import { fetchUserStats } from "../../../redux/actions/KPI/UserStatsAction";
-import { fetchGroupTotal } from "../../../redux/actions/KPI/GroupTotalAction";
-import { fetchMeetingTotal } from "../../../redux/actions/KPI/MeetingTotalAction";
+import { fetchGroupStats } from "../../../redux/actions/KPI/GroupStatsAction";
+import { fetchMeetingStats } from "../../../redux/actions/KPI/MeetingStatsAction";
 import { getCurrentTime } from "../../../util/Date";
 
 class KPIView extends Component {
@@ -38,14 +38,16 @@ class KPIView extends Component {
   async componentDidMount() {
     // Error handling when not authenticated?
     await this.props.fetchUserStats();
-    await this.props.fetchGroupTotal();
-    await this.props.fetchMeetingTotal();
+    await this.props.fetchGroupStats();
+    await this.props.fetchMeetingStats();
 
     const userStats = this.props.userStats;
-    const groupTotal = this.props.groupTotal;
-    const meetingTotal = this.props.meetingTotal;
+    const groupTotal = this.props.groupStats.groupTotal;
+    const meetingTotal = this.props.meetingStats.meetingTotal;
 
     let lastUpdatedAt = getCurrentTime();
+
+    console.log(this.props);
 
     this.setState({
       userTotal: userStats.numberOfUsers,
@@ -62,12 +64,12 @@ class KPIView extends Component {
     setInterval(async () => {
       // Error handling when not authenticated?
       await this.props.fetchUserStats();
-      await this.props.fetchGroupTotal();
-      await this.props.fetchMeetingTotal();
+      await this.props.fetchGroupStats();
+      await this.props.fetchMeetingStats();
 
       const userStats = this.props.userStats;
-      const groupTotal = this.props.groupTotal;
-      const meetingTotal = this.props.meetingTotal;
+      const groupTotal = this.props.groupStats.groupTotal;
+      const meetingTotal = this.props.meetingStats.meetingTotal;
 
       let lastUpdatedAt = getCurrentTime();
 
@@ -141,7 +143,6 @@ class KPIView extends Component {
             </Col>
           </Row>
           <Row>
-            
             <Col lg={4} sm={6}>
               <UsersLastMonthBar />
             </Col>
@@ -162,13 +163,13 @@ class KPIView extends Component {
 const mapStateToProps = state => {
   return {
     userStats: state.KPI.userStats,
-    groupTotal: state.KPI.groupTotal,
-    meetingTotal: state.KPI.meetingTotal
+    groupStats: state.KPI.groupStats,
+    meetingStats: state.KPI.meetingStats
   };
 };
 
 export default connect(mapStateToProps, {
   fetchUserStats,
-  fetchGroupTotal,
-  fetchMeetingTotal
+  fetchGroupStats,
+  fetchMeetingStats
 })(KPIView);

@@ -1,13 +1,13 @@
 import {
-  USERS_TOTAL,
+  USERS_STATS,
   USERS_LAST_YEAR,
-  GROUP_TOTAL, GROUPS_LAST_MONTH,
-  GROUPS_LAST_YEAR, MEETING_TOTAL
+  GROUP_STATS,
+  MEETING_STATS
 } from "../actions/ActionTypes";
 
 export default function(state = {}, action) {
   switch (action.type) {
-    case USERS_TOTAL:
+    case USERS_STATS:
       return Object.assign({}, state, {
         userStats: action.payload
       });
@@ -15,21 +15,13 @@ export default function(state = {}, action) {
       return Object.assign({}, state, {
         usersLastYear: action.payload
       });
-    case GROUP_TOTAL:
+    case GROUP_STATS:
       return Object.assign({}, state, {
-        groupTotal: action.payload
+        groupStats: action.payload
       });
-      case GROUPS_LAST_MONTH:
+    case MEETING_STATS:
       return Object.assign({}, state, {
-        groupsLastMonth: action.payload
-      });
-      case GROUPS_LAST_YEAR:
-      return Object.assign({}, state, {
-        groupsLastYear: action.payload
-      });
-      case MEETING_TOTAL:
-      return Object.assign({}, state, {
-        meetingTotal: action.payload
+        meetingStats: action.payload
       });
     default:
       return state;

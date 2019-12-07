@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { fetchGroupsLastMonth } from "../../../../redux/actions/KPI/GroupsLastMonthAction";
+import { fetchGroupStats } from "../../../../redux/actions/KPI/GroupStatsAction";
 
 import Barr from "./Bar";
 
@@ -25,7 +25,7 @@ class GroupsLastMonthBar extends Component {
   }
 
   async componentDidMount() {
-    await this.props.fetchGroupsLastMonth();
+    await this.props.fetchGroupStats();
 
     const signups = this.props.groupsLastMonth.signups;
 
@@ -99,8 +99,8 @@ class GroupsLastMonthBar extends Component {
 
 const mapStateToProps = state => {
   return {
-    groupsLastMonth: state.KPI.groupsLastMonth
+    groupStats: state.KPI.groupStats
   };
 };
 
-export default connect(mapStateToProps, { fetchGroupsLastMonth })(GroupsLastMonthBar);
+export default connect(mapStateToProps, { fetchGroupStats })(GroupsLastMonthBar);

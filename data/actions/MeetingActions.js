@@ -17,8 +17,6 @@ async function fetchMeetingsLastMonth() {
 async function fetchMeetingsLastYear() {
   const result = await fetchLastYear("groupmeetings", "meetingDay");
 
-  console.log(result);
-
   return result;
 }
 

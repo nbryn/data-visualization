@@ -47,8 +47,6 @@ class KPIView extends Component {
 
     let lastUpdatedAt = getCurrentTime();
 
-    console.log(this.props);
-
     this.setState({
       userTotal: userStats.numberOfUsers,
       userTotalLastUpdate: lastUpdatedAt,

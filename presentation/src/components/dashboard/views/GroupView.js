@@ -1,17 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Grid, Row, Col } from "react-bootstrap";
-
 import { KPICard } from "../util/KPICard";
 
 import GroupTotalGraph from "../charts/graph/GroupTotalGraph";
-
 import GroupSizeChart from "../charts/circle/GroupSizeChart";
-
 import GroupsLastMonthBar from "../charts/bar/GroupsLastMonthBar";
 
 import { fetchGroupStats } from "../../../redux/actions/KPI/GroupStatsAction";
-
 import { getCurrentTime } from "../../../util/Date";
 
 class KPIView extends Component {
@@ -27,11 +23,10 @@ class KPIView extends Component {
   }
   async componentDidMount() {
     // Error handling when not authenticated?
-    await this.props.fetchGroupTotal();
     await this.props.fetchGroupStats();
 
-    const groupTotal = this.props.groupTotal;
-    const signups = this.props.groupsLastMonth.signups;
+    const groupTotal = this.props.groupStats.groupTotal;
+    const signups = this.props.groupStats.groupsLastMonth.resultMonth;
 
     let lastUpdatedAt = getCurrentTime();
 
@@ -47,8 +42,8 @@ class KPIView extends Component {
       // Error handling when not authenticated?
       await this.props.fetchGroupStats();
 
-      const groupTotal = this.props.groupTotal;
-      const signups = this.props.groupsLastMonth.signups;
+      const groupTotal = this.props.groupStats.groupTotal;
+      const signups = this.props.groupStats.groupsLastMonth.resultMonth;
 
       let lastUpdatedAt = getCurrentTime();
 
@@ -126,8 +121,7 @@ class KPIView extends Component {
 
 const mapStateToProps = state => {
   return {
-    groupTotal: state.KPI.groupTotal,
-    groupsLastMonth: state.KPI.groupsLastMonth
+    groupStats: state.KPI.groupStats
   };
 };
 

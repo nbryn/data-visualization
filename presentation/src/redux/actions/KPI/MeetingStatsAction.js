@@ -8,8 +8,8 @@ export const fetchMeetingStats = () => async dispatch => {
   const data = `query{
     meetingStats{
       meetingTotal
-      meetingMonth{
-        meetings{
+      meetingsLastMonth{
+        resultMonth{
           count
           day{
             year
@@ -18,8 +18,8 @@ export const fetchMeetingStats = () => async dispatch => {
           }
         }
       }
-      meetingYear{
-        meetings{
+      meetingsLastYear{
+        resultYear{
           count
           month
         }

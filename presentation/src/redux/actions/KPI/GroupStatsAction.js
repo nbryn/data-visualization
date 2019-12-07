@@ -8,8 +8,8 @@ export const fetchGroupStats = () => async dispatch => {
   const data = `query{
     groupStats{
       groupTotal
-      groupMonth{
-        signups{
+      groupsLastMonth{
+        resultMonth{
           count
           day{
             year
@@ -18,8 +18,8 @@ export const fetchGroupStats = () => async dispatch => {
           }
         }
       }
-      groupYear{
-        signups{
+      groupsLastYear{
+        resultYear{
         month
         count
         }

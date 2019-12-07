@@ -26,8 +26,8 @@ class GroupTotalGraph extends Component {
   }
 
   async componentDidMount() {
-    const temp = await this.props.fetchGroupStats();
-    const signups = this.props.groupsLastYear.signups;
+    await this.props.fetchGroupStats();
+    const signups = this.props.groupStats.groupsLastYear.resultYear;
 
     this.setState({
       first: [

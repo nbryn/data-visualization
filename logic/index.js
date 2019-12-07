@@ -18,11 +18,11 @@ const DefaultSchema = gql`
   }
 
   type LastMonth {
-    result: [NumberDay]!
+    resultMonth: [NumberDay]!
   }
 
   type LastYear {
-    result: [NumberMonth]!
+    resultYear: [NumberMonth]!
   }
 
   type Query {

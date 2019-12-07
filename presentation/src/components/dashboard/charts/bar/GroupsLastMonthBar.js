@@ -27,7 +27,7 @@ class GroupsLastMonthBar extends Component {
   async componentDidMount() {
     await this.props.fetchGroupStats();
 
-    const signups = this.props.groupsLastMonth.signups;
+    const signups = this.props.groupStats.groupsLastMonth.resultMonth;
 
     this.setState({
       first: signups[0] ? signups[0].count : "",

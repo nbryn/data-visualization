@@ -26,7 +26,7 @@ class KPIView extends Component {
     await this.props.fetchGroupStats();
 
     const groupTotal = this.props.groupStats.groupTotal;
-    const signups = this.props.groupStats.groupsLastMonth.resultMonth;
+    const signups = this.props.groupStats.groupsLastMonth.data;
 
     let lastUpdatedAt = getCurrentTime();
 

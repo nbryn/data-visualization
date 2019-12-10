@@ -5,7 +5,7 @@ async function fetchTotal(collectionString) {
 
   return new Promise((resolve, reject) => {
     connection.db.collection(collectionString, async (err, collection) => {
-      
+
       const total = await collection.countDocuments("");
 
       if (total) {

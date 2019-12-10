@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
 import GraphChart from "./GraphChart.js";
 
 class TotalGraph extends Component {
@@ -83,7 +82,7 @@ class TotalGraph extends Component {
     const stroke = this.props.stroke;
     const state = this.state;
     const yLabel = { value: "Users", angle: -90, position: "insideLeft" };
-    const xLabel = { value: "Months", position: "insideMiddle", dy: 10 };
+    const xLabel = { value: "Months", position: "center", dy: 10 };
     const data = [
       {
         name: state.first[0],

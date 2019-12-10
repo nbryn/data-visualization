@@ -43,7 +43,7 @@ class LastMonthBar extends Component {
   render() {
     const title = this.props.title;
     const yLabel = { value: "Users", angle: -90, position: "insideLeft" };
-    const xLabel = { value: "Days", position: "outsideLeft", dy: +10 };
+    const xLabel = { value: "Days", position: "inside", dy: +10 };
     const data = [
       {
         name: "1",
@@ -89,7 +89,7 @@ class LastMonthBar extends Component {
 
     return (
       <div>
-        <Barr title={title} data={data} yLabel={yLabel} xLabel={xLabel} />
+        <Barr title={title} data={data} yLabel={yLabel} xLabel={xLabel} color={this.props.color} />
       </div>
     );
   }

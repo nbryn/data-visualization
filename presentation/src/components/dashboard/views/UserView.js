@@ -125,6 +125,7 @@ class KPIView extends Component {
             <Col lg={4} sm={6}>
               <LastMonthBar
                 title="Users Last Month"
+                color="#228b22"
                 signups={this.state.usersLastMonth}
               />
             </Col>
@@ -135,6 +136,7 @@ class KPIView extends Component {
             <Col lg={4} sm={6}>
               <LastYearBar
                 title="Users Last Year"
+                color="#ff0000"
                 signups={this.state.usersLastYear}
               />
             </Col>

@@ -1,6 +1,8 @@
 import React, { Component } from "react";
-
+import { connect } from "react-redux";
 import CircleChart from "./CircleChart";
+
+import { fetchGroupSize } from "../../../../redux/actions/KPI/GroupStatsAction";
 
 class GroupSizeChart extends Component {
   constructor(props) {
@@ -10,8 +12,7 @@ class GroupSizeChart extends Component {
       first: "",
       second: "",
       third: "",
-      fourth: "",
-      
+      fourth: ""
     };
   }
 
@@ -20,7 +21,7 @@ class GroupSizeChart extends Component {
       first: 100,
       second: 200,
       third: 300,
-      fourth: 400,
+      fourth: 400
     });
   }
 
@@ -55,14 +56,16 @@ class GroupSizeChart extends Component {
 
     return (
       <div>
-        <CircleChart
-          title="Group Size"
-          data={data}
-          colors={colors}
-        />
+        <CircleChart title="Group Size" data={data} colors={colors} />
       </div>
     );
   }
 }
 
-export default GroupSizeChart;
+const mapStateToProps = state => {
+  return {
+    groupSize: this.state.groupSize
+  };
+};
+
+export default connect(mapStateToProps, { fetchGroupSize })(GroupSizeChart);

@@ -10,6 +10,7 @@ import Store from "./Store";
 
 import Dashboard from "./components/dashboard/Dashboard.js";
 import Groupboard from "./components/dashboard/Groupboard";
+import Meetingboard from "./components/dashboard/Meetingboard";
 import Userboard from "./components/dashboard/Userboard";
 
 import Signin from "./components/user/Signin.js";
@@ -27,6 +28,7 @@ class App extends Component {
 
             <SecureRoute exact path="/dashboard" component={Dashboard} />
             <SecureRoute exact path="/groups" component={Groupboard} />
+            <SecureRoute exact path="/meetings" component={Meetingboard} />
             <SecureRoute exact path="/users" component={Userboard} />
             <SecureRoute exact path="/profile" component={Profile} />
 

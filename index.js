@@ -4,20 +4,22 @@ const { makeExecutableSchema } = require("graphql-tools");
 const express = require("express");
 
 const DefaultSchema = require("./logic/index");
-const UserSchema = require("./logic/user/UserSchema");
 const GroupSchema = require("./logic/group/GroupSchema");
 const MeetingSchema = require("./logic/meeting/MeetingSchema");
+const MoneySchema = require("./logic/money/MoneySchema");
+const UserSchema = require("./logic/user/UserSchema");
 
-const userResolvers = require("./logic/user/UserResolvers");
 const groupResolvers = require("./logic/group/GroupResolvers");
 const meetingResolvers = require("./logic/meeting/MeetingResolvers");
+const moneyResolvers = require("./logic/money/MoneyResolvers");
+const userResolvers = require("./logic/user/UserResolvers");
 
 const app = express();
 
-const resolvers = merge(userResolvers, groupResolvers, meetingResolvers);
+const resolvers = merge(groupResolvers, meetingResolvers, moneyResolvers, userResolvers);
 
 const schema = makeExecutableSchema({
-  typeDefs: [DefaultSchema, UserSchema, GroupSchema, MeetingSchema],
+  typeDefs: [DefaultSchema, GroupSchema, MoneySchema, MeetingSchema, UserSchema],
   resolvers
 });
 

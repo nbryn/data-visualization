@@ -36,7 +36,7 @@ class Barr extends Component {
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis label={this.props.xLabel} dataKey="name" />
               <YAxis label={this.props.yLabel} />
-              <Bar dataKey="value" fill="#8884d8" />>
+              <Bar dataKey="value" fill={this.props.color}  />>
             </BarChart>
           </div>
         </div>

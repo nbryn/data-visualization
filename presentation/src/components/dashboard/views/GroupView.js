@@ -48,8 +48,12 @@ class KPIView extends Component {
     let groupMonthCount = 0;
     let groupYearCount = 0;
 
-    groupStats.groupsLastMonth.data.forEach(element => groupMonthCount += element.count);
-    groupStats.groupsLastYear.data.forEach(element => groupYearCount += element.count);
+    groupStats.groupsLastMonth.data.forEach(
+      element => (groupMonthCount += element.count)
+    );
+    groupStats.groupsLastYear.data.forEach(
+      element => (groupYearCount += element.count)
+    );
 
     this.setState({
       groupTotal: groupStats.groupTotal,
@@ -112,14 +116,19 @@ class KPIView extends Component {
 
           <Row>
             <Col lg={4} sm={6}></Col>
-            <TotalGraph title="Total Groups" stroke="#228b22" signups={this.state.groupsLastYear}/>
+            <TotalGraph
+              title="Total Groups"
+              stroke="#228b22"
+              signups={this.state.groupsLastYear}
+            />
             <Col lg={4} sm={6}></Col>
           </Row>
           <Row>
             <Col lg={4} sm={6}>
               <LastMonthBar
-                signups={this.state.groupsLastMonth}
                 title="Groups Last Month"
+                color="#228b22"
+                signups={this.state.groupsLastMonth}
               />
             </Col>
             <Col lg={4} sm={6}>
@@ -127,8 +136,9 @@ class KPIView extends Component {
             </Col>
             <Col lg={4} sm={6}>
               <LastYearBar
-                signups={this.state.groupsLastYear}
                 title="Groups Last Year"
+                color="#2196f3"
+                signups={this.state.groupsLastYear}
               />
             </Col>
           </Row>

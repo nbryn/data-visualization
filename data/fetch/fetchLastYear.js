@@ -15,7 +15,8 @@ async function fetchLastYear(collectionToFetch, matchString) {
           .aggregate([
             {
               $match: {
-                [matchString]: { $gt: since }
+                [matchString]: { $gt: since },
+                state: "ACTIVE"
               }
             },
             {

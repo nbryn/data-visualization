@@ -1,22 +1,20 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Grid, Row, Col } from "react-bootstrap";
-
 import { KPICard } from "../util/KPICard";
 
-import GroupTotalGraph from "../charts/graph/GroupTotalGraph";
-import MoneyTotalGraph from "../charts/graph/MoneyTotalGraph";
-import UserTotalGraph from "../charts/graph/UserTotalGraph";
+import TotalGraph from "../charts/graph/TotalGraph";
 
 import SoMeCircleChart from "../charts/circle/SoMeCircleChart";
 import GroupSizeChart from "../charts/circle/GroupSizeChart";
 
-import UsersLastMonthBar from "../charts/bar/UsersLastMonthBar";
-import UsersLastYearBar from "../charts/bar/UsersLastYearBar";
+import LastMonthBar from "../charts/bar/LastMonthBar";
+import LastYearBar from "../charts/bar/LastYearBar";
 
 import { fetchUserStats } from "../../../redux/actions/KPI/UserStatsAction";
 import { fetchGroupStats } from "../../../redux/actions/KPI/GroupStatsAction";
 import { fetchMeetingStats } from "../../../redux/actions/KPI/MeetingStatsAction";
+import { fetchUsersLastYear } from "../../../redux/actions/KPI/UsersLastYearAction";
 import { getCurrentTime } from "../../../util/Date";
 
 class KPIView extends Component {
@@ -28,22 +26,41 @@ class KPIView extends Component {
       usersTotalLastUpdate: "",
       usersToday: "",
       usersTodayLastUpdate: "",
+      usersLastYear: "",
       groupTotal: "",
       groupTotalLastUpdate: "",
+      groupsLastMonth: "",
+      groupsLastYear: "",
       meetingTotal: "",
       meetingTotalLastUpdate: "",
+      meetingsLastMonth: "",
+      meetingsLastYear: "",
       $Total: ""
     };
+
+    this.fetchData = this.fetchData.bind(this);
   }
   async componentDidMount() {
     // Error handling when not authenticated?
+    this.fetchData();
+
+    // Reload KPI data
+    setInterval(async () => {
+      // Error handling when not authenticated?
+      this.fetchData();
+    }, 1000000);
+  }
+
+  async fetchData() {
     await this.props.fetchUserStats();
+    await this.props.fetchUsersLastYear();
     await this.props.fetchGroupStats();
     await this.props.fetchMeetingStats();
 
     const userStats = this.props.userStats;
-    const groupTotal = this.props.groupStats.groupTotal;
-    const meetingTotal = this.props.meetingStats.meetingTotal;
+    const usersLastYear = this.props.usersLastYear.signups;
+    const groupStats = this.props.groupStats;
+    const meetingsStats = this.props.meetingStats;
 
     let lastUpdatedAt = getCurrentTime();
 
@@ -52,36 +69,16 @@ class KPIView extends Component {
       userTotalLastUpdate: lastUpdatedAt,
       usersToday: userStats.signups[10].count,
       usersTodayLastUpdate: lastUpdatedAt,
-      groupTotal: groupTotal,
+      usersLastYear: usersLastYear,
+      groupTotal: groupStats.groupTotal,
       groupTotalLastUpdate: lastUpdatedAt,
-      meetingTotal: meetingTotal,
-      meetingTotalLastUpdate: lastUpdatedAt
+      groupsLastMonth: groupStats.groupsLastMonth.data,
+      groupsLastYear: groupStats.groupsLastYear.data,
+      meetingTotal: meetingsStats.meetingTotal,
+      meetingTotalLastUpdate: lastUpdatedAt,
+      meetingsLastMonth: meetingsStats.meetingsLastMonth.data,
+      meetingsLastYear: meetingsStats.meetingsLastYear.data
     });
-
-    // Reload KPI data
-    setInterval(async () => {
-      // Error handling when not authenticated?
-      await this.props.fetchUserStats();
-      await this.props.fetchGroupStats();
-      await this.props.fetchMeetingStats();
-
-      const userStats = this.props.userStats;
-      const groupTotal = this.props.groupStats.groupTotal;
-      const meetingTotal = this.props.meetingStats.meetingTotal;
-
-      let lastUpdatedAt = getCurrentTime();
-
-      this.setState({
-        userTotal: userStats.numberOfUsers,
-        userTotalLastUpdate: lastUpdatedAt,
-        usersToday: userStats.signups[10].count,
-        usersTodayLastUpdate: lastUpdatedAt,
-        groupTotal: groupTotal,
-        groupTotalLastUpdate: lastUpdatedAt,
-        meetingTotal: meetingTotal,
-        meetingTotalLastUpdate: lastUpdatedAt
-      });
-    }, 1000000);
   }
 
   render() {
@@ -131,25 +128,25 @@ class KPIView extends Component {
 
           <Row>
             <Col lg={4} sm={6}>
-              <UserTotalGraph />
+              <TotalGraph title="Total Users" stroke="#ff0000" signups={this.state.usersLastYear}/>
             </Col>
             <Col lg={4} sm={6}>
-              <GroupTotalGraph />
+              <TotalGraph title="Total Groups" stroke="#228b22" signups={this.state.groupsLastYear} />
             </Col>
             <Col lg={4} sm={6}>
-              <MoneyTotalGraph />
+              <TotalGraph title="Total Meetings" stroke="#2196f3" signups={this.state.meetingsLastYear}/>
             </Col>
           </Row>
           <Row>
             <Col lg={4} sm={6}>
-              <UsersLastMonthBar />
+              <LastMonthBar title="Groups Last Month" signups={this.state.groupsLastMonth} />
             </Col>
             <Col lg={4} sm={6}>
               <SoMeCircleChart />
             </Col>
 
             <Col lg={4} sm={6}>
-              <UsersLastYearBar />
+              <LastYearBar title="Users Last Year" signups={this.state.usersLastYear} />
             </Col>
           </Row>
         </Grid>
@@ -161,13 +158,14 @@ class KPIView extends Component {
 const mapStateToProps = state => {
   return {
     userStats: state.KPI.userStats,
+    usersLastYear: state.KPI.usersLastYear,
     groupStats: state.KPI.groupStats,
     meetingStats: state.KPI.meetingStats
   };
 };
 
 export default connect(mapStateToProps, {
-  fetchUserStats,
+  fetchUserStats, fetchUsersLastYear,
   fetchGroupStats,
   fetchMeetingStats
 })(KPIView);

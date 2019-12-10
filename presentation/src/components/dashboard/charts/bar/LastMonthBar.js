@@ -1,11 +1,7 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
-
-import { fetchUserStats } from "../../../../redux/actions/KPI/UserStatsAction";
-
 import Barr from "./Bar";
 
-class UsersLastMonthBar extends Component {
+class LastMonthBar extends Component {
   constructor(props) {
     super(props);
 
@@ -24,28 +20,30 @@ class UsersLastMonthBar extends Component {
     };
   }
 
-  async componentDidMount() {
-    const temp = await this.props.fetchUserStats();
+  componentDidUpdate(prevProps) {
+    if (this.props.signups !== prevProps.signups) {
+      const signups = this.props.signups;
 
-    const signups = this.props.userStats.signups;
-
-    this.setState({
-      first: signups[0].count,
-      second: signups[1].count,
-      third: signups[2].count,
-      fourth: signups[3].count,
-      fifth: signups[4].count,
-      sixth: signups[5].count,
-      seventh: signups[6].count,
-      eighth: signups[7].count,
-      ninth: signups[8].count,
-      tenth: signups[9].count,
-      eleventh: signups[10].count
-    });
+      this.setState({
+        first: signups[0] ? signups[0].count : "",
+        second: signups[1] ? signups[1].count : "",
+        third: signups[2] ? signups[2].count : "",
+        fourth: signups[3] ? signups[3].count : "",
+        fifth: signups[4] ? signups[4].count : "",
+        sixth: signups[5] ? signups[5].count : "",
+        seventh: signups[6] ? signups[6].count : "",
+        eighth: signups[7] ? signups[7].count : "",
+        ninth: signups[8] ? signups[8].count : "",
+        tenth: signups[9] ? signups[9].count : "",
+        eleventh: signups[10] ? signups[10].count : ""
+      });
+    }
   }
+
   render() {
-    const title = "Users Last Month";
+    const title = this.props.title;
     const yLabel = { value: "Users", angle: -90, position: "insideLeft" };
+    const xLabel = { value: "Days", position: "outsideLeft", dy: +10 };
     const data = [
       {
         name: "1",
@@ -91,18 +89,10 @@ class UsersLastMonthBar extends Component {
 
     return (
       <div>
-        <Barr title={title} data={data} yLabel={yLabel} />
+        <Barr title={title} data={data} yLabel={yLabel} xLabel={xLabel} />
       </div>
     );
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    userStats: state.KPI.userStats
-  };
-};
-
-export default connect(mapStateToProps, { fetchUserStats })(
-  UsersLastMonthBar
-);
+export default LastMonthBar;

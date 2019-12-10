@@ -13,8 +13,8 @@ const groupResolvers = {
 
       return {
         groupTotal,
-        groupsLastMonth: { resultMonth: groupsPrevMonth },
-        groupsLastYear: { resultYear: groupsPrevYear }
+        groupsLastMonth: { data: groupsPrevMonth },
+        groupsLastYear: { data: groupsPrevYear }
       };
     }
   }

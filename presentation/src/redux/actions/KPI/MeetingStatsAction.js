@@ -9,7 +9,7 @@ export const fetchMeetingStats = () => async dispatch => {
     meetingStats{
       meetingTotal
       meetingsLastMonth{
-        resultMonth{
+        data{
           count
           day{
             year
@@ -19,7 +19,7 @@ export const fetchMeetingStats = () => async dispatch => {
         }
       }
       meetingsLastYear{
-        resultYear{
+        data{
           count
           month
         }

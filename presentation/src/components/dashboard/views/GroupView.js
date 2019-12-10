@@ -3,9 +3,11 @@ import { connect } from "react-redux";
 import { Grid, Row, Col } from "react-bootstrap";
 import { KPICard } from "../util/KPICard";
 
-import GroupTotalGraph from "../charts/graph/GroupTotalGraph";
+import TotalGraph from "../charts/graph/TotalGraph";
 import GroupSizeChart from "../charts/circle/GroupSizeChart";
-import GroupsLastMonthBar from "../charts/bar/GroupsLastMonthBar";
+
+import LastMonthBar from "../charts/bar/LastMonthBar";
+import LastYearBar from "../charts/bar/LastYearBar";
 
 import { fetchGroupStats } from "../../../redux/actions/KPI/GroupStatsAction";
 import { getCurrentTime } from "../../../util/Date";
@@ -18,42 +20,50 @@ class KPIView extends Component {
       groupTotal: "",
       groupTotalLastUpdate: "",
       groupsToday: "",
-      groupTodayLastUpdate: ""
+      groupTodayLastUpdate: "",
+      groupMonth: "",
+      groupYear: "",
+      groupsLastMonth: "",
+      groupsLastYear: ""
     };
+    this.fetchData = this.fetchData.bind(this);
   }
-  async componentDidMount() {
+  componentDidMount() {
     // Error handling when not authenticated?
-    await this.props.fetchGroupStats();
-
-    const groupTotal = this.props.groupStats.groupTotal;
-    const signups = this.props.groupStats.groupsLastMonth.data;
-
-    let lastUpdatedAt = getCurrentTime();
-
-    this.setState({
-      groupTotal: groupTotal,
-      groupTotalLastUpdate: lastUpdatedAt,
-      groupsToday: signups[signups.length-1].count,
-      groupTodayLastUpdate: lastUpdatedAt
-    });
+    this.fetchData();
 
     // Reload KPI data
     setInterval(async () => {
       // Error handling when not authenticated?
-      await this.props.fetchGroupStats();
+      this.fetchData();
+    }, 10000000);
+  }
 
-      const groupTotal = this.props.groupStats.groupTotal;
-      const signups = this.props.groupStats.groupsLastMonth.resultMonth;
+  async fetchData() {
+    await this.props.fetchGroupStats();
 
-      let lastUpdatedAt = getCurrentTime();
+    const groupStats = this.props.groupStats;
+    let lastUpdatedAt = getCurrentTime();
 
-      this.setState({
-        groupTotal: groupTotal,
-        groupTotalLastUpdate: lastUpdatedAt,
-        groupsToday: signups[signups.length-1].count,
-        groupTodayLastUpdate: lastUpdatedAt
-      });
-    }, 1000000);
+    let groupMonthCount = 0;
+    let groupYearCount = 0;
+
+    groupStats.groupsLastMonth.data.forEach(element => groupMonthCount += element.count);
+    groupStats.groupsLastYear.data.forEach(element => groupYearCount += element.count);
+
+    this.setState({
+      groupTotal: groupStats.groupTotal,
+      groupTotalLastUpdate: lastUpdatedAt,
+      groupsToday:
+        groupStats.groupsLastMonth.data[
+          groupStats.groupsLastMonth.data.length - 1
+        ].count,
+      groupTodayLastUpdate: lastUpdatedAt,
+      groupMonth: groupMonthCount,
+      groupYear: groupYearCount,
+      groupsLastMonth: groupStats.groupsLastMonth.data,
+      groupsLastYear: groupStats.groupsLastYear.data
+    });
   }
 
   render() {
@@ -84,7 +94,7 @@ class KPIView extends Component {
               <KPICard
                 bigIcon={<i className="pe-7s-users text-info" />}
                 statsText="This Month"
-                statsValue={this.state.groupTotal}
+                statsValue={this.state.groupMonth}
                 statsIcon={<i className="fa fa-refresh" />}
                 statsIconText={`Last Update: ${this.state.groupTotalLastUpdate}`}
               />
@@ -93,7 +103,7 @@ class KPIView extends Component {
               <KPICard
                 bigIcon={<i className="pe-7s-users text-info" />}
                 statsText="This Year"
-                statsValue={this.state.groupTotal}
+                statsValue={this.state.groupYear}
                 statsIcon={<i className="fa fa-refresh" />}
                 statsIconText={`Last Update: ${this.state.groupTotalLastUpdate}`}
               />
@@ -102,15 +112,24 @@ class KPIView extends Component {
 
           <Row>
             <Col lg={4} sm={6}></Col>
-            <GroupTotalGraph />
+            <TotalGraph title="Total Groups" stroke="#228b22" signups={this.state.groupsLastYear}/>
             <Col lg={4} sm={6}></Col>
           </Row>
           <Row>
-          <Col lg={4} sm={6}>
-              <GroupsLastMonthBar />
+            <Col lg={4} sm={6}>
+              <LastMonthBar
+                signups={this.state.groupsLastMonth}
+                title="Groups Last Month"
+              />
             </Col>
             <Col lg={4} sm={6}>
               <GroupSizeChart />
+            </Col>
+            <Col lg={4} sm={6}>
+              <LastYearBar
+                signups={this.state.groupsLastYear}
+                title="Groups Last Year"
+              />
             </Col>
           </Row>
         </Grid>

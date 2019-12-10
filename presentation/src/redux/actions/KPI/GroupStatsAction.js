@@ -9,7 +9,7 @@ export const fetchGroupStats = () => async dispatch => {
     groupStats{
       groupTotal
       groupsLastMonth{
-        resultMonth{
+        data{
           count
           day{
             year
@@ -19,7 +19,7 @@ export const fetchGroupStats = () => async dispatch => {
         }
       }
       groupsLastYear{
-        resultYear{
+        data{
         month
         count
         }

@@ -13,8 +13,8 @@ const meetingResolvers = {
 
       return {
         meetingTotal,
-        meetingsLastMonth: { resultMonth: meetingsPrevMonth },
-        meetingsLastYear: { resultYear: meetingsPrevYear }
+        meetingsLastMonth: { data: meetingsPrevMonth },
+        meetingsLastYear: { data: meetingsPrevYear }
       };
     }
   }

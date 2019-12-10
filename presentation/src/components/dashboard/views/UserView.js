@@ -4,14 +4,15 @@ import { Grid, Row, Col } from "react-bootstrap";
 
 import { KPICard } from "../util/KPICard";
 
-import UserTotalGraph from "../charts/graph/UserTotalGraph";
+import TotalGraph from "../charts/graph/TotalGraph";
 
 import SoMeCircleChart from "../charts/circle/SoMeCircleChart";
 
-import UsersLastMonthBar from "../charts/bar/UsersLastMonthBar";
-import UsersLastYearBar from "../charts/bar/UsersLastYearBar";
+import LastMonthBar from "../charts/bar/LastMonthBar";
+import LastYearBar from "../charts/bar/LastYearBar";
 
 import { fetchUserStats } from "../../../redux/actions/KPI/UserStatsAction";
+import { fetchUsersLastYear } from "../../../redux/actions/KPI/UsersLastYearAction";
 import { getCurrentTime } from "../../../util/Date";
 
 class KPIView extends Component {
@@ -22,40 +23,49 @@ class KPIView extends Component {
       userTotal: "",
       usersTotalLastUpdate: "",
       usersToday: "",
-      usersTodayLastUpdate: ""
+      usersTodayLastUpdate: "",
+      userMonth: "",
+      userYear: "",
+      usersLastMonth: "",
+      usersLastYear: ""
     };
   }
   async componentDidMount() {
     // Error handling when not authenticated?
+    this.fetchData();
+
+    // Reload KPI data
+    setInterval(async () => {
+      // Error handling when not authenticated?
+      this.fetchData();
+    }, 1000000);
+  }
+
+  async fetchData() {
     await this.props.fetchUserStats();
+    await this.props.fetchUsersLastYear();
 
     const userStats = this.props.userStats;
+    const usersLastYear = this.props.usersLastYear;
 
     let lastUpdatedAt = getCurrentTime();
+
+    let userMonthCount = 0;
+    let userYearCount = 0;
+
+    userStats.signups.forEach(element => (userMonthCount += element.count));
+    usersLastYear.signups.forEach(element => (userYearCount += element.count));
 
     this.setState({
       userTotal: userStats.numberOfUsers,
       userTotalLastUpdate: lastUpdatedAt,
       usersToday: userStats.signups[10].count,
-      usersTodayLastUpdate: lastUpdatedAt
+      usersTodayLastUpdate: lastUpdatedAt,
+      userMonth: userMonthCount,
+      userYear: userYearCount,
+      usersLastMonth: userStats.signups,
+      usersLastYear: usersLastYear.signups
     });
-
-    // Reload KPI data
-    setInterval(async () => {
-      // Error handling when not authenticated?
-      await this.props.fetchUserStats();
-
-      const signups = this.props.userStats.signups;
-
-      let lastUpdatedAt = getCurrentTime();
-
-      this.setState({
-        userTotal: userStats.numberOfUsers,
-        userTotalLastUpdate: lastUpdatedAt,
-        usersToday: signups[signups.length-1].count,
-        usersTodayLastUpdate: lastUpdatedAt
-      });
-    }, 1000000);
   }
 
   render() {
@@ -86,7 +96,7 @@ class KPIView extends Component {
               <KPICard
                 bigIcon={<i className="pe-7s-user text-warning" />}
                 statsText="This Month"
-                statsValue=""
+                statsValue={this.state.userMonth}
                 statsIcon={<i className="fa fa-calendar-o" />}
                 statsIconText={`Last Update: ${this.state.usersTodayLastUpdate}`}
               />
@@ -95,7 +105,7 @@ class KPIView extends Component {
               <KPICard
                 bigIcon={<i className="pe-7s-user text-warning" />}
                 statsText="This Year"
-                statsValue=""
+                statsValue={this.state.userYear}
                 statsIcon={<i className="fa fa-clock-o" />}
                 statsIconText={`Last Update: ${this.state.usersTodayLastUpdate}`}
               />
@@ -104,19 +114,29 @@ class KPIView extends Component {
 
           <Row>
             <Col lg={4} sm={6}>
-              <UserTotalGraph />
+              <TotalGraph
+                title="Total Users"
+                stroke="#ff0000"
+                signups={this.state.usersLastYear}
+              />
             </Col>
           </Row>
           <Row>
             <Col lg={4} sm={6}>
-              <UsersLastMonthBar />
+              <LastMonthBar
+                title="Users Last Month"
+                signups={this.state.usersLastMonth}
+              />
             </Col>
             <Col lg={4} sm={6}>
               <SoMeCircleChart />
             </Col>
 
             <Col lg={4} sm={6}>
-              <UsersLastYearBar />
+              <LastYearBar
+                title="Users Last Year"
+                signups={this.state.usersLastYear}
+              />
             </Col>
           </Row>
         </Grid>
@@ -127,8 +147,11 @@ class KPIView extends Component {
 
 const mapStateToProps = state => {
   return {
-    userStats: state.KPI.userStats
+    userStats: state.KPI.userStats,
+    usersLastYear: state.KPI.usersLastYear
   };
 };
 
-export default connect(mapStateToProps, { fetchUserStats })(KPIView);
+export default connect(mapStateToProps, { fetchUserStats, fetchUsersLastYear })(
+  KPIView
+);

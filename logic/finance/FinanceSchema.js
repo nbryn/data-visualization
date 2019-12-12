@@ -6,9 +6,22 @@ const FinanceSchema = gql`
     totalAmount: Float
   }
 
+  type Share {
+    groupName: String
+    totalAmount: Float
+  }
+
+  type MostShares {
+    groupName: String
+    amount: Float
+  }
+
   type FinanceStats {
     currencyTotal: Float
     currencyStats: [Currency]
+    shareTotal: Float
+    mostShares: MostShares
+    shareStats: [Share]
   }
 
   extend type Query {

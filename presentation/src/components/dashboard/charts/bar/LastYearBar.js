@@ -25,6 +25,8 @@ class LastYearBar extends Component {
     if (this.props.data !== prevProps.data) {
       const data = this.props.data;
 
+     
+
       this.setState({
         first: [
           data[0] ? data[0].month : "",
@@ -62,18 +64,7 @@ class LastYearBar extends Component {
           data[8] ? data[8].month : "",
           data[8] ? data[8].count : ""
         ],
-        tenth: [
-          data[9] ? data[9].month : "",
-          data[9] ? data[9].count : ""
-        ],
-        eleventh: [
-          data[10] ? data[10].month : "",
-          data[10] ? data[10].count : ""
-        ],
-        twelfth: [
-          data[11] ? data[11].month : "",
-          data[11] ? data[11].count : ""
-        ]
+        
       });
     }
   }

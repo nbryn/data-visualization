@@ -29,12 +29,9 @@ class GroupView extends Component {
     this.fetchData = this.fetchData.bind(this);
   }
   componentDidMount() {
-    // Error handling when not authenticated?
     this.fetchData();
 
-    // Reload KPI data
     setInterval(async () => {
-      // Error handling when not authenticated?
       this.fetchData();
     }, 10000000);
   }

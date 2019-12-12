@@ -1,39 +1,61 @@
-const { connectToDB } = require("../connection");
+const { fetchFinanceStats } = require("../fetch/fetchFinanceStats");
 
 async function fetchCurrencyStats() {
-  const connection = await connectToDB();
-  return new Promise((resolve, reject) => {
-    try {
-      connection.db.collection("groupaccounts", async (err, collection) => {
-        const currenciesResult = await collection
-          .aggregate([
-            {
-              $group: {
-                _id: "$currency",
-                totalAmount: { $sum: "$totalBalance" }
-              }
-            }
-          ])
-          .toArray();
+  const currencyResult = await fetchFinanceStats(
+    "groupaccounts",
+    "totalBalance",
+    "$currency"
+  );
 
-        const currencyStats = currenciesResult
-          .filter(element => element.totalAmount !== 0)
-          .map(element => {
-            if (element.totalAmount !== 0) {
-              return {
-                name: element._id,
-                totalAmount: element.totalAmount
-              };
-            }
-          });
-
-        if (currencyStats) {
-          resolve(currencyStats);
-        }
-      });
-    } catch (err) {
-      console.log(err);
-    }
+  const currencyStats = currencyResult.map(element => {
+    return {
+      name: element._id,
+      totalAmount: element.totalAmount
+    };
   });
+
+  return currencyStats;
 }
-module.exports = { fetchCurrencyStats };
+
+async function fetchShareStats() {
+  const shareResult = await fetchFinanceStats(
+    "groupaccounts",
+    "totalShares",
+    "$_id"
+  );
+
+  let shareTotal = 0;
+  let groupWithMostShares = {
+    groupName: "",
+    amount: ""
+  };
+
+  const shareTemp = shareResult.map(element => {
+    shareTotal += element.totalAmount;
+    if (element.totalAmount > groupWithMostShares.amount) {
+      groupWithMostShares = {
+        groupName: element._id,
+        amount: element.totalAmount
+      };
+    }
+    return {
+      groupName: element._id,
+      totalAmount: element.totalAmount
+    };
+  });
+
+  shareTemp.sort((ele1, ele2) => {
+    return ele2.totalAmount - ele1.totalAmount;
+  });
+
+  const top10Groups = shareTemp.slice(0, 10);
+
+  const shareStats = {
+    shareTotal: shareTotal,
+    mostShares: groupWithMostShares,
+    shareStats: top10Groups
+  };
+
+  return shareStats;
+}
+module.exports = { fetchCurrencyStats, fetchShareStats };

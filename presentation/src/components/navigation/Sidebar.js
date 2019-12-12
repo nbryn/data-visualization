@@ -30,6 +30,16 @@ class Sidebar extends Component {
             </li>
             <li>
               <NavLink
+                to="/finance"
+                className="nav-link"
+                activeClassName="active"
+              >
+                <i className="pe-7s-graph" />
+                <p>Finance</p>
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
                 to="/groups"
                 className="nav-link"
                 activeClassName="active"

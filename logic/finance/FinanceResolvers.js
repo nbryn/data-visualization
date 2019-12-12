@@ -1,15 +1,28 @@
-const { fetchCurrencyStats } = require("../../data/actions/FinanceActions");
+const {
+  fetchCurrencyStats,
+  fetchShareStats
+} = require("../../data/actions/FinanceActions");
 
 const financeResolvers = {
   Query: {
     financeStats: async (parent, args, context, info) => {
-      const currencyStats = await fetchCurrencyStats();
-      
-      const currencyTotal = currencyStats.length;
+      const currencyResult = await fetchCurrencyStats();
+
+      const shareResult = await fetchShareStats();
+
+      const shareTotal = shareResult.shareTotal;
+      const groupWithMostShares = shareResult.mostShares;
+      const currencyTotal = currencyResult.length;
+
+    //   console.log(groupWithMostShares);
+    //   console.log(shareResult);
 
       return {
         currencyTotal,
-        currencyStats: currencyStats
+        currencyStats: currencyResult,
+        shareTotal,
+        mostShares: groupWithMostShares,
+        shareStats: shareResult.shareStats
       };
     }
   }

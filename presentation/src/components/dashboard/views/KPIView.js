@@ -8,9 +8,9 @@ import LastMonthBar from "../charts/bar/LastMonthBar";
 import LastYearBar from "../charts/bar/LastYearBar";
 import SizeChart from "../charts/circle/SizeChart";
 
+import { fetchFinanceStats } from "../../../redux/actions/KPI/FinanceStatsAction";
 import { fetchGroupStats } from "../../../redux/actions/KPI/GroupStatsAction";
 import { fetchMeetingStats } from "../../../redux/actions/KPI/MeetingStatsAction";
-import { fetchMoneyStats } from "../../../redux/actions/KPI/MoneyStatsAction";
 import { fetchUserStats } from "../../../redux/actions/KPI/UserStatsAction";
 import { fetchUsersLastYear } from "../../../redux/actions/KPI/UsersLastYearAction";
 import { getCurrentTime } from "../../../util/Date";
@@ -30,7 +30,7 @@ class KPIView extends Component {
       meetingTotal: "",
       meetingsLastMonth: "",
       meetingsLastYear: "",
-      moneyTotal: "",
+      shareTotal: "",
       lastUpdate: ""
     };
 
@@ -45,15 +45,15 @@ class KPIView extends Component {
   }
 
   async fetchData() {
+    await this.props.fetchFinanceStats();
     await this.props.fetchGroupStats();
     await this.props.fetchMeetingStats();
     await this.props.fetchUserStats();
     await this.props.fetchUsersLastYear();
-    await this.props.fetchMoneyStats();
 
+    const financeStats = this.props.financeStats;
     const groupStats = this.props.groupStats;
     const meetingsStats = this.props.meetingStats;
-    const moneyStats = this.props.moneyStats;
     const userStats = this.props.userStats;
     const usersLastYear = this.props.usersLastYear.signups;
 
@@ -71,7 +71,7 @@ class KPIView extends Component {
       meetingTotal: meetingsStats.meetingTotal,
       meetingsLastMonth: meetingsStats.meetingsLastMonth.data,
       meetingsLastYear: meetingsStats.meetingsLastYear.data,
-      moneyTotal: moneyStats.moneyTotal,
+      shareTotal: financeStats.shareTotal,
       lastUpdate: lastUpdatedAt
     });
   }
@@ -113,8 +113,8 @@ class KPIView extends Component {
             <Col lg={3} sm={6}>
               <KPICard
                 bigIcon={<i className="pe-7s-wallet text-success" />}
-                statsText="Amount Registered"
-                statsValue={this.state.moneyTotal}
+                statsText="Total Shares"
+                statsValue={this.state.shareTotal}
                 statsIcon={<i className="fa fa-calendar-o" />}
                 statsIconText={`Last Update: ${this.state.lastUpdate}`}
               />
@@ -183,6 +183,7 @@ class KPIView extends Component {
 
 const mapStateToProps = state => {
   return {
+    financeStats: state.KPI.financeStats,
     groupStats: state.KPI.groupStats,
     meetingStats: state.KPI.meetingStats,
     moneyStats: state.KPI.moneyStats,
@@ -192,9 +193,9 @@ const mapStateToProps = state => {
 };
 
 export default connect(mapStateToProps, {
+  fetchFinanceStats,
   fetchGroupStats,
   fetchMeetingStats,
-  fetchMoneyStats,
   fetchUserStats,
   fetchUsersLastYear
 })(KPIView);

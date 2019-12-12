@@ -1,15 +1,15 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Provider } from "react-redux";
+import Store from "./Store";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./assets/sass/dashboard.scss?v=1.3.0";
 import "./assets/fonts/pe-icon-7-stroke.css";
 
-import Store from "./Store";
-
-import MainOverview from "./components/dashboard/MainOverview.js";
+import FinanceOverview from "./components/dashboard/FinanceOverview";
 import GroupOverview from "./components/dashboard/GroupOverview";
+import MainOverview from "./components/dashboard/MainOverview.js";
 import MeetingOverview from "./components/dashboard/MeetingOverview";
 import UserOverview from "./components/dashboard/UserOverview";
 
@@ -27,6 +27,7 @@ class App extends Component {
             <Route exact path="/" component={Signin} />
 
             <SecureRoute exact path="/dashboard" component={MainOverview} />
+            <SecureRoute exact path="/finance" component={FinanceOverview} />
             <SecureRoute exact path="/groups" component={GroupOverview} />
             <SecureRoute exact path="/meetings" component={MeetingOverview} />
             <SecureRoute exact path="/users" component={UserOverview} />

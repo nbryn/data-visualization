@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { GROUP_STATS, GROUP_SIZE } from "../ActionTypes";
+import { GROUP_STATS } from "../ActionTypes";
 
 const url = "http://localhost:4000/graphql";
 
@@ -50,5 +50,3 @@ export const fetchGroupStats = () => async dispatch => {
     console.log(err);
   }
 };
-
-

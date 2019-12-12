@@ -2,18 +2,18 @@ import React, { Component } from "react";
 
 import Header from "../navigation/Header.js";
 import Sidebar from "../navigation/Sidebar.js";
-import GroupView from "./views/GroupView";
+import UserView from "./views/UserView";
 
 
-class Groupboard extends Component {
+class UserOverview extends Component {
 
   render() {
     return (
       <div className="wrapper">
         <Sidebar />
         <div id="main-panel" className="main-panel" ref="mainPanel">
-          <Header title="Groups" />
-          <GroupView />
+          <Header title="Users" />
+          <UserView />
         </div>
       </div>
     );
@@ -21,4 +21,4 @@ class Groupboard extends Component {
 }
 
 
-export default Groupboard;
+export default UserOverview;

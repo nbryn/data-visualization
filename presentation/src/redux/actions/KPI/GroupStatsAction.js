@@ -8,6 +8,10 @@ export const fetchGroupStats = () => async dispatch => {
   const data = `query{
     groupStats{
       groupTotal
+      groupSize{
+        numberOfMembers
+        count
+      }
       groupsLastMonth{
         data{
           count
@@ -47,29 +51,4 @@ export const fetchGroupStats = () => async dispatch => {
   }
 };
 
-export const fetchGroupSize = () => async dispatch => {
-  const data = `query{
-    groupStats{
-      groupSize
-     
-    }
-  }`;
 
-  let response;
-
-  try {
-    response = await axios({
-      url,
-      method: "post",
-      data: {
-        query: data
-      }
-    });
-    dispatch({
-      type: GROUP_SIZE,
-      payload: response.data.data.groupStats.groupSize
-    });
-  } catch (err) {
-    console.log(err);
-  }
-};

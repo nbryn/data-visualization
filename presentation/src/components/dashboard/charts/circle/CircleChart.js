@@ -1,8 +1,5 @@
 import React, { Component } from "react";
-
 import { Col } from "react-bootstrap";
-
-
 import { ResponsiveContainer, Cell, PieChart, Pie } from "recharts";
 
 class CircleChart extends Component {
@@ -31,6 +28,7 @@ class CircleChart extends Component {
             </Col>
             <PieChart width={400} height={300}>
               <Pie
+               label="s"
                 dataKey="value"
                 nameKey="name"
                 data={this.props.data}

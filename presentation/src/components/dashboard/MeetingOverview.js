@@ -2,18 +2,18 @@ import React, { Component } from "react";
 
 import Header from "../navigation/Header.js";
 import Sidebar from "../navigation/Sidebar.js";
-import KPIView from "./views/KPIView";
+import MeetingView from "./views/MeetingView";
 
 
-class DashBoard extends Component {
+class MeetingOverview extends Component {
 
   render() {
     return (
       <div className="wrapper">
         <Sidebar />
         <div id="main-panel" className="main-panel" ref="mainPanel">
-          <Header title="Dashboard" />
-          <KPIView />
+          <Header title="Meetings" />
+          <MeetingView />
         </div>
       </div>
     );
@@ -21,4 +21,4 @@ class DashBoard extends Component {
 }
 
 
-export default DashBoard;
+export default MeetingOverview;

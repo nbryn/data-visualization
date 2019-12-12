@@ -117,7 +117,7 @@ class KPIView extends Component {
               <TotalGraph
                 title="Total Users"
                 stroke="#ff0000"
-                signups={this.state.usersLastYear}
+                data={this.state.usersLastYear}
               />
             </Col>
           </Row>
@@ -126,7 +126,7 @@ class KPIView extends Component {
               <LastMonthBar
                 title="Users Last Month"
                 color="#228b22"
-                signups={this.state.usersLastMonth}
+                data={this.state.usersLastMonth}
               />
             </Col>
             <Col lg={4} sm={6}>
@@ -137,7 +137,7 @@ class KPIView extends Component {
               <LastYearBar
                 title="Users Last Year"
                 color="#ff0000"
-                signups={this.state.usersLastYear}
+                data={this.state.usersLastYear}
               />
             </Col>
           </Row>

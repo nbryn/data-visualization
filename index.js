@@ -6,20 +6,31 @@ const express = require("express");
 const DefaultSchema = require("./logic/index");
 const GroupSchema = require("./logic/group/GroupSchema");
 const MeetingSchema = require("./logic/meeting/MeetingSchema");
-const MoneySchema = require("./logic/money/MoneySchema");
+const FinanceSchema = require("./logic/finance/FinanceSchema");
 const UserSchema = require("./logic/user/UserSchema");
 
 const groupResolvers = require("./logic/group/GroupResolvers");
 const meetingResolvers = require("./logic/meeting/MeetingResolvers");
-const moneyResolvers = require("./logic/money/MoneyResolvers");
+const financeResolvers = require("./logic/finance/FinanceResolvers");
 const userResolvers = require("./logic/user/UserResolvers");
 
 const app = express();
 
-const resolvers = merge(groupResolvers, meetingResolvers, moneyResolvers, userResolvers);
+const resolvers = merge(
+  financeResolvers,
+  groupResolvers,
+  meetingResolvers,
+  userResolvers
+);
 
 const schema = makeExecutableSchema({
-  typeDefs: [DefaultSchema, GroupSchema, MoneySchema, MeetingSchema, UserSchema],
+  typeDefs: [
+    DefaultSchema,
+    FinanceSchema,
+    GroupSchema,
+    MeetingSchema,
+    UserSchema
+  ],
   resolvers
 });
 

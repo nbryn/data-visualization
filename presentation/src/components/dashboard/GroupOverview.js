@@ -2,18 +2,18 @@ import React, { Component } from "react";
 
 import Header from "../navigation/Header.js";
 import Sidebar from "../navigation/Sidebar.js";
-import MeetingView from "./views/MeetingView";
+import GroupView from "./views/GroupView";
 
 
-class Meetingboard extends Component {
+class GroupOverview extends Component {
 
   render() {
     return (
       <div className="wrapper">
         <Sidebar />
         <div id="main-panel" className="main-panel" ref="mainPanel">
-          <Header title="Meetings" />
-          <MeetingView />
+          <Header title="Groups" />
+          <GroupView />
         </div>
       </div>
     );
@@ -21,4 +21,4 @@ class Meetingboard extends Component {
 }
 
 
-export default Meetingboard;
+export default GroupOverview;

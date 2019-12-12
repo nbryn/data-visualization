@@ -4,7 +4,7 @@ import { Grid, Row, Col } from "react-bootstrap";
 import { KPICard } from "../util/KPICard";
 
 import TotalGraph from "../charts/graph/TotalGraph";
-import GroupSizeChart from "../charts/circle/GroupSizeChart";
+import SizeChart from "../charts/circle/SizeChart";
 
 import LastMonthBar from "../charts/bar/LastMonthBar";
 import LastYearBar from "../charts/bar/LastYearBar";
@@ -29,12 +29,9 @@ class KPIView extends Component {
     this.fetchData = this.fetchData.bind(this);
   }
   componentDidMount() {
-    // Error handling when not authenticated?
     this.fetchData();
 
-    // Reload KPI data
     setInterval(async () => {
-      // Error handling when not authenticated?
       this.fetchData();
     }, 10000000);
   }
@@ -119,7 +116,7 @@ class KPIView extends Component {
             <TotalGraph
               title="Total Groups"
               stroke="#228b22"
-              signups={this.state.groupsLastYear}
+              data={this.state.groupsLastYear}
             />
             <Col lg={4} sm={6}></Col>
           </Row>
@@ -128,17 +125,17 @@ class KPIView extends Component {
               <LastMonthBar
                 title="Groups Last Month"
                 color="#228b22"
-                signups={this.state.groupsLastMonth}
+                data={this.state.groupsLastMonth}
               />
             </Col>
             <Col lg={4} sm={6}>
-              <GroupSizeChart />
+              <SizeChart />
             </Col>
             <Col lg={4} sm={6}>
               <LastYearBar
                 title="Groups Last Year"
                 color="#2196f3"
-                signups={this.state.groupsLastYear}
+                data={this.state.groupsLastYear}
               />
             </Col>
           </Row>

@@ -5,7 +5,7 @@ const { fetchGroupsLastYear } = require("../../data/actions/GroupActions");
 
 const groupResolvers = {
   Query: {
-    groupStats: async (parent, args, context, info) => {    
+    groupStats: async (parent, args, context, info) => {
       const groupTotal = await fetchGroupTotal();
 
       const groupSize = await fetchGroupSize();
@@ -16,13 +16,12 @@ const groupResolvers = {
 
       return {
         groupTotal,
-        groupSize,
+        groupSize: groupSize,
         groupsLastMonth: { data: groupsPrevMonth },
         groupsLastYear: { data: groupsPrevYear }
       };
     }
   }
 };
-
 
 module.exports = groupResolvers;

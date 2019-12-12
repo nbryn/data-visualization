@@ -6,7 +6,7 @@ import { KPICard } from "../util/KPICard";
 import TotalGraph from "../charts/graph/TotalGraph";
 import LastMonthBar from "../charts/bar/LastMonthBar";
 import LastYearBar from "../charts/bar/LastYearBar";
-import GroupSizeChart from "../charts/circle/GroupSizeChart";
+import SizeChart from "../charts/circle/SizeChart";
 
 import { fetchGroupStats } from "../../../redux/actions/KPI/GroupStatsAction";
 import { fetchMeetingStats } from "../../../redux/actions/KPI/MeetingStatsAction";
@@ -24,6 +24,7 @@ class KPIView extends Component {
       usersToday: "",
       usersLastYear: "",
       groupTotal: "",
+      groupSize: "",
       groupsLastMonth: "",
       groupsLastYear: "",
       meetingTotal: "",
@@ -35,7 +36,7 @@ class KPIView extends Component {
 
     this.fetchData = this.fetchData.bind(this);
   }
-  async componentDidMount() {
+  componentDidMount() {
     this.fetchData();
 
     setInterval(async () => {
@@ -64,6 +65,7 @@ class KPIView extends Component {
       usersToday: userStats.signups[10].count,
       usersLastYear: usersLastYear,
       groupTotal: groupStats.groupTotal,
+      groupSize: groupStats.groupSize,
       groupsLastMonth: groupStats.groupsLastMonth.data,
       groupsLastYear: groupStats.groupsLastYear.data,
       meetingTotal: meetingsStats.meetingTotal,
@@ -124,21 +126,21 @@ class KPIView extends Component {
               <TotalGraph
                 title="Total Users"
                 stroke="#ff0000"
-                signups={this.state.usersLastYear}
+                data={this.state.usersLastYear}
               />
             </Col>
             <Col lg={4} sm={6}>
               <TotalGraph
                 title="Total Groups"
                 stroke="#228b22"
-                signups={this.state.groupsLastYear}
+                data={this.state.groupsLastYear}
               />
             </Col>
             <Col lg={4} sm={6}>
               <TotalGraph
                 title="Total Meetings"
                 stroke="#2196f3"
-                signups={this.state.meetingsLastYear}
+                data={this.state.meetingsLastYear}
               />
             </Col>
           </Row>
@@ -147,18 +149,29 @@ class KPIView extends Component {
               <LastMonthBar
                 title="Groups Last Month"
                 color="#228b22"
-                signups={this.state.groupsLastMonth}
+                data={this.state.groupsLastMonth}
               />
             </Col>
             <Col lg={4} sm={6}>
-              <GroupSizeChart />
+              <SizeChart
+                title="Group Size"
+                colors={[
+                  "#2964d8",
+                  "#67b6ed",
+                  "#75ad57",
+                  "#d9ae6c",
+                  "#9edlel",
+                  "#42cb7d"
+                ]}
+                data={this.state.groupSize}
+              />
             </Col>
 
             <Col lg={4} sm={6}>
               <LastYearBar
                 title="Users Last Year"
                 color="#ff0000"
-                signups={this.state.usersLastYear}
+                data={this.state.usersLastYear}
               />
             </Col>
           </Row>

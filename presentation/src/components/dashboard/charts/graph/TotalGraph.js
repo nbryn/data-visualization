@@ -22,57 +22,57 @@ class TotalGraph extends Component {
   }
 
   async componentDidUpdate(prevProps) {
-    if (this.props.signups !== prevProps.signups) {
-      const signups = this.props.signups;
+    if (this.props.data !== prevProps.data) {
+      const data = this.props.data;
 
       this.setState({
         first: [
-          signups[0] ? signups[0].month : "",
-          signups[0] ? signups[0].count : ""
+          data[0] ? data[0].month : "",
+          data[0] ? data[0].count : ""
         ],
         second: [
-          signups[1] ? signups[1].month : "",
-          signups[1] ? signups[1].count : ""
+          data[1] ? data[1].month : "",
+          data[1] ? data[1].count : ""
         ],
         third: [
-          signups[2] ? signups[2].month : "",
-          signups[2] ? signups[2].count : ""
+          data[2] ? data[2].month : "",
+          data[2] ? data[2].count : ""
         ],
         fourth: [
-          signups[3] ? signups[3].month : "",
-          signups[3] ? signups[3].count : ""
+          data[3] ? data[3].month : "",
+          data[3] ? data[3].count : ""
         ],
         fifth: [
-          signups[4] ? signups[4].month : "",
-          signups[4] ? signups[4].count : ""
+          data[4] ? data[4].month : "",
+          data[4] ? data[4].count : ""
         ],
         sixth: [
-          signups[5] ? signups[5].month : "",
-          signups[5] ? signups[5].count : ""
+          data[5] ? data[5].month : "",
+          data[5] ? data[5].count : ""
         ],
         seventh: [
-          signups[6] ? signups[6].month : "",
-          signups[6] ? signups[6].count : ""
+          data[6] ? data[6].month : "",
+          data[6] ? data[6].count : ""
         ],
         eighth: [
-          signups[7] ? signups[7].month : "",
-          signups[7] ? signups[7].count : ""
+          data[7] ? data[7].month : "",
+          data[7] ? data[7].count : ""
         ],
         ninth: [
-          signups[8] ? signups[8].month : "",
-          signups[8] ? signups[8].count : ""
+          data[8] ? data[8].month : "",
+          data[8] ? data[8].count : ""
         ],
         tenth: [
-          signups[9] ? signups[9].month : "",
-          signups[9] ? signups[9].count : ""
+          data[9] ? data[9].month : "",
+          data[9] ? data[9].count : ""
         ],
         eleventh: [
-          signups[10] ? signups[10].month : "",
-          signups[10] ? signups[10].count : ""
+          data[10] ? data[10].month : "",
+          data[10] ? data[10].count : ""
         ],
         twelfth: [
-          signups[11] ? signups[11].month : "",
-          signups[11] ? signups[11].count : ""
+          data[11] ? data[11].month : "",
+          data[11] ? data[11].count : ""
         ]
       });
     }

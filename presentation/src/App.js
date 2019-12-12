@@ -8,10 +8,10 @@ import "./assets/fonts/pe-icon-7-stroke.css";
 
 import Store from "./Store";
 
-import Dashboard from "./components/dashboard/Dashboard.js";
-import Groupboard from "./components/dashboard/Groupboard";
-import Meetingboard from "./components/dashboard/Meetingboard";
-import Userboard from "./components/dashboard/Userboard";
+import MainOverview from "./components/dashboard/MainOverview.js";
+import GroupOverview from "./components/dashboard/GroupOverview";
+import MeetingOverview from "./components/dashboard/MeetingOverview";
+import UserOverview from "./components/dashboard/UserOverview";
 
 import Signin from "./components/user/Signin.js";
 import Profile from "./components/user/UserProfile.js";
@@ -26,10 +26,10 @@ class App extends Component {
           <Switch>
             <Route exact path="/" component={Signin} />
 
-            <SecureRoute exact path="/dashboard" component={Dashboard} />
-            <SecureRoute exact path="/groups" component={Groupboard} />
-            <SecureRoute exact path="/meetings" component={Meetingboard} />
-            <SecureRoute exact path="/users" component={Userboard} />
+            <SecureRoute exact path="/dashboard" component={MainOverview} />
+            <SecureRoute exact path="/groups" component={GroupOverview} />
+            <SecureRoute exact path="/meetings" component={MeetingOverview} />
+            <SecureRoute exact path="/users" component={UserOverview} />
             <SecureRoute exact path="/profile" component={Profile} />
 
             <Route path="*" component={NotFound} />

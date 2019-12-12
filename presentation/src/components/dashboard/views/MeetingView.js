@@ -4,7 +4,7 @@ import { Grid, Row, Col } from "react-bootstrap";
 import { KPICard } from "../util/KPICard";
 
 import TotalGraph from "../charts/graph/TotalGraph";
-import GroupSizeChart from "../charts/circle/GroupSizeChart";
+import SizeChart from "../charts/circle/SizeChart";
 
 import LastMonthBar from "../charts/bar/LastMonthBar";
 import LastYearBar from "../charts/bar/LastYearBar";
@@ -119,7 +119,7 @@ class GroupView extends Component {
             <TotalGraph
               title="Total Meetings"
               stroke="#228b22"
-              signups={this.state.meetingsLastYear}
+              data={this.state.meetingsLastYear}
             />
             <Col lg={4} sm={6}></Col>
           </Row>
@@ -128,17 +128,17 @@ class GroupView extends Component {
               <LastMonthBar
                 title="Meetings Last Month"
                 color="#228b22"
-                signups={this.state.meetingsLastMonth}
+                data={this.state.meetingsLastMonth}
               />
             </Col>
             <Col lg={4} sm={6}>
-              <GroupSizeChart />
+              <SizeChart />
             </Col>
             <Col lg={4} sm={6}>
               <LastYearBar
                 title="Meetings Last Year"
                 color="#ff0000"
-                signups={this.state.meetingsLastYear}
+                data={this.state.meetingsLastYear}
               />
             </Col>
           </Row>

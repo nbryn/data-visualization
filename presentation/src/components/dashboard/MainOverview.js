@@ -2,18 +2,18 @@ import React, { Component } from "react";
 
 import Header from "../navigation/Header.js";
 import Sidebar from "../navigation/Sidebar.js";
-import UserView from "./views/UserView";
+import KPIView from "./views/KPIView";
 
 
-class Userboard extends Component {
+class MainOverview extends Component {
 
   render() {
     return (
       <div className="wrapper">
         <Sidebar />
         <div id="main-panel" className="main-panel" ref="mainPanel">
-          <Header title="Users" />
-          <UserView />
+          <Header title="Dashboard" />
+          <KPIView />
         </div>
       </div>
     );
@@ -21,4 +21,4 @@ class Userboard extends Component {
 }
 
 
-export default Userboard;
+export default MainOverview;

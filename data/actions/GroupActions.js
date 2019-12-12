@@ -83,17 +83,20 @@ async function fetchGroupSize() {
           }
         }
 
-        let groupSize = [];
+        let groupSize,
+          groupSizeTemp = [];
 
         for (let key in size) {
           if (size[key] > 0) {
             let temp = {
-              groupSize: key,
-              numberOfGroups: size[key]
+              numberOfMembers: key,
+              count: size[key]
             };
-            groupSize.push(temp);
+            groupSizeTemp.push(temp);
           }
         }
+
+        groupSize = groupSizeTemp.filter(element => element.count > 2);
 
         if (groupSize) {
           resolve(groupSize);

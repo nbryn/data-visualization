@@ -1,61 +1,29 @@
 import React, { Component } from "react";
 import GraphChart from "./GraphChart.js";
 
+import { convertNumberToMonth } from "../../../../util/Date";
+
 class TotalGraph extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      data: [
-        {
-          name: "",
-          value: ""
-        },
-        {
-          name: "",
-          value: ""
-        },
-        {
-          name: "",
-          value: ""
-        },
-        {
-          name: "",
-          value: ""
-        },
-        {
-          name: "",
-          value: ""
-        },
-        {
-          name: "",
-          value: ""
-        },
-        {
-          name: "",
-          value: ""
-        },
-        {
-          name: "",
-          value: ""
-        },
-        {
-          name: "",
-          value: ""
-        }
-      ]
+      data: []
     };
   }
 
-  async componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps) {
     if (this.props.data !== prevProps.data) {
       const data = this.props.data;
 
       let total = 0;
+      let month;
       const newState = data.map(element => {
         total += element.count;
+        month = convertNumberToMonth(element.month);
+
         return {
-          name: element.month,
+          name: month,
           value: total
         };
       });
@@ -66,8 +34,12 @@ class TotalGraph extends Component {
   render() {
     const title = this.props.title;
     const stroke = this.props.stroke;
-    const yLabel = { value: "Users", angle: -90, position: "insideLeft" };
-    const xLabel = { value: "Months", position: "center", dy: 10 };
+    const yLabel = {
+      value: this.props.yLabel,
+      angle: -90,
+      position: "insideLeft"
+    };
+    const xLabel = { value: this.props.xLabel, position: "center", dy: 10 };
 
     return (
       <div>

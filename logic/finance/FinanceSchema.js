@@ -7,7 +7,7 @@ const FinanceSchema = gql`
   }
 
   type Share {
-    groupName: String
+    name: String
     totalAmount: Float
   }
 

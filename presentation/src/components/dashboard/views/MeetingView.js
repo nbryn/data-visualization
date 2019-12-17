@@ -4,7 +4,6 @@ import { Grid, Row, Col } from "react-bootstrap";
 import { KPICard } from "../util/KPICard";
 
 import TotalGraph from "../charts/graph/TotalGraph";
-import SizeChart from "../charts/circle/SizeChart";
 
 import LastMonthBar from "../charts/bar/LastMonthBar";
 import LastYearBar from "../charts/bar/LastYearBar";
@@ -18,13 +17,13 @@ class GroupView extends Component {
 
     this.state = {
       meetingTotal: "",
-      meetingTotalLastUpdate: "",
       meetingsToday: "",
-      meetingTodayLastUpdate: "",
+      meetingsTodayText: "",
       meetingMonth: "",
       meetingYear: "",
       meetingsLastMonth: "",
-      meetingsLastYear: ""
+      meetingsLastYear: "",
+      lastUpdate: ""
     };
     this.fetchData = this.fetchData.bind(this);
   }
@@ -40,30 +39,29 @@ class GroupView extends Component {
     await this.props.fetchMeetingStats();
 
     const meetingStats = this.props.meetingStats;
+    const lastMonth = meetingStats.meetingsLastMonth.data;
     let lastUpdatedAt = getCurrentTime();
 
     let meetingMonthCount = 0;
     let meetingYearCount = 0;
 
-    meetingStats.meetingsLastMonth.data.forEach(
-      element => (meetingMonthCount += element.count)
-    );
+    lastMonth.forEach(element => (meetingMonthCount += element.count));
     meetingStats.meetingsLastYear.data.forEach(
       element => (meetingYearCount += element.count)
     );
 
     this.setState({
       meetingTotal: meetingStats.meetingTotal,
-      meetingTotalLastUpdate: lastUpdatedAt,
-      meetingToday:
-        meetingStats.meetingsLastMonth.data[
-          meetingStats.meetingsLastMonth.data.length - 1
-        ].count,
-      meetingTodayLastUpdate: lastUpdatedAt,
+      meetingsToday: lastMonth[lastMonth.length - 1].count,
+      meetingsTodayText:
+        lastMonth[lastMonth.length - 1].day.day +
+        "/" +
+        lastMonth[lastMonth.length - 1].day.month,
       meetingMonth: meetingMonthCount,
       meetingYear: meetingYearCount,
-      meetingsLastMonth: meetingStats.meetingsLastMonth.data,
-      meetingsLastYear: meetingStats.meetingsLastYear.data
+      meetingsLastMonth: lastMonth,
+      meetingsLastYear: meetingStats.meetingsLastYear.data,
+      lastUpdate: lastUpdatedAt
     });
   }
 
@@ -78,17 +76,17 @@ class GroupView extends Component {
                 statsText="Total Meetings"
                 statsValue={this.state.meetingTotal}
                 statsIcon={<i className="fa fa-refresh" />}
-                statsIconText={`Last Update: ${this.state.meetingTotalLastUpdate}`}
+                statsIconText={`Last Update: ${this.state.lastUpdate}`}
               />
             </Col>
 
             <Col lg={3} sm={6}>
               <KPICard
                 bigIcon={<i className="pe-7s-users text-info" />}
-                statsText="Meetings Today"
+                statsText={"Meetings " + this.state.meetingsTodayText}
                 statsValue={this.state.meetingsToday}
                 statsIcon={<i className="fa fa-clock-o" />}
-                statsIconText={`Last Update: ${this.state.meetingTodayLastUpdate}`}
+                statsIconText={`Last Update: ${this.state.lastUpdate}`}
               />
             </Col>
             <Col lg={3} sm={6}>
@@ -97,7 +95,7 @@ class GroupView extends Component {
                 statsText="This Month"
                 statsValue={this.state.meetingMonth}
                 statsIcon={<i className="fa fa-refresh" />}
-                statsIconText={`Last Update: ${this.state.meetingTotalLastUpdate}`}
+                statsIconText={`Last Update: ${this.state.lastUpdate}`}
               />
             </Col>
             <Col lg={3} sm={6}>
@@ -106,7 +104,7 @@ class GroupView extends Component {
                 statsText="This Year"
                 statsValue={this.state.meetingYear}
                 statsIcon={<i className="fa fa-refresh" />}
-                statsIconText={`Last Update: ${this.state.meetingTotalLastUpdate}`}
+                statsIconText={`Last Update: ${this.state.lastUpdate}`}
               />
             </Col>
           </Row>
@@ -128,9 +126,7 @@ class GroupView extends Component {
                 data={this.state.meetingsLastMonth}
               />
             </Col>
-            <Col lg={4} sm={6}>
-              <SizeChart />
-            </Col>
+
             <Col lg={4} sm={6}>
               <LastYearBar
                 title="Meetings Last Year"

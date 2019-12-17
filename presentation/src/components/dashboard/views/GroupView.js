@@ -18,13 +18,14 @@ class KPIView extends Component {
 
     this.state = {
       groupTotal: "",
-      groupTotalLastUpdate: "",
       groupsToday: "",
-      groupTodayLastUpdate: "",
+      groupsTodayText: "",
       groupMonth: "",
       groupYear: "",
+      groupSize: "",
       groupsLastMonth: "",
-      groupsLastYear: ""
+      groupsLastYear: "",
+      lastUpdate: "",
     };
     this.fetchData = this.fetchData.bind(this);
   }
@@ -40,12 +41,13 @@ class KPIView extends Component {
     await this.props.fetchGroupStats();
 
     const groupStats = this.props.groupStats;
+    const lastMonth = groupStats.groupsLastMonth.data;
     let lastUpdatedAt = getCurrentTime();
 
     let groupMonthCount = 0;
     let groupYearCount = 0;
 
-    groupStats.groupsLastMonth.data.forEach(
+    lastMonth.forEach(
       element => (groupMonthCount += element.count)
     );
     groupStats.groupsLastYear.data.forEach(
@@ -54,16 +56,17 @@ class KPIView extends Component {
 
     this.setState({
       groupTotal: groupStats.groupTotal,
-      groupTotalLastUpdate: lastUpdatedAt,
       groupsToday:
-        groupStats.groupsLastMonth.data[
-          groupStats.groupsLastMonth.data.length - 1
+        lastMonth[
+          lastMonth.length - 1
         ].count,
-      groupTodayLastUpdate: lastUpdatedAt,
+      groupsTodayText: lastMonth[lastMonth.length - 1].day.day + "/" + lastMonth[lastMonth.length - 1].day.month,
       groupMonth: groupMonthCount,
       groupYear: groupYearCount,
-      groupsLastMonth: groupStats.groupsLastMonth.data,
-      groupsLastYear: groupStats.groupsLastYear.data
+      groupSize: groupStats.groupSize,
+      groupsLastMonth: lastMonth,
+      groupsLastYear: groupStats.groupsLastYear.data,
+      lastUpdate: lastUpdatedAt
     });
   }
 
@@ -78,17 +81,17 @@ class KPIView extends Component {
                 statsText="Total Groups"
                 statsValue={this.state.groupTotal}
                 statsIcon={<i className="fa fa-refresh" />}
-                statsIconText={`Last Update: ${this.state.groupTotalLastUpdate}`}
+                statsIconText={`Last Update: ${this.state.lastUpdate}`}
               />
             </Col>
 
             <Col lg={3} sm={6}>
               <KPICard
                 bigIcon={<i className="pe-7s-users text-info" />}
-                statsText="Groups Today"
+                statsText={"Groups " + this.state.groupsTodayText}
                 statsValue={this.state.groupsToday}
                 statsIcon={<i className="fa fa-clock-o" />}
-                statsIconText={`Last Update: ${this.state.groupTodayLastUpdate}`}
+                statsIconText={`Last Update: ${this.state.lastUpdate}`}
               />
             </Col>
             <Col lg={3} sm={6}>
@@ -97,7 +100,7 @@ class KPIView extends Component {
                 statsText="This Month"
                 statsValue={this.state.groupMonth}
                 statsIcon={<i className="fa fa-refresh" />}
-                statsIconText={`Last Update: ${this.state.groupTotalLastUpdate}`}
+                statsIconText={`Last Update: ${this.state.lastUpdate}`}
               />
             </Col>
             <Col lg={3} sm={6}>
@@ -106,7 +109,7 @@ class KPIView extends Component {
                 statsText="This Year"
                 statsValue={this.state.groupYear}
                 statsIcon={<i className="fa fa-refresh" />}
-                statsIconText={`Last Update: ${this.state.groupTotalLastUpdate}`}
+                statsIconText={`Last Update: ${this.state.lastUpdate}`}
               />
             </Col>
           </Row>
@@ -129,7 +132,18 @@ class KPIView extends Component {
               />
             </Col>
             <Col lg={4} sm={6}>
-              <SizeChart />
+            <SizeChart
+                title="Group Size"
+                colors={[
+                  "#2964d8",
+                  "#67b6ed",
+                  "#75ad57",
+                  "#d9ae6c",
+                  "#9edlel",
+                  "#42cb7d"
+                ]}
+                data={this.state.groupSize}
+              />
             </Col>
             <Col lg={4} sm={6}>
               <LastYearBar

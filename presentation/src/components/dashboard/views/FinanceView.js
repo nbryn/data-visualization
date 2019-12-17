@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Grid, Row, Col } from "react-bootstrap";
 import { KPICard } from "../util/KPICard";
-import  LastYearBar from "../charts/bar/LastYearBar";
+import  TopBar from "../charts/bar/TopBar";
 
 import { fetchFinanceStats } from "../../../redux/actions/KPI/FinanceStatsAction";
 import { getCurrentTime } from "../../../util/Date";
@@ -13,8 +13,10 @@ class FinanceView extends Component {
 
     this.state = {
       shareTotal: "",
-      currencyTotal: "",
       mostShares: "",
+      shareStats: "",
+      loanTotal: "",
+      currencyTotal: "",
       currencyStats: "",
       lastUpdate: ""
     };
@@ -36,8 +38,9 @@ class FinanceView extends Component {
     
     this.setState({
       shareTotal: financeStats.shareTotal,
-      currencyTotal: financeStats.currencyTotal,
       mostShares: financeStats.mostShares.amount,
+      shareStats: financeStats.shareStats,
+      currencyTotal: financeStats.currencyTotal,
       currencyStats: financeStats.currencyStats,
       lastUpdate: lastUpdatedAt
     });
@@ -57,16 +60,16 @@ class FinanceView extends Component {
                 statsIconText={`Last Update: ${this.state.lastUpdate}`}
               />
             </Col>
-
             <Col lg={3} sm={6}>
               <KPICard
                 bigIcon={<i className="pe-7s-users text-info" />}
-                statsText="Total Currencies"
-                statsValue={this.state.currencyTotal}
-                statsIcon={<i className="fa fa-clock-o" />}
+                statsText="Total Loans"
+                statsValue={this.state.totalLoans}
+                statsIcon={<i className="fa fa-refresh" />}
                 statsIconText={`Last Update: ${this.state.lastUpdate}`}
               />
             </Col>
+            
             <Col lg={3} sm={6}>
               <KPICard
                 bigIcon={<i className="pe-7s-users text-info" />}
@@ -76,22 +79,37 @@ class FinanceView extends Component {
                 statsIconText={`Last Update: ${this.state.lastUpdate}`}
               />
             </Col>
+            
             <Col lg={3} sm={6}>
               <KPICard
                 bigIcon={<i className="pe-7s-users text-info" />}
                 statsText="Total Currencies"
-                statsValue={this.state.meetingYear}
-                statsIcon={<i className="fa fa-refresh" />}
+                statsValue={this.state.currencyTotal}
+                statsIcon={<i className="fa fa-clock-o" />}
                 statsIconText={`Last Update: ${this.state.lastUpdate}`}
               />
             </Col>
           </Row>
-          <LastYearBar
-            title="Share top 10"
+          <Row>
+          <Col lg={3} sm={6}>
+           <TopBar
+            title="Currencies"
             color="#ff0000"
+            xLabel="Currency"
+            yLabel="Amount"
             data={this.state.currencyStats}
           />
-          <Row></Row>
+          </Col>
+          <Col lg={3} sm={6}>
+          <TopBar
+            title="Most Shares"
+            color="#1828E8"
+            xLabel="Group Name"
+            yLabel="Amount"
+            data={this.state.shareStats}
+          />
+          </Col>
+          </Row>
         </Grid>
       </div>
     );

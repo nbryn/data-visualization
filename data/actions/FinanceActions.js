@@ -39,7 +39,7 @@ async function fetchShareStats() {
       };
     }
     return {
-      groupName: element._id,
+      name: element._id.toString().substring(0, 5),
       totalAmount: element.totalAmount
     };
   });
@@ -48,12 +48,11 @@ async function fetchShareStats() {
     return ele2.totalAmount - ele1.totalAmount;
   });
 
-  const top10Groups = shareTemp.slice(0, 10);
 
   const shareStats = {
     shareTotal: shareTotal,
     mostShares: groupWithMostShares,
-    shareStats: top10Groups
+    shareStats: shareTemp.slice(0, 10)
   };
 
   return shareStats;

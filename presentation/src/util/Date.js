@@ -26,8 +26,21 @@ export const getCurrentTime = () => {
   return currentTime;
 };
 
-export const getMonth = (number) => {
-  const months = ["Januar", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+export const getMonth = number => {
+  const months = [
+    "Januar",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December"
+  ];
   let date = new Date();
 
   let month = date.getMonth() + 1;
@@ -39,6 +52,35 @@ export const getMonth = (number) => {
   if (number) {
     return month;
   } else {
-    return months[month-1];
+    return months[month - 1];
   }
+};
+
+export const convertNumberToMonth = monthNumber => {
+  let result;
+
+  const number = monthNumber.toString();
+
+  const months = {
+    "1": "jan",
+    "2": "feb",
+    "3": "mar",
+    "4": "apr",
+    "5": "may",
+    "6": "jun",
+    "7": "jul",
+    "8": "aug",
+    "9": "sep",
+    "10": "oct",
+    "11": "nov",
+    "12": "dec"
+  };
+
+  for (let key in months) {
+    if (number === key) {
+      result = months[key];
+    }
+  }
+
+  return result;
 };

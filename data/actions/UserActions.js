@@ -134,6 +134,8 @@ async function fetchUserStats(context) {
 async function fetchUsersLastYear() {
   const result = await fetchLastYear("users", "signupDate");
 
+
+
   return result;
 }
 

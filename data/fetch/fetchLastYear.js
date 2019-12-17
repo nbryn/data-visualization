@@ -6,6 +6,9 @@ async function fetchLastYear(collectionToFetch, matchString) {
   return new Promise((resolve, reject) => {
     try {
       connection.db.collection(collectionToFetch, async (err, collection) => {
+        if (err) {
+          console.log(err);
+        }
         const since = moment()
           .startOf("day")
           .subtract(365, "days")
@@ -16,7 +19,6 @@ async function fetchLastYear(collectionToFetch, matchString) {
             {
               $match: {
                 [matchString]: { $gt: since },
-                state: "ACTIVE"
               }
             },
             {

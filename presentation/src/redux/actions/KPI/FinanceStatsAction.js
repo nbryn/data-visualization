@@ -17,7 +17,7 @@ export const fetchFinanceStats = () => async dispatch => {
         amount
       }
       shareStats{
-        groupName
+        name
         totalAmount
       }
     }

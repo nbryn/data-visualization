@@ -22,7 +22,7 @@ class GraphChart extends Component {
             </Col>
             <LineChart width={350} height={300} data={this.props.data}>
               <XAxis label={this.props.xLabel} dataKey="name" />
-              <YAxis label={this.props.ylabel} />
+              <YAxis label={this.props.ylabel} dataKey="value"/>
               <CartesianGrid stroke="#eee" strokeDasharray="5 5" />
               <Line
                 strokeWidth={3}

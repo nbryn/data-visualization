@@ -21,22 +21,19 @@ class KPIView extends Component {
 
     this.state = {
       userTotal: "",
-      usersTotalLastUpdate: "",
       usersToday: "",
-      usersTodayLastUpdate: "",
+      usersTodayText: "",
       userMonth: "",
       userYear: "",
       usersLastMonth: "",
-      usersLastYear: ""
+      usersLastYear: "",
+      lastUpdate: ""
     };
   }
   async componentDidMount() {
-    // Error handling when not authenticated?
     this.fetchData();
 
-    // Reload KPI data
     setInterval(async () => {
-      // Error handling when not authenticated?
       this.fetchData();
     }, 1000000);
   }
@@ -58,13 +55,13 @@ class KPIView extends Component {
 
     this.setState({
       userTotal: userStats.numberOfUsers,
-      userTotalLastUpdate: lastUpdatedAt,
-      usersToday: userStats.signups[10].count,
-      usersTodayLastUpdate: lastUpdatedAt,
+      usersToday: userStats.signups[userStats.signups.length - 1].count,
+      usersTodayText: userStats.signups[userStats.signups.length - 1].day.day + "/" + userStats.signups[userStats.signups.length - 1].day.month,
       userMonth: userMonthCount,
       userYear: userYearCount,
       usersLastMonth: userStats.signups,
-      usersLastYear: usersLastYear.signups
+      usersLastYear: usersLastYear.signups,
+      lastUpdate: lastUpdatedAt
     });
   }
 
@@ -79,16 +76,16 @@ class KPIView extends Component {
                 statsText="Total Users"
                 statsValue={this.state.userTotal}
                 statsIcon={<i className="fa fa-refresh" />}
-                statsIconText={`Last Update: ${this.state.userTotalLastUpdate}`}
+                statsIconText={`Last Update: ${this.state.lastUpdate}`}
               />
             </Col>
             <Col lg={3} sm={6}>
               <KPICard
                 bigIcon={<i className="pe-7s-user text-warning" />}
-                statsText="Users Today"
+                statsText={"Users " + this.state.usersTodayText}
                 statsValue={this.state.usersToday}
                 statsIcon={<i className="fa fa-refresh" />}
-                statsIconText={`Last Update: ${this.state.usersTodayLastUpdate}`}
+                statsIconText={`Last Update: ${this.state.lastUpdate}`}
               />
             </Col>
 
@@ -98,16 +95,16 @@ class KPIView extends Component {
                 statsText="This Month"
                 statsValue={this.state.userMonth}
                 statsIcon={<i className="fa fa-calendar-o" />}
-                statsIconText={`Last Update: ${this.state.usersTodayLastUpdate}`}
+                statsIconText={`Last Update: ${this.state.lastUpdate}`}
               />
             </Col>
             <Col lg={3} sm={6}>
               <KPICard
                 bigIcon={<i className="pe-7s-user text-warning" />}
                 statsText="This Year"
-                statsValue={this.state.userYear}
+                statsValue={this.state.userTotal}
                 statsIcon={<i className="fa fa-clock-o" />}
-                statsIconText={`Last Update: ${this.state.usersTodayLastUpdate}`}
+                statsIconText={`Last Update: ${this.state.lastUpdate}`}
               />
             </Col>
           </Row>

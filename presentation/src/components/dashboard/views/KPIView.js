@@ -4,8 +4,8 @@ import { Grid, Row, Col } from "react-bootstrap";
 import { KPICard } from "../util/KPICard";
 
 import TotalGraph from "../charts/graph/TotalGraph";
-import LastMonthBar from "../charts/bar/LastMonthBar";
 import LastYearBar from "../charts/bar/LastYearBar";
+import LastMonthBar from "../charts/bar/LastMonthBar";
 import SizeChart from "../charts/circle/SizeChart";
 
 import { fetchFinanceStats } from "../../../redux/actions/KPI/FinanceStatsAction";
@@ -125,6 +125,8 @@ class KPIView extends Component {
             <Col lg={4} sm={6}>
               <TotalGraph
                 title="Total Users"
+                xLabel="Months"
+                yLabel="Users"
                 stroke="#ff0000"
                 data={this.state.usersLastYear}
               />
@@ -132,6 +134,8 @@ class KPIView extends Component {
             <Col lg={4} sm={6}>
               <TotalGraph
                 title="Total Groups"
+                xLabel="Months"
+                yLabel="Groups"
                 stroke="#228b22"
                 data={this.state.groupsLastYear}
               />
@@ -139,6 +143,8 @@ class KPIView extends Component {
             <Col lg={4} sm={6}>
               <TotalGraph
                 title="Total Meetings"
+                xLabel="Months"
+                yLabel="Meetings"
                 stroke="#2196f3"
                 data={this.state.meetingsLastYear}
               />
@@ -148,6 +154,8 @@ class KPIView extends Component {
             <Col lg={4} sm={6}>
               <LastMonthBar
                 title="Groups Last Month"
+                xLabel="Months"
+                yLabel="Groups"
                 color="#228b22"
                 data={this.state.groupsLastMonth}
               />
@@ -156,12 +164,11 @@ class KPIView extends Component {
               <SizeChart
                 title="Group Size"
                 colors={[
-                  "#2964d8",
+                  "#ff0000",
                   "#67b6ed",
-                  "#75ad57",
+                  "#2196f3",
                   "#d9ae6c",
-                  "#9edlel",
-                  "#42cb7d"
+                  "#228b22",
                 ]}
                 data={this.state.groupSize}
               />
@@ -170,6 +177,8 @@ class KPIView extends Component {
             <Col lg={4} sm={6}>
               <LastYearBar
                 title="Users Last Year"
+                xLabel="Months"
+                yLabel="Users"
                 color="#ff0000"
                 data={this.state.usersLastYear}
               />

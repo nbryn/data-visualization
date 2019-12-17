@@ -6,6 +6,9 @@ async function fetchLastMonth(collectionToFetch, matchString) {
   return new Promise((resolve, reject) => {
     try {
       connection.db.collection(collectionToFetch, async (err, collection) => {
+        if (err) {
+          console.log(err);
+        }
         const since = moment()
           .startOf("day")
           .subtract(30, "days")

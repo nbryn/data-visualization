@@ -22,13 +22,29 @@ async function fetchGroupsLastYear() {
   return result;
 }
 
+async function fetchGroupsPerCountry() {
+  const connection = await connectToDB();
+
+  return new Promise((resolve, reject) => {
+    try {
+      connection.db.collection("groups", async (err, collection) => {
+
+      })
+    } catch (err) {
+      console.log(err);
+    }
+  });
+}
+
 async function fetchGroup(groupID) {
   const connection = await connectToDB();
   return new Promise((resolve, reject) => {
     try {
       connection.db.collection("groups", async (err, collection) => {
+        if (err) {
+          console.log(err);
+        }
         const result = await collection.find({ _id: groupID });
-
 
         if (result) {
           resolve(result);
@@ -45,6 +61,9 @@ async function fetchGroupSize() {
   return new Promise((resolve, reject) => {
     try {
       connection.db.collection("groups", async (err, collection) => {
+        if (err) {
+          console.log(err);
+        }
         const members = await collection
           .aggregate([
             {
@@ -131,5 +150,6 @@ module.exports = {
   fetchGroupTotal,
   fetchGroupsLastMonth,
   fetchGroupsLastYear,
+  fetchGroupsPerCountry,
   fetchGroupSize
 };

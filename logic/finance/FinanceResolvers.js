@@ -14,8 +14,6 @@ const financeResolvers = {
       const groupWithMostShares = shareResult.mostShares;
       const currencyTotal = currencyResult.length;
 
-    //   console.log(groupWithMostShares);
-    //   console.log(shareResult);
 
       return {
         currencyTotal,

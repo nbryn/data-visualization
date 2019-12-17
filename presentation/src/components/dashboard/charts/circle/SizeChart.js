@@ -17,8 +17,8 @@ class SizeChart extends Component {
 
       const newState = data.map(element => {
         return {
-          name: element.numberOfMembers,
-          value: element.count
+          name: element.count,
+          value: element.numberOfMembers
         }
       })
 

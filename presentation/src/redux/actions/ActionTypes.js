@@ -8,3 +8,4 @@ export const MEETING_STATS = "MEETING_STATS";
 
 export const USERS_STATS = "USERS_STATS";
 export const USERS_LAST_YEAR = "USERS_LAST_YEAR";
+export const USERS_GENDER = "USERS_GENDER";

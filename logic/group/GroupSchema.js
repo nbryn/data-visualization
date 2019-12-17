@@ -11,12 +11,18 @@ const GroupSchema = gql`
     count: Float
   }
 
+  type GroupNGO {
+    name: String
+    count: Float
+  }
+
   type GroupStats {
     groupTotal: Float
     groupSize: [GroupSize]
     groupsLastMonth: LastMonth
     groupsLastYear: LastYear
-    groupsCountry: GroupCountry
+    groupsCountry: [GroupCountry]
+    groupsNGO: [GroupNGO]
   }
 
   extend type Query {

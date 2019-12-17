@@ -7,12 +7,12 @@ async function fetchTotal(collectionString) {
     connection.db.collection(collectionString, async (err, collection) => {
       if (err) {
         console.log(err);
-      }
+      } else {
+        const total = await collection.countDocuments("");
 
-      const total = await collection.countDocuments("");
-
-      if (total) {
-        resolve(total);
+        if (total) {
+          resolve(total);
+        }
       }
     });
   });

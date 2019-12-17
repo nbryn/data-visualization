@@ -1,27 +1,36 @@
 const { gql } = require("apollo-server");
 
 const FinanceSchema = gql`
-  type Currency {
+  type CurrencyStats {
     name: String
-    totalAmount: Float
+    count: Float
   }
 
-  type Share {
+  type LoanStats {
     name: String
-    totalAmount: Float
+    count: Float
+  }
+
+  type ShareStats {
+    name: String
+    count: Float
   }
 
   type MostShares {
     groupName: String
-    amount: Float
+    count: Float
   }
 
   type FinanceStats {
     currencyTotal: Float
-    currencyStats: [Currency]
+    currencyStats: [CurrencyStats]
+    loanTotal: Float
+    loanStats: [LoanStats]
+    loansLastMonth: LastMonth
+    loansLastYear: LastYear
     shareTotal: Float
     mostShares: MostShares
-    shareStats: [Share]
+    shareStats: [ShareStats]
   }
 
   extend type Query {

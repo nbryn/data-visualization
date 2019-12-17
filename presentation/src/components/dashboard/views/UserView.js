@@ -6,13 +6,12 @@ import { KPICard } from "../util/KPICard";
 
 import TotalGraph from "../charts/graph/TotalGraph";
 
-import SoMeCircleChart from "../charts/circle/SoMeCircleChart";
+import SizeChart from "../charts/circle/SizeChart";
 
 import LastMonthBar from "../charts/bar/LastMonthBar";
 import LastYearBar from "../charts/bar/LastYearBar";
 
-import { fetchUserStats } from "../../../redux/actions/KPI/UserStatsAction";
-import { fetchUsersLastYear } from "../../../redux/actions/KPI/UsersLastYearAction";
+import { fetchUserStats, fetchUsersLastYear, fetchUserGender } from "../../../redux/actions/KPI/UserStatsActions";
 import { getCurrentTime } from "../../../util/Date";
 
 class KPIView extends Component {
@@ -27,6 +26,7 @@ class KPIView extends Component {
       userYear: "",
       usersLastMonth: "",
       usersLastYear: "",
+      userGender: "",
       lastUpdate: ""
     };
   }
@@ -41,6 +41,7 @@ class KPIView extends Component {
   async fetchData() {
     await this.props.fetchUserStats();
     await this.props.fetchUsersLastYear();
+    await this.props.fetchUserGender();
 
     const userStats = this.props.userStats;
     const usersLastYear = this.props.usersLastYear;
@@ -51,7 +52,7 @@ class KPIView extends Component {
     let userYearCount = 0;
 
     userStats.signups.forEach(element => (userMonthCount += element.count));
-    usersLastYear.signups.forEach(element => (userYearCount += element.count));
+    usersLastYear.data.forEach(element => (userYearCount += element.count));
 
     this.setState({
       userTotal: userStats.numberOfUsers,
@@ -60,7 +61,8 @@ class KPIView extends Component {
       userMonth: userMonthCount,
       userYear: userYearCount,
       usersLastMonth: userStats.signups,
-      usersLastYear: usersLastYear.signups,
+      usersLastYear: usersLastYear.data,
+      userGender: userStats.userGender,
       lastUpdate: lastUpdatedAt
     });
   }
@@ -126,9 +128,19 @@ class KPIView extends Component {
                 data={this.state.usersLastMonth}
               />
             </Col>
-            <Col lg={4} sm={6}>
-              <SoMeCircleChart />
-            </Col>
+            {/* <Col lg={4} sm={6}>
+              <SizeChart
+              title="Gender Distibution"
+              colors={[
+                "#a4de6c",
+                "#67b6ed",           
+                "#8884d8",
+                "#ff0000",
+                "#2196f3",
+                "#228b22"
+              ]}
+              data={this.state.userGender} />
+            </Col> */}
 
             <Col lg={4} sm={6}>
               <LastYearBar
@@ -151,6 +163,6 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, { fetchUserStats, fetchUsersLastYear })(
+export default connect(mapStateToProps, { fetchUserStats, fetchUsersLastYear, fetchUserGender  })(
   KPIView
 );

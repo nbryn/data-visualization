@@ -1,10 +1,12 @@
-const { fetchMeetingsLastMonth } = require("../../data/actions/MeetingActions");
-const { fetchMeetingTotal } = require("../../data/actions/MeetingActions");
-const { fetchMeetingsLastYear } = require("../../data/actions/MeetingActions");
+const {
+  fetchMeetingsLastMonth,
+  fetchMeetingsLastYear,
+  fetchMeetingTotal
+} = require("../../data/mappers/MeetingMapper");
 
 const meetingResolvers = {
   Query: {
-    meetingStats: async (parent, args, context, info) => {    
+    meetingStats: async (parent, args, context, info) => {
       const meetingTotal = await fetchMeetingTotal();
 
       const meetingsPrevMonth = await fetchMeetingsLastMonth();

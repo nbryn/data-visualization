@@ -6,13 +6,14 @@ import { KPICard } from "../util/KPICard";
 import TotalGraph from "../charts/graph/TotalGraph";
 import SizeChart from "../charts/circle/SizeChart";
 
+import TopBar from "../charts/bar/TopBar";
 import LastMonthBar from "../charts/bar/LastMonthBar";
 import LastYearBar from "../charts/bar/LastYearBar";
 
 import { fetchGroupStats } from "../../../redux/actions/KPI/GroupStatsAction";
 import { getCurrentTime } from "../../../util/Date";
 
-class KPIView extends Component {
+class GroupView extends Component {
   constructor(props) {
     super(props);
 
@@ -25,7 +26,9 @@ class KPIView extends Component {
       groupSize: "",
       groupsLastMonth: "",
       groupsLastYear: "",
-      lastUpdate: "",
+      groupsPerCountry: "",
+      groupsPerNGO: "",
+      lastUpdate: ""
     };
     this.fetchData = this.fetchData.bind(this);
   }
@@ -47,25 +50,25 @@ class KPIView extends Component {
     let groupMonthCount = 0;
     let groupYearCount = 0;
 
-    lastMonth.forEach(
-      element => (groupMonthCount += element.count)
-    );
+    lastMonth.forEach(element => (groupMonthCount += element.count));
     groupStats.groupsLastYear.data.forEach(
       element => (groupYearCount += element.count)
     );
 
     this.setState({
       groupTotal: groupStats.groupTotal,
-      groupsToday:
-        lastMonth[
-          lastMonth.length - 1
-        ].count,
-      groupsTodayText: lastMonth[lastMonth.length - 1].day.day + "/" + lastMonth[lastMonth.length - 1].day.month,
+      groupsToday: lastMonth[lastMonth.length - 1].count,
+      groupsTodayText:
+        lastMonth[lastMonth.length - 1].day.day +
+        "/" +
+        lastMonth[lastMonth.length - 1].day.month,
       groupMonth: groupMonthCount,
       groupYear: groupYearCount,
       groupSize: groupStats.groupSize,
       groupsLastMonth: lastMonth,
       groupsLastYear: groupStats.groupsLastYear.data,
+      groupsPerCountry: groupStats.groupsCountry,
+      groupsPerNGO: groupStats.groupsNGO,
       lastUpdate: lastUpdatedAt
     });
   }
@@ -115,19 +118,39 @@ class KPIView extends Component {
           </Row>
 
           <Row>
-            <Col lg={4} sm={6}></Col>
+            <Col lg={4} sm={6}>
             <TotalGraph
               title="Total Groups"
               stroke="#228b22"
               data={this.state.groupsLastYear}
             />
-            <Col lg={4} sm={6}></Col>
+            </Col>
+            <Col lg={4} sm={6}>
+              <TopBar
+                title="Groups Per Country"
+                xLabel="Countries"
+                yLabel="Groups"
+                color="#ff0000"
+                data={this.state.groupsPerCountry}
+              />
+            </Col>
+            <Col lg={4} sm={6}>
+              <TopBar
+                title="Groups Per NGO"
+                xLabel="NGOs"
+                yLabel="Groups"
+                color="#ff0000"
+                data={this.state.groupsPerNGO}
+              />
+            </Col>
           </Row>
           <Row>
             <Col lg={4} sm={6}>
               <LastMonthBar
                 title="Groups Last Month"
                 color="#228b22"
+                xLabel="Days"
+                yLabel="Groups"
                 data={this.state.groupsLastMonth}
               />
             </Col>
@@ -135,12 +158,12 @@ class KPIView extends Component {
             <SizeChart
                 title="Group Size"
                 colors={[
-                  "#2964d8",
-                  "#67b6ed",
-                  "#75ad57",
-                  "#d9ae6c",
-                  "#9edlel",
-                  "#42cb7d"
+                  "#a4de6c",
+                  "#67b6ed",           
+                  "#8884d8",
+                  "#ff0000",
+                  "#2196f3",
+                  "#228b22"
                 ]}
                 data={this.state.groupSize}
               />
@@ -149,6 +172,8 @@ class KPIView extends Component {
               <LastYearBar
                 title="Groups Last Year"
                 color="#2196f3"
+                xLabel="Months"
+                yLabel="Groups"
                 data={this.state.groupsLastYear}
               />
             </Col>
@@ -165,4 +190,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, { fetchGroupStats })(KPIView);
+export default connect(mapStateToProps, { fetchGroupStats })(GroupView);

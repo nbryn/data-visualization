@@ -1,5 +1,6 @@
 const { connectToDB } = require("../connection");
 
+const { fetchGroupStats } = require("../fetch/fetchGroupStats");
 const { fetchLastMonth } = require("../fetch/fetchLastMonth");
 const { fetchLastYear } = require("../fetch/fetchLastYear");
 const { fetchTotal } = require("../fetch/fetchTotal");
@@ -23,17 +24,29 @@ async function fetchGroupsLastYear() {
 }
 
 async function fetchGroupsPerCountry() {
-  const connection = await connectToDB();
+  const result = await fetchGroupStats("$country");
 
-  return new Promise((resolve, reject) => {
-    try {
-      connection.db.collection("groups", async (err, collection) => {
-
-      })
-    } catch (err) {
-      console.log(err);
-    }
+  const groups = result.map(element => {
+    return {
+      name: element._id,
+      count: element.count
+    };
   });
+
+  return groups;
+}
+
+async function fetchGroupsPerNGO() {
+  const result = await fetchGroupStats("$ngoOrganization");
+
+  const groups = result.map(element => {
+    return {
+      name: element._id,
+      count: element.count
+    };
+  });
+
+  return groups;
 }
 
 async function fetchGroup(groupID) {
@@ -151,5 +164,6 @@ module.exports = {
   fetchGroupsLastMonth,
   fetchGroupsLastYear,
   fetchGroupsPerCountry,
+  fetchGroupsPerNGO,
   fetchGroupSize
 };

@@ -1,7 +1,8 @@
 const axios = require("axios");
 
-const { fetchLastYear } = require("../fetch/fetchLastYear");
+const { connectToDB } = require("../connection");
 
+const { fetchLastYear } = require("../fetch/fetchLastYear");
 const { setTokenInHeader } = require("../../logic/auth/Auth");
 
 const url =
@@ -94,9 +95,9 @@ async function fetchCurrentUser(context) {
 }
 
 async function fetchUserStats(context) {
-    setTokenInHeader(context);
-    
-    const data = `query {
+  setTokenInHeader(context);
+
+  const data = `query {
           userStats{
             numberOfUsers
             signups {
@@ -109,35 +110,83 @@ async function fetchUserStats(context) {
               }    
           }
           }`;
-  
-    let response;
-  
-    try {
-      response = await axios({
-        url,
-        method: "post",
-        data: {
-          query: data
-        }
-      });
-  
-      if (response.data.errors) {
-        return response.data.errors[0].extensions.code;
-      } else {
-        return response.data.data.userStats;
+
+  let response;
+
+  try {
+    response = await axios({
+      url,
+      method: "post",
+      data: {
+        query: data
       }
-    } catch (err) {
-      console.log(err);
+    });
+
+    if (response.data.errors) {
+      return response.data.errors[0].extensions.code;
+    } else {
+      return response.data.data.userStats;
     }
+  } catch (err) {
+    console.log(err);
   }
+}
 
 async function fetchUsersLastYear() {
   const result = await fetchLastYear("users", "signupDate");
 
-
-
   return result;
 }
 
+async function fetchGenderStats() {
+  const connection = await connectToDB();
+  return new Promise((resolve, reject) => {
+    try {
+      connection.db.collection("users", async (err, collection) => {
+        if (err) {
+          console.log(err);
+        } else {
+          const result = await collection
+            .aggregate([
+              {
+                $group: {
+                  _id: "$gender",
+                  count: { $sum: 1 }
+                }
+              }
+            ])
+            .toArray();
 
-module.exports = { validateLogin, fetchCurrentUser, fetchUserStats, fetchUsersLastYear };
+          const genders = {
+            female: "",
+            male: ""
+          };
+
+          result.forEach(element => {
+            if (element._id === "FEMALE") {
+              genders.female = element.count;
+            } else if (element._id === "MALE") {
+              genders.male = element.count;
+            }
+          });
+
+          console.log(genders);
+
+          if (genders) {
+            resolve(genders);
+          }
+        }
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  });
+}
+
+module.exports = {
+  validateLogin,
+  fetchCurrentUser,
+  fetchUserStats,
+  fetchUsersLastYear,
+  fetchGenderStats
+};

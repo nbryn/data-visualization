@@ -1,7 +1,11 @@
-const { fetchGroupTotal } = require("../../data/actions/GroupActions");
-const { fetchGroupSize } = require("../../data/actions/GroupActions");
-const { fetchGroupsLastMonth } = require("../../data/actions/GroupActions");
-const { fetchGroupsLastYear } = require("../../data/actions/GroupActions");
+const {
+  fetchGroupTotal,
+  fetchGroupSize,
+  fetchGroupsLastMonth,
+  fetchGroupsLastYear,
+  fetchGroupsPerCountry,
+  fetchGroupsPerNGO
+} = require("../../data/mappers/GroupMapper");
 
 const groupResolvers = {
   Query: {
@@ -9,6 +13,10 @@ const groupResolvers = {
       const groupTotal = await fetchGroupTotal();
 
       const groupSize = await fetchGroupSize();
+
+      const groupsNGO = await fetchGroupsPerNGO();
+
+      const groupsCountry = await fetchGroupsPerCountry();
 
       const groupsPrevMonth = await fetchGroupsLastMonth();
 
@@ -18,7 +26,9 @@ const groupResolvers = {
         groupTotal,
         groupSize: groupSize,
         groupsLastMonth: { data: groupsPrevMonth },
-        groupsLastYear: { data: groupsPrevYear }
+        groupsLastYear: { data: groupsPrevYear },
+        groupsCountry: groupsCountry,
+        groupsNGO: groupsNGO
       };
     }
   }

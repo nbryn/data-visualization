@@ -1,6 +1,8 @@
 const { gql } = require("apollo-server");
 
 const DefaultSchema = gql`
+  scalar JSON
+
   type Day {
     year: Float!
     month: Float!

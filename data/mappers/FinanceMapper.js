@@ -1,3 +1,6 @@
+const { fetchTotal } = require("../fetch/fetchTotal");
+const { fetchLastMonth } = require("../fetch/fetchLastMonth");
+const { fetchLastYear } = require("../fetch/fetchLastYear");
 const { fetchFinanceStats } = require("../fetch/fetchFinanceStats");
 
 async function fetchCurrencyStats() {
@@ -10,7 +13,7 @@ async function fetchCurrencyStats() {
   const currencyStats = currencyResult.map(element => {
     return {
       name: element._id,
-      totalAmount: element.totalAmount
+      count: element.totalAmount
     };
   });
 
@@ -27,27 +30,26 @@ async function fetchShareStats() {
   let shareTotal = 0;
   let groupWithMostShares = {
     groupName: "",
-    amount: ""
+    count: ""
   };
 
   const shareTemp = shareResult.map(element => {
     shareTotal += element.totalAmount;
-    if (element.totalAmount > groupWithMostShares.amount) {
+    if (element.totalAmount > groupWithMostShares.count) {
       groupWithMostShares = {
         groupName: element._id,
-        amount: element.totalAmount
+        count: element.totalAmount
       };
     }
     return {
       name: element._id.toString().substring(0, 5),
-      totalAmount: element.totalAmount
+      count: element.totalAmount
     };
   });
 
   shareTemp.sort((ele1, ele2) => {
-    return ele2.totalAmount - ele1.totalAmount;
+    return ele2.count - ele1.count;
   });
-
 
   const shareStats = {
     shareTotal: shareTotal,
@@ -57,4 +59,28 @@ async function fetchShareStats() {
 
   return shareStats;
 }
-module.exports = { fetchCurrencyStats, fetchShareStats };
+
+async function fetchLoanTotal() {
+  const result = await fetchTotal("groupmeetingloans");
+
+  return result;
+}
+
+async function fetchLoansLastMonth() {
+  const result = await fetchLastMonth("groupmeetingloans", "registrationDate");
+
+  return result;
+}
+
+async function fetchLoansLastYear() {
+  const result = await fetchLastYear("groupmeetingloans", "registrationDate");
+
+  return result;
+}
+module.exports = {
+  fetchCurrencyStats,
+  fetchShareStats,
+  fetchLoanTotal,
+  fetchLoansLastMonth,
+  fetchLoansLastYear
+};

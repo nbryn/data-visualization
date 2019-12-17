@@ -5,24 +5,28 @@ async function fetchFinanceStats(collectionToFetch, matchString, idString) {
   return new Promise((resolve, reject) => {
     try {
       connection.db.collection(collectionToFetch, async (err, collection) => {
-        const result = await collection
-          .aggregate([
-            {
-              $match: {
-                [matchString]: { $gt: 0 }
+        if (err) {
+          console.log(err);
+        } else {
+          const result = await collection
+            .aggregate([
+              {
+                $match: {
+                  [matchString]: { $gt: 0 }
+                }
+              },
+              {
+                $group: {
+                  _id: idString,
+                  totalAmount: { $sum: "$" + matchString }
+                }
               }
-            },
-            {
-              $group: {
-                _id: idString,
-                totalAmount: { $sum: "$" + matchString }
-              }
-            }
-          ])
-          .toArray();
+            ])
+            .toArray();
 
-        if (result) {
-          resolve(result);
+          if (result) {
+            resolve(result);
+          }
         }
       });
     } catch (err) {

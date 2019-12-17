@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Barr from "./Bar";
 
-class Top10Bar extends Component {
+class TopBar extends Component {
   constructor(props) {
     super(props);
 
@@ -18,7 +18,7 @@ class Top10Bar extends Component {
 
         return {
           name: element.name,
-          value: element.totalAmount
+          value: element.count
         };
       });
 
@@ -47,4 +47,4 @@ class Top10Bar extends Component {
   }
 }
 
-export default Top10Bar;
+export default TopBar;

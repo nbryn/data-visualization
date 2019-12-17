@@ -3,7 +3,8 @@ import {
   GROUP_STATS,
   MEETING_STATS,
   USERS_STATS,
-  USERS_LAST_YEAR
+  USERS_LAST_YEAR,
+  USERS_GENDER
 } from "../actions/ActionTypes";
 
 export default function(state = {}, action) {
@@ -28,6 +29,10 @@ export default function(state = {}, action) {
     case USERS_LAST_YEAR:
       return Object.assign({}, state, {
         usersLastYear: action.payload
+      });
+    case USERS_GENDER:
+      return Object.assign({}, state, {
+        userGender: action.payload
       });
 
     default:

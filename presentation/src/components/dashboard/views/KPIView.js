@@ -11,8 +11,7 @@ import SizeChart from "../charts/circle/SizeChart";
 import { fetchFinanceStats } from "../../../redux/actions/KPI/FinanceStatsAction";
 import { fetchGroupStats } from "../../../redux/actions/KPI/GroupStatsAction";
 import { fetchMeetingStats } from "../../../redux/actions/KPI/MeetingStatsAction";
-import { fetchUserStats } from "../../../redux/actions/KPI/UserStatsAction";
-import { fetchUsersLastYear } from "../../../redux/actions/KPI/UsersLastYearAction";
+import { fetchUserStats, fetchUsersLastYear } from "../../../redux/actions/KPI/UserStatsActions";
 import { getCurrentTime } from "../../../util/Date";
 
 class KPIView extends Component {
@@ -55,7 +54,9 @@ class KPIView extends Component {
     const groupStats = this.props.groupStats;
     const meetingsStats = this.props.meetingStats;
     const userStats = this.props.userStats;
-    const usersLastYear = this.props.usersLastYear.signups;
+    const usersLastYear = this.props.usersLastYear.data;
+
+    console.log(this.props);
 
     let lastUpdatedAt = getCurrentTime();
 
@@ -164,11 +165,12 @@ class KPIView extends Component {
               <SizeChart
                 title="Group Size"
                 colors={[
+                  "#a4de6c",
+                  "#67b6ed",           
+                  "#8884d8",
                   "#ff0000",
-                  "#67b6ed",
                   "#2196f3",
-                  "#d9ae6c",
-                  "#228b22",
+                  "#228b22"
                 ]}
                 data={this.state.groupSize}
               />

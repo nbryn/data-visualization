@@ -8,40 +8,41 @@ async function fetchLastYear(collectionToFetch, matchString) {
       connection.db.collection(collectionToFetch, async (err, collection) => {
         if (err) {
           console.log(err);
-        }
-        const since = moment()
-          .startOf("day")
-          .subtract(365, "days")
-          .toDate();
+        } else {
+          const since = moment()
+            .startOf("day")
+            .subtract(365, "days")
+            .toDate();
 
-        const signupsInPeriod = await collection
-          .aggregate([
-            {
-              $match: {
-                [matchString]: { $gt: since },
-              }
-            },
-            {
-              $group: {
-                _id: {
-                  month: { $month: "$" + matchString }
-                },
-                count: { $sum: 1 }
-              }
-            },
-            { $sort: { _id: 1 } }
-          ])
-          .toArray();
+          const signupsInPeriod = await collection
+            .aggregate([
+              {
+                $match: {
+                  [matchString]: { $gt: since }
+                }
+              },
+              {
+                $group: {
+                  _id: {
+                    month: { $month: "$" + matchString }
+                  },
+                  count: { $sum: 1 }
+                }
+              },
+              { $sort: { _id: 1 } }
+            ])
+            .toArray();
 
-        const signups = signupsInPeriod.map(element => {
-          return {
-            month: element._id.month,
-            count: element.count
-          };
-        });
+          const signups = signupsInPeriod.map(element => {
+            return {
+              month: element._id.month,
+              count: element.count
+            };
+          });
 
-        if (signups) {
-          resolve(signups);
+          if (signups) {
+            resolve(signups);
+          }
         }
       });
     } catch (err) {

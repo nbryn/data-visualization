@@ -28,6 +28,14 @@ export const fetchGroupStats = () => async dispatch => {
         count
         }
       }
+      groupsCountry{
+        name
+        count
+      }
+      groupsNGO{
+        name
+        count
+      }
     }
   }`;
 

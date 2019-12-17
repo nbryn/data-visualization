@@ -9,16 +9,33 @@ export const fetchFinanceStats = () => async dispatch => {
       currencyTotal
       currencyStats{
         name
-        totalAmount
+        count
       }
       shareTotal
       mostShares{
         groupName
-        amount
+        count
       }
       shareStats{
         name
-        totalAmount
+        count
+      }
+      loanTotal
+      loansLastYear{
+        data{
+          month
+          count
+        }
+      }
+      loansLastMonth{
+        data{
+          count
+          day{
+            day
+          month
+          year
+          }
+        }
       }
     }
   }`;

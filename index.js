@@ -16,6 +16,8 @@ const userResolvers = require("./logic/user/UserResolvers");
 
 const app = express();
 
+app.use(express.static("presentation/build"));
+
 const resolvers = merge(
   financeResolvers,
   groupResolvers,
@@ -50,6 +52,15 @@ server.applyMiddleware({
   app,
   cors: corsOptions
 });
+
+if (process.env.NODE_ENV === "PRODUCTION") {
+  const path = require("path");
+  app.get("/*", (request, response) => {
+    response.sendfile(
+      path.resolve(__dirname, "/presentation", "build", "index.js")
+    );
+  });
+}
 
 app.listen(process.env.PORT || 4000, () =>
   console.log(`Server ready at http://localhost:4000/graphql`)

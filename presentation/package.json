@@ -25,17 +25,11 @@
     "minify-sass": "node-sass src/assets/sass/dashboard.scss src/assets/css/dashboard.min.css --output-style compressed",
     
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
+  "browserslist": [
+    "defaults",
+    "not IE 11",
+    "not IE_Mob 11",
+    "maintained node versions"
     ]
-  },
-  "homepage": "https://jamiipay.herokuapp.com/"
 }
+

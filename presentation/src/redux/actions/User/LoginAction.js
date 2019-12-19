@@ -2,7 +2,7 @@ import axios from "axios";
 
 import { setTokenInLocalStorage } from "../../../security/Token";
 
-const url = "http://localhost:4000/graphql";
+const url = "/graphql";
 
 export const login = (username, password, history) => async dispatch => {
   const data = `mutation signin {

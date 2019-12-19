@@ -4,7 +4,7 @@ import axios from "axios";
 import { setTokenInHeader } from "../../../security/Token";
 
 const url =
-"http://localhost:4000/graphql";
+"/graphql";
 
 export const setCurrentUser = () => async dispatch => {
   const data = `query{

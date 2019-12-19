@@ -2,6 +2,14 @@
   "name": "dashboard",
   "version": "1.0.0",
   "proxy":"http://localhost:4000",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "compile-sass": "node-sass src/assets/sass/dashboard.scss src/assets/css/dashboard.css",
+    "minify-sass": "node-sass src/assets/sass/dashboard.scss src/assets/css/dashboard.min.css --output-style compressed",   
+  },
   "dependencies": {
     "axios": "^0.19.0",
     "bootstrap": "3.3.7",
@@ -16,14 +24,11 @@
     "redux": "^4.0.4",
     "redux-thunk": "^2.3.0"
   },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject",
-    "compile-sass": "node-sass src/assets/sass/dashboard.scss src/assets/css/dashboard.css",
-    "minify-sass": "node-sass src/assets/sass/dashboard.scss src/assets/css/dashboard.min.css --output-style compressed",
-    
-  }
+  "browserslist": [
+    "defaults",
+    "not IE 11",
+    "not IE_Mob 11",
+    "maintained node versions"
+  ]
 }
 

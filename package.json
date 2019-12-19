@@ -4,6 +4,7 @@
   "description": "Dashboard",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "server": "nodemon index.js",
     "client": "npm start --prefix presentation",
     "dev": "concurrently \"npm run server\" \"npm run client\" "

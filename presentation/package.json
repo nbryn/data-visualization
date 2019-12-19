@@ -27,7 +27,7 @@
     "eject": "react-scripts eject",
     "compile-sass": "node-sass src/assets/sass/dashboard.scss src/assets/css/dashboard.css",
     "minify-sass": "node-sass src/assets/sass/dashboard.scss src/assets/css/dashboard.min.css --output-style compressed",
-    "heroku-postbuild": "cd client && npm install && npm run build"
+    
   },
   "browserslist": {
     "production": [

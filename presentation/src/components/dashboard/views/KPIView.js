@@ -168,7 +168,7 @@ class KPIView extends Component {
               title="Gender Distribution"
               colors={[
                 "#1828E8",
-                "#ff0000",                        
+                "#228b22",                        
               ]}
               data={this.state.userGender} />
             </Col>

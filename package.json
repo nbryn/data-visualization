@@ -3,12 +3,16 @@
   "version": "1.0.0",
   "description": "Dashboard",
   "main": "index.js",
+  "engines": {
+    "npm": "6.12.0",
+    "node": "12.13.0"
+  },
   "scripts": {
     "start": "node index.js",
     "server": "nodemon index.js",
     "client": "npm start --prefix presentation",
     "dev": "concurrently \"npm run server\" \"npm run client\" ",
-    "heroku-postbuild": "cd client && npm install && npm run build"
+    "heroku-postbuild": "cd presentation && npm install && npm run build"
   },
   "repository": {
     "type": "git",

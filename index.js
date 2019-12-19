@@ -2,6 +2,9 @@ const { ApolloServer } = require("apollo-server-express");
 const { merge } = require("lodash");
 const { makeExecutableSchema } = require("graphql-tools");
 const express = require("express");
+const cors = require("cors");
+
+
 
 const DefaultSchema = require("./logic/index");
 const FinanceSchema = require("./logic/finance/FinanceSchema");
@@ -15,6 +18,8 @@ const meetingResolvers = require("./logic/meeting/MeetingResolvers");
 const userResolvers = require("./logic/user/UserResolvers");
 
 const app = express();
+
+app.use(cors());
 
 app.use(express.static("presentation/build"));
 

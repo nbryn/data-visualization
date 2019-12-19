@@ -24,8 +24,6 @@ export const login = (username, password, history) => async dispatch => {
       }
     });
 
-    console.log(response);
-
     const error = response.data.data.data.error;
 
     if (error) {

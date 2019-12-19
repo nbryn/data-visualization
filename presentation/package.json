@@ -24,12 +24,6 @@
     "compile-sass": "node-sass src/assets/sass/dashboard.scss src/assets/css/dashboard.css",
     "minify-sass": "node-sass src/assets/sass/dashboard.scss src/assets/css/dashboard.min.css --output-style compressed",
     
-  },
-  "browserslist": [
-    "defaults",
-    "not IE 11",
-    "not IE_Mob 11",
-    "maintained node versions"
-  ]
+  }
 }
 

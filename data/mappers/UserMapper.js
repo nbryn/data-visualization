@@ -149,6 +149,11 @@ async function fetchGenderStats() {
           const result = await collection
             .aggregate([
               {
+                $match: {
+                  $or: [{ gender: "FEMALE" }, { gender: "MALE" }]
+                }
+              },
+              {
                 $group: {
                   _id: "$gender",
                   count: { $sum: 1 }
@@ -157,20 +162,12 @@ async function fetchGenderStats() {
             ])
             .toArray();
 
-          const genders = {
-            female: "",
-            male: ""
-          };
-
-          result.forEach(element => {
-            if (element._id === "FEMALE") {
-              genders.female = element.count;
-            } else if (element._id === "MALE") {
-              genders.male = element.count;
-            }
+          const genders = result.map(element => {
+            return {
+              value: element._id,
+              count: element.count
+            };
           });
-
-          console.log(genders);
 
           if (genders) {
             resolve(genders);

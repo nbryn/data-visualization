@@ -132,6 +132,7 @@ class GroupView extends Component {
                 yLabel="Groups"
                 color="#ff0000"
                 data={this.state.groupsPerCountry}
+                css="card-graph card-stats"
               />
             </Col>
             <Col lg={4} sm={6}>
@@ -141,6 +142,7 @@ class GroupView extends Component {
                 yLabel="Groups"
                 color="#ff0000"
                 data={this.state.groupsPerNGO}
+                css="card-graph card-stats"
               />
             </Col>
           </Row>

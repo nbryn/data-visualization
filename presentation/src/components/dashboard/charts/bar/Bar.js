@@ -15,7 +15,7 @@ class Barr extends Component {
   render() {
     return (
       <ResponsiveContainer width={400} height="80%">
-        <div className="card-circle card-stats">
+        
           <div className="content">
             <Col xs={8}>
               <div className="numbers">
@@ -39,7 +39,7 @@ class Barr extends Component {
               <Bar dataKey="value" fill={this.props.color}  />>
             </BarChart>
           </div>
-        </div>
+       
       </ResponsiveContainer>
     );
   }

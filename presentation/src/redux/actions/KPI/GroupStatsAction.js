@@ -2,14 +2,14 @@ import axios from "axios";
 
 import { GROUP_STATS } from "../ActionTypes";
 
-const url = "http://localhost:4000/graphql";
+const url = "/graphql";
 
 export const fetchGroupStats = () => async dispatch => {
   const data = `query{
     groupStats{
       groupTotal
       groupSize{
-        numberOfMembers
+        value
         count
       }
       groupsLastMonth{

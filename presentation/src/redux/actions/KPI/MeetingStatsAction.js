@@ -2,7 +2,7 @@ import axios from "axios";
 
 import { MEETING_STATS } from "../ActionTypes";
 
-const url = "http://localhost:4000/graphql";
+const url = "/graphql";
 
 export const fetchMeetingStats = () => async dispatch => {
   const data = `query{

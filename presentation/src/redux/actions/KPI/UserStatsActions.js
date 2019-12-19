@@ -3,7 +3,7 @@ import axios from "axios";
 
 import { setTokenInHeader } from "../../../security/Token";
 
-const url = "http://localhost:4000/graphql";
+const url = "/graphql";
 
 export const fetchUserStats = () => async dispatch => {
   const data = `query {
@@ -71,8 +71,8 @@ export const fetchUsersLastYear = () => async dispatch => {
 export const fetchUserGender = () => async dispatch => {
   const data = `query{
     userGender{
-    male
-    female
+    value
+    count
     }
   }`;
 

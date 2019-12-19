@@ -139,7 +139,7 @@ async function fetchGroupSize() {
         for (let key in size) {
           if (size[key] > 0) {
             let temp = {
-              numberOfMembers: key,
+              value: key,
               count: size[key]
             };
             groupSizeTemp.push(temp);

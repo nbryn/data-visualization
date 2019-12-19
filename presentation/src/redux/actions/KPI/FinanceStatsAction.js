@@ -1,7 +1,7 @@
 import axios from "axios";
 import { FINANCE_STATS } from "../ActionTypes";
 
-const url = "http://localhost:4000/graphql";
+const url = "/graphql";
 
 export const fetchFinanceStats = () => async dispatch => {
   const data = `query{

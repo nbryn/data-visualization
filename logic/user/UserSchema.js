@@ -12,13 +12,13 @@ const UserSchema = gql`
   }
 
   type UserGender {
-    male: Float
-    female: Float
+    value: String
+    count: Float
   }
 
   extend type Query {
     me: JSON
-    userGender: UserGender
+    userGender: [UserGender]
     userStats: JSON
     usersLastYear: LastYear
   }

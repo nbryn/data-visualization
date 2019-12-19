@@ -51,6 +51,6 @@ server.applyMiddleware({
   cors: corsOptions
 });
 
-app.listen({ port: 4000 }, () =>
+app.listen({ port: process.env.port || 4000 }, () =>
   console.log(`Server ready at http://localhost:4000/graphql`)
 );

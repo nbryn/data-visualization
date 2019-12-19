@@ -9,6 +9,12 @@ class CircleChart extends Component {
     this.state = {
       colors: ""
     };
+    
+    this.renderLabel = this.renderLabel.bind(this);
+  }
+
+  renderLabel(entry) {
+    return entry.name;
   }
 
   componentDidMount() {
@@ -28,7 +34,7 @@ class CircleChart extends Component {
             </Col>
             <PieChart width={400} height={300}>
               <Pie
-               label="s"
+                label={this.renderLabel}
                 dataKey="value"
                 nameKey="name"
                 data={this.props.data}

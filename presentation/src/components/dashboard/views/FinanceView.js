@@ -117,6 +117,7 @@ class FinanceView extends Component {
             xLabel="Group Name"
             yLabel="Shares"
             data={this.state.shareStats}
+            css="card-graph card-stats"
           />
           </Col>
             </Row>
@@ -147,6 +148,7 @@ class FinanceView extends Component {
             xLabel="Currency"
             yLabel="Amount"
             data={this.state.currencyStats}
+            css="card-circle card-stats"
           />
           </Col>
           

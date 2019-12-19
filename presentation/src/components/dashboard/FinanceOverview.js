@@ -10,7 +10,7 @@ class FinanceOverview extends Component {
       <div className="wrapper">
         <Sidebar />
         <div id="main-panel" className="main-panel" ref="mainPanel">
-          <Header title="Groups" />
+          <Header title="Finance" />
           <FinanceView />
         </div>
       </div>

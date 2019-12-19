@@ -27,8 +27,6 @@ const userResolvers = {
     usersLastYear: async (parent, args, context, info) => {
       const result = await fetchUsersLastYear();
 
-      console.log(result);
-
       return {
         data: result
       };
@@ -36,10 +34,8 @@ const userResolvers = {
     userGender: async (parent, args, context, info) => {
       const result = await fetchGenderStats();
 
-      return {
-        female: result.female,
-        male: result.male
-      };
+      return result;
+      
     },
     me: async (parent, args, context, info) => {
       const result = fetchCurrentUser(context);

@@ -5,6 +5,7 @@
     "npm": "6.12.0",
     "node": "12.13.0"
   },
+  "proxy":"http://localhost:4000",
   "dependencies": {
     "axios": "^0.19.0",
     "bootstrap": "3.3.7",
@@ -25,7 +26,8 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "compile-sass": "node-sass src/assets/sass/dashboard.scss src/assets/css/dashboard.css",
-    "minify-sass": "node-sass src/assets/sass/dashboard.scss src/assets/css/dashboard.min.css --output-style compressed"
+    "minify-sass": "node-sass src/assets/sass/dashboard.scss src/assets/css/dashboard.min.css --output-style compressed",
+    "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "browserslist": {
     "production": [
@@ -39,6 +41,5 @@
       "last 1 safari version"
     ]
   },
-  "homepage": "https://jamiipay.herokuapp.com/",
-  "proxy": "http://localhost:3000"
+  "homepage": "https://jamiipay.herokuapp.com/"
 }

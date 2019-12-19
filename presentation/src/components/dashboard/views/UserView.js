@@ -45,6 +45,7 @@ class KPIView extends Component {
 
     const userStats = this.props.userStats;
     const usersLastYear = this.props.usersLastYear;
+    const userGender = this.props.userGender
 
     let lastUpdatedAt = getCurrentTime();
 
@@ -62,7 +63,7 @@ class KPIView extends Component {
       userYear: userYearCount,
       usersLastMonth: userStats.signups,
       usersLastYear: usersLastYear.data,
-      userGender: userStats.userGender,
+      userGender: userGender,
       lastUpdate: lastUpdatedAt
     });
   }
@@ -128,19 +129,15 @@ class KPIView extends Component {
                 data={this.state.usersLastMonth}
               />
             </Col>
-            {/* <Col lg={4} sm={6}>
+            <Col lg={4} sm={6}>
               <SizeChart
-              title="Gender Distibution"
+              title="Gender Distribution"
               colors={[
-                "#a4de6c",
-                "#67b6ed",           
-                "#8884d8",
-                "#ff0000",
-                "#2196f3",
-                "#228b22"
+                "#1828E8",
+                "#ff0000",                        
               ]}
               data={this.state.userGender} />
-            </Col> */}
+            </Col>
 
             <Col lg={4} sm={6}>
               <LastYearBar
@@ -159,7 +156,8 @@ class KPIView extends Component {
 const mapStateToProps = state => {
   return {
     userStats: state.KPI.userStats,
-    usersLastYear: state.KPI.usersLastYear
+    usersLastYear: state.KPI.usersLastYear,
+    userGender: state.KPI.userGender
   };
 };
 

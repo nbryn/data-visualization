@@ -11,7 +11,7 @@ import SizeChart from "../charts/circle/SizeChart";
 import { fetchFinanceStats } from "../../../redux/actions/KPI/FinanceStatsAction";
 import { fetchGroupStats } from "../../../redux/actions/KPI/GroupStatsAction";
 import { fetchMeetingStats } from "../../../redux/actions/KPI/MeetingStatsAction";
-import { fetchUserStats, fetchUsersLastYear } from "../../../redux/actions/KPI/UserStatsActions";
+import { fetchUserStats, fetchUsersLastYear, fetchUserGender } from "../../../redux/actions/KPI/UserStatsActions";
 import { getCurrentTime } from "../../../util/Date";
 
 class KPIView extends Component {
@@ -22,6 +22,7 @@ class KPIView extends Component {
       userTotal: "",
       usersToday: "",
       usersLastYear: "",
+      userGender: "",
       groupTotal: "",
       groupSize: "",
       groupsLastMonth: "",
@@ -49,14 +50,14 @@ class KPIView extends Component {
     await this.props.fetchMeetingStats();
     await this.props.fetchUserStats();
     await this.props.fetchUsersLastYear();
+    await this.props.fetchUserGender();
 
     const financeStats = this.props.financeStats;
     const groupStats = this.props.groupStats;
     const meetingsStats = this.props.meetingStats;
     const userStats = this.props.userStats;
     const usersLastYear = this.props.usersLastYear.data;
-
-    console.log(this.props);
+    const userGender = this.props.userGender;
 
     let lastUpdatedAt = getCurrentTime();
 
@@ -65,6 +66,7 @@ class KPIView extends Component {
       userTotalLastUpdate: lastUpdatedAt,
       usersToday: userStats.signups[10].count,
       usersLastYear: usersLastYear,
+      userGender: userGender,
       groupTotal: groupStats.groupTotal,
       groupSize: groupStats.groupSize,
       groupsLastMonth: groupStats.groupsLastMonth.data,
@@ -162,18 +164,13 @@ class KPIView extends Component {
               />
             </Col>
             <Col lg={4} sm={6}>
-              <SizeChart
-                title="Group Size"
-                colors={[
-                  "#a4de6c",
-                  "#67b6ed",           
-                  "#8884d8",
-                  "#ff0000",
-                  "#2196f3",
-                  "#228b22"
-                ]}
-                data={this.state.groupSize}
-              />
+            <SizeChart
+              title="Gender Distribution"
+              colors={[
+                "#1828E8",
+                "#ff0000",                        
+              ]}
+              data={this.state.userGender} />
             </Col>
 
             <Col lg={4} sm={6}>
@@ -199,7 +196,8 @@ const mapStateToProps = state => {
     meetingStats: state.KPI.meetingStats,
     moneyStats: state.KPI.moneyStats,
     userStats: state.KPI.userStats,
-    usersLastYear: state.KPI.usersLastYear
+    usersLastYear: state.KPI.usersLastYear,
+    userGender: state.KPI.userGender
   };
 };
 
@@ -208,5 +206,6 @@ export default connect(mapStateToProps, {
   fetchGroupStats,
   fetchMeetingStats,
   fetchUserStats,
-  fetchUsersLastYear
+  fetchUsersLastYear,
+  fetchUserGender
 })(KPIView);

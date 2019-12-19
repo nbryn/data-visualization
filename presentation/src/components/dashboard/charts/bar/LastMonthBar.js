@@ -34,8 +34,8 @@ class LastMonthBar extends Component {
     const xLabel = { value: this.props.xLabel, position: "inside", dy: +10 };
 
     return (
-      <div>
-        <Barr
+      <div className="card-circle card-stats">
+        <Barr 
           title={title}
           data={this.state.data}
           yLabel={yLabel}

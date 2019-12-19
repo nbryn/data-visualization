@@ -36,8 +36,8 @@ class LastYearBar extends Component {
     const xLabel = { value: "Months", position: "center", dy: +10 };
 
     return (
-      <div>
-        <Barr
+      <div className="card-circle card-stats">
+        <Barr 
           title={title}
           data={this.state.data}
           yLabel={yLabel}

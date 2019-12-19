@@ -110,13 +110,13 @@ class GroupView extends Component {
           </Row>
 
           <Row>
-            <Col lg={4} sm={6}></Col>
+            <Col lg={4} sm={6}>
             <TotalGraph
               title="Total Meetings"
               stroke="#228b22"
               data={this.state.meetingsLastYear}
             />
-            <Col lg={4} sm={6}></Col>
+            </Col>
           </Row>
           <Row>
             <Col lg={4} sm={6}>

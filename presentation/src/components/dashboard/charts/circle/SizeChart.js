@@ -15,10 +15,12 @@ class SizeChart extends Component {
 
       const data = this.props.data;
 
+      console.log(this.props);
+
       const newState = data.map(element => {
         return {
-          name: element.count,
-          value: element.numberOfMembers
+          name:  element.value,
+          value: element.count
         }
       })
 

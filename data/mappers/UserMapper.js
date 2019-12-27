@@ -134,9 +134,21 @@ async function fetchUserStats(context) {
 }
 
 async function fetchUserTotal() {
-  const userTotal = await fetchTotal("users");
+  const connection = await connectToDB();
 
-  return userTotal;
+  return new Promise((resolve, reject) => {
+    connection.db.collection("users", async (err, collection) => {
+      if (err) {
+        console.log(err);
+      } else {
+        const total = await collection.countDocuments({ state: "ACTIVE" });
+
+        if (total) {
+          resolve(total);
+        }
+      }
+    });
+  });
 }
 
 async function fetchUsersLastYear() {

@@ -1,4 +1,5 @@
 import {
+  KEY_STATS,
   FINANCE_STATS,
   GROUP_STATS,
   MEETING_STATS,
@@ -9,6 +10,10 @@ import {
 
 export default function(state = {}, action) {
   switch (action.type) {
+    case KEY_STATS:
+      return Object.assign({}, state, {
+        keyStats: action.payload
+      });
     case FINANCE_STATS:
       return Object.assign({}, state, {
         financeStats: action.payload

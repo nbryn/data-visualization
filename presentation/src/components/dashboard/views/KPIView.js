@@ -8,10 +8,8 @@ import LastYearBar from "../charts/bar/LastYearBar";
 import LastMonthBar from "../charts/bar/LastMonthBar";
 import SizeChart from "../charts/circle/SizeChart";
 
-import { fetchFinanceStats } from "../../../redux/actions/KPI/FinanceStatsAction";
-import { fetchGroupStats } from "../../../redux/actions/KPI/GroupStatsAction";
-import { fetchMeetingStats } from "../../../redux/actions/KPI/MeetingStatsAction";
-import { fetchUserStats, fetchUsersLastYear, fetchUserGender } from "../../../redux/actions/KPI/UserStatsActions";
+import { fetchKeyStats } from "../../../redux/actions/KPI/KeyStatsAction";
+
 import { getCurrentTime } from "../../../util/Date";
 
 class KPIView extends Component {
@@ -24,17 +22,13 @@ class KPIView extends Component {
       usersLastYear: "",
       userGender: "",
       groupTotal: "",
-      groupSize: "",
       groupsLastMonth: "",
       groupsLastYear: "",
       meetingTotal: "",
-      meetingsLastMonth: "",
       meetingsLastYear: "",
       shareTotal: "",
       lastUpdate: ""
     };
-
-    this.fetchData = this.fetchData.bind(this);
   }
   componentDidMount() {
     this.fetchData();
@@ -45,36 +39,22 @@ class KPIView extends Component {
   }
 
   async fetchData() {
-    await this.props.fetchFinanceStats();
-    await this.props.fetchGroupStats();
-    await this.props.fetchMeetingStats();
-    await this.props.fetchUserStats();
-    await this.props.fetchUsersLastYear();
-    await this.props.fetchUserGender();
+    await this.props.fetchKeyStats();
 
-    const financeStats = this.props.financeStats;
-    const groupStats = this.props.groupStats;
-    const meetingsStats = this.props.meetingStats;
-    const userStats = this.props.userStats;
-    const usersLastYear = this.props.usersLastYear.data;
-    const userGender = this.props.userGender;
-
+    const stats = this.props.keyStats;
+    
     let lastUpdatedAt = getCurrentTime();
 
     this.setState({
-      userTotal: userStats.numberOfUsers,
-      userTotalLastUpdate: lastUpdatedAt,
-      usersToday: userStats.signups[10].count,
-      usersLastYear: usersLastYear,
-      userGender: userGender,
-      groupTotal: groupStats.groupTotal,
-      groupSize: groupStats.groupSize,
-      groupsLastMonth: groupStats.groupsLastMonth.data,
-      groupsLastYear: groupStats.groupsLastYear.data,
-      meetingTotal: meetingsStats.meetingTotal,
-      meetingsLastMonth: meetingsStats.meetingsLastMonth.data,
-      meetingsLastYear: meetingsStats.meetingsLastYear.data,
-      shareTotal: financeStats.shareTotal,
+      userTotal: stats.userTotal,
+      usersLastYear: stats.usersLastYear.data,
+      userGender: stats.userGender,
+      groupTotal: stats.groupTotal,
+      groupsLastMonth: stats.groupsLastMonth.data,
+      groupsLastYear: stats.groupsLastYear.data,
+      meetingTotal: stats.meetingTotal,
+      meetingsLastYear: stats.meetingsLastYear.data,
+      shareTotal: stats.shareTotal,
       lastUpdate: lastUpdatedAt
     });
   }
@@ -164,13 +144,11 @@ class KPIView extends Component {
               />
             </Col>
             <Col lg={4} sm={6}>
-            <SizeChart
-              title="Gender Distribution"
-              colors={[
-                "#1828E8",
-                "#228b22",                        
-              ]}
-              data={this.state.userGender} />
+              <SizeChart
+                title="Gender Distribution"
+                colors={["#1828E8", "#228b22"]}
+                data={this.state.userGender}
+              />
             </Col>
 
             <Col lg={4} sm={6}>
@@ -191,21 +169,10 @@ class KPIView extends Component {
 
 const mapStateToProps = state => {
   return {
-    financeStats: state.KPI.financeStats,
-    groupStats: state.KPI.groupStats,
-    meetingStats: state.KPI.meetingStats,
-    moneyStats: state.KPI.moneyStats,
-    userStats: state.KPI.userStats,
-    usersLastYear: state.KPI.usersLastYear,
-    userGender: state.KPI.userGender
+    keyStats: state.KPI.keyStats
   };
 };
 
 export default connect(mapStateToProps, {
-  fetchFinanceStats,
-  fetchGroupStats,
-  fetchMeetingStats,
-  fetchUserStats,
-  fetchUsersLastYear,
-  fetchUserGender
+  fetchKeyStats
 })(KPIView);

@@ -2,16 +2,15 @@ const { ApolloServer } = require("apollo-server-express");
 const { merge } = require("lodash");
 const { makeExecutableSchema } = require("graphql-tools");
 const express = require("express");
-const cors = require("cors");
 
 
-
-const DefaultSchema = require("./logic/index");
+const DefaultSchema = require("./logic/DefaultSchema");
 const FinanceSchema = require("./logic/finance/FinanceSchema");
 const GroupSchema = require("./logic/group/GroupSchema");
 const MeetingSchema = require("./logic/meeting/MeetingSchema");
 const UserSchema = require("./logic/user/UserSchema");
 
+const defaultResolvers = require("./logic/DefaultResolvers")
 const financeResolvers = require("./logic/finance/FinanceResolvers");
 const groupResolvers = require("./logic/group/GroupResolvers");
 const meetingResolvers = require("./logic/meeting/MeetingResolvers");
@@ -19,11 +18,11 @@ const userResolvers = require("./logic/user/UserResolvers");
 
 const app = express();
 
-app.use(cors());
 
 app.use(express.static("presentation/build"));
 
 const resolvers = merge(
+  defaultResolvers,
   financeResolvers,
   groupResolvers,
   meetingResolvers,

@@ -11,7 +11,11 @@ import SizeChart from "../charts/circle/SizeChart";
 import LastMonthBar from "../charts/bar/LastMonthBar";
 import LastYearBar from "../charts/bar/LastYearBar";
 
-import { fetchUserStats, fetchUsersLastYear, fetchUserGender } from "../../../redux/actions/KPI/UserStatsActions";
+import {
+  fetchUserStats,
+  fetchUsersLastYear,
+  fetchUserGender
+} from "../../../redux/actions/KPI/UserStatsActions";
 import { getCurrentTime } from "../../../util/Date";
 
 class KPIView extends Component {
@@ -45,7 +49,7 @@ class KPIView extends Component {
 
     const userStats = this.props.userStats;
     const usersLastYear = this.props.usersLastYear;
-    const userGender = this.props.userGender
+    const userGender = this.props.userGender;
 
     let lastUpdatedAt = getCurrentTime();
 
@@ -58,7 +62,10 @@ class KPIView extends Component {
     this.setState({
       userTotal: userStats.numberOfUsers,
       usersToday: userStats.signups[userStats.signups.length - 1].count,
-      usersTodayText: userStats.signups[userStats.signups.length - 1].day.day + "/" + userStats.signups[userStats.signups.length - 1].day.month,
+      usersTodayText:
+        userStats.signups[userStats.signups.length - 1].day.day +
+        "/" +
+        userStats.signups[userStats.signups.length - 1].day.month,
       userMonth: userMonthCount,
       userYear: userYearCount,
       usersLastMonth: userStats.signups,
@@ -131,12 +138,10 @@ class KPIView extends Component {
             </Col>
             <Col lg={4} sm={6}>
               <SizeChart
-              title="Gender Distribution"
-              colors={[
-                "#1828E8",
-                "#ff0000",                        
-              ]}
-              data={this.state.userGender} />
+                title="Gender Distribution"
+                colors={["#1828E8", "#228b22"]}
+                data={this.state.userGender}
+              />
             </Col>
 
             <Col lg={4} sm={6}>
@@ -161,6 +166,8 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, { fetchUserStats, fetchUsersLastYear, fetchUserGender  })(
-  KPIView
-);
+export default connect(mapStateToProps, {
+  fetchUserStats,
+  fetchUsersLastYear,
+  fetchUserGender
+})(KPIView);

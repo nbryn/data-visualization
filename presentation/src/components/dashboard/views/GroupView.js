@@ -30,7 +30,6 @@ class GroupView extends Component {
       groupsPerNGO: "",
       lastUpdate: ""
     };
-    this.fetchData = this.fetchData.bind(this);
   }
   componentDidMount() {
     this.fetchData();
@@ -119,11 +118,11 @@ class GroupView extends Component {
 
           <Row>
             <Col lg={4} sm={6}>
-            <TotalGraph
-              title="Total Groups"
-              stroke="#228b22"
-              data={this.state.groupsLastYear}
-            />
+              <TotalGraph
+                title="Total Groups"
+                stroke="#228b22"
+                data={this.state.groupsLastYear}
+              />
             </Col>
             <Col lg={4} sm={6}>
               <TopBar
@@ -157,11 +156,11 @@ class GroupView extends Component {
               />
             </Col>
             <Col lg={4} sm={6}>
-            <SizeChart
+              <SizeChart
                 title="Group Size"
                 colors={[
                   "#a4de6c",
-                  "#67b6ed",           
+                  "#67b6ed",
                   "#8884d8",
                   "#ff0000",
                   "#2196f3",

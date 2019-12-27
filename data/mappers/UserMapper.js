@@ -2,6 +2,7 @@ const axios = require("axios");
 
 const { connectToDB } = require("../connection");
 
+const { fetchTotal } = require("../fetch/fetchTotal");
 const { fetchLastYear } = require("../fetch/fetchLastYear");
 const { setTokenInHeader } = require("../../logic/auth/Auth");
 
@@ -132,6 +133,12 @@ async function fetchUserStats(context) {
   }
 }
 
+async function fetchUserTotal() {
+  const userTotal = await fetchTotal("users");
+
+  return userTotal;
+}
+
 async function fetchUsersLastYear() {
   const result = await fetchLastYear("users", "signupDate");
 
@@ -183,6 +190,7 @@ async function fetchGenderStats() {
 module.exports = {
   validateLogin,
   fetchCurrentUser,
+  fetchUserTotal,
   fetchUserStats,
   fetchUsersLastYear,
   fetchGenderStats

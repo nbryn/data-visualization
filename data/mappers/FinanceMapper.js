@@ -77,6 +77,8 @@ async function fetchLoansLastYear() {
 
   return result;
 }
+
+
 module.exports = {
   fetchCurrencyStats,
   fetchShareStats,

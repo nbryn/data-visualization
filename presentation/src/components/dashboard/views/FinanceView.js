@@ -6,7 +6,7 @@ import { KPICard } from "../util/KPICard";
 import TotalGraph from "../charts/graph/TotalGraph";
 import LastYearBar from "../charts/bar/LastYearBar";
 import LastMonthBar from "../charts/bar/LastMonthBar";
-import  TopBar from "../charts/bar/TopBar";
+import TopBar from "../charts/bar/TopBar";
 
 import { fetchFinanceStats } from "../../../redux/actions/KPI/FinanceStatsAction";
 import { getCurrentTime } from "../../../util/Date";
@@ -26,7 +26,6 @@ class FinanceView extends Component {
       loansLastYear: "",
       lastUpdate: ""
     };
-    this.fetchData = this.fetchData.bind(this);
   }
   componentDidMount() {
     this.fetchData();
@@ -42,7 +41,6 @@ class FinanceView extends Component {
     const financeStats = this.props.financeStats;
     let lastUpdatedAt = getCurrentTime();
 
-    
     this.setState({
       shareTotal: financeStats.shareTotal,
       mostShares: financeStats.mostShares.count,
@@ -79,7 +77,7 @@ class FinanceView extends Component {
                 statsIconText={`Last Update: ${this.state.lastUpdate}`}
               />
             </Col>
-            
+
             <Col lg={3} sm={6}>
               <KPICard
                 bigIcon={<i className="pe-7s-users text-info" />}
@@ -89,7 +87,7 @@ class FinanceView extends Component {
                 statsIconText={`Last Update: ${this.state.lastUpdate}`}
               />
             </Col>
-            
+
             <Col lg={3} sm={6}>
               <KPICard
                 bigIcon={<i className="pe-7s-users text-info" />}
@@ -101,57 +99,55 @@ class FinanceView extends Component {
             </Col>
           </Row>
           <Row>
-          <Col lg={4} sm={6}>
-          <TotalGraph
-              title="Total Loans"
-              xLabel="Months"
-              yLabel="Loans"
-              stroke="#228b22"
-              data={this.state.loansLastYear}
-            />
+            <Col lg={4} sm={6}>
+              <TotalGraph
+                title="Total Loans"
+                xLabel="Months"
+                yLabel="Loans"
+                stroke="#228b22"
+                data={this.state.loansLastYear}
+              />
             </Col>
             <Col lg={4} sm={6}>
-          <TopBar
-            title="Most Shares"
-            color="#1828E8"
-            xLabel="Group Name"
-            yLabel="Shares"
-            data={this.state.shareStats}
-            css="card-graph card-stats"
-          />
-          </Col>
-            </Row>
+              <TopBar
+                title="Most Shares"
+                color="#1828E8"
+                xLabel="Group Name"
+                yLabel="Shares"
+                data={this.state.shareStats}
+                css="card-graph card-stats"
+              />
+            </Col>
+          </Row>
           <Row>
-          
-          <Col lg={4} sm={6}>
-           <LastYearBar
-            title="Loans Last Year"
-            color="#8918E8"
-            xLabel="Months"
-            yLabel="Loans"
-            data={this.state.loansLastYear}
-          />
-          </Col>
-          <Col lg={4} sm={6}>
-           <LastMonthBar
-            title="Loans Last Month"
-            color="#ff0000"
-            xLabel="Months"
-            yLabel="Loans"
-            data={this.state.loansLastMonth}
-          />
-          </Col>
-          <Col lg={4} sm={6}>
-           <TopBar
-            title="Currencies"
-            color="#2196f3"
-            xLabel="Currency"
-            yLabel="Amount"
-            data={this.state.currencyStats}
-            css="card-circle card-stats"
-          />
-          </Col>
-          
+            <Col lg={4} sm={6}>
+              <LastYearBar
+                title="Loans Last Year"
+                color="#8918E8"
+                xLabel="Months"
+                yLabel="Loans"
+                data={this.state.loansLastYear}
+              />
+            </Col>
+            <Col lg={4} sm={6}>
+              <LastMonthBar
+                title="Loans Last Month"
+                color="#ff0000"
+                xLabel="Months"
+                yLabel="Loans"
+                data={this.state.loansLastMonth}
+              />
+            </Col>
+            <Col lg={4} sm={6}>
+              <TopBar
+                title="Currencies"
+                color="#2196f3"
+                xLabel="Currency"
+                yLabel="Amount"
+                data={this.state.currencyStats}
+                css="card-circle card-stats"
+              />
+            </Col>
           </Row>
         </Grid>
       </div>

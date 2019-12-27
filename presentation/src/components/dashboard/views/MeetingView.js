@@ -25,7 +25,6 @@ class GroupView extends Component {
       meetingsLastYear: "",
       lastUpdate: ""
     };
-    this.fetchData = this.fetchData.bind(this);
   }
   componentDidMount() {
     this.fetchData();
@@ -111,11 +110,11 @@ class GroupView extends Component {
 
           <Row>
             <Col lg={4} sm={6}>
-            <TotalGraph
-              title="Total Meetings"
-              stroke="#228b22"
-              data={this.state.meetingsLastYear}
-            />
+              <TotalGraph
+                title="Total Meetings"
+                stroke="#228b22"
+                data={this.state.meetingsLastYear}
+              />
             </Col>
           </Row>
           <Row>

@@ -13,7 +13,7 @@ class GraphChart extends Component {
   render() {
     return (
       <ResponsiveContainer width={400} height="80%">
-        <div className="card-graph card-stats">
+       
           <div className="content">
             <Col xs={8}>
               <div className="numbers">
@@ -32,7 +32,7 @@ class GraphChart extends Component {
               />
             </LineChart>
           </div>
-        </div>
+        
       </ResponsiveContainer>
     );
   }

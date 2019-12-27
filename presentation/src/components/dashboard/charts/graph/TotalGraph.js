@@ -42,7 +42,7 @@ class TotalGraph extends Component {
     const xLabel = { value: this.props.xLabel, position: "center", dy: 10 };
 
     return (
-      <div>
+      <div className="card-graph card-stats">
         <GraphChart
           title={title}
           data={this.state.data}

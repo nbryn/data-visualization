@@ -31,7 +31,7 @@ class SizeChart extends Component {
     const title = this.props.title;
 
     return (
-      <div>
+      <div className="card-circle card-stats">
         <CircleChart
           title={title}
           data={this.state.data}

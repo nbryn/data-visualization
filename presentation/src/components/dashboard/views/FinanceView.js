@@ -110,7 +110,7 @@ class FinanceView extends Component {
               data={this.state.loansLastYear}
             />
             </Col>
-            <Col lg={3} sm={6}>
+            <Col lg={4} sm={6}>
           <TopBar
             title="Most Shares"
             color="#1828E8"

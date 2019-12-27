@@ -25,14 +25,14 @@ class CircleChart extends Component {
   render() {
     return (
       <ResponsiveContainer width={400} height="80%">
-        <div className="card-circle card-stats">
+        
           <div className="content">
             <Col xs={8}>
               <div className="numbers">
                 <p>{this.props.title}</p>
               </div>
             </Col>
-            <PieChart width={400} height={300}>
+            <PieChart width={350} height={300}>
               <Pie
                 label={this.renderLabel}
                 dataKey="value"
@@ -48,7 +48,7 @@ class CircleChart extends Component {
                 ))}
               </Pie>
             </PieChart>
-          </div>
+          
         </div>
       </ResponsiveContainer>
     );

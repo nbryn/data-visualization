@@ -11,7 +11,12 @@ const FinanceSchema = gql`
     count: Float
   }
 
-  type ShareStats {
+  type SharesPerGroup {
+    name: String
+    count: Float
+  }
+
+  type OnLoanPerGroup {
     name: String
     count: Float
   }
@@ -25,12 +30,13 @@ const FinanceSchema = gql`
     currencyTotal: Float
     currencyStats: [CurrencyStats]
     loanTotal: Float
-    loanStats: [LoanStats]
     loansLastMonth: LastMonth
     loansLastYear: LastYear
     shareTotal: Float
+    sharesPerGroup: [SharesPerGroup]
     mostShares: MostShares
-    shareStats: [ShareStats]
+    etbOnLoan: Float
+    onLoanPerGroup: [OnLoanPerGroup]
   }
 
   extend type Query {

@@ -17,9 +17,6 @@ export const getCurrentTime = () => {
     day = "0" + day;
   }
 
-  if (month < 10) {
-    month = "0" + month;
-  }
 
   let currentTime = day + "/" + month + " at " + hours + ":" + minutes;
 

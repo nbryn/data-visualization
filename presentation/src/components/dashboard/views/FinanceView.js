@@ -44,7 +44,7 @@ class FinanceView extends Component {
     this.setState({
       shareTotal: financeStats.shareTotal,
       mostShares: financeStats.mostShares.count,
-      shareStats: financeStats.shareStats,
+      shareStats: financeStats.sharesPerGroup,
       currencyTotal: financeStats.currencyTotal,
       currencyStats: financeStats.currencyStats,
       loanTotal: financeStats.loanTotal,

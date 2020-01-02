@@ -1,5 +1,6 @@
 const {
   fetchCurrencyStats,
+  fetchSharesPerGroup,
   fetchShareStats,
   fetchLoanTotal,
   fetchLoansLastMonth,
@@ -11,7 +12,9 @@ const financeResolvers = {
     financeStats: async (parent, args, context, info) => {
       const currencyResult = await fetchCurrencyStats();
 
-      const shareResult = await fetchShareStats();
+      const sharesPerGroup = await fetchSharesPerGroup();
+
+      const etbStats = await fetchShareStats();
 
       const loanTotal = await fetchLoanTotal();
 
@@ -19,19 +22,24 @@ const financeResolvers = {
 
       const loansLastYear = await fetchLoansLastYear();
 
-      const shareTotal = shareResult.shareTotal;
-      const groupWithMostShares = shareResult.mostShares;
+      const shareTotal = sharesPerGroup.shareTotal;
+      const etbOnLoan = etbStats.totalETBOnLoan;
+      const groupWithMostShares = sharesPerGroup.mostShares;
       const currencyTotal = currencyResult.length;
+
+      console.log(etbStats);
 
       return {
         currencyTotal,
         currencyStats: currencyResult,
         shareTotal,
         mostShares: groupWithMostShares,
-        shareStats: shareResult.shareStats,
+        sharesPerGroup: sharesPerGroup.shareStats,
         loanTotal,
         loansLastYear: { data: loansLastYear },
-        loansLastMonth: { data: loansLastMonth }
+        loansLastMonth: { data: loansLastMonth },
+        etbOnLoan,
+        onLoanPerGroup: etbStats.etbOnLoan
       };
     }
   }

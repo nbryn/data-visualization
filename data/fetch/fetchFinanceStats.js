@@ -19,7 +19,8 @@ async function fetchFinanceStats(collectionToFetch, matchString, idString) {
                 $group: {
                   _id: idString,
                   totalAmount: { $sum: "$" + matchString }
-                }
+                },
+                
               }
             ])
             .toArray();

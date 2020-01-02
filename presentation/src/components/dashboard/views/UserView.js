@@ -102,7 +102,7 @@ class KPIView extends Component {
             <Col lg={3} sm={6}>
               <KPICard
                 bigIcon={<i className="pe-7s-user text-warning" />}
-                statsText="This Month"
+                statsText="Last Month"
                 statsValue={this.state.userMonth}
                 statsIcon={<i className="fa fa-calendar-o" />}
                 statsIconText={`Last Update: ${this.state.lastUpdate}`}
@@ -111,7 +111,7 @@ class KPIView extends Component {
             <Col lg={3} sm={6}>
               <KPICard
                 bigIcon={<i className="pe-7s-user text-warning" />}
-                statsText="This Year"
+                statsText="Last Year"
                 statsValue={this.state.userTotal}
                 statsIcon={<i className="fa fa-clock-o" />}
                 statsIconText={`Last Update: ${this.state.lastUpdate}`}
@@ -131,7 +131,7 @@ class KPIView extends Component {
           <Row>
             <Col lg={4} sm={6}>
               <LastMonthBar
-                title="Users Last Month"
+                title="Users Per Day"
                 color="#228b22"
                 data={this.state.usersLastMonth}
               />
@@ -146,7 +146,7 @@ class KPIView extends Component {
 
             <Col lg={4} sm={6}>
               <LastYearBar
-                title="Users Last Year"
+                title="Users Per Month"
                 color="#ff0000"
                 data={this.state.usersLastYear}
               />

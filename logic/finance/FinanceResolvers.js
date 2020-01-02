@@ -27,8 +27,6 @@ const financeResolvers = {
       const groupWithMostShares = sharesPerGroup.mostShares;
       const currencyTotal = currencyResult.length;
 
-      console.log(etbStats);
-
       return {
         currencyTotal,
         currencyStats: currencyResult,

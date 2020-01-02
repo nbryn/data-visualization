@@ -21,6 +21,7 @@ class TopBar extends Component {
         };
       });
 
+
       this.setState({
         data: newState
       });

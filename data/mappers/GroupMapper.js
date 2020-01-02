@@ -158,6 +158,71 @@ async function fetchGroupSize() {
   });
 }
 
+async function fetchGroupActivity() {
+  const connection = await connectToDB();
+  return new Promise((resolve, reject) => {
+    try {
+      connection.db.collection("groups", async (err, collection) => {
+        if (err) {
+          console.log(err);
+        } else {
+          const result = await collection.find({}).toArray();
+
+          const data = result.map(element => {
+            const date = new Date();
+            currentDate = new Date(date.getFullYear(), date.getMonth());
+
+            const regYear = element.registrationDate.getFullYear();
+            const regMonth = element.registrationDate.getMonth();
+
+            regDate = new Date(regYear, regMonth);
+
+            monthsSinceReg =
+              currentDate.getMonth() -
+              regDate.getMonth() +
+              12 * (currentDate.getFullYear() - regDate.getFullYear());
+
+            let supposedMeetings = 0;
+
+            switch (element.meetingWeeksBetween) {
+              case 1:
+                supposedMeetings = monthsSinceReg;
+                break;
+              case 2:
+                supposedMeetings = monthsSinceReg * 2;
+                break;
+              case 3:
+                supposedMeetings = monthsSinceReg * 3;
+                break;
+              case 4:
+                supposedMeetings = monthsSinceReg * 4;
+                break;
+              default:
+                supposedMeetings = monthsSinceReg * 2;
+                break;
+            }
+
+            return {
+              name: element._id,
+              regDate: element.registrationDate,
+              meetingSupposed: supposedMeetings,
+              meetingActual: element.meetings.length + 1
+            };
+          });
+
+          console.log(data);
+
+          if (result) {
+            resolve(result);
+          }
+        }
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  });
+}
+
 module.exports = {
   fetchGroup,
   fetchGroupTotal,
@@ -165,5 +230,6 @@ module.exports = {
   fetchGroupsLastYear,
   fetchGroupsPerCountry,
   fetchGroupsPerNGO,
-  fetchGroupSize
+  fetchGroupSize,
+  fetchGroupActivity
 };

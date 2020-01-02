@@ -18,12 +18,14 @@ class FinanceView extends Component {
     this.state = {
       shareTotal: "",
       mostShares: "",
-      shareStats: "",
+      sharesPerGroup: "",
       currencyTotal: "",
       currencyStats: "",
       loanTotal: "",
       loansLastMonth: "",
       loansLastYear: "",
+      etbOnLoan: "",
+      onLoanPerGroup: "",
       lastUpdate: ""
     };
   }
@@ -41,15 +43,28 @@ class FinanceView extends Component {
     const financeStats = this.props.financeStats;
     let lastUpdatedAt = getCurrentTime();
 
+    const loanPerGroup = financeStats.onLoanPerGroup.map(element => {
+      return {
+        name: element.name.substring(0, 5),
+        count: element.count
+      };
+    });
+
+    loanPerGroup.sort((ele1, ele2) => {
+      return ele2.count - ele1.count;
+    });
+
     this.setState({
       shareTotal: financeStats.shareTotal,
       mostShares: financeStats.mostShares.count,
-      shareStats: financeStats.sharesPerGroup,
+      sharesPerGroup: financeStats.sharesPerGroup,
       currencyTotal: financeStats.currencyTotal,
       currencyStats: financeStats.currencyStats,
       loanTotal: financeStats.loanTotal,
       loansLastMonth: financeStats.loansLastMonth.data,
       loansLastYear: financeStats.loansLastYear.data,
+      etbOnLoan: financeStats.etbOnLoan,
+      onLoanPerGroup: loanPerGroup.splice(0, 10),
       lastUpdate: lastUpdatedAt
     });
   }
@@ -81,9 +96,9 @@ class FinanceView extends Component {
             <Col lg={3} sm={6}>
               <KPICard
                 bigIcon={<i className="pe-7s-users text-info" />}
-                statsText="Most Shares In Group"
-                statsValue={this.state.mostShares}
-                statsIcon={<i className="fa fa-refresh" />}
+                statsText="ETB On Loan"
+                statsValue={this.state.etbOnLoan}
+                statsIcon={<i className="fa fa-clock-o" />}
                 statsIconText={`Last Update: ${this.state.lastUpdate}`}
               />
             </Col>
@@ -91,9 +106,9 @@ class FinanceView extends Component {
             <Col lg={3} sm={6}>
               <KPICard
                 bigIcon={<i className="pe-7s-users text-info" />}
-                statsText="Total Currencies"
-                statsValue={this.state.currencyTotal}
-                statsIcon={<i className="fa fa-clock-o" />}
+                statsText="Most Shares In Group"
+                statsValue={this.state.mostShares}
+                statsIcon={<i className="fa fa-refresh" />}
                 statsIconText={`Last Update: ${this.state.lastUpdate}`}
               />
             </Col>
@@ -114,7 +129,17 @@ class FinanceView extends Component {
                 color="#1828E8"
                 xLabel="Group Name"
                 yLabel="Shares"
-                data={this.state.shareStats}
+                data={this.state.sharesPerGroup}
+                css="card-graph card-stats"
+              />
+            </Col>
+            <Col lg={4} sm={6}>
+              <TopBar
+                title="ETB On Loan"
+                color="#2196f3"
+                xLabel="Group Name"
+                yLabel="Amount"
+                data={this.state.onLoanPerGroup}
                 css="card-graph card-stats"
               />
             </Col>
@@ -122,18 +147,18 @@ class FinanceView extends Component {
           <Row>
             <Col lg={4} sm={6}>
               <LastYearBar
-                title="Loans Last Year"
+                title="Loans Per Month"
                 color="#8918E8"
-                xLabel="Months"
+                xLabel="Month"
                 yLabel="Loans"
                 data={this.state.loansLastYear}
               />
             </Col>
             <Col lg={4} sm={6}>
               <LastMonthBar
-                title="Loans Last Month"
+                title="Loans Per Day"
                 color="#ff0000"
-                xLabel="Months"
+                xLabel="Day"
                 yLabel="Loans"
                 data={this.state.loansLastMonth}
               />

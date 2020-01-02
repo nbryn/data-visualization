@@ -37,6 +37,11 @@ export const fetchFinanceStats = () => async dispatch => {
           }
         }
       }
+      etbOnLoan
+      onLoanPerGroup {
+        name
+        count
+      }
     }
   }`;
 
@@ -50,7 +55,6 @@ export const fetchFinanceStats = () => async dispatch => {
         query: data
       }
     });
-
 
     dispatch({
       type: FINANCE_STATS,

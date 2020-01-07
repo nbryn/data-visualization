@@ -77,76 +77,29 @@ async function fetchGroupSize() {
         if (err) {
           console.log(err);
         }
-        const members = await collection
+        const dbResult = await collection
           .aggregate([
             {
-              $project: {
-                item: 1,
-                numberOfMembers: {
-                  $cond: {
-                    if: { $isArray: "$members" },
-                    then: { $size: "$members" },
-                    else: "NA"
-                  }
-                }
+              $group: {
+                _id: { groupSize: { $size: "$members" } },
+                count: { $sum: 1 }
               }
             }
           ])
           .toArray();
 
-        let size = {
-          5: 0,
-          6: 0,
-          7: 0,
-          8: 0,
-          9: 0,
-          10: 0,
-          11: 0,
-          12: 0,
-          13: 0,
-          14: 0,
-          15: 0,
-          16: 0,
-          17: 0,
-          18: 0,
-          19: 0,
-          20: 0,
-          21: 0,
-          22: 0,
-          23: 0,
-          24: 0,
-          25: 0,
-          26: 0,
-          27: 0,
-          28: 0,
-          29: 0,
-          30: 0,
-          31: 0,
-          32: 0
-        };
-
-        for (let i = 0; i < members.length; i++) {
-          let temp = members[i].numberOfMembers;
-
-          if (size.hasOwnProperty(temp)) {
-            size[temp]++;
-          }
-        }
-
-        let groupSize,
-          groupSizeTemp = [];
-
-        for (let key in size) {
-          if (size[key] > 0) {
-            let temp = {
-              value: key,
-              count: size[key]
+        const result = dbResult
+          .filter(element => element._id.groupSize > 6)
+          .map(element => {
+            return {
+              value: element._id.groupSize,
+              count: element.count
             };
-            groupSizeTemp.push(temp);
-          }
-        }
+          });
 
-        groupSize = groupSizeTemp.filter(element => element.count > 2);
+        groupSize = result.filter(element => element.count > 2);
+
+        console.log(groupSize);
 
         if (groupSize) {
           resolve(groupSize);
@@ -251,7 +204,7 @@ async function fetchGroupActivityStats() {
         if (err) {
           console.log(err);
         } else {
-          const result = await collection
+          const dbResult = await collection
             .aggregate([
               {
                 $lookup: {
@@ -265,14 +218,13 @@ async function fetchGroupActivityStats() {
             .toArray();
 
           //Test groups < 6 members & New groups regDate < 14 days
-
           let testGroups = 0;
           let newGroups = 0;
           let meetingLastMonth = 0;
           let meetingLast2Months = 0;
           let meetingOver2Months = 0;
 
-          result.forEach(element => {
+          dbResult.forEach(element => {
             const currentDate = new Date();
 
             if (element.members.length < 6) {
@@ -284,9 +236,6 @@ async function fetchGroupActivityStats() {
                 (currentDate.getTime() - regDate.getTime()) / 1000;
 
               const daysSinceReg = Math.floor(secondsSinceReg / (3600 * 24));
-
-              console.log("RegDate: " + regDate.toString());
-              console.log("Days: " + daysSinceReg);
 
               if (daysSinceReg < 14) {
                 newGroups++;
@@ -314,21 +263,36 @@ async function fetchGroupActivityStats() {
             }
           });
 
-          const data = {
-            testGroups: testGroups,
-            newGroups: newGroups,
-            meetingLastMonth: meetingLastMonth,
-            meetingLast2Months: meetingLast2Months,
-            meetingOver2Months: meetingOver2Months
+          const result = [];
+
+          const testGroupData = {
+            value: "Test Groups",
+            count: testGroups
           };
 
-          console.log("Test Groups: " + testGroups);
-          console.log("New Groups: " + newGroups);
-          console.log("MeetingLastMonth: " + meetingLastMonth);
-          console.log("MeetingLastTwoMonths: " + meetingLast2Months);
-          console.log("MeetingOverTwoMonths: " + meetingOver2Months);
+          const lastMonthData = {
+            value: "< 1",
+            count: meetingLastMonth
+          };
 
-          console.log(result);
+          const lastTwoMonthsData = {
+            value: "< 2",
+            count: meetingLast2Months
+          };
+
+          const overTwoMonthsData = {
+            value: "> 2",
+            count: meetingOver2Months
+          };
+
+          result.push(testGroupData);
+          result.push(lastMonthData);
+          result.push(lastTwoMonthsData);
+          result.push(overTwoMonthsData);
+
+          if (result) {
+            resolve(result);
+          }
         }
       });
     } catch (err) {

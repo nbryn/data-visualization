@@ -3,12 +3,15 @@ import { connect } from "react-redux";
 import { Grid, Row, Col } from "react-bootstrap";
 import { KPICard } from "../util/KPICard";
 
+import Sidebar from "../../navigation/Sidebar";
+import Header from "../../navigation/Header";
+
 import TotalGraph from "../charts/graph/TotalGraph";
 
 import LastMonthBar from "../charts/bar/LastMonthBar";
 import LastYearBar from "../charts/bar/LastYearBar";
 
-import { fetchMeetingStats } from "../../../redux/actions/KPI/MeetingStatsAction";
+import { fetchMeetingStats } from "../../../redux/actions/kpi/MeetingStatsAction";
 import { getCurrentTime } from "../../../util/Date";
 
 class GroupView extends Component {
@@ -66,6 +69,10 @@ class GroupView extends Component {
 
   render() {
     return (
+      <div className="wrapper">
+      <Sidebar />
+      <div id="main-panel" className="main-panel" ref="mainPanel">
+          <Header title="Meetings" />
       <div className="content">
         <Grid fluid>
           <Row>
@@ -135,6 +142,8 @@ class GroupView extends Component {
             </Col>
           </Row>
         </Grid>
+      </div>
+      </div>
       </div>
     );
   }

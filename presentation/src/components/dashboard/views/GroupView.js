@@ -3,6 +3,9 @@ import { connect } from "react-redux";
 import { Grid, Row, Col } from "react-bootstrap";
 import { KPICard } from "../util/KPICard";
 
+import Sidebar from "../../navigation/Sidebar";
+import Header from "../../navigation/Header";
+
 import TotalGraph from "../charts/graph/TotalGraph";
 import SizeChart from "../charts/circle/SizeChart";
 
@@ -10,7 +13,7 @@ import TopBar from "../charts/bar/TopBar";
 import LastMonthBar from "../charts/bar/LastMonthBar";
 import LastYearBar from "../charts/bar/LastYearBar";
 
-import { fetchGroupStats } from "../../../redux/actions/KPI/GroupStatsAction";
+import { fetchGroupStats } from "../../../redux/actions/kpi/GroupStatsAction";
 import { getCurrentTime } from "../../../util/Date";
 
 class GroupView extends Component {
@@ -44,7 +47,7 @@ class GroupView extends Component {
 
     const groupStats = this.props.groupStats;
     const lastMonth = groupStats.groupsLastMonth.data;
-    let lastUpdatedAt = getCurrentTime();
+    const lastUpdatedAt = getCurrentTime();
 
     let groupMonthCount = 0;
     let groupYearCount = 0;
@@ -74,6 +77,10 @@ class GroupView extends Component {
 
   render() {
     return (
+      <div className="wrapper">
+        <Sidebar />
+        <div id="main-panel" className="main-panel" ref="mainPanel">
+          <Header title="Groups" />
       <div className="content">
         <Grid fluid>
           <Row>
@@ -180,6 +187,8 @@ class GroupView extends Component {
             </Col>
           </Row>
         </Grid>
+      </div>
+      </div>
       </div>
     );
   }

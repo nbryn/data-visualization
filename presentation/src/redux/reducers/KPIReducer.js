@@ -1,5 +1,6 @@
 import {
   KEY_STATS,
+  ENGAGEMENT_STATS,
   FINANCE_STATS,
   GROUP_STATS,
   MEETING_STATS,
@@ -13,6 +14,10 @@ export default function(state = {}, action) {
     case KEY_STATS:
       return Object.assign({}, state, {
         keyStats: action.payload
+      });
+      case ENGAGEMENT_STATS:
+      return Object.assign({}, state, {
+        engagementStats: action.payload
       });
     case FINANCE_STATS:
       return Object.assign({}, state, {

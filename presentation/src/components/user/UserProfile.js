@@ -7,7 +7,7 @@ import { FormGroup, ControlLabel, FormControl } from "react-bootstrap";
 import Sidebar from "../navigation/Sidebar.js";
 import Header from "../navigation/Header.js";
 
-import { setCurrentUser } from "../../redux/actions/User/SetUserAction";
+import { setCurrentUser } from "../../redux/actions/user/SetUserAction";
 
 class UserProfile extends Component {
   constructor(props) {

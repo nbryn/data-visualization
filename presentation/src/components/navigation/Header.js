@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Navbar, NavItem, Nav } from "react-bootstrap";
 
-import { signOut } from "../../redux/actions/User/SignoutAction";
+import { signOut } from "../../redux/actions/user/SignoutAction";
 
 class Header extends Component {
   constructor(props) {

@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Grid, Row, Col } from "react-bootstrap";
-
 import { KPICard } from "../util/KPICard";
 
+import Sidebar from "../../navigation/Sidebar";
+import Header from "../../navigation/Header";
+
 import TotalGraph from "../charts/graph/TotalGraph";
-
 import SizeChart from "../charts/circle/SizeChart";
-
 import LastMonthBar from "../charts/bar/LastMonthBar";
 import LastYearBar from "../charts/bar/LastYearBar";
 
@@ -15,7 +15,7 @@ import {
   fetchUserStats,
   fetchUsersLastYear,
   fetchUserGender
-} from "../../../redux/actions/KPI/UserStatsActions";
+} from "../../../redux/actions/kpi/UserStatsActions";
 import { getCurrentTime } from "../../../util/Date";
 
 class KPIView extends Component {
@@ -77,82 +77,88 @@ class KPIView extends Component {
 
   render() {
     return (
-      <div className="content">
-        <Grid fluid>
-          <Row>
-            <Col lg={3} sm={6}>
-              <KPICard
-                bigIcon={<i className="pe-7s-user text-warning" />}
-                statsText="Total Users"
-                statsValue={this.state.userTotal}
-                statsIcon={<i className="fa fa-refresh" />}
-                statsIconText={`Last Update: ${this.state.lastUpdate}`}
-              />
-            </Col>
-            <Col lg={3} sm={6}>
-              <KPICard
-                bigIcon={<i className="pe-7s-user text-warning" />}
-                statsText={"Users " + this.state.usersTodayText}
-                statsValue={this.state.usersToday}
-                statsIcon={<i className="fa fa-refresh" />}
-                statsIconText={`Last Update: ${this.state.lastUpdate}`}
-              />
-            </Col>
+      <div className="wrapper">
+        <Sidebar />
+        <div id="main-panel" className="main-panel" ref="mainPanel">
+          <Header title="Users" />
+          <div className="content">
+            <Grid fluid>
+              <Row>
+                <Col lg={3} sm={6}>
+                  <KPICard
+                    bigIcon={<i className="pe-7s-user text-warning" />}
+                    statsText="Total Users"
+                    statsValue={this.state.userTotal}
+                    statsIcon={<i className="fa fa-refresh" />}
+                    statsIconText={`Last Update: ${this.state.lastUpdate}`}
+                  />
+                </Col>
+                <Col lg={3} sm={6}>
+                  <KPICard
+                    bigIcon={<i className="pe-7s-user text-warning" />}
+                    statsText={"Users " + this.state.usersTodayText}
+                    statsValue={this.state.usersToday}
+                    statsIcon={<i className="fa fa-refresh" />}
+                    statsIconText={`Last Update: ${this.state.lastUpdate}`}
+                  />
+                </Col>
 
-            <Col lg={3} sm={6}>
-              <KPICard
-                bigIcon={<i className="pe-7s-user text-warning" />}
-                statsText="Last Month"
-                statsValue={this.state.userMonth}
-                statsIcon={<i className="fa fa-calendar-o" />}
-                statsIconText={`Last Update: ${this.state.lastUpdate}`}
-              />
-            </Col>
-            <Col lg={3} sm={6}>
-              <KPICard
-                bigIcon={<i className="pe-7s-user text-warning" />}
-                statsText="Last Year"
-                statsValue={this.state.userTotal}
-                statsIcon={<i className="fa fa-clock-o" />}
-                statsIconText={`Last Update: ${this.state.lastUpdate}`}
-              />
-            </Col>
-          </Row>
+                <Col lg={3} sm={6}>
+                  <KPICard
+                    bigIcon={<i className="pe-7s-user text-warning" />}
+                    statsText="Last Month"
+                    statsValue={this.state.userMonth}
+                    statsIcon={<i className="fa fa-calendar-o" />}
+                    statsIconText={`Last Update: ${this.state.lastUpdate}`}
+                  />
+                </Col>
+                <Col lg={3} sm={6}>
+                  <KPICard
+                    bigIcon={<i className="pe-7s-user text-warning" />}
+                    statsText="Last Year"
+                    statsValue={this.state.userTotal}
+                    statsIcon={<i className="fa fa-clock-o" />}
+                    statsIconText={`Last Update: ${this.state.lastUpdate}`}
+                  />
+                </Col>
+              </Row>
 
-          <Row>
-            <Col lg={4} sm={6}>
-              <TotalGraph
-                title="Total Users"
-                stroke="#ff0000"
-                data={this.state.usersLastYear}
-              />
-            </Col>
-          </Row>
-          <Row>
-            <Col lg={4} sm={6}>
-              <LastMonthBar
-                title="Users Per Day"
-                color="#228b22"
-                data={this.state.usersLastMonth}
-              />
-            </Col>
-            <Col lg={4} sm={6}>
-              <SizeChart
-                title="Gender Distribution"
-                colors={["#1828E8", "#228b22"]}
-                data={this.state.userGender}
-              />
-            </Col>
+              <Row>
+                <Col lg={4} sm={6}>
+                  <TotalGraph
+                    title="Total Users"
+                    stroke="#ff0000"
+                    data={this.state.usersLastYear}
+                  />
+                </Col>
+              </Row>
+              <Row>
+                <Col lg={4} sm={6}>
+                  <LastMonthBar
+                    title="Users Per Day"
+                    color="#228b22"
+                    data={this.state.usersLastMonth}
+                  />
+                </Col>
+                <Col lg={4} sm={6}>
+                  <SizeChart
+                    title="Gender Distribution"
+                    colors={["#1828E8", "#228b22"]}
+                    data={this.state.userGender}
+                  />
+                </Col>
 
-            <Col lg={4} sm={6}>
-              <LastYearBar
-                title="Users Per Month"
-                color="#ff0000"
-                data={this.state.usersLastYear}
-              />
-            </Col>
-          </Row>
-        </Grid>
+                <Col lg={4} sm={6}>
+                  <LastYearBar
+                    title="Users Per Month"
+                    color="#ff0000"
+                    data={this.state.usersLastYear}
+                  />
+                </Col>
+              </Row>
+            </Grid>
+          </div>
+        </div>
       </div>
     );
   }

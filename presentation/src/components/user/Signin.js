@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Alert } from "react-bootstrap";
 
 import { connect } from "react-redux";
-import { login } from "../../redux/actions/User/LoginAction";
+import { login } from "../../redux/actions/user/LoginAction";
 
 class Signin extends Component {
   constructor(props) {

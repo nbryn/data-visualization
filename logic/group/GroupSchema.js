@@ -16,21 +16,6 @@ const GroupSchema = gql`
     count: Float
   }
 
-  type GroupMeetingStats {
-    name: String
-    regDate: String
-    memberCount: Float
-    meetingSupposed: Float
-    meetingActual: Float
-  }
-
-  type GroupActivityStats {
-    testGroups: Float
-    lastMonth: Float
-    lastTwoMonths: Float
-    overTwoMonths: Float
-  }
-
   type GroupStats {
     groupTotal: Float
     groupSize: [GroupSize]
@@ -40,10 +25,17 @@ const GroupSchema = gql`
     groupsNGO: [GroupPerNGO]
   }
 
+  type GroupMeetingStats {
+    name: String
+    regDate: String
+    memberCount: Float
+    meetingSupposed: Float
+    meetingActual: Float
+  }
+
   extend type Query {
     groupStats: GroupStats
     groupMeetingStats: [GroupMeetingStats]
-    groupActivityStats: GroupActivityStats
   }
 `;
 

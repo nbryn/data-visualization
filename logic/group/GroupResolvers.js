@@ -6,7 +6,6 @@ const {
   fetchGroupsPerCountry,
   fetchGroupsPerNGO,
   fetchGroupMeetingStats,
-  fetchGroupActivityStats
 } = require("../../data/mappers/GroupMapper");
 
 const groupResolvers = {
@@ -34,11 +33,7 @@ const groupResolvers = {
       };
     },
     groupMeetingStats: async (parent, args, context, info) => {
-      const groupActivity = await fetchGroupMeetingStats();
-    },
-    groupActivityStats: async (parent, args, context, info) => {
-      const groupActivity = await fetchGroupActivityStats();
-
+      const groupMeetingStats = await fetchGroupMeetingStats();
     }
   }
 };

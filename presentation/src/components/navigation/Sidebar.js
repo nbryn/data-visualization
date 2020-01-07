@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 
-import Logo from "../../assets/img/jamiipay.png";
+import Logo from "../../assets/img/jamii.png";
 
 class Sidebar extends Component {
   render() {
@@ -28,6 +28,7 @@ class Sidebar extends Component {
                 <p>Dashboard</p>
               </NavLink>
             </li>
+            
             <li>
               <NavLink
                 to="/finance"
@@ -70,6 +71,16 @@ class Sidebar extends Component {
             </li>
             <li>
               <NavLink
+                to="/engagement"
+                className="nav-link"
+                activeClassName="active"
+              >
+                <i className="pe-7s-graph" />
+                <p>Engagement</p>
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
                 to="/profile"
                 className="nav-link"
                 activeClassName="active"
@@ -78,6 +89,7 @@ class Sidebar extends Component {
                 <p>Profile</p>
               </NavLink>
             </li>
+            
           </ul>
         </div>
       </div>

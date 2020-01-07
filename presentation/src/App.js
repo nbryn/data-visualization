@@ -7,11 +7,12 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./assets/sass/dashboard.scss?v=1.3.0";
 import "./assets/fonts/pe-icon-7-stroke.css";
 
-import FinanceOverview from "./components/dashboard/FinanceOverview";
-import GroupOverview from "./components/dashboard/GroupOverview";
-import MainOverview from "./components/dashboard/MainOverview.js";
-import MeetingOverview from "./components/dashboard/MeetingOverview";
-import UserOverview from "./components/dashboard/UserOverview";
+import EngagementView from "./components/dashboard/views/EngagementView";
+import FinanceView from "./components/dashboard/views/FinanceView";
+import GroupView from "./components/dashboard/views/GroupView";
+import MainView from "./components/dashboard/views/MainView";
+import MeetingView from "./components/dashboard/views/MeetingView";
+import UserView from "./components/dashboard/views/UserView";
 
 import Signin from "./components/user/Signin.js";
 import Profile from "./components/user/UserProfile.js";
@@ -26,11 +27,12 @@ class App extends Component {
           <Switch>
             <Route exact path="/" component={Signin} />
 
-            <SecureRoute exact path="/dashboard" component={MainOverview} />
-            <SecureRoute exact path="/finance" component={FinanceOverview} />
-            <SecureRoute exact path="/groups" component={GroupOverview} />
-            <SecureRoute exact path="/meetings" component={MeetingOverview} />
-            <SecureRoute exact path="/users" component={UserOverview} />
+            <SecureRoute exact path="/dashboard" component={MainView} />
+            <SecureRoute exact path="/engagement" component={EngagementView} />
+            <SecureRoute exact path="/finance" component={FinanceView} />
+            <SecureRoute exact path="/groups" component={GroupView} />
+            <SecureRoute exact path="/meetings" component={MeetingView} />
+            <SecureRoute exact path="/users" component={UserView} />
             <SecureRoute exact path="/profile" component={Profile} />
 
             <Route path="*" component={NotFound} />

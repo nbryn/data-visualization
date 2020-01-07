@@ -16,11 +16,19 @@ const GroupSchema = gql`
     count: Float
   }
 
-  type GroupActivity {
+  type GroupMeetingStats {
     name: String
     regDate: String
+    memberCount: Float
     meetingSupposed: Float
     meetingActual: Float
+  }
+
+  type GroupActivityStats {
+    testGroups: Float
+    lastMonth: Float
+    lastTwoMonths: Float
+    overTwoMonths: Float
   }
 
   type GroupStats {
@@ -34,7 +42,8 @@ const GroupSchema = gql`
 
   extend type Query {
     groupStats: GroupStats
-    groupActivity: [GroupActivity]
+    groupMeetingStats: [GroupMeetingStats]
+    groupActivityStats: GroupActivityStats
   }
 `;
 

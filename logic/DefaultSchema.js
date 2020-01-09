@@ -27,21 +27,8 @@ const DefaultSchema = gql`
     data: [NumberMonth]!
   }
 
-  type KeyStats {
-    userTotal: Float
-    groupTotal: Float
-    meetingTotal: Float
-    shareTotal: Float
-    userGender: [UserGender]
-    usersLastYear: LastYear
-    groupsLastMonth: LastMonth
-    groupsLastYear: LastYear
-    meetingsLastYear: LastYear
-  }
-
   type Query {
     _empty: String
-    keyStats: KeyStats
   }
 `;
 

@@ -1,4 +1,4 @@
-import { USERS_STATS, USERS_LAST_YEAR, USERS_GENDER  } from "../ActionTypes";
+import { USERS_STATS, USERS_LAST_YEAR, USERS_GENDER } from "../ActionTypes";
 import axios from "axios";
 
 import { setTokenInHeader } from "../../../security/Token";
@@ -7,8 +7,30 @@ const url = "/graphql";
 
 export const fetchUserStats = () => async dispatch => {
   const data = `query {
-        userStats   
-        }`;
+    userStats{
+      userCount
+      usersLastMonth{
+        data{
+          day{
+            day
+            month
+            year
+          }
+          count
+        }
+      }
+      usersLastYear{
+        data{
+          month
+          count
+        }
+      }
+      userGenderStats{
+        value
+        count
+      }
+    }
+  }`;
 
   setTokenInHeader();
 
@@ -22,6 +44,8 @@ export const fetchUserStats = () => async dispatch => {
         query: data
       }
     });
+
+    console.log(response);
 
     if (response.data.errors) {
       return response.data.errors[0].extensions.code;
@@ -38,60 +62,60 @@ export const fetchUserStats = () => async dispatch => {
   }
 };
 
-export const fetchUsersLastYear = () => async dispatch => {
-  const data = `query{
-        usersLastYear{
-          data{
-            month
-            count
-          }
-        }
-      }`;
+// export const fetchUsersLastYear = () => async dispatch => {
+//   const data = `query{
+//         usersLastYear{
+//           data{
+//             month
+//             count
+//           }
+//         }
+//       }`;
 
-  let response;
+//   let response;
 
-  try {
-    response = await axios({
-      url,
-      method: "post",
-      data: {
-        query: data
-      }
-    });
+//   try {
+//     response = await axios({
+//       url,
+//       method: "post",
+//       data: {
+//         query: data
+//       }
+//     });
 
-    dispatch({
-      type: USERS_LAST_YEAR,
-      payload: response.data.data.usersLastYear
-    });
-  } catch (err) {
-    console.log(err);
-  }
-};
+//     dispatch({
+//       type: USERS_LAST_YEAR,
+//       payload: response.data.data.usersLastYear
+//     });
+//   } catch (err) {
+//     console.log(err);
+//   }
+// };
 
-export const fetchUserGender = () => async dispatch => {
-  const data = `query{
-    userGender{
-    value
-    count
-    }
-  }`;
+// export const fetchUserGender = () => async dispatch => {
+//   const data = `query{
+//     userGender{
+//     value
+//     count
+//     }
+//   }`;
 
-  let response;
+//   let response;
 
-  try {
-    response = await axios({
-      url,
-      method: "post",
-      data: {
-        query: data
-      }
-    });
+//   try {
+//     response = await axios({
+//       url,
+//       method: "post",
+//       data: {
+//         query: data
+//       }
+//     });
 
-    dispatch({
-      type: USERS_GENDER,
-      payload: response.data.data.userGender
-    });
-  } catch (err) {
-    console.log(err);
-  }
-};
+//     dispatch({
+//       type: USERS_GENDER,
+//       payload: response.data.data.userGender
+//     });
+//   } catch (err) {
+//     console.log(err);
+//   }
+// };

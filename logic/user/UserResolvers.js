@@ -2,7 +2,8 @@ const { GraphQLJSON } = require("graphql-type-json");
 
 const {
   validateLogin,
-  fetchUserStats,
+  fetchUserTotal,
+  fetchUsersLastMonth,
   fetchCurrentUser,
   fetchUsersLastYear,
   fetchGenderStats
@@ -19,26 +20,33 @@ const userResolvers = {
     }
   },
   Query: {
-    userStats: async (parent, args, context, info) => {
-      const result = await fetchUserStats(context);
+    userStats: (root, context) => ({ root, context }),
+    me: async (root, context) => {
+      const result = await fetchCurrentUser();
 
       return result;
+    }
+  },
+  UserStats: {
+    userCount: async (root, context) => {
+      const userCount = await fetchUserTotal();
+
+      return userCount;
     },
-    usersLastYear: async (parent, args, context, info) => {
+    usersLastMonth: async (root, context) => {
+      const usersLastMonth = fetchUsersLastMonth;
+
+      return { data: usersLastMonth };
+    },
+    usersLastYear: async (root, context) => {
       const result = await fetchUsersLastYear();
 
       return {
         data: result
       };
     },
-    userGender: async (parent, args, context, info) => {
+    userGenderStats: async (root, context) => {
       const result = await fetchGenderStats();
-
-      return result;
-      
-    },
-    me: async (parent, args, context, info) => {
-      const result = fetchCurrentUser(context);
 
       return result;
     }

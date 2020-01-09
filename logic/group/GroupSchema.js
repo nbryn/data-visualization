@@ -6,12 +6,12 @@ const GroupSchema = gql`
     count: Float
   }
 
-  type GroupPerCountry {
+  type GroupsPerCountry {
     name: String
     count: Float
   }
 
-  type GroupPerNGO {
+  type GroupsPerNGO {
     name: String
     count: Float
   }
@@ -21,8 +21,8 @@ const GroupSchema = gql`
     groupSize: [GroupSize]
     groupsLastMonth: LastMonth
     groupsLastYear: LastYear
-    groupsCountry: [GroupPerCountry]
-    groupsNGO: [GroupPerNGO]
+    groupsCountry: [GroupsPerCountry]
+    groupsNGO: [GroupsPerNGO]
   }
 
   type GroupMeetingStats {

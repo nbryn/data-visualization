@@ -4,6 +4,7 @@ const { connectToDB } = require("../connection");
 
 const { fetchTotal } = require("../fetch/fetchTotal");
 const { fetchLastYear } = require("../fetch/fetchLastYear");
+const {fetchLastMonth} = require("../fetch/fetchLastMonth");
 const { setTokenInHeader } = require("../../logic/auth/Auth");
 
 const url =
@@ -95,42 +96,10 @@ async function fetchCurrentUser(context) {
   }
 }
 
-async function fetchUserStats(context) {
-  setTokenInHeader(context);
+async function fetchUsersLastMonth() {
+ const result = await fetchLastMonth("users", "signupDate");
 
-  const data = `query {
-          userStats{
-            numberOfUsers
-            signups {
-               count 
-               day {
-                 year
-                 month
-                 day
-               }
-              }    
-          }
-          }`;
-
-  let response;
-
-  try {
-    response = await axios({
-      url,
-      method: "post",
-      data: {
-        query: data
-      }
-    });
-
-    if (response.data.errors) {
-      return response.data.errors[0].extensions.code;
-    } else {
-      return response.data.data.userStats;
-    }
-  } catch (err) {
-    console.log(err);
-  }
+ return result;
 }
 
 async function fetchUserTotal() {
@@ -203,7 +172,7 @@ module.exports = {
   validateLogin,
   fetchCurrentUser,
   fetchUserTotal,
-  fetchUserStats,
+  fetchUsersLastMonth,
   fetchUsersLastYear,
   fetchGenderStats
 };

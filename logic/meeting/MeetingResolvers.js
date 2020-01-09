@@ -6,18 +6,23 @@ const {
 
 const meetingResolvers = {
   Query: {
-    meetingStats: async (parent, args, context, info) => {
+    meetingStats: (root, context) => ({ root, context })
+  },
+  MeetingStats: {
+    meetingTotal: async (root, context) => {
       const meetingTotal = await fetchMeetingTotal();
 
-      const meetingsPrevMonth = await fetchMeetingsLastMonth();
+      return meetingTotal;
+    },
+    meetingsLastMonth: async (root, context) => {
+      const meetingsLastMonth = await fetchMeetingsLastMonth();
 
-      const meetingsPrevYear = await fetchMeetingsLastYear();
+      return { data: meetingsLastMonth };
+    },
+    meetingsLastYear: async (root, context) => {
+      const meetingsLastYear = await fetchMeetingsLastYear();
 
-      return {
-        meetingTotal,
-        meetingsLastMonth: { data: meetingsPrevMonth },
-        meetingsLastYear: { data: meetingsPrevYear }
-      };
+      return { data: meetingsLastYear };
     }
   }
 };

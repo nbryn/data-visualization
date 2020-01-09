@@ -46,7 +46,9 @@ class FinanceView extends Component {
     const financeStats = this.props.financeStats;
     let lastUpdatedAt = getCurrentTime();
 
-    const loanPerGroup = financeStats.onLoanPerGroup.map(element => {
+    console.log(financeStats);
+
+    const loanPerGroup = financeStats.etbStats.groupLoan.map(element => {
       return {
         name: element.name.substring(0, 5),
         count: element.count
@@ -58,15 +60,15 @@ class FinanceView extends Component {
     });
 
     this.setState({
-      shareTotal: financeStats.shareTotal,
-      mostShares: financeStats.mostShares.count,
-      sharesPerGroup: financeStats.sharesPerGroup,
-      currencyTotal: financeStats.currencyTotal,
-      currencyStats: financeStats.currencyStats,
+      shareTotal: financeStats.shareStats.shareTotal,
+      mostShares: financeStats.shareStats.mostShares.count,
+      sharesPerGroup: financeStats.shareStats.groupShares,
+      currencyTotal: financeStats.currencyStats.currencyTotal,
+      currencyStats: financeStats.currencyStats.currency,
       loanTotal: financeStats.loanTotal,
       loansLastMonth: financeStats.loansLastMonth.data,
       loansLastYear: financeStats.loansLastYear.data,
-      etbOnLoan: financeStats.etbOnLoan,
+      etbOnLoan: financeStats.etbStats.etbOnLoan,
       onLoanPerGroup: loanPerGroup.splice(0, 10),
       lastUpdate: lastUpdatedAt
     });

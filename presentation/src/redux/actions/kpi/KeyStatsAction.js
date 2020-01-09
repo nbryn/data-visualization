@@ -4,22 +4,19 @@ import { KEY_STATS } from "../ActionTypes";
 const url = "/graphql";
 
 export const fetchKeyStats = () => async dispatch => {
-  const data = `query{
-    keyStats{
-      userTotal
-      groupTotal
-      meetingTotal
-      shareTotal
-      userGender{
-        value
-        count
-       }
-       usersLastYear{
-        data{
-          month
-          count
-        }
-      }  
+  let groupResponse, userResponse, meetingResponse, shareResponse;
+
+  try {
+    let keyStats = {
+      groupStats: "",
+      userStats: "",
+      shareStats: "",
+      meetingStats: ""
+    };
+
+    const groupQuery = `query{
+    groupStats{
+      groupTotal    
      groupsLastMonth{
         data{
           count
@@ -36,30 +33,90 @@ export const fetchKeyStats = () => async dispatch => {
           count  
         }
       }
-    meetingsLastYear{
-        data{
-          month
-          count
-        }
-      }
-        
+      
     }
     }`;
 
-  let response;
-
-  try {
-    response = await axios({
+    groupResponse = await axios({
       url,
       method: "post",
       data: {
-        query: data
+        query: groupQuery
       }
     });
 
+    keyStats.groupStats = groupResponse.data.data.groupStats;
+
+    const userQuery = `query{
+      userStats{
+        userCount   
+        userGenderStats{
+          value
+          count
+         }
+        usersLastYear{
+          data{
+            month
+            count
+          }
+        }       
+      }
+      }`;
+
+    userResponse = await axios({
+      url,
+      method: "post",
+      data: {
+        query: userQuery
+      }
+    });
+
+    keyStats.userStats = userResponse.data.data.userStats;
+
+    const meetingQuery = `query {
+      meetingStats{
+        meetingTotal
+        meetingsLastYear{
+          data{
+            month
+            count
+          }
+        }            
+      }
+    }`;
+
+    meetingResponse = await axios({
+      url,
+      method: "post",
+      data: {
+        query: meetingQuery
+      }
+    });
+
+    keyStats.meetingStats = meetingResponse.data.data.meetingStats;
+
+    const shareQuery = `query {
+      financeStats{
+        shareStats {
+          shareTotal
+        }
+
+      }
+    }`;
+
+    shareResponse = await axios({
+      url,
+      method: "post",
+      data: {
+        query: shareQuery
+      }
+    });
+
+    keyStats.shareStats = shareResponse.data.data.financeStats.shareStats.shareTotal;
+
     dispatch({
       type: KEY_STATS,
-      payload: response.data.data.keyStats
+      payload: keyStats
     });
   } catch (err) {
     console.log(err);

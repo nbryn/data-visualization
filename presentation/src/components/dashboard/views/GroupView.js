@@ -49,6 +49,8 @@ class GroupView extends Component {
     const lastMonth = groupStats.groupsLastMonth.data;
     const lastUpdatedAt = getCurrentTime();
 
+    
+
     let groupMonthCount = 0;
     let groupYearCount = 0;
 

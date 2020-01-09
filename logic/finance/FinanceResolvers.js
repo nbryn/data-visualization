@@ -46,8 +46,8 @@ const financeResolvers = {
     shareStats: async ({ root, context }) => {
       const shareStats = await fetchShareStats();
 
-      const shareTotal = shareStats.shareTotal;
-      const mostShares = shareStats.mostShares;
+      const { shareTotal } = shareStats;
+      const { mostShares } = shareStats;
 
       return {
         shareTotal: shareTotal,
@@ -58,10 +58,10 @@ const financeResolvers = {
     etbStats: async ({ root, context }) => {
       const etbStats = await fetchEtbStats();
 
-      const onLoan = etbStats.totalETBOnLoan;
+      const { totalETBOnLoan } = etbStats;
 
       return {
-        etbOnLoan: onLoan,
+        etbOnLoan: totalETBOnLoan,
         groupLoan: etbStats.etbOnLoan
       };
     }

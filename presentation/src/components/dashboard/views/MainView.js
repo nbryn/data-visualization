@@ -46,18 +46,20 @@ class KPIView extends Component {
 
     const stats = this.props.keyStats;
 
+    console.log(stats);
+
     let lastUpdatedAt = getCurrentTime();
 
     this.setState({
-      userTotal: stats.userTotal,
-      usersLastYear: stats.usersLastYear.data,
-      userGender: stats.userGender,
-      groupTotal: stats.groupTotal,
-      groupsLastMonth: stats.groupsLastMonth.data,
-      groupsLastYear: stats.groupsLastYear.data,
-      meetingTotal: stats.meetingTotal,
-      meetingsLastYear: stats.meetingsLastYear.data,
-      shareTotal: stats.shareTotal,
+      userTotal: stats.userStats.userCount,
+      usersLastYear: stats.userStats.usersLastYear.data,
+      userGender: stats.userStats.userGenderStats,
+      groupTotal: stats.groupStats.groupTotal,
+      groupsLastMonth: stats.groupStats.groupsLastMonth.data,
+      groupsLastYear: stats.groupStats.groupsLastYear.data,
+      meetingTotal: stats.meetingStats.meetingTotal,
+      meetingsLastYear: stats.meetingStats.meetingsLastYear.data,
+      shareTotal: stats.shareStats.shareTotal,
       lastUpdate: lastUpdatedAt
     });
   }

@@ -11,11 +11,7 @@ import SizeChart from "../charts/circle/SizeChart";
 import LastMonthBar from "../charts/bar/LastMonthBar";
 import LastYearBar from "../charts/bar/LastYearBar";
 
-import {
-  fetchUserStats,
-  fetchUsersLastYear,
-  fetchUserGender
-} from "../../../redux/actions/kpi/UserStatsActions";
+import { fetchUserStats } from "../../../redux/actions/kpi/UserStatsActions";
 import { getCurrentTime } from "../../../util/Date";
 
 class KPIView extends Component {
@@ -44,33 +40,31 @@ class KPIView extends Component {
 
   async fetchData() {
     await this.props.fetchUserStats();
-    await this.props.fetchUsersLastYear();
-    await this.props.fetchUserGender();
+
+    console.log(this.props);
 
     const userStats = this.props.userStats;
-    const usersLastYear = this.props.usersLastYear;
-    const userGender = this.props.userGender;
 
     let lastUpdatedAt = getCurrentTime();
 
     let userMonthCount = 0;
     let userYearCount = 0;
 
-    userStats.signups.forEach(element => (userMonthCount += element.count));
-    usersLastYear.data.forEach(element => (userYearCount += element.count));
+    userStats.usersLastMonth.data.forEach(element => (userMonthCount += element.count));
+    userStats.usersLastYear.data.forEach(element => (userYearCount += element.count));
 
     this.setState({
-      userTotal: userStats.numberOfUsers,
-      usersToday: userStats.signups[userStats.signups.length - 1].count,
+      userTotal: userStats.userCount,
+      usersToday: userStats.usersLastMonth.data[userStats.usersLastMonth.data.length - 1].count,
       usersTodayText:
-        userStats.signups[userStats.signups.length - 1].day.day +
+        userStats.usersLastMonth.data[userStats.usersLastMonth.data.length - 1].day.day +
         "/" +
-        userStats.signups[userStats.signups.length - 1].day.month,
+        userStats.usersLastMonth.data[userStats.usersLastMonth.data.length - 1].day.month,
       userMonth: userMonthCount,
       userYear: userYearCount,
-      usersLastMonth: userStats.signups,
-      usersLastYear: usersLastYear.data,
-      userGender: userGender,
+      usersLastMonth: userStats.usersLastMonth.data,
+      usersLastYear: userStats.usersLastYear.data,
+      userGender: userStats.userGenderStats,
       lastUpdate: lastUpdatedAt
     });
   }
@@ -166,14 +160,10 @@ class KPIView extends Component {
 
 const mapStateToProps = state => {
   return {
-    userStats: state.KPI.userStats,
-    usersLastYear: state.KPI.usersLastYear,
-    userGender: state.KPI.userGender
+    userStats: state.KPI.userStats
   };
 };
 
 export default connect(mapStateToProps, {
-  fetchUserStats,
-  fetchUsersLastYear,
-  fetchUserGender
+  fetchUserStats
 })(KPIView);

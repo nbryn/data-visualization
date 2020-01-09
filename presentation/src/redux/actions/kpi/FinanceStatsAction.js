@@ -6,42 +6,49 @@ const url = "/graphql";
 export const fetchFinanceStats = () => async dispatch => {
   const data = `query{
     financeStats{
-      currencyTotal
       currencyStats{
+        numberOfCurrencies
+        currency{
         name
         count
-      }
-      shareTotal
-      mostShares{
-        groupName
-        count
-      }
-      sharesPerGroup{
-        name
-        count
+        }
       }
       loanTotal
-      loansLastYear{
-        data{
-          month
-          count
-        }
-      }
       loansLastMonth{
         data{
-          count
           day{
             day
-          month
-          year
+            month
+            year
           }
+          count
         }
       }
-      etbOnLoan
-      onLoanPerGroup {
+      loansLastYear{
+        data {
+          month
+          count
+        }
+      }
+     shareStats{
+      shareTotal
+      groupShares{
         name
         count
       }
+      mostShares{
+      name
+        count
+      }
+    }
+      etbStats{
+        etbOnLoan
+        groupLoan{
+          name
+          count
+        }
+      }
+   
     }
   }`;
 

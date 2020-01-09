@@ -6,11 +6,13 @@ const url = "/graphql";
 export const fetchEngagementStats = () => async dispatch => {
   const data = `query{
     engagementStats{
+      groupEngagement{
       activeGroups
       groupActivity {
         value
         count
     }
+      }
   }
   }`;
 

@@ -10,7 +10,6 @@ const GroupSchema = require("./logic/group/GroupSchema");
 const MeetingSchema = require("./logic/meeting/MeetingSchema");
 const UserSchema = require("./logic/user/UserSchema");
 
-const defaultResolvers = require("./logic/DefaultResolvers")
 const engagementResolvers = require("./logic/engagement/EngagementResolvers");
 const financeResolvers = require("./logic/finance/FinanceResolvers");
 const groupResolvers = require("./logic/group/GroupResolvers");
@@ -23,7 +22,6 @@ const app = express();
 app.use(express.static("presentation/build"));
 
 const resolvers = merge(
-  defaultResolvers,
   engagementResolvers,
   financeResolvers,
   groupResolvers,

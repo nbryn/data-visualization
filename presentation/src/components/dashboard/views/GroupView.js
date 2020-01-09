@@ -106,7 +106,7 @@ class GroupView extends Component {
             <Col lg={3} sm={6}>
               <KPICard
                 bigIcon={<i className="pe-7s-users text-info" />}
-                statsText="This Month"
+                statsText="Last Month"
                 statsValue={this.state.groupMonth}
                 statsIcon={<i className="fa fa-refresh" />}
                 statsIconText={`Last Update: ${this.state.lastUpdate}`}

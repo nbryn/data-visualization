@@ -99,8 +99,6 @@ async function fetchGroupSize() {
 
         groupSize = result.filter(element => element.count > 2);
 
-        console.log(groupSize);
-
         if (groupSize) {
           resolve(groupSize);
         }
@@ -285,10 +283,7 @@ async function fetchGroupActivityStats() {
             count: meetingOver2Months
           };
 
-          result.push(testGroupData);
-          result.push(lastMonthData);
-          result.push(lastTwoMonthsData);
-          result.push(overTwoMonthsData);
+          result.push(testGroupData, lastMonthData, lastTwoMonthsData, overTwoMonthsData);
 
           if (result) {
             resolve(result);

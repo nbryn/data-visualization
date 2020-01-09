@@ -1,7 +1,7 @@
 const {
   fetchCurrencyStats,
-  fetchSharesPerGroup,
   fetchShareStats,
+  fetchEtbStats,
   fetchLoanTotal,
   fetchLoansLastMonth,
   fetchLoansLastYear
@@ -9,35 +9,60 @@ const {
 
 const financeResolvers = {
   Query: {
-    financeStats: async (parent, args, context, info) => {
+    financeStats: (root, context) => ({ root, context })
+  },
+
+  FinanceStats: {
+    currencyStats: async ({ root, context }) => {
       const currencyResult = await fetchCurrencyStats();
 
-      const sharesPerGroup = await fetchSharesPerGroup();
-
-      const etbStats = await fetchShareStats();
-
-      const loanTotal = await fetchLoanTotal();
-
-      const loansLastMonth = await fetchLoansLastMonth();
-
-      const loansLastYear = await fetchLoansLastYear();
-
-      const shareTotal = sharesPerGroup.shareTotal;
-      const etbOnLoan = etbStats.totalETBOnLoan;
-      const groupWithMostShares = sharesPerGroup.mostShares;
-      const currencyTotal = currencyResult.length;
+      const numberOfCurrencies = currencyResult.length;
 
       return {
-        currencyTotal,
-        currencyStats: currencyResult,
-        shareTotal,
-        mostShares: groupWithMostShares,
-        sharesPerGroup: sharesPerGroup.shareStats,
-        loanTotal,
-        loansLastYear: { data: loansLastYear },
-        loansLastMonth: { data: loansLastMonth },
-        etbOnLoan,
-        onLoanPerGroup: etbStats.etbOnLoan
+        numberOfCurrencies: numberOfCurrencies,
+        currency: currencyResult
+      };
+    },
+
+    loanTotal: async ({ root, context }) => {
+      const loanTotal = await fetchLoanTotal();
+
+      return loanTotal;
+    },
+    loansLastMonth: async ({ root, context }) => {
+      const loansLastMonth = await fetchLoansLastMonth();
+
+      return {
+        data: loansLastMonth
+      };
+    },
+    loansLastYear: async ({ root, context }) => {
+      const loansLastYear = await fetchLoansLastYear();
+
+      return {
+        data: loansLastYear
+      };
+    },
+    shareStats: async ({ root, context }) => {
+      const shareStats = await fetchShareStats();
+
+      const shareTotal = shareStats.shareTotal;
+      const mostShares = shareStats.mostShares;
+
+      return {
+        shareTotal: shareTotal,
+        groupShares: shareStats.shareStats,
+        mostShares: mostShares
+      };
+    },
+    etbStats: async ({ root, context }) => {
+      const etbStats = await fetchEtbStats();
+
+      const onLoan = etbStats.totalETBOnLoan;
+
+      return {
+        etbOnLoan: onLoan,
+        groupLoan: etbStats.etbOnLoan
       };
     }
   }

@@ -39,7 +39,7 @@ async function fetchCurrencyStats() {
   return currencyStats;
 }
 
-async function fetchSharesPerGroup() {
+async function fetchShareStats() {
   const shareResult = await fetchFinanceStats(
     "groupaccounts",
     "totalShares",
@@ -79,7 +79,7 @@ async function fetchSharesPerGroup() {
   return shareStats;
 }
 
-async function fetchShareStats() {
+async function fetchEtbStats() {
   const connection = await connectToDB();
   return new Promise((resolve, reject) => {
     try {
@@ -133,8 +133,8 @@ async function fetchShareStats() {
 
 module.exports = {
   fetchCurrencyStats,
-  fetchSharesPerGroup,
   fetchShareStats,
+  fetchEtbStats,
   fetchLoanTotal,
   fetchLoansLastMonth,
   fetchLoansLastYear

@@ -1,10 +1,8 @@
 const axios = require("axios");
-
 const { connectToDB } = require("../connection");
 
-const { fetchTotal } = require("../fetch/fetchTotal");
 const { fetchLastYear } = require("../fetch/fetchLastYear");
-const {fetchLastMonth} = require("../fetch/fetchLastMonth");
+const { fetchLastMonth } = require("../fetch/fetchLastMonth");
 const { setTokenInHeader } = require("../../logic/auth/Auth");
 
 const url =
@@ -96,12 +94,6 @@ async function fetchCurrentUser(context) {
   }
 }
 
-async function fetchUsersLastMonth() {
- const result = await fetchLastMonth("users", "signupDate");
-
- return result;
-}
-
 async function fetchUserTotal() {
   const connection = await connectToDB();
 
@@ -119,6 +111,12 @@ async function fetchUserTotal() {
     });
   });
 }
+
+async function fetchUsersLastMonth() {
+  const result = await fetchLastMonth("users", "signupDate");
+ 
+  return result;
+ }
 
 async function fetchUsersLastYear() {
   const result = await fetchLastYear("users", "signupDate");

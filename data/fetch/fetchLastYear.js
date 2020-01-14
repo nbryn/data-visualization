@@ -14,17 +14,13 @@ async function fetchLastYear(collectionToFetch, matchString) {
             .subtract(365, "days")
             .toDate();
 
-          const signupsInPeriod = await collection
+          const dbResult = await collection
             .aggregate([
-              {
-                $match: {
-                  [matchString]: { $gt: since }
-                }
-              },
               {
                 $group: {
                   _id: {
-                    month: { $month: "$" + matchString }
+                    month: { $month: "$" + matchString },
+                    year: { $year: "$" + matchString }
                   },
                   count: { $sum: 1 }
                 }
@@ -33,12 +29,18 @@ async function fetchLastYear(collectionToFetch, matchString) {
             ])
             .toArray();
 
-          const signups = signupsInPeriod.map(element => {
+          const signups = dbResult.map(element => {
             return {
+              year: element._id.year,
               month: element._id.month,
               count: element.count
             };
           });
+
+          signups.sort((ele1, ele2) => {
+            return ele1.year - ele2.year;
+          });
+
 
           if (signups) {
             resolve(signups);

@@ -21,8 +21,8 @@ const userResolvers = {
   },
   Query: {
     userStats: (root, context) => ({ root, context }),
-    me: async (root, context) => {
-      const result = await fetchCurrentUser();
+    me: async (parent, args, context, info) => {
+      const result = await fetchCurrentUser(context);
 
       return result;
     }

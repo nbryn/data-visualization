@@ -24,6 +24,7 @@ export const fetchGroupStats = () => async dispatch => {
       }
       groupsLastYear{
         data{
+        year
         month
         count
         }

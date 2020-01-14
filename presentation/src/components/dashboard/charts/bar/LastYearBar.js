@@ -19,7 +19,7 @@ class LastYearBar extends Component {
       const newState = data.map(element => {
         let month = convertNumberToMonth(element.month)
         return {
-          name: month,
+          name: month + " '" + element.year.toString().substring(2),
           value: element.count
         };
       });

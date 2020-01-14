@@ -40,7 +40,6 @@ class EngagementView extends Component {
 
     const engagementStats = this.props.engagementStats;
 
-    console.log(engagementStats);
 
     this.setState({
       activeGroups: engagementStats.groupEngagement.activeGroups,

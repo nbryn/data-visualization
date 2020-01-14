@@ -15,7 +15,7 @@ import { fetchKeyStats } from "../../../redux/actions/kpi/KeyStatsAction";
 
 import { getCurrentTime } from "../../../util/Date";
 
-class KPIView extends Component {
+class MainView extends Component {
   constructor(props) {
     super(props);
 
@@ -46,9 +46,9 @@ class KPIView extends Component {
 
     const stats = this.props.keyStats;
 
-    console.log(stats);
-
     let lastUpdatedAt = getCurrentTime();
+
+    console.log(stats.userStats.usersLastYear.data);
 
     this.setState({
       userTotal: stats.userStats.userCount,
@@ -59,7 +59,7 @@ class KPIView extends Component {
       groupsLastYear: stats.groupStats.groupsLastYear.data,
       meetingTotal: stats.meetingStats.meetingTotal,
       meetingsLastYear: stats.meetingStats.meetingsLastYear.data,
-      shareTotal: stats.shareStats.shareTotal,
+      shareTotal: stats.shareStats,
       lastUpdate: lastUpdatedAt
     });
   }
@@ -187,4 +187,4 @@ const mapStateToProps = state => {
 
 export default connect(mapStateToProps, {
   fetchKeyStats
-})(KPIView);
+})(MainView);

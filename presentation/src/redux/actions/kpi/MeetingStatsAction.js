@@ -20,8 +20,10 @@ export const fetchMeetingStats = () => async dispatch => {
       }
       meetingsLastYear{
         data{
-          count
+          year
           month
+          count
+          
         }
       }
     }

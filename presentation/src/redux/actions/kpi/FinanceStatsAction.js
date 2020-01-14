@@ -26,6 +26,7 @@ export const fetchFinanceStats = () => async dispatch => {
       }
       loansLastYear{
         data {
+          year
           month
           count
         }

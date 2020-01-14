@@ -17,13 +17,14 @@ class TotalGraph extends Component {
       const data = this.props.data;
 
       let total = 0;
-      let month;
+      let month, year;
       const newState = data.map(element => {
         total += element.count;
+        year = element.year.toString().substring(2);
         month = convertNumberToMonth(element.month);
 
         return {
-          name: month,
+          name: month + " '" + year,
           value: total
         };
       });

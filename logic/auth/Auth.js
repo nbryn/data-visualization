@@ -6,6 +6,7 @@ function setTokenInHeader(context) {
     context.token.length
   );
 
+
   axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 }
 

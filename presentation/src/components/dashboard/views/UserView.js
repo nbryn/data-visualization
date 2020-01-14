@@ -41,8 +41,6 @@ class KPIView extends Component {
   async fetchData() {
     await this.props.fetchUserStats();
 
-    console.log(this.props);
-
     const userStats = this.props.userStats;
 
     let lastUpdatedAt = getCurrentTime();

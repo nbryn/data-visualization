@@ -15,8 +15,9 @@ const DefaultSchema = gql`
   }
 
   type NumberMonth {
-    month: JSON
-    count: Float!
+    year: Float
+    month: Float
+    count: Float
   }
 
   type LastMonth {

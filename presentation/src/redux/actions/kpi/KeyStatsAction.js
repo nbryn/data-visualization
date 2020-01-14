@@ -29,6 +29,7 @@ export const fetchKeyStats = () => async dispatch => {
     }
     groupsLastYear{
         data{
+          year
           month
           count  
         }
@@ -56,6 +57,7 @@ export const fetchKeyStats = () => async dispatch => {
          }
         usersLastYear{
           data{
+            year
             month
             count
           }
@@ -78,6 +80,7 @@ export const fetchKeyStats = () => async dispatch => {
         meetingTotal
         meetingsLastYear{
           data{
+            year
             month
             count
           }

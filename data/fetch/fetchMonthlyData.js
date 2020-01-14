@@ -1,7 +1,6 @@
-const moment = require("moment");
 const { connectToDB } = require("../connection");
 
-async function fetchLastMonth(collectionToFetch, matchString) {
+async function fetchMonthlyData(collectionToFetch, matchString) {
   const connection = await connectToDB();
   return new Promise((resolve, reject) => {
     try {
@@ -9,24 +8,15 @@ async function fetchLastMonth(collectionToFetch, matchString) {
         if (err) {
           console.log(err);
         } else {
-          const since = moment()
-            .startOf("day")
-            .subtract(30, "days")
-            .toDate();
+          
 
-          const signupsInPeriod = await collection
+          const dbResult = await collection
             .aggregate([
-              {
-                $match: {
-                  [matchString]: { $gt: since }
-                }
-              },
               {
                 $group: {
                   _id: {
-                    year: { $year: "$" + matchString },
                     month: { $month: "$" + matchString },
-                    day: { $dayOfMonth: "$" + matchString }
+                    year: { $year: "$" + matchString }
                   },
                   count: { $sum: 1 }
                 }
@@ -35,16 +25,18 @@ async function fetchLastMonth(collectionToFetch, matchString) {
             ])
             .toArray();
 
-          const signups = signupsInPeriod.map(element => {
+          const signups = dbResult.map(element => {
             return {
-              day: {
-                year: element._id.year,
-                month: element._id.month,
-                day: element._id.day
-              },
+              year: element._id.year,
+              month: element._id.month,
               count: element.count
             };
           });
+
+          signups.sort((ele1, ele2) => {
+            return ele1.year - ele2.year;
+          });
+
 
           if (signups) {
             resolve(signups);
@@ -57,4 +49,4 @@ async function fetchLastMonth(collectionToFetch, matchString) {
   });
 }
 
-module.exports = { fetchLastMonth };
+module.exports = { fetchMonthlyData };

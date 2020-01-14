@@ -1,7 +1,5 @@
-import axios from "axios";
 import { FINANCE_STATS } from "../ActionTypes";
-
-const url = "/graphql";
+import { fetchFromServer } from "../Fetch";
 
 export const fetchFinanceStats = () => async dispatch => {
   const data = `query{
@@ -53,22 +51,10 @@ export const fetchFinanceStats = () => async dispatch => {
     }
   }`;
 
-  let response;
+  const response = await fetchFromServer("post", data);
 
-  try {
-    response = await axios({
-      url,
-      method: "post",
-      data: {
-        query: data
-      }
-    });
-
-    dispatch({
-      type: FINANCE_STATS,
-      payload: response.data.data.financeStats
-    });
-  } catch (err) {
-    console.log(err);
-  }
+  dispatch({
+    type: FINANCE_STATS,
+    payload: response.data.data.financeStats
+  });
 };

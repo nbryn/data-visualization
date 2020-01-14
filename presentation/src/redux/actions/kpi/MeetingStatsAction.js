@@ -1,8 +1,5 @@
-import axios from "axios";
-
 import { MEETING_STATS } from "../ActionTypes";
-
-const url = "/graphql";
+import { fetchFromServer } from "../Fetch";
 
 export const fetchMeetingStats = () => async dispatch => {
   const data = `query{
@@ -29,23 +26,10 @@ export const fetchMeetingStats = () => async dispatch => {
     }
   }`;
 
-  let response;
+  const response = await fetchFromServer("post", data);
 
-  try {
-    response = await axios({
-      url,
-      method: "post",
-      data: {
-        query: data
-      }
-    });
-
-    dispatch({
-        type: MEETING_STATS,
-        payload: response.data.data.meetingStats
-      });
-
-  } catch (err) {
-    console.log(err);
-  }
+  dispatch({
+    type: MEETING_STATS,
+    payload: response.data.data.meetingStats
+  });
 };

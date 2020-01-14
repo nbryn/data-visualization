@@ -1,7 +1,7 @@
 const moment = require("moment");
 const { connectToDB } = require("../connection");
 
-async function fetchLastYear(collectionToFetch, matchString) {
+async function fetchDailyData(collectionToFetch, matchString) {
   const connection = await connectToDB();
   return new Promise((resolve, reject) => {
     try {
@@ -11,16 +11,22 @@ async function fetchLastYear(collectionToFetch, matchString) {
         } else {
           const since = moment()
             .startOf("day")
-            .subtract(365, "days")
+            .subtract(30, "days")
             .toDate();
 
-          const dbResult = await collection
+          const signupsInPeriod = await collection
             .aggregate([
+              {
+                $match: {
+                  [matchString]: { $gt: since }
+                }
+              },
               {
                 $group: {
                   _id: {
+                    year: { $year: "$" + matchString },
                     month: { $month: "$" + matchString },
-                    year: { $year: "$" + matchString }
+                    day: { $dayOfMonth: "$" + matchString }
                   },
                   count: { $sum: 1 }
                 }
@@ -29,18 +35,16 @@ async function fetchLastYear(collectionToFetch, matchString) {
             ])
             .toArray();
 
-          const signups = dbResult.map(element => {
+          const signups = signupsInPeriod.map(element => {
             return {
-              year: element._id.year,
-              month: element._id.month,
+              day: {
+                year: element._id.year,
+                month: element._id.month,
+                day: element._id.day
+              },
               count: element.count
             };
           });
-
-          signups.sort((ele1, ele2) => {
-            return ele1.year - ele2.year;
-          });
-
 
           if (signups) {
             resolve(signups);
@@ -53,4 +57,4 @@ async function fetchLastYear(collectionToFetch, matchString) {
   });
 }
 
-module.exports = { fetchLastYear };
+module.exports = { fetchDailyData };

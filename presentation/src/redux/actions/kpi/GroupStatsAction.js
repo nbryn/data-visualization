@@ -1,8 +1,5 @@
-import axios from "axios";
-
 import { GROUP_STATS } from "../ActionTypes";
-
-const url = "/graphql";
+import { fetchFromServer } from "../Fetch";
 
 export const fetchGroupStats = () => async dispatch => {
   const data = `query{
@@ -40,22 +37,10 @@ export const fetchGroupStats = () => async dispatch => {
     }
   }`;
 
-  let response;
+  const response = await fetchFromServer("post", data);
 
-  try {
-    response = await axios({
-      url,
-      method: "post",
-      data: {
-        query: data
-      }
-    });
-
-    dispatch({
-      type: GROUP_STATS,
-      payload: response.data.data.groupStats
-    });
-  } catch (err) {
-    console.log(err);
-  }
+  dispatch({
+    type: GROUP_STATS,
+    payload: response.data.data.groupStats
+  });
 };

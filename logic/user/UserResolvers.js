@@ -1,11 +1,12 @@
 const { GraphQLJSON } = require("graphql-type-json");
 
+const { fetchDailyData } = require("../../data/fetch/fetchDailyData");
+const { fetchMonthlyData } = require("../../data/fetch/fetchMonthlyData");
+
 const {
   validateLogin,
   fetchUserTotal,
-  fetchUsersLastMonth,
   fetchCurrentUser,
-  fetchUsersLastYear,
   fetchGenderStats
 } = require("../../data/mappers/UserMapper");
 
@@ -34,12 +35,12 @@ const userResolvers = {
       return userCount;
     },
     usersLastMonth: async (root, context) => {
-      const usersLastMonth = fetchUsersLastMonth;
+      const usersLastMonth = fetchDailyData("users", "signupDate");
 
       return { data: usersLastMonth };
     },
     usersLastYear: async (root, context) => {
-      const result = await fetchUsersLastYear();
+      const result = await fetchMonthlyData("users", "signupDate");
 
       return {
         data: result

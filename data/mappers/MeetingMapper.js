@@ -1,6 +1,4 @@
 const { fetchTotal } = require("../fetch/fetchTotal");
-const { fetchLastMonth } = require("../fetch/fetchLastMonth");
-const { fetchLastYear } = require("../fetch/fetchLastYear");
 
 async function fetchMeetingTotal() {
   const result = await fetchTotal("groupmeetings");
@@ -8,16 +6,6 @@ async function fetchMeetingTotal() {
   return result;
 }
 
-async function fetchMeetingsLastMonth() {
-  const result = await fetchLastMonth("groupmeetings", "meetingDay");
-
-  return result;
-}
-
-async function fetchMeetingsLastYear() {
-  const result = await fetchLastYear("groupmeetings", "meetingDay");
-
-  return result;
-}
-
-module.exports = { fetchMeetingTotal, fetchMeetingsLastMonth, fetchMeetingsLastYear };
+module.exports = {
+  fetchMeetingTotal
+};

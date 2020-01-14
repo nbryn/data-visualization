@@ -1,4 +1,4 @@
-const { fetchGroupActivityStats } = require("../../data/mappers/GroupMapper");
+const { getGroupEngagementStats} = require("../group/GroupService");
 
 const engagementResolvers = {
   Query: {
@@ -6,7 +6,7 @@ const engagementResolvers = {
   },
   EngagementStats: {
     groupEngagement: async (root, context) => {
-      groupActivityStats = await fetchGroupActivityStats();
+      groupActivityStats = await getGroupEngagementStats();
 
       let activeGroups = 0;
 

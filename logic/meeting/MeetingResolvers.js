@@ -1,8 +1,6 @@
-const {
-  fetchMeetingsLastMonth,
-  fetchMeetingsLastYear,
-  fetchMeetingTotal
-} = require("../../data/mappers/MeetingMapper");
+const { fetchMeetingTotal } = require("../../data/mappers/MeetingMapper");
+const { fetchDailyData } = require("../../data/fetch/fetchDailyData");
+const { fetchMonthlyData } = require("../../data/fetch/fetchMonthlyData");
 
 const meetingResolvers = {
   Query: {
@@ -15,12 +13,18 @@ const meetingResolvers = {
       return meetingTotal;
     },
     meetingsLastMonth: async (root, context) => {
-      const meetingsLastMonth = await fetchMeetingsLastMonth();
+      const meetingsLastMonth = await fetchDailyData(
+        "groupmeetings",
+        "meetingDay"
+      );
 
       return { data: meetingsLastMonth };
     },
     meetingsLastYear: async (root, context) => {
-      const meetingsLastYear = await fetchMeetingsLastYear();
+      const meetingsLastYear = await fetchMonthlyData(
+        "groupmeetings",
+        "meetingDay"
+      );
 
       return { data: meetingsLastYear };
     }

@@ -7,51 +7,54 @@ export const fetchFinanceStats = () => async dispatch => {
       currencyStats{
         numberOfCurrencies
         currency{
-        name
-        count
-        }
+          name
+          count
+        }        
       }
       loanTotal
       loansLastMonth{
         data{
           day{
-            day
-            month
             year
+            month
+            day
           }
           count
         }
       }
       loansLastYear{
-        data {
+        data{
           year
           month
           count
         }
       }
-     shareStats{
-      shareTotal
-      groupShares{
-        name
-        count
+      shareStats{
+        shareTotal
+        groupShares{
+          name
+          count
+        }
+        mostShares{
+          name
+          count
+        }
+        
       }
-      mostShares{
-      name
-        count
-      }
-    }
       etbStats{
         etbOnLoan
         groupLoan{
           name
           count
-        }
+        
       }
-   
     }
-  }`;
+  }
+}`;
 
   const response = await fetchFromServer("post", data);
+
+  console.log(response);
 
   dispatch({
     type: FINANCE_STATS,

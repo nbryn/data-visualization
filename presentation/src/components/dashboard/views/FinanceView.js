@@ -46,8 +46,7 @@ class FinanceView extends Component {
     const financeStats = this.props.financeStats;
     let lastUpdatedAt = getCurrentTime();
 
-    console.log(financeStats);
-
+    // Move to backend?
     const loanPerGroup = financeStats.etbStats.groupLoan.map(element => {
       return {
         name: element.name.substring(0, 5),
@@ -63,7 +62,7 @@ class FinanceView extends Component {
       shareTotal: financeStats.shareStats.shareTotal,
       mostShares: financeStats.shareStats.mostShares.count,
       sharesPerGroup: financeStats.shareStats.groupShares,
-      currencyTotal: financeStats.currencyStats.currencyTotal,
+      currencyTotal: financeStats.currencyStats.numberOfCurrencies,
       currencyStats: financeStats.currencyStats.currency,
       loanTotal: financeStats.loanTotal,
       loansLastMonth: financeStats.loansLastMonth.data,

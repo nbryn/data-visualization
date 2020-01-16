@@ -1,7 +1,7 @@
 const { connectToDB } = require("../connection");
 
 
-async function fetchEtbLoanStats() {
+async function fetchLoanStats() {
   const connection = await connectToDB();
   return new Promise((resolve, reject) => {
     try {
@@ -22,6 +22,7 @@ async function fetchEtbLoanStats() {
             ])
             .toArray();
 
+
           if (result) {
             resolve(result);
           }
@@ -35,5 +36,5 @@ async function fetchEtbLoanStats() {
 }
 
 module.exports = {
-  fetchEtbLoanStats
+  fetchLoanStats
 };

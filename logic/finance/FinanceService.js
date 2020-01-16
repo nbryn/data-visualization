@@ -1,7 +1,7 @@
 const { fetchFinanceStats } = require("../../data/fetch/fetchFinanceStats");
-const { fetchEtbLoanStats } = require("../../data/mappers/FinanceMapper");
+const { fetchLoanStats } = require("../../data/mappers/FinanceMapper");
 
-async function fetchCurrencyStats() {
+async function getCurrencyStats() {
   const result = await fetchFinanceStats(
     "groupaccounts",
     "totalBalance",
@@ -18,7 +18,7 @@ async function fetchCurrencyStats() {
   return currencyStats;
 }
 
-async function fetchShareStats() {
+async function getShareStats() {
   const result = await fetchFinanceStats(
     "groupaccounts",
     "totalShares",
@@ -35,7 +35,7 @@ async function fetchShareStats() {
     shareTotal += element.totalAmount;
     if (element.totalAmount > groupWithMostShares.count) {
       groupWithMostShares = {
-        groupName: element._id,
+        name: element._id,
         count: element.totalAmount
       };
     }
@@ -58,13 +58,13 @@ async function fetchShareStats() {
   return shareStats;
 }
 
-async function fetchEtbStats() {
-  const result = await fetchEtbStats();
+async function getEtbLoanStats() {
+  const result = await fetchLoanStats();
   let totalETB = 0;
 
   const etbGroups = result
     .filter(
-      element => element.currency === "ETB" && element.shares[0].totalShares > 0
+      element => element.currency === "ETB" && element.members.length > 6 && element.shares[0].totalShares > 0
     )
     .map(element => {
       totalETB += element.shares[0].totalShares;
@@ -82,4 +82,4 @@ async function fetchEtbStats() {
   return etbStats;
 }
 
-module.exports = { fetchCurrencyStats, fetchShareStats, fetchEtbStats };
+module.exports = { getCurrencyStats, getShareStats, getEtbLoanStats };

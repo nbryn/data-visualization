@@ -34,7 +34,7 @@ const groupResolvers = {
       return groupsNGO;
     },
     groupsCountry: async (root, context) => {
-      const result = await fetchGroupsStats("$country");
+      const result = await fetchGroupStats("$country");
 
       const groupsNGO = result.map(element => {
         return {

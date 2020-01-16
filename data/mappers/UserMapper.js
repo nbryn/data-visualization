@@ -91,7 +91,7 @@ async function fetchCurrentUser(context) {
   }
 }
 
-async function fetchUserTotal() {
+async function fetchUserCount() {
   const connection = await connectToDB();
 
   return new Promise((resolve, reject) => {
@@ -103,6 +103,26 @@ async function fetchUserTotal() {
 
         if (total) {
           resolve(total);
+        }
+      }
+    });
+  });
+}
+
+async function fetchAllUsers() {
+  const connection = await connectToDB();
+
+  return new Promise((resolve, reject) => {
+    connection.db.collection("users", async (err, collection) => {
+      if (err) {
+        console.log(err);
+      } else {
+        const activeUsers = await collection.distinct("_id", {
+          state: "ACTIVE"
+        });
+
+        if (activeUsers) {
+          resolve(activeUsers);
         }
       }
     });
@@ -154,6 +174,7 @@ async function fetchGenderStats() {
 module.exports = {
   validateLogin,
   fetchCurrentUser,
-  fetchUserTotal,
+  fetchUserCount,
+  fetchAllUsers,
   fetchGenderStats
 };

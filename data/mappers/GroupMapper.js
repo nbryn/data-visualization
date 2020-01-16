@@ -51,6 +51,31 @@ async function fetchGroup(groupID) {
   });
 }
 
+//Only field fecthed is members
+async function fetchAllGroups(groupID) {
+  const connection = await connectToDB();
+  return new Promise((resolve, reject) => {
+    try {
+      connection.db.collection("groups", async (err, collection) => {
+        if (err) {
+          console.log(err);
+        }
+        const result = await collection
+          .find({ state: "ACTIVE" })
+          .project({ _id: 1, members: 1 })
+          .toArray();
+
+
+        if (result) {
+          resolve(result);
+        }
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  });
+}
+
 async function fetchGroupSizeData() {
   const connection = await connectToDB();
   return new Promise((resolve, reject) => {
@@ -135,6 +160,7 @@ async function fetchGroupActivityData() {
 
 module.exports = {
   fetchGroup,
+  fetchAllGroups,
   fetchGroupStats,
   fetchGroupSizeData,
   fetchGroupMeetingData,

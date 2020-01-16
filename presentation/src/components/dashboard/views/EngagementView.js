@@ -88,7 +88,7 @@ class EngagementView extends Component {
                 <Col lg={3} sm={6}>
                   <KPICard
                     bigIcon={<i className="pe-7s-users text-info" />}
-                    statsText="Last Year"
+                    statsText="Meetings In Active Groups"
                     statsValue=""
                     statsIcon={<i className="fa fa-refresh" />}
                     statsIconText={`Last Update: ${this.state.lastUpdate}`}

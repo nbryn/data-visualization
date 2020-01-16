@@ -11,8 +11,10 @@ const UserSchema = gql`
     count: Float
   }
 
+
   type UserStats {
     userCount: Float!
+    usersActive: Float
     usersLastMonth: LastMonth
     usersLastYear: LastYear
     userGenderStats: [UserGenderStats]

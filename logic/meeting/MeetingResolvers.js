@@ -1,4 +1,4 @@
-const { fetchMeetingTotal } = require("../../data/mappers/MeetingMapper");
+const { fetchTotal } = require("../../data/fetch/fetchTotal");
 const { fetchDailyData } = require("../../data/fetch/fetchDailyData");
 const { fetchMonthlyData } = require("../../data/fetch/fetchMonthlyData");
 
@@ -8,7 +8,7 @@ const meetingResolvers = {
   },
   MeetingStats: {
     meetingTotal: async (root, context) => {
-      const meetingTotal = await fetchMeetingTotal();
+      const meetingTotal = await fetchTotal("groupMeetings");
 
       return meetingTotal;
     },

@@ -1,7 +1,7 @@
 const {
   fetchGroupSizeData,
   fetchGroupMeetingData,
-  fetchGroupActivityData
+  fetchAllGroupData
 } = require("../../data/mappers/GroupMapper");
 
 async function getGroupSizeStats() {
@@ -22,7 +22,7 @@ async function getGroupSizeStats() {
 }
 
 async function getGroupEngagementStats() {
-  const result = await fetchGroupActivityData();
+  const meetingData = await fetchGroupMeetingData();
 
   //Test groups < 6 members & New groups regDate < 14 days
   let testGroups = 0;
@@ -31,7 +31,7 @@ async function getGroupEngagementStats() {
   let meetingLast2Months = 0;
   let meetingOver2Months = 0;
 
-  result.forEach(element => {
+  meetingData.forEach(element => {
     const currentDate = new Date();
 
     if (element.members.length < 6) {
@@ -103,7 +103,7 @@ async function getGroupEngagementStats() {
 }
 
 async function getGroupMeetingStats() {
-  const result = await fetchGroupMeetingData();
+  const result = await fetchAllGroupData();
 
   const groupMeetingData = result.map(element => {
     const currentDate = new Date();
@@ -158,14 +158,18 @@ async function getGroupMeetingStats() {
       }
     }
 
+
     return {
-      name: element._id.toString().substring(0, 5),
+      name: element._id,
       regDate: regDate,
       memberCount: element.members.length + 1,
+      members: element.members,
       meetingSupposed: supposedMeetings,
       meetingActual: element.meetings.length + 1
     };
   });
+
+ 
 
   return groupMeetingData;
 }

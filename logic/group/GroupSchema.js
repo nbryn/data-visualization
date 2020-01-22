@@ -16,6 +16,11 @@ const GroupSchema = gql`
     count: Float
   }
 
+  type GroupEngagement {
+    activeGroups: Float
+    groupActivity: [GroupActivity]
+  }
+
   type GroupStats {
     groupTotal: Float
     groupSize: [GroupSize]

@@ -8,7 +8,7 @@ const meetingResolvers = {
   },
   MeetingStats: {
     meetingTotal: async (root, context) => {
-      const meetingTotal = await fetchTotal("groupMeetings");
+      const meetingTotal = await fetchTotal("groupmeetings");
 
       return meetingTotal;
     },

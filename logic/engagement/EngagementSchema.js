@@ -6,10 +6,7 @@ const EngagementSchema = gql`
     count: Float
   }
 
-  type GroupEngagement {
-    activeGroups: Float
-    groupActivity: [GroupActivity]
-  }
+  
 
   type EngagementStats {
     groupEngagement: GroupEngagement

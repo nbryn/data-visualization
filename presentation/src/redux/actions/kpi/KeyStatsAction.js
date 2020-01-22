@@ -46,6 +46,8 @@ export const fetchKeyStats = () => async dispatch => {
       }
     });
 
+    
+
     keyStats.groupStats = groupResponse.data.data.groupStats;
 
     const userQuery = `query{
@@ -96,6 +98,8 @@ export const fetchKeyStats = () => async dispatch => {
       }
     });
 
+    console.log(meetingResponse);
+
     keyStats.meetingStats = meetingResponse.data.data.meetingStats;
 
     const shareQuery = `query {
@@ -116,6 +120,8 @@ export const fetchKeyStats = () => async dispatch => {
     });
 
     keyStats.shareStats = shareResponse.data.data.financeStats.shareStats.shareTotal;
+
+    console.log(keyStats);
 
     dispatch({
       type: KEY_STATS,

@@ -31,6 +31,27 @@ async function fetchGroupStats(groupBy) {
   });
 }
 
+async function fetchGroupMembersData() {
+  const connection = await connectToDB();
+  return new Promise((resolve, reject) => {
+    try {
+      connection.db.collection("groupmembers", async (err, collection) => {
+        if (err) {
+          console.log(err);
+        }
+        const result = await collection.find({ state: "ACTIVE" }).toArray();
+
+        if (result) {
+          resolve(result);
+        }
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  });
+}
+
+
 async function fetchGroup(groupID) {
   const connection = await connectToDB();
   return new Promise((resolve, reject) => {
@@ -51,8 +72,8 @@ async function fetchGroup(groupID) {
   });
 }
 
-//Only field fecthed is members
-async function fetchAllGroups(groupID) {
+//Only field fetched is members
+async function fetchAllGroups() {
   const connection = await connectToDB();
   return new Promise((resolve, reject) => {
     try {
@@ -105,7 +126,7 @@ async function fetchGroupSizeData() {
   });
 }
 
-async function fetchGroupMeetingData() {
+async function fetchAllGroupData() {
   const connection = await connectToDB();
   return new Promise((resolve, reject) => {
     try {
@@ -126,7 +147,7 @@ async function fetchGroupMeetingData() {
   });
 }
 
-async function fetchGroupActivityData() {
+async function fetchGroupMeetingData() {
   const connection = await connectToDB();
   return new Promise((resolve, reject) => {
     try {
@@ -160,9 +181,10 @@ async function fetchGroupActivityData() {
 
 module.exports = {
   fetchGroup,
+  fetchGroupMembersData,
   fetchAllGroups,
   fetchGroupStats,
   fetchGroupSizeData,
   fetchGroupMeetingData,
-  fetchGroupActivityData
+  fetchAllGroupData
 };

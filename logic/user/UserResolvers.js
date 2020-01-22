@@ -3,7 +3,7 @@ const { GraphQLJSON } = require("graphql-type-json");
 const { fetchDailyData } = require("../../data/fetch/fetchDailyData");
 const { fetchMonthlyData } = require("../../data/fetch/fetchMonthlyData");
 
-const { getActiveUsersCount } = require("./UserService");
+const { calculateActiveUsers } = require("./UserService");
 
 const {
   validateLogin,
@@ -37,9 +37,9 @@ const userResolvers = {
       return userCount;
     },
     usersActive: async (root, context) => {
-      const usersLastMonth = getActiveUsersCount();
+      const activeUsers = calculateActiveUsers();
 
-      return { data: usersLastMonth };
+      return activeUsers;
     },
     usersLastMonth: async (root, context) => {
       const usersLastMonth = fetchDailyData("users", "signupDate");

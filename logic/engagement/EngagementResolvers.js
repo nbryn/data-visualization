@@ -1,4 +1,4 @@
-const { getGroupEngagementStats} = require("../group/GroupService");
+const { getGroupEngagementStats, getGroupMeetingStats} = require("../group/GroupService");
 
 const engagementResolvers = {
   Query: {

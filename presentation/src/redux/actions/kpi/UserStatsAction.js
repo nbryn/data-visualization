@@ -5,6 +5,7 @@ export const fetchUserStats = () => async dispatch => {
   const data = `query {
     userStats{
       userCount
+      activeUsers
       usersLastMonth{
         data{
           day{

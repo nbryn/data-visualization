@@ -1,34 +1,38 @@
+const { fetchGroupMembersData, fetchAllGroups } = require("../../data/mappers/GroupMapper");
 const { fetchAllUsers } = require("../../data/mappers/UserMapper");
-const { fetchAllGroups } = require("../../data/mappers/GroupMapper");
 
-async function getActiveUsersCount() {
+async function calculateActiveUsers() {
+  const allGroupMembers = await fetchGroupMembersData();
+
   const allUsers = await fetchAllUsers();
 
   const allGroups = await fetchAllGroups();
 
-  let activeUsers = 0;
+  const activeGroups = allGroups.filter(group => group.members.length > 6);
 
-  console.log(allGroups);
+  let activeGroupMembers = [];
 
-  allUsers.forEach(user => {
-    for (const group in allGroups) {
-      //console.log(Object.values(group));
-      let memberList = group.members;
-      //console.log(memberList);
-      for (const member in memberList) {
-        // console.log("User: " + typeof user);
-        // console.log("member: " + typeof members[j]);
-        if (user.toString() == member.toString()) {
-          // console.log(user);
-          // console.log(members[j]);
-          activeUsers++;
-          break;
-        }
+  allGroupMembers.forEach(member => {
+    for (let i = 0; i < activeGroups.length; i++) {
+      if (member.group.toString() === activeGroups[i]._id.toString()) {
+        activeGroupMembers.push(member);
+        break;
       }
     }
   });
 
-  console.log(activeUsers);
+  let activeUsers = 0;
+
+  allUsers.forEach(user => {
+    for (let i = 0; i < activeGroupMembers.length; i++) {
+      if (user.toString() === activeGroupMembers[i].user.toString()) {
+        activeUsers++;
+        break;
+      }
+    }
+  });
+
+  return activeUsers;
 }
 
-module.exports = { getActiveUsersCount };
+module.exports = { calculateActiveUsers };

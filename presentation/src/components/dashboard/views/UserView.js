@@ -11,7 +11,7 @@ import SizeChart from "../charts/circle/SizeChart";
 import LastMonthBar from "../charts/bar/LastMonthBar";
 import LastYearBar from "../charts/bar/LastYearBar";
 
-import { fetchUserStats } from "../../../redux/actions/kpi/UserStatsActions";
+import { fetchUserStats } from "../../../redux/actions/kpi/UserStatsAction";
 import { getCurrentTime } from "../../../util/Date";
 
 class KPIView extends Component {

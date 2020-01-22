@@ -20,8 +20,9 @@ class EngagementView extends Component {
     super(props);
 
     this.state = {
-      activeGroups: "",
+      groupsActive: "",
       groupActivity: "",
+      usersActive: "",
       lastUpdate: ""
     };
   }
@@ -40,10 +41,13 @@ class EngagementView extends Component {
 
     const engagementStats = this.props.engagementStats;
 
+    console.log(engagementStats);
+
 
     this.setState({
-      activeGroups: engagementStats.groupEngagement.activeGroups,
-      groupActivity: engagementStats.groupEngagement.groupActivity,
+      groupsActive: engagementStats.groupEngagement.groupsActive,
+      groupActivity: engagementStats.groupEngagement.groupMeetingFrequency,
+      usersActive: engagementStats.userEngagement,
       lastUpdate: lastUpdatedAt
     });
   }
@@ -61,7 +65,7 @@ class EngagementView extends Component {
                   <KPICard
                     bigIcon={<i className="pe-7s-graph1 text-danger" />}
                     statsText="Active Users"
-                    statsValue=""
+                    statsValue={this.state.usersActive}
                     statsIcon={<i className="fa fa-refresh" />}
                     statsIconText={`Last Update: ${this.state.lastUpdate}`}
                   />
@@ -71,7 +75,7 @@ class EngagementView extends Component {
                   <KPICard
                     bigIcon={<i className="pe-7s-users text-info" />}
                     statsText="Active Groups"
-                    statsValue={this.state.activeGroups}
+                    statsValue={this.state.groupsActive}
                     statsIcon={<i className="fa fa-clock-o" />}
                     statsIconText={`Last Update: ${this.state.lastUpdate}`}
                   />

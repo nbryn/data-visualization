@@ -1,20 +1,37 @@
-import axios from "axios";
+import { fetchFromServer } from "../Fetch";
 import { KEY_STATS } from "../ActionTypes";
 
-const url = "/graphql";
-
 export const fetchKeyStats = () => async dispatch => {
-  let groupResponse, userResponse, meetingResponse, shareResponse;
+  let keyStats = {
+    groupStats: "",
+    userStats: "",
+    shareStats: "",
+    meetingStats: ""
+  };
 
-  try {
-    let keyStats = {
-      groupStats: "",
-      userStats: "",
-      shareStats: "",
-      meetingStats: ""
-    };
+  const groupResponse = await fetchKeyGroupStats();
+  keyStats.groupStats = groupResponse.groupStats;
 
-    const groupQuery = `query{
+  const userResponse = await fetchKeyUserStats();
+  keyStats.userStats = userResponse.userStats;
+
+  const meetingResponse = await fetchKeyMeetingStats();
+  keyStats.meetingStats = meetingResponse.meetingStats;
+
+  const shareResponse = await fetchKeyFinanceStats();
+
+  keyStats.shareStats = shareResponse.financeStats.shareStats.shareTotal;
+
+  console.log(keyStats);
+
+  dispatch({
+    type: KEY_STATS,
+    payload: keyStats
+  });
+};
+
+async function fetchKeyGroupStats() {
+  const groupQuery = `query{
     groupStats{
       groupTotal    
      groupsLastMonth{
@@ -33,101 +50,65 @@ export const fetchKeyStats = () => async dispatch => {
           month
           count  
         }
-      }
-      
+      }      
     }
     }`;
 
-    groupResponse = await axios({
-      url,
-      method: "post",
-      data: {
-        query: groupQuery
-      }
-    });
+  const response = await fetchFromServer("post", groupQuery);
 
-    
+  return response.data.data;
+}
 
-    keyStats.groupStats = groupResponse.data.data.groupStats;
-
-    const userQuery = `query{
-      userStats{
-        userCount   
-        userGenderStats{
-          value
+async function fetchKeyUserStats() {
+  const userQuery = `query{
+    userStats{
+      userCount   
+      userGenderStats{
+        value
+        count
+       }
+      usersLastYear{
+        data{
+          year
+          month
           count
-         }
-        usersLastYear{
-          data{
-            year
-            month
-            count
-          }
-        }       
-      }
-      }`;
-
-    userResponse = await axios({
-      url,
-      method: "post",
-      data: {
-        query: userQuery
-      }
-    });
-
-    keyStats.userStats = userResponse.data.data.userStats;
-
-    const meetingQuery = `query {
-      meetingStats{
-        meetingTotal
-        meetingsLastYear{
-          data{
-            year
-            month
-            count
-          }
-        }            
-      }
-    }`;
-
-    meetingResponse = await axios({
-      url,
-      method: "post",
-      data: {
-        query: meetingQuery
-      }
-    });
-
-    console.log(meetingResponse);
-
-    keyStats.meetingStats = meetingResponse.data.data.meetingStats;
-
-    const shareQuery = `query {
-      financeStats{
-        shareStats {
-          shareTotal
         }
-
-      }
+      }       
+    }
     }`;
 
-    shareResponse = await axios({
-      url,
-      method: "post",
-      data: {
-        query: shareQuery
+  const response = await fetchFromServer("post", userQuery);
+
+  return response.data.data;
+}
+
+async function fetchKeyMeetingStats() {
+  const meetingQuery = `query {
+    meetingStats{
+      meetingTotal
+      meetingsLastYear{
+        data{
+          year
+          month
+          count
+        }
+      }            
+    }
+  }`;
+  const response = await fetchFromServer("post", meetingQuery);
+
+  return response.data.data;
+}
+
+async function fetchKeyFinanceStats() {
+  const shareQuery = `query {
+    financeStats{
+      shareStats {
+        shareTotal
       }
-    });
+    }
+  }`;
+  const response = await fetchFromServer("post", shareQuery);
 
-    keyStats.shareStats = shareResponse.data.data.financeStats.shareStats.shareTotal;
-
-    console.log(keyStats);
-
-    dispatch({
-      type: KEY_STATS,
-      payload: keyStats
-    });
-  } catch (err) {
-    console.log(err);
-  }
-};
+  return response.data.data;
+}

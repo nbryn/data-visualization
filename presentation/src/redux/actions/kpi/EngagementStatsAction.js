@@ -2,22 +2,52 @@ import { ENGAGEMENT_STATS } from "../ActionTypes";
 import { fetchFromServer } from "../Fetch";
 
 export const fetchEngagementStats = () => async dispatch => {
-  const data = `query{
-    engagementStats{
-      groupEngagement{
-      activeGroups
-      groupActivity {
-        value
-        count
-    }
-    }
-  }
-  }`;
+  let engagementStats = {
+    groupEngagement: "",
+    userEngagement: ""
+  };
 
-  const response = await fetchFromServer("post", data);
+  
+  const groupResponse = await fetchGroupEngagementStats();
+  engagementStats.groupEngagement = groupResponse.groupEngagement;
+
+  
+  const userResponse = await fetchUserEngagementStats();
+  engagementStats.userEngagement = userResponse.userStats.usersActive;
 
   dispatch({
     type: ENGAGEMENT_STATS,
-    payload: response.data.data.engagementStats
+    payload: engagementStats
   });
 };
+
+
+async function fetchGroupEngagementStats() {
+  const groupQuery = `query{
+    groupEngagement{
+      groupsActive
+      groupMeetingFrequency{
+        value
+        count
+      }
+  
+    }
+  }`;
+
+  const response = await fetchFromServer("post", groupQuery);
+
+  return response.data.data;
+}
+
+async function fetchUserEngagementStats() {
+  const userQuery = `query{
+    userStats{
+      usersActive 
+    }
+  }`;
+
+  const response = await fetchFromServer("post", userQuery);
+
+  return response.data.data;
+}
+

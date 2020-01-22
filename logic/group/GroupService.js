@@ -16,12 +16,12 @@ async function getGroupSizeStats() {
       };
     });
 
-  groupSize = tempResult.filter(element => element.count > 2);
+  const groupSizeStats = tempResult.filter(element => element.count > 2);
 
-  return groupSize;
+  return groupSizeStats;
 }
 
-async function getGroupEngagementStats() {
+async function calculateMeetingFrequency() {
   const meetingData = await fetchGroupMeetingData();
 
   //Test groups < 6 members & New groups regDate < 14 days
@@ -37,12 +37,9 @@ async function getGroupEngagementStats() {
     if (element.members.length < 6) {
       testGroups++;
     } else {
-      const regDate = element.registrationDate;
+      const sinceReg = calculateDaysSinceReg(element.registrationDate);
 
-      const secondsSinceReg =
-        (currentDate.getTime() - regDate.getTime()) / 1000;
-
-      const daysSinceReg = Math.floor(secondsSinceReg / (3600 * 24));
+      const { daysSinceReg } = sinceReg;
 
       if (daysSinceReg < 14) {
         newGroups++;
@@ -102,37 +99,16 @@ async function getGroupEngagementStats() {
   return groupEngagement;
 }
 
-async function getGroupMeetingStats() {
+async function calculateMeetingStats() {
   const result = await fetchAllGroupData();
 
   const groupMeetingData = result.map(element => {
-    const currentDate = new Date();
-    // const currentDate = new Date(
-    //   date.getFullYear(),
-    //   date.getMonth(),
-    //   date.getDay()
-    // );
+    const sinceReg = calculateTimeSinceReg(element.registrationDate);
 
-    const regYear = element.registrationDate.getFullYear();
-    const regMonth = element.registrationDate.getMonth();
-    const regDay = element.registrationDate.getDay();
-
-    const regDateObj = new Date(regYear, regMonth, regDay);
-
-    const regMonthActual = regMonth + 1;
-
-    const regDate = regDay + "/" + regMonthActual + "/" + regYear;
-
-    monthsSinceReg =
-      currentDate.getMonth() -
-      regDateObj.getMonth() +
-      12 * (currentDate.getFullYear() - regDateObj.getFullYear());
+    const { daysSinceReg } = sinceReg;
+    const { monthsSinceReg } = sinceReg;
 
     let supposedMeetings = 0;
-
-    const secondsSinceReg =
-      (currentDate.getTime() - regDateObj.getTime()) / 1000;
-    const daysSinceReg = Math.floor(secondsSinceReg / (3600 * 24));
 
     if (daysSinceReg < 14) {
       supposedMeetings = 1;
@@ -158,10 +134,9 @@ async function getGroupMeetingStats() {
       }
     }
 
-
     return {
       name: element._id,
-      regDate: regDate,
+      regDate: sinceReg.regDate,
       memberCount: element.members.length + 1,
       members: element.members,
       meetingSupposed: supposedMeetings,
@@ -169,13 +144,42 @@ async function getGroupMeetingStats() {
     };
   });
 
- 
-
   return groupMeetingData;
 }
 
 module.exports = {
   getGroupSizeStats,
-  getGroupEngagementStats,
-  getGroupMeetingStats
+  calculateMeetingFrequency,
+  calculateMeetingStats
 };
+
+// ---- Helper Functions ---- //
+
+function calculateTimeSinceReg(registrationDate) {
+  let timeSinceReg = {
+    daysSinceReg: "",
+    monthsSinceReg: "",
+    regDate: ""
+  };
+  const currentDate = new Date();
+
+  const regYear = registrationDate.getFullYear();
+  const regMonth = registrationDate.getMonth();
+  const regDay = registrationDate.getDay();
+
+  const regDateObj = new Date(regYear, regMonth, regDay);
+
+  const regMonthActual = regMonth + 1;
+
+  timeSinceReg.regDate = regDay + "/" + regMonthActual + "/" + regYear;
+
+  timeSinceReg.monthsSinceReg =
+    currentDate.getMonth() -
+    regDateObj.getMonth() +
+    12 * (currentDate.getFullYear() - regDateObj.getFullYear());
+
+  const secondsSinceReg = (currentDate.getTime() - regDateObj.getTime()) / 1000;
+  timeSinceReg.daysSinceReg = Math.floor(secondsSinceReg / (3600 * 24));
+
+  return timeSinceReg;
+}

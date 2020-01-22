@@ -1,14 +1,20 @@
 const { fetchDailyData } = require("../../data/fetch/fetchDailyData");
 const { fetchMonthlyData } = require("../../data/fetch/fetchMonthlyData");
 const { fetchTotal } = require("../../data/fetch/fetchTotal");
-const { fetchGroupStats } = require("../../data/mappers/GroupMapper");
-const { getGroupSizeStats, getGroupMeetingStats } = require("./GroupService");
-
+const {
+  fetchGroupStats,
+  fetchAllGroups
+} = require("../../data/mappers/GroupMapper");
+const {
+  getGroupSizeStats,
+  calculateMeetingFrequency,
+  calculateMeetingStats
+} = require("./GroupService");
 
 const groupResolvers = {
   Query: {
     groupStats: (root, context) => ({ root, context }),
-    groupMeetingStats: (root, context) => ({ root, context })
+    groupEngagement: (root, context) => ({ root, context })
   },
   GroupStats: {
     groupTotal: async (root, context) => {
@@ -62,8 +68,30 @@ const groupResolvers = {
       return { data: groupsLastYear };
     }
   },
-  GroupMeetingStats: async (parent, args, context, info) => {
-    const groupMeetingStats = await getGroupMeetingStats();
+  GroupEngagement: {
+    groupsActive: async (root, context) => {
+      //Need to adjust how active groups are counted
+      const allGroups = await fetchAllGroups();
+      let activeGroups = 0;
+
+      allGroups.forEach(group => {
+        if (group.members.length > 6) {
+          activeGroups++;
+        }
+      });
+      
+      return activeGroups;
+    },
+    groupMeetingFrequency: async (root, context) => {
+      const meetingFreq = calculateMeetingFrequency();
+
+      return meetingFreq;
+    },
+    groupMeetingStats: async (root, context) => {
+      meetingStats = await calculateMeetingStats();
+
+      return meetingStats;
+    }
   }
 };
 

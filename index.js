@@ -7,15 +7,16 @@ const DefaultSchema = require("./logic/DefaultSchema");
 const FinanceSchema = require("./logic/finance/FinanceSchema");
 const GroupSchema = require("./logic/group/GroupSchema");
 const MeetingSchema = require("./logic/meeting/MeetingSchema");
+const NGOSchema = require("./logic/ngo/NGOSchema");
 const UserSchema = require("./logic/user/UserSchema");
 
 const financeResolvers = require("./logic/finance/FinanceResolvers");
 const groupResolvers = require("./logic/group/GroupResolvers");
 const meetingResolvers = require("./logic/meeting/MeetingResolvers");
+const ngoResolvers = require("./logic/ngo/NGOResolvers");
 const userResolvers = require("./logic/user/UserResolvers");
 
 const app = express();
-
 
 app.use(express.static("presentation/build"));
 

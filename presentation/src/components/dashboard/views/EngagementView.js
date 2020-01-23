@@ -41,9 +41,6 @@ class EngagementView extends Component {
 
     const engagementStats = this.props.engagementStats;
 
-    console.log(engagementStats);
-
-
     this.setState({
       groupsActive: engagementStats.groupEngagement.groupsActive,
       groupActivity: engagementStats.groupEngagement.groupMeetingFrequency,
@@ -107,11 +104,7 @@ class EngagementView extends Component {
               </Row>
               <Row>
                 <Col lg={4} sm={6}>
-                  <LastMonthBar
-                    title="Engagement"
-                    color="#228b22"
-                    data=""
-                  />
+                  <LastMonthBar title="Engagement" color="#228b22" data="" />
                 </Col>
                 <Col lg={4} sm={6}>
                   <SizeChart

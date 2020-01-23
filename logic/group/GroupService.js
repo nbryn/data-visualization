@@ -32,12 +32,10 @@ async function calculateMeetingFrequency() {
   let meetingOver2Months = 0;
 
   meetingData.forEach(element => {
-    const currentDate = new Date();
-
     if (element.members.length < 6) {
       testGroups++;
     } else {
-      const sinceReg = calculateDaysSinceReg(element.registrationDate);
+      const sinceReg = calculateTimeSinceReg(element.registrationDate);
 
       const { daysSinceReg } = sinceReg;
 
@@ -45,14 +43,8 @@ async function calculateMeetingFrequency() {
         newGroups++;
       } else {
         if (element.meetings[element.meetings.length - 1]) {
-          const lastMeetingDate =
-            element.meetings[element.meetings.length - 1].meetingDay;
-
-          const secondsSinceLastMeeting =
-            (currentDate.getTime() - lastMeetingDate.getTime()) / 1000;
-
-          const daysSinceLastMeeting = Math.floor(
-            secondsSinceLastMeeting / (3600 * 24)
+          const daysSinceLastMeeting = calculateDaysSinceLastMeeting(
+            element.meetings[element.meetings.length - 1].meetingDay
           );
 
           if (daysSinceLastMeeting < 30) {
@@ -67,7 +59,7 @@ async function calculateMeetingFrequency() {
     }
   });
 
-  const groupEngagement = [];
+  let groupEngagement = [];
 
   const testGroupData = {
     value: "Test Groups",
@@ -182,4 +174,17 @@ function calculateTimeSinceReg(registrationDate) {
   timeSinceReg.daysSinceReg = Math.floor(secondsSinceReg / (3600 * 24));
 
   return timeSinceReg;
+}
+
+function calculateDaysSinceLastMeeting(lastMeetingDate) {
+  const currentDate = new Date();
+
+  const secondsSinceLastMeeting =
+    (currentDate.getTime() - lastMeetingDate.getTime()) / 1000;
+
+  const daysSinceLastMeeting = Math.floor(
+    secondsSinceLastMeeting / (3600 * 24)
+  );
+
+  return daysSinceLastMeeting;
 }

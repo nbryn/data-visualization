@@ -18,7 +18,7 @@ async function getCurrencyStats() {
   return currencyStats;
 }
 
-async function getShareStats() {
+async function calculateShareStats() {
   const result = await fetchFinanceStats(
     "groupaccounts",
     "totalShares",
@@ -31,7 +31,7 @@ async function getShareStats() {
     count: ""
   };
 
-  const shareTemp = result.map(element => {
+  const sharesPerGroup = result.map(element => {
     shareTotal += element.totalAmount;
     if (element.totalAmount > groupWithMostShares.count) {
       groupWithMostShares = {
@@ -45,26 +45,29 @@ async function getShareStats() {
     };
   });
 
-  shareTemp.sort((ele1, ele2) => {
+  sharesPerGroup.sort((ele1, ele2) => {
     return ele2.count - ele1.count;
   });
 
   const shareStats = {
     shareTotal: shareTotal,
     mostShares: groupWithMostShares,
-    shareStats: shareTemp.slice(0, 10)
+    shareStats: sharesPerGroup.slice(0, 10)
   };
 
   return shareStats;
 }
 
-async function getEtbLoanStats() {
+async function calculateEtbLoanStats() {
   const result = await fetchLoanStats();
   let totalETB = 0;
 
   const etbGroups = result
     .filter(
-      element => element.currency === "ETB" && element.members.length > 6 && element.shares[0].totalShares > 0
+      element =>
+        element.currency === "ETB" &&
+        element.members.length > 6 &&
+        element.shares[0].totalShares > 0
     )
     .map(element => {
       totalETB += element.shares[0].totalShares;
@@ -82,4 +85,8 @@ async function getEtbLoanStats() {
   return etbStats;
 }
 
-module.exports = { getCurrencyStats, getShareStats, getEtbLoanStats };
+module.exports = {
+  getCurrencyStats,
+  calculateShareStats,
+  calculateEtbLoanStats
+};

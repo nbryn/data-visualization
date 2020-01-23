@@ -28,7 +28,17 @@ class Sidebar extends Component {
                 <p>Dashboard</p>
               </NavLink>
             </li>
-            
+            <li>
+              <NavLink
+                to="/NGOView"
+                className="nav-link"
+                activeClassName="active"
+              >
+                <i className="pe-7s-graph" />
+                <p>NGOView</p>
+              </NavLink>
+            </li>
+
             <li>
               <NavLink
                 to="/finance"
@@ -39,6 +49,7 @@ class Sidebar extends Component {
                 <p>Finance</p>
               </NavLink>
             </li>
+
             <li>
               <NavLink
                 to="/groups"
@@ -89,7 +100,6 @@ class Sidebar extends Component {
                 <p>Profile</p>
               </NavLink>
             </li>
-            
           </ul>
         </div>
       </div>

@@ -3,8 +3,8 @@ const { fetchMonthlyData } = require("../../data/fetch/fetchMonthlyData");
 const { fetchTotal } = require("../../data/fetch/fetchTotal");
 const {
   getCurrencyStats,
-  getShareStats,
-  getEtbLoanStats
+  calculateShareStats,
+  calculateEtbLoanStats
 } = require("./FinanceService");
 
 const financeResolvers = {
@@ -50,7 +50,7 @@ const financeResolvers = {
       };
     },
     shareStats: async ({ root, context }) => {
-      const shareStats = await getShareStats();
+      const shareStats = await calculateShareStats();
 
       const { shareTotal } = shareStats;
       const { mostShares } = shareStats;
@@ -62,7 +62,7 @@ const financeResolvers = {
       };
     },
     etbStats: async ({ root, context }) => {
-      const etbStats = await getEtbLoanStats();
+      const etbStats = await calculateEtbLoanStats();
 
       const { ETBLoanTotal } = etbStats;
 

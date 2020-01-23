@@ -51,7 +51,6 @@ async function fetchGroupMembersData() {
   });
 }
 
-
 async function fetchGroup(groupID) {
   const connection = await connectToDB();
   return new Promise((resolve, reject) => {
@@ -85,7 +84,6 @@ async function fetchAllGroups() {
           .find({ state: "ACTIVE" })
           .project({ _id: 1, members: 1 })
           .toArray();
-
 
         if (result) {
           resolve(result);
@@ -179,6 +177,138 @@ async function fetchGroupMeetingData() {
   });
 }
 
+async function fetchGroupsByNGO(ngo) {
+  const connection = await connectToDB();
+  return new Promise((resolve, reject) => {
+    try {
+      connection.db.collection("groups", async (err, collection) => {
+        if (err) {
+          console.log(err);
+        } else {
+          const dbResult = await collection
+            .find({ ngoOrganization: ngo })
+            .project({ _id: 1, name: 1, cycleNumber: 1, meetings: 1 })
+            .toArray();
+
+          if (dbResult) {
+            resolve(dbResult);
+          }
+        }
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  });
+}
+
+async function fetchSharesByGroup(groupID) {
+  const connection = await connectToDB();
+  return new Promise((resolve, reject) => {
+    try {
+      connection.db.collection("groupaccounts", async (err, collection) => {
+        if (err) {
+          console.log(err);
+        } else {
+          const dbResult = await collection
+            .find({ group: groupID })
+            .project({ totalShares: 1, boxBalance: 1 })
+            .toArray();
+
+          if (dbResult) {
+            resolve(dbResult);
+          }
+        }
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  });
+}
+
+async function fetchLoansByGroup(groupID) {
+  const connection = await connectToDB();
+  return new Promise((resolve, reject) => {
+    try {
+      connection.db.collection("groupmeetingloans", async (err, collection) => {
+        if (err) {
+          console.log(err);
+        } else {
+          const dbResult = await collection.count({ group: groupID });
+
+          if (dbResult < 1) {
+            resolve(dbResult);
+          }
+
+          if (dbResult) {
+            resolve(dbResult);
+          }
+        }
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  });
+}
+
+async function fetchGroupAdminID(groupID) {
+  const connection = await connectToDB();
+  return new Promise((resolve, reject) => {
+    try {
+      connection.db.collection("groupmembers", async (err, collection) => {
+        if (err) {
+          console.log(err);
+        } else {
+          const dbResult = await collection
+            .find({
+              $and: [{ group: groupID }, { groupRoles: "ADMINISTRATOR" }]
+            })
+            .project({ user: 1 })
+            .toArray();
+
+
+          if (dbResult) {
+            resolve(dbResult);
+          }
+        }
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  });
+}
+
+async function fetchLoanData() {
+  const connection = await connectToDB();
+  return new Promise((resolve, reject) => {
+    try {
+      connection.db.collection("groups", async (err, collection) => {
+        if (err) {
+          console.log(err);
+        } else {
+          const result = await collection
+            .aggregate([
+              {
+                $lookup: {
+                  from: "groupaccounts",
+                  localField: "_id",
+                  foreignField: "group",
+                  as: "shares"
+                }
+              }
+            ])
+            .toArray();
+
+          if (result) {
+            resolve(result);
+          }
+        }
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  });
+}
+
 module.exports = {
   fetchGroup,
   fetchGroupMembersData,
@@ -186,5 +316,10 @@ module.exports = {
   fetchGroupStats,
   fetchGroupSizeData,
   fetchGroupMeetingData,
-  fetchAllGroupData
+  fetchAllGroupData,
+  fetchGroupsByNGO,
+  fetchSharesByGroup,
+  fetchLoansByGroup,
+  fetchGroupAdminID,
+  fetchLoanData
 };

@@ -1,8 +1,8 @@
-const { fetchFinanceStats } = require("../../data/fetch/fetchFinanceStats");
-const { fetchLoanStats } = require("../../data/mappers/FinanceMapper");
+const { fetchFinanceData } = require("../../data/fetch/fetchFinanceData");
+const { fetchLoanData } = require("../../data/mappers/GroupMapper");
 
 async function getCurrencyStats() {
-  const result = await fetchFinanceStats(
+  const result = await fetchFinanceData(
     "groupaccounts",
     "totalBalance",
     "$currency"
@@ -19,7 +19,7 @@ async function getCurrencyStats() {
 }
 
 async function calculateShareStats() {
-  const result = await fetchFinanceStats(
+  const result = await fetchFinanceData(
     "groupaccounts",
     "totalShares",
     "$_id"
@@ -59,7 +59,7 @@ async function calculateShareStats() {
 }
 
 async function calculateEtbLoanStats() {
-  const result = await fetchLoanStats();
+  const result = await fetchLoanData();
   let totalETB = 0;
 
   const etbGroups = result

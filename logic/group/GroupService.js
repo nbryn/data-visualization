@@ -1,8 +1,14 @@
 const {
   fetchGroupSizeData,
+  fetchGroupsByNGO,
+  fetchSharesByGroup,
+  fetchLoansByGroup,
+  fetchGroupAdminID,
   fetchGroupMeetingData,
   fetchAllGroupData
 } = require("../../data/mappers/GroupMapper");
+
+const { fetchUserByID } = require("../../data/mappers/UserMapper");
 
 async function getGroupSizeStats() {
   const result = await fetchGroupSizeData();
@@ -19,6 +25,42 @@ async function getGroupSizeStats() {
   const groupSizeStats = tempResult.filter(element => element.count > 2);
 
   return groupSizeStats;
+}
+
+async function listGroupsByNGO(ngo) {
+  const generalGroupData = await fetchGroupsByNGO(ngo);
+
+  const allGroupData = await Promise.all(
+    generalGroupData.map(async group => {
+      const shares = await fetchSharesByGroup(group._id);
+      const loans = await fetchLoansByGroup(group._id);
+      const adminIDs = await fetchGroupAdminID(group._id);
+
+      let admins = [];
+
+      await adminIDs.forEach(async element => {
+        const admin = await fetchUserByID(element.user);
+        admins.push(admin);
+      });
+
+      const { totalShares, boxBalance } = shares[0];
+
+
+      return {
+        id: group._id,
+        name: group.name,
+        cycle: group.cycleNumber,
+        meetings: group.meetings.length,
+        shares: totalShares,
+        inBox: boxBalance,
+        loans: loans,
+        admins: admins
+      };
+    })
+  );
+
+
+  return allGroupData;
 }
 
 async function calculateMeetingFrequency() {
@@ -141,6 +183,7 @@ async function calculateMeetingStats() {
 
 module.exports = {
   getGroupSizeStats,
+  listGroupsByNGO,
   calculateMeetingFrequency,
   calculateMeetingStats
 };

@@ -76,10 +76,11 @@ class NGOGroupView extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    groups: state.NGO.financeStats
-  };
-};
+// const mapStateToProps = state => {
+//   return {
+//     groups: state.NGO.financeStats
+//   };
+// };
+// connect(mapStateToProps)
 
-export default connect(mapStateToProps)(NGOGroupView);
+export default NGOGroupView;

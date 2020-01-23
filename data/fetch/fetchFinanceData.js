@@ -1,6 +1,6 @@
 const { connectToDB } = require("../connection");
 
-async function fetchFinanceStats(collectionToFetch, matchString, idString) {
+async function fetchFinanceData(collectionToFetch, matchString, idString) {
   const connection = await connectToDB();
   return new Promise((resolve, reject) => {
     try {
@@ -19,8 +19,7 @@ async function fetchFinanceStats(collectionToFetch, matchString, idString) {
                 $group: {
                   _id: idString,
                   totalAmount: { $sum: "$" + matchString }
-                },
-                
+                },          
               }
             ])
             .toArray();
@@ -36,4 +35,4 @@ async function fetchFinanceStats(collectionToFetch, matchString, idString) {
   });
 }
 
-module.exports = { fetchFinanceStats };
+module.exports = { fetchFinanceData };

@@ -91,6 +91,28 @@ async function fetchCurrentUser(context) {
   }
 }
 
+async function fetchUserByID(userID) {
+  const connection = await connectToDB();
+
+  return new Promise((resolve, reject) => {
+    connection.db.collection("users", async (err, collection) => {
+      if (err) {
+        console.log(err);
+      } else {
+        const dbUser = await collection
+          .find({ _id: userID })
+          .project({ firstName: 1, lastName: 1 })
+          .toArray();
+
+        const user = dbUser[0];
+        if (user) {
+          resolve(user);
+        }
+      }
+    });
+  });
+}
+
 async function fetchUserCount() {
   const connection = await connectToDB();
 
@@ -174,6 +196,7 @@ async function fetchGenderStats() {
 module.exports = {
   validateLogin,
   fetchCurrentUser,
+  fetchUserByID,
   fetchUserCount,
   fetchAllUsers,
   fetchGenderStats

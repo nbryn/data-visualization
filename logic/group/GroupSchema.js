@@ -44,9 +44,29 @@ const GroupSchema = gql`
     groupMeetingStats: [GroupMeetingStats]
   }
 
+  type Admin {
+    name: String
+  }
+
+  type Group {
+    name: String
+    cycle: Float
+    meetings: Float
+    shares: Float
+    loans: Float
+    boxBalance: Float
+    admin: [Admin]
+  }
+
+
+  type NGOGroupData {
+    groupData(ngo: String!): [Group]
+  }
+
   extend type Query {
     groupStats: GroupStats
     groupEngagement: GroupEngagement
+    ngoGroupData: NGOGroupData
   }
 `;
 

@@ -7,6 +7,7 @@ const {
 } = require("../../data/mappers/GroupMapper");
 const {
   getGroupSizeStats,
+  listGroupsByNGO,
   calculateMeetingFrequency,
   calculateMeetingStats
 } = require("./GroupService");
@@ -14,7 +15,8 @@ const {
 const groupResolvers = {
   Query: {
     groupStats: (root, context) => ({ root, context }),
-    groupEngagement: (root, context) => ({ root, context })
+    groupEngagement: (root, context) => ({ root, context }),
+    ngoGroupData: (obj, args, root, context) => ({ obj, args, root, context })
   },
   GroupStats: {
     groupTotal: async (root, context) => {
@@ -79,7 +81,7 @@ const groupResolvers = {
           activeGroups++;
         }
       });
-      
+
       return activeGroups;
     },
     groupMeetingFrequency: async (root, context) => {
@@ -91,6 +93,13 @@ const groupResolvers = {
       meetingStats = await calculateMeetingStats();
 
       return meetingStats;
+    }
+  },
+  NGOGroupData: {
+    groupData: async (ojb, args, root, context) => {
+      const groupData = await listGroupsByNGO(args.ngo);
+
+      return groupData;
     }
   }
 };

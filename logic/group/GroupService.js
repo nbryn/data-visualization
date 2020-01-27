@@ -55,9 +55,6 @@ async function listGroupsByNGO(ngo) {
         })
       );
 
-      console.log("OWner" + owners);
-      console.log("admin" + admins);
-
       const { totalShares, boxBalance } = shares[0];
 
       return {

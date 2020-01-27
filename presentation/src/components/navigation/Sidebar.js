@@ -30,7 +30,7 @@ class Sidebar extends Component {
             </li>
             <li>
               <NavLink
-                to="/NGOView"
+                to="/ngo-view"
                 className="nav-link"
                 activeClassName="active"
               >

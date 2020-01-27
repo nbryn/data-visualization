@@ -3,7 +3,7 @@ const {
   fetchGroupsByNGO,
   fetchSharesByGroup,
   fetchLoansByGroup,
-  fetchGroupAdminID,
+  fetchUserIDByRole,
   fetchGroupMeetingData,
   fetchAllGroupData
 } = require("../../data/mappers/GroupMapper");
@@ -34,17 +34,31 @@ async function listGroupsByNGO(ngo) {
     generalGroupData.map(async group => {
       const shares = await fetchSharesByGroup(group._id);
       const loans = await fetchLoansByGroup(group._id);
-      const adminIDs = await fetchGroupAdminID(group._id);
+      const adminIDs = await fetchUserIDByRole("ADMINISTRATOR", group._id);
+      const ownerIDs = await fetchUserIDByRole("OWNER", group._id);
 
-      let admins = [];
+      const admins = await Promise.all(
+        await adminIDs.map(async element => {
+          const adminInfo = await fetchUserByID(element.user);
+          const admin = adminInfo.firstName + " " + adminInfo.lastName;
 
-      await adminIDs.forEach(async element => {
-        const admin = await fetchUserByID(element.user);
-        admins.push(admin);
-      });
+          return admin;
+        })
+      );
+
+      const owners = await Promise.all(
+        await ownerIDs.map(async element => {
+          const ownerInfo = await fetchUserByID(element.user);
+          const owner = ownerInfo.firstName + " " + ownerInfo.lastName;
+
+          return owner;
+        })
+      );
+
+      console.log("OWner" + owners);
+      console.log("admin" + admins);
 
       const { totalShares, boxBalance } = shares[0];
-
 
       return {
         id: group._id,
@@ -54,11 +68,11 @@ async function listGroupsByNGO(ngo) {
         shares: totalShares,
         inBox: boxBalance,
         loans: loans,
-        admins: admins
+        owner: owners[0],
+        admin: admins[1] ? admins[1] : admins[0]
       };
     })
   );
-
 
   return allGroupData;
 }

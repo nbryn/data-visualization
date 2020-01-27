@@ -250,7 +250,7 @@ async function fetchLoansByGroup(groupID) {
   });
 }
 
-async function fetchGroupAdminID(groupID) {
+async function fetchUserIDByRole(role, groupID) {
   const connection = await connectToDB();
   return new Promise((resolve, reject) => {
     try {
@@ -260,11 +260,10 @@ async function fetchGroupAdminID(groupID) {
         } else {
           const dbResult = await collection
             .find({
-              $and: [{ group: groupID }, { groupRoles: "ADMINISTRATOR" }]
+              $and: [{ group: groupID }, { groupRoles: role }]
             })
             .project({ user: 1 })
             .toArray();
-
 
           if (dbResult) {
             resolve(dbResult);
@@ -276,6 +275,7 @@ async function fetchGroupAdminID(groupID) {
     }
   });
 }
+
 
 async function fetchLoanData() {
   const connection = await connectToDB();
@@ -320,6 +320,6 @@ module.exports = {
   fetchGroupsByNGO,
   fetchSharesByGroup,
   fetchLoansByGroup,
-  fetchGroupAdminID,
+  fetchUserIDByRole,
   fetchLoanData
 };

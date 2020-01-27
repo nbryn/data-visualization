@@ -55,7 +55,8 @@ const GroupSchema = gql`
     shares: Float
     loans: Float
     boxBalance: Float
-    admin: [Admin]
+    owner: String
+    admin: String
   }
 
 

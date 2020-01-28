@@ -40,6 +40,8 @@ class GroupView extends Component {
   async fetchData() {
     await this.props.fetchMeetingStats();
 
+    console.log(this.props);
+
     const meetingStats = this.props.meetingStats;
     const lastMonth = meetingStats.meetingsLastMonth.data;
     let lastUpdatedAt = getCurrentTime();

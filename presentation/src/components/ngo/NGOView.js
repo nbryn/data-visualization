@@ -1,20 +1,27 @@
 import React, { Component } from "react";
 import BootstrapTable from "react-bootstrap-table-next";
-import ToolkitProvider, { Search, ColumnToggle } from "react-bootstrap-table2-toolkit";
-import paginationFactory from 'react-bootstrap-table2-paginator';
+import ToolkitProvider, {
+  Search,
+  ColumnToggle
+} from "react-bootstrap-table2-toolkit";
+import paginationFactory from "react-bootstrap-table2-paginator";
 
+import NGOGroupView from "./NGOGroupView";
 import { Grid, Row, Col } from "react-bootstrap";
 import { connect } from "react-redux";
+
 import Sidebar from "../navigation/Sidebar";
 import Header from "../navigation/Header";
 
-import { fetchGroupsByNGO } from "../../redux/actions/ngo/NGOGroupsAction";
+import { fetchGroupsByNGO } from "../../redux/actions/ngo/NGOGroupsActions";
 
 class NGOView extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      newPage: false,
+      groupInfo: "",
       data: {}
     };
   }
@@ -32,13 +39,20 @@ class NGOView extends Component {
 
     const newState = this.props.groups.groupData.map(element => {
       return {
+        id: element.id,
+        regDate: element.regDate,
         name: element.name,
+        currency: element.currency,
         cycle: element.cycle,
-        meetings: element.meetings,
+        meetingsTotal: element.meetingsTotal,
+        perShare: element.perShare,
+        serviceFee: element.serviceFee,
+        loanLimit: element.loanLimit,
         shares: element.shares,
         loans: element.loans,
         admin: element.admin,
-        owner: element.owner
+        owner: element.owner,
+        members: element.members
       };
     });
 
@@ -52,16 +66,22 @@ class NGOView extends Component {
 
     if (Array.isArray(this.state.data)) {
       groupData = this.state.data.map(group => {
-        console.log(this.state.data);
-        return {
+        return {        
           id: id++,
+          objectID: group.id,
+          regDate: group.regDate,
           name: group.name,
+          currency: group.currency,
           cycle: group.cycle,
-          meetings: group.meetings,
+          meetingsTotal: group.meetingsTotal,
+          perShare: group.perShare,
+          serviceFee: group.serviceFee,
+          loanLimit: group.loanLimit,
           shares: group.shares,
           loans: group.loans,
           admin: group.admin,
-          owner: group.owner
+          owner: group.owner,
+          members: group.members
         };
       });
     }
@@ -71,7 +91,13 @@ class NGOView extends Component {
     const selectRow = {
       mode: "radio",
       clickToSelect: true,
-      style: { backgroundColor: "#c8e6c9" }
+      style: { backgroundColor: "#c8e6c9" },
+      onSelect: (row, isSelect, rowIndex, e) => {
+        this.setState({
+          newPage: true,
+          groupInfo: row
+        });
+      }
     };
 
     const { ToggleList } = ColumnToggle;
@@ -86,8 +112,8 @@ class NGOView extends Component {
         text: "Cycle"
       },
       {
-        dataField: "meetings",
-        text: "Meetings"
+        dataField: "meetingsTotal",
+        text: "Total Meetings"
       },
       {
         dataField: "shares",
@@ -107,7 +133,9 @@ class NGOView extends Component {
       }
     ];
 
-    return (
+    return this.state.newPage ? (
+      <NGOGroupView groupInfo={this.state.groupInfo} />
+    ) : (
       <div className="wrapper">
         <Sidebar />
 
@@ -125,15 +153,12 @@ class NGOView extends Component {
           >
             {props => (
               <div>
-                
                 <h4>Search</h4>
-                <SearchBar 
-                {...props.searchProps} 
-                placeholder="Group Name"/>
+                <SearchBar {...props.searchProps} placeholder="Group Name" />
                 <ClearSearchButton {...props.searchProps} />
-                
+
                 <hr />
-                <ToggleList { ...props.columnToggleProps } />
+                <ToggleList {...props.columnToggleProps} />
                 <div className="content">
                   <Grid fluid>
                     <Row>
@@ -143,8 +168,7 @@ class NGOView extends Component {
                         data={groupData ? groupData : []}
                         columns={columns}
                         selectRow={selectRow}
-                        pagination={ paginationFactory()}
-                        
+                        pagination={paginationFactory()}
                       />
                     </Row>
                   </Grid>
@@ -163,6 +187,5 @@ const mapStateToProps = state => {
     groups: state.NGO.groups
   };
 };
-connect(mapStateToProps);
 
 export default connect(mapStateToProps, { fetchGroupsByNGO })(NGOView);

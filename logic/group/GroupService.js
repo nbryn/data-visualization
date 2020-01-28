@@ -4,6 +4,7 @@ const {
   fetchSharesByGroup,
   fetchLoansByGroup,
   fetchUserIDByRole,
+  fetchAllMemberIDsFromGroup,
   fetchGroupMeetingData,
   fetchAllGroupData
 } = require("../../data/mappers/GroupMapper");
@@ -34,6 +35,7 @@ async function listGroupsByNGO(ngo) {
     generalGroupData.map(async group => {
       const shares = await fetchSharesByGroup(group._id);
       const loans = await fetchLoansByGroup(group._id);
+      const memberIDs = await fetchAllMemberIDsFromGroup(group._id);
       const adminIDs = await fetchUserIDByRole("ADMINISTRATOR", group._id);
       const ownerIDs = await fetchUserIDByRole("OWNER", group._id);
 
@@ -55,16 +57,41 @@ async function listGroupsByNGO(ngo) {
         })
       );
 
+      const members = await Promise.all(
+        await memberIDs.map(async element => {
+          const memberInfo = await fetchUserByID(element.user);
+          const name = memberInfo.firstName + " " + memberInfo.lastName;
+
+          return {
+            id: element.user,
+            name: name,
+            email: element.email,
+            gender: element.gender
+          };
+        })
+      );
+
+      let regMonth = group.registrationDate.getMonth().toString();
+      regMonth.length < 2 ? (regMonth = "0" + "" + regMonth) : regMonth;
+
+      const regDate = regMonth + "/" + group.registrationDate.getFullYear();
+
       const { totalShares, boxBalance } = shares[0];
 
       return {
         id: group._id,
         name: group.name,
+        regDate: regDate,
+        currency: group.currency,
         cycle: group.cycleNumber,
-        meetings: group.meetings.length,
+        meetingsTotal: group.meetings.length,
+        perShare: group.amountPerShare,
+        serviceFee: group.loanServiceFee,
+        loanLimit: group.loanLimit,
         shares: totalShares,
         inBox: boxBalance,
         loans: loans,
+        members: members,
         owner: owners[0],
         admin: admins[1] ? admins[1] : admins[0]
       };

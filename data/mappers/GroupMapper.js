@@ -187,7 +187,6 @@ async function fetchGroupsByNGO(ngo) {
         } else {
           const dbResult = await collection
             .find({ ngoOrganization: ngo })
-            .project({ _id: 1, name: 1, cycleNumber: 1, meetings: 1 })
             .toArray();
 
           if (dbResult) {
@@ -250,7 +249,7 @@ async function fetchLoansByGroup(groupID) {
   });
 }
 
-async function fetchUserIDByRole(role, groupID) {
+async function fetchAllMemberIDsFromGroup(groupID) {
   const connection = await connectToDB();
   return new Promise((resolve, reject) => {
     try {
@@ -260,7 +259,7 @@ async function fetchUserIDByRole(role, groupID) {
         } else {
           const dbResult = await collection
             .find({
-              $and: [{ group: groupID }, { groupRoles: role }]
+              group: groupID
             })
             .project({ user: 1 })
             .toArray();
@@ -276,6 +275,35 @@ async function fetchUserIDByRole(role, groupID) {
   });
 }
 
+async function fetchUserIDByRole(role, groupID) {
+  const connection = await connectToDB();
+  return new Promise((resolve, reject) => {
+    try {
+      connection.db.collection("groupmembers", async (err, collection) => {
+        if (err) {
+          console.log(err);
+        } else {
+          const dbResult = await collection
+            .find({
+              $and: [{ group: groupID }, { groupRoles: role }]
+            })
+            .project({ user: 1 })
+            .toArray();
+
+          if (role === "(.*?)") {
+            console.log(dbResult);
+          }
+
+          if (dbResult) {
+            resolve(dbResult);
+          }
+        }
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  });
+}
 
 async function fetchLoanData() {
   const connection = await connectToDB();
@@ -321,5 +349,6 @@ module.exports = {
   fetchSharesByGroup,
   fetchLoansByGroup,
   fetchUserIDByRole,
+  fetchAllMemberIDsFromGroup,
   fetchLoanData
 };

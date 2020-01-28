@@ -44,19 +44,31 @@ const GroupSchema = gql`
     groupMeetingStats: [GroupMeetingStats]
   }
 
-  type Admin {
+  type Member {
+    id: String
     name: String
+    email: String
+    gender: String
   }
 
+
   type Group {
+    id: String
+    regDate: String
     name: String
+    currency: String
     cycle: Float
-    meetings: Float
+    boxBalance: Float
+    meetingsTotal: Float
+    meetingsInCycle: Float
+    perShare: Float
+    serviceFee: Float
+    loanLimit: Float 
     shares: Float
     loans: Float
-    boxBalance: Float
     owner: String
     admin: String
+    members: JSON
   }
 
 

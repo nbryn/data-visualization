@@ -101,7 +101,7 @@ async function fetchUserByID(userID) {
       } else {
         const dbUser = await collection
           .find({ _id: userID })
-          .project({ firstName: 1, lastName: 1 })
+          .project({ firstName: 1, lastName: 1, email: 1, gender: 1 })
           .toArray();
 
         const user = dbUser[0];

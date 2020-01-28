@@ -96,7 +96,7 @@ const groupResolvers = {
     }
   },
   NGOGroupData: {
-    groupData: async (ojb, args, root, context) => {
+    groupData: async (obj, args, root, context) => {
       const groupData = await listGroupsByNGO(args.ngo);
 
       return groupData;

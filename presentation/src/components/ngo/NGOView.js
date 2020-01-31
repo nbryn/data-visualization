@@ -66,7 +66,7 @@ class NGOView extends Component {
 
     if (Array.isArray(this.state.data)) {
       groupData = this.state.data.map(group => {
-        return {        
+        return {
           id: id++,
           objectID: group.id,
           regDate: group.regDate,
@@ -144,38 +144,41 @@ class NGOView extends Component {
             title="NGOView
           "
           />
-          <ToolkitProvider
-            keyField="name"
-            data={groupData}
-            columns={columns}
-            search
-            columnToggle
-          >
-            {props => (
-              <div>
-                <h4>Search</h4>
-                <SearchBar {...props.searchProps} placeholder="Group Name" />
-                <ClearSearchButton {...props.searchProps} />
+          <div className="content">
+            <Grid fluid>
+              <ToolkitProvider
+                keyField="name"
+                data={groupData}
+                columns={columns}
+                search
+                columnToggle
+              >
+                {props => (
+                  <div>
+                    <h4>Search</h4>
+                    <SearchBar
+                      {...props.searchProps}
+                      placeholder="Group Name"
+                    />
+                    <ClearSearchButton {...props.searchProps} />
 
-                <hr />
-                <ToggleList {...props.columnToggleProps} />
-                <div className="content">
-                  <Grid fluid>
-                    <Row>
-                      <BootstrapTable
-                        {...props.baseProps}
-                        keyField="id"
-                        data={groupData ? groupData : []}
-                        columns={columns}
-                        selectRow={selectRow}
-                        pagination={paginationFactory()}
-                      />
-                    </Row>
-                  </Grid>
-                </div>
-              </div>
-            )}
-          </ToolkitProvider>
+                    <hr />
+
+                    <ToggleList {...props.columnToggleProps} />
+
+                    <BootstrapTable
+                      {...props.baseProps}
+                      keyField="id"
+                      data={groupData ? groupData : []}
+                      columns={columns}
+                      selectRow={selectRow}
+                      pagination={paginationFactory()}
+                    />
+                  </div>
+                )}
+              </ToolkitProvider>
+            </Grid>
+          </div>
         </div>
       </div>
     );

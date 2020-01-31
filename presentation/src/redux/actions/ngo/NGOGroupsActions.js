@@ -9,15 +9,23 @@ export const fetchGroupsByNGO = ngo => async dispatch => {
             regDate
             name
             currency
+            lastMeeting
             cycle
+            boxBalance
             meetingsTotal
             perShare
             serviceFee
             loanLimit
             shares
             loans
-            owner
-            admin
+            owner{
+              firstName
+              lastName
+            }
+            admin{
+              firstName
+              lastName
+            }
             members                      
       }
       }
@@ -32,5 +40,3 @@ export const fetchGroupsByNGO = ngo => async dispatch => {
     payload: response.data.data.ngoGroupData
   });
 };
-
-

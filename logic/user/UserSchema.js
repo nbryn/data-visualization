@@ -6,11 +6,19 @@ const UserSchema = gql`
     password: String!
   }
 
+  type User {
+    firstName: String
+    lastName: String
+    phoneNumber: String
+    signupDate: String
+    email: String
+    gender: String
+  }
+
   type UserGenderStats {
     value: String
     count: Float
   }
-
 
   type UserStats {
     userCount: Float!

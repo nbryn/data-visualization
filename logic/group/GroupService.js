@@ -1,15 +1,18 @@
 const {
   fetchGroupSizeData,
   fetchGroupsByNGO,
-  fetchSharesByGroup,
-  fetchLoansByGroup,
   fetchUserIDByRole,
   fetchAllMemberIDsFromGroup,
   fetchGroupMeetingData,
   fetchAllGroupData
 } = require("../../data/mappers/GroupMapper");
 
-const { fetchUserByID } = require("../../data/mappers/UserMapper");
+const {
+  fetchAccountDataByGroup,
+  fetchLoansByGroup
+} = require("../../data/mappers/FinanceMapper");
+
+const { fetchByID } = require("../../data/fetch/fetchByID");
 
 async function getGroupSizeStats() {
   const result = await fetchGroupSizeData();
@@ -33,63 +36,39 @@ async function listGroupsByNGO(ngo) {
 
   const allGroupData = await Promise.all(
     generalGroupData.map(async group => {
-      const shares = await fetchSharesByGroup(group._id);
+      const accountData = await fetchAccountDataByGroup(group._id);
       const loans = await fetchLoansByGroup(group._id);
+      const lastMeetingData = await fetchByID(
+        "groupmeetings",
+        group.meetings[group.meetings.length - 1]
+      );
       const memberIDs = await fetchAllMemberIDsFromGroup(group._id);
       const adminIDs = await fetchUserIDByRole("ADMINISTRATOR", group._id);
       const ownerIDs = await fetchUserIDByRole("OWNER", group._id);
 
-      const admins = await Promise.all(
-        await adminIDs.map(async element => {
-          const adminInfo = await fetchUserByID(element.user);
-          const admin = adminInfo.firstName + " " + adminInfo.lastName;
+      const lastMeeting = extractLastMeetingDate(lastMeetingData);
 
-          return admin;
-        })
-      );
+      const members = await getUsersByIDs(memberIDs);
+      const admins = await getUsersByIDs(adminIDs);
+      const owners = await getUsersByIDs(ownerIDs);
 
-      const owners = await Promise.all(
-        await ownerIDs.map(async element => {
-          const ownerInfo = await fetchUserByID(element.user);
-          const owner = ownerInfo.firstName + " " + ownerInfo.lastName;
+      const regDate = extractRegDate(group.registrationDate);
 
-          return owner;
-        })
-      );
-
-      const members = await Promise.all(
-        await memberIDs.map(async element => {
-          const memberInfo = await fetchUserByID(element.user);
-          const name = memberInfo.firstName + " " + memberInfo.lastName;
-
-          return {
-            id: element.user,
-            name: name,
-            email: element.email,
-            gender: element.gender
-          };
-        })
-      );
-
-      let regMonth = group.registrationDate.getMonth().toString();
-      regMonth.length < 2 ? (regMonth = "0" + "" + regMonth) : regMonth;
-
-      const regDate = regMonth + "/" + group.registrationDate.getFullYear();
-
-      const { totalShares, boxBalance } = shares[0];
+      const { totalShares, boxBalance } = accountData[0];
 
       return {
         id: group._id,
         name: group.name,
         regDate: regDate,
         currency: group.currency,
+        lastMeeting: lastMeeting,
         cycle: group.cycleNumber,
         meetingsTotal: group.meetings.length,
         perShare: group.amountPerShare,
         serviceFee: group.loanServiceFee,
         loanLimit: group.loanLimit,
         shares: totalShares,
-        inBox: boxBalance,
+        boxBalance: boxBalance,
         loans: loans,
         members: members,
         owner: owners[0],
@@ -227,6 +206,53 @@ module.exports = {
 };
 
 // ---- Helper Functions ---- //
+
+async function getUsersByIDs(users) {
+  const result = await Promise.all(
+    await users.map(async element => {
+      const memberInfo = await fetchByID("users", element.user);
+
+      return {
+        id: element.user,
+        firstName: memberInfo[0].firstName,
+        lastName: memberInfo[0].lastName,
+        email: element.email,
+        gender: element.gender
+      };
+    })
+  );
+
+  return result;
+}
+
+function extractLastMeetingDate(meetingData) {
+  const lastMeetingDate = meetingData[0].meetingDay;
+  const lastMeetingDay = lastMeetingDate.getDate();
+  const lastMeetingM = lastMeetingDate.getMonth() + 1;
+  const lastMeetingYear = lastMeetingDate.getFullYear();
+
+  let lastMeetingMonth = lastMeetingM.toString();
+
+  lastMeetingMonth.length < 2
+    ? (lastMeetingMonth = "0" + lastMeetingMonth)
+    : lastMeetingMonth;
+
+  const lastMeeting =
+    lastMeetingDay + "/" + lastMeetingMonth + "/" + lastMeetingYear;
+
+  return lastMeeting;
+}
+
+function extractRegDate(regDateObj) {
+  const regMonthTemp = regDateObj.getMonth() + 1;
+  let regMonth = regMonthTemp.toString();
+
+  regMonth.length < 2 ? (regMonth = "0" + regMonth) : regMonth;
+
+  const regDate = regMonth + "/" + regDateObj.getFullYear();
+
+  return regDate;
+}
 
 function calculateTimeSinceReg(registrationDate) {
   let timeSinceReg = {

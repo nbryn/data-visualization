@@ -1,5 +1,5 @@
 const { fetchFinanceData } = require("../../data/fetch/fetchFinanceData");
-const { fetchLoanData } = require("../../data/mappers/GroupMapper");
+const { fetchLoanData } = require("../../data/mappers/FinanceMapper");
 
 async function getCurrencyStats() {
   const result = await fetchFinanceData(
@@ -19,11 +19,7 @@ async function getCurrencyStats() {
 }
 
 async function calculateShareStats() {
-  const result = await fetchFinanceData(
-    "groupaccounts",
-    "totalShares",
-    "$_id"
-  );
+  const result = await fetchFinanceData("groupaccounts", "totalShares", "$_id");
 
   let shareTotal = 0;
   let groupWithMostShares = {

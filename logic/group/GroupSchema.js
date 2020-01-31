@@ -44,33 +44,26 @@ const GroupSchema = gql`
     groupMeetingStats: [GroupMeetingStats]
   }
 
-  type Member {
-    id: String
-    name: String
-    email: String
-    gender: String
-  }
-
 
   type Group {
     id: String
     regDate: String
     name: String
     currency: String
+    lastMeeting: String
     cycle: Float
     boxBalance: Float
     meetingsTotal: Float
     meetingsInCycle: Float
     perShare: Float
     serviceFee: Float
-    loanLimit: Float 
+    loanLimit: Float
     shares: Float
     loans: Float
-    owner: String
-    admin: String
+    owner: User
+    admin: User
     members: JSON
   }
-
 
   type NGOGroupData {
     groupData(ngo: String!): [Group]

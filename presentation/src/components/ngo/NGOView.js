@@ -1,12 +1,9 @@
 import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
 import BootstrapTable from "react-bootstrap-table-next";
-import ToolkitProvider, {
-  Search,
-  ColumnToggle
-} from "react-bootstrap-table2-toolkit";
+import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit";
 import paginationFactory from "react-bootstrap-table2-paginator";
 
-import NGOGroupView from "./NGOGroupView";
 import { Grid, Row, Col } from "react-bootstrap";
 import { connect } from "react-redux";
 
@@ -20,7 +17,7 @@ class NGOView extends Component {
     super(props);
 
     this.state = {
-      newPage: false,
+      redirect: false,
       groupInfo: "",
       data: {}
     };
@@ -44,14 +41,16 @@ class NGOView extends Component {
         name: element.name,
         currency: element.currency,
         cycle: element.cycle,
+        boxBalance: element.boxBalance,
+        lastMeeting: element.lastMeeting,
         meetingsTotal: element.meetingsTotal,
         perShare: element.perShare,
         serviceFee: element.serviceFee,
         loanLimit: element.loanLimit,
         shares: element.shares,
         loans: element.loans,
-        admin: element.admin,
-        owner: element.owner,
+        admin: element.admin.name,
+        owner: element.owner.name,
         members: element.members
       };
     });
@@ -73,6 +72,8 @@ class NGOView extends Component {
           name: group.name,
           currency: group.currency,
           cycle: group.cycle,
+          boxBalance: group.boxBalance,
+          lastMeeting: group.lastMeeting,
           meetingsTotal: group.meetingsTotal,
           perShare: group.perShare,
           serviceFee: group.serviceFee,
@@ -86,7 +87,7 @@ class NGOView extends Component {
       });
     }
 
-    const { SearchBar, ClearSearchButton } = Search;
+    const { SearchBar } = Search;
 
     const selectRow = {
       mode: "radio",
@@ -94,35 +95,18 @@ class NGOView extends Component {
       style: { backgroundColor: "#c8e6c9" },
       onSelect: (row, isSelect, rowIndex, e) => {
         this.setState({
-          newPage: true,
+          redirect: true,
           groupInfo: row
         });
       }
     };
-
-    const { ToggleList } = ColumnToggle;
 
     const columns = [
       {
         dataField: "name",
         text: "Name"
       },
-      {
-        dataField: "cycle",
-        text: "Cycle"
-      },
-      {
-        dataField: "meetingsTotal",
-        text: "Total Meetings"
-      },
-      {
-        dataField: "shares",
-        text: "Shares"
-      },
-      {
-        dataField: "loans",
-        text: "Loans"
-      },
+
       {
         dataField: "admin",
         text: "Admin"
@@ -133,8 +117,14 @@ class NGOView extends Component {
       }
     ];
 
-    return this.state.newPage ? (
-      <NGOGroupView groupInfo={this.state.groupInfo} />
+    return this.state.redirect ? (
+      <Redirect
+        push
+        to={{
+          pathname: "/ngo-groupview",
+          state: { groupInfo: this.state.groupInfo }
+        }}
+      />
     ) : (
       <div className="wrapper">
         <Sidebar />
@@ -146,37 +136,39 @@ class NGOView extends Component {
           />
           <div className="content">
             <Grid fluid>
-              <ToolkitProvider
-                keyField="name"
-                data={groupData}
-                columns={columns}
-                search
-                columnToggle
-              >
-                {props => (
-                  <div>
-                    <h4>Search</h4>
-                    <SearchBar
-                      {...props.searchProps}
-                      placeholder="Group Name"
-                    />
-                    <ClearSearchButton {...props.searchProps} />
-
-                    <hr />
-
-                    <ToggleList {...props.columnToggleProps} />
-
-                    <BootstrapTable
-                      {...props.baseProps}
-                      keyField="id"
-                      data={groupData ? groupData : []}
-                      columns={columns}
-                      selectRow={selectRow}
-                      pagination={paginationFactory()}
-                    />
-                  </div>
-                )}
-              </ToolkitProvider>
+              <Row>
+                <div className="col-md-5">
+                  <ToolkitProvider
+                    keyField="name"
+                    data={groupData}
+                    columns={columns}
+                    striped
+                    hover
+                    condensed
+                    search
+                  >
+                    {props => (
+                      <div>
+                        <h4>
+                          <b>Groups</b>
+                        </h4>
+                        <SearchBar
+                          {...props.searchProps}
+                          placeholder="Search"
+                        />
+                        <BootstrapTable
+                          {...props.baseProps}
+                          keyField="id"
+                          data={groupData ? groupData : []}
+                          columns={columns}
+                          selectRow={selectRow}
+                          pagination={paginationFactory()}
+                        />
+                      </div>
+                    )}
+                  </ToolkitProvider>
+                </div>
+              </Row>
             </Grid>
           </div>
         </div>

@@ -19,11 +19,11 @@ class NGOGroupView extends Component {
   }
 
   render() {
-    const groupInfo = this.props.groupInfo;
+    const groupInfo = this.props.location.state.groupInfo;
 
     const renderGroupInfo = (name, prop) => {
       return (
-        <Row>
+        <Row >
           <div className="col-md-5">
             <FormGroup>
               <ControlLabel>{name}</ControlLabel>
@@ -49,22 +49,14 @@ class NGOGroupView extends Component {
             <Grid fluid>
               <Row>
                 <Col lg={3}>
-                  <div>{renderGroupInfo("Group Name", groupInfo.name)}</div>
-                  <div>
-                    {renderGroupInfo("Registration Date", groupInfo.regDate)}
-                  </div>
-                  <div>{renderGroupInfo("Currency", groupInfo.currency)}</div>
-                  <div>{renderGroupInfo("Cycle", groupInfo.cycle)}</div>
-                  <div>{renderGroupInfo("Last Meeting")}</div>
-                  <div>
-                    {renderGroupInfo("Loan Service Fee", groupInfo.serviceFee)}
-                  </div>
-                  <div>
-                    {renderGroupInfo("Loan Limit", groupInfo.loanLimit)}
-                  </div>
-                  <div>
-                    {renderGroupInfo("Amount Per Share", groupInfo.perShare)}
-                  </div>
+                  {renderGroupInfo("Group Name", groupInfo.name)}
+                  {renderGroupInfo("Registration Date", groupInfo.regDate)}
+                  {renderGroupInfo("Currency", groupInfo.currency)}
+                  {renderGroupInfo("Cycle", groupInfo.cycle)}
+                  {renderGroupInfo("Last Meeting", groupInfo.lastMeeting)}
+                  {renderGroupInfo("Loan Service Fee", groupInfo.serviceFee)}
+                  {renderGroupInfo("Loan Limit", groupInfo.loanLimit)}
+                  {renderGroupInfo("Amount Per Share", groupInfo.perShare)}
                 </Col>
                 <Col lg={3}>
                   <div>
@@ -82,7 +74,7 @@ class NGOGroupView extends Component {
                 <Col lg={3}>
                   <BootstrapTable
                     keyField="id"
-                    data={this.props.groupInfo.members}
+                    data={groupInfo.members}
                     columns={columns}
                     pagination={paginationFactory()}
                   />

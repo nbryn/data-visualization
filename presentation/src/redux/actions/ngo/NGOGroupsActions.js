@@ -5,19 +5,18 @@ export const fetchGroupsByNGO = ngo => async dispatch => {
   const data = `query{
         ngoGroupData{
           groupData(ngo: ${ngo}){
-            id
-            regDate
             name
+            regDate   
             currency
-            lastMeeting
             cycle
+            lastMeeting           
             boxBalance
             meetingsTotal
             perShare
             serviceFee
-            loanLimit
-            shares
+            loanLimit   
             loans
+            shares
             owner{
               firstName
               lastName

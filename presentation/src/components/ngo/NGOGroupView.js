@@ -14,66 +14,55 @@ class NGOGroupView extends Component {
   constructor(props) {
     super(props);
   }
-  componentDidMount() {
-    console.log(this.props);
-  }
 
   render() {
     const groupInfo = this.props.location.state.groupInfo;
 
-    const renderGroupInfo = (name, prop) => {
-      return (
-        <Row>
-          <div className="col-md-5">
-            <FormGroup>
-              <ControlLabel>{name}</ControlLabel>
-              <FormControl type="text" placeholder={name} value={prop} />
-            </FormGroup>
-          </div>
-        </Row>
-      );
-    };
-
     let groupData = [];
 
     for (let key in groupInfo) {
-      const ele = {
-        [key]: groupInfo[key]
-      };
-
-      groupData.push(ele);
+      if (key != "id") {
+        let ele = groupInfo[key];
+        groupData.push(ele);
+      }
     }
-
-    console.log(groupData);
 
     const properties = [
       "Group Name",
       "Registration Date",
       "Currency",
       "Cycle",
-      "Box Balance",
       "Last Meeting",
+      "Box Balance",
+      "Total Meetings",
+      "Amount Per Share",
       "Loan Service Fee",
       "Loan Limit",
-      "Amount Per Share",
-      "Total Meetings",
-      "Meetings In Cycle",
       "Total Loans",
-      "Loans In Cycle",
       "Total Shares",
-      "Shares In Cycle",
       "Owner",
       "Admin"
     ];
 
-    const show = start => {
-      let counter = 0;
+    const generateFields = (name, value) => {
+      return (
+        <Row>
+          <div className="group-view-row">
+            <FormGroup>
+              <ControlLabel>{name}</ControlLabel>
+              <FormControl type="text" placeholder={name} value={value} />
+            </FormGroup>
+          </div>
+        </Row>
+      );
+    };
+
+    const renderGroupData = index => {
+      let row = 0;
       let arr = [];
-      while (counter < 8) {
-        counter++;
-        console.log(properties[start]);
-        console.log(groupData[start++]);
-        arr.push(renderGroupInfo(properties[start], groupData[start++]));
+      while (row < 7 && index < properties.length) {
+        row++;
+        arr.push(generateFields(properties[index], groupData[index++]));
       }
 
       return arr.map(element => element);
@@ -93,9 +82,11 @@ class NGOGroupView extends Component {
           <div className="content">
             <Grid fluid>
               <Row>
-                <Col lg={3}>{show(0)}</Col>
-                <Col lg={3}>{show(8)}</Col>
+                <div className="group-view-col">
+                  <Col lg={3}>{renderGroupData(0)}</Col>
 
+                  <Col lg={3}>{renderGroupData(7)}</Col>
+                </div>
                 <Col lg={3}>
                   <BootstrapTable
                     keyField="id"

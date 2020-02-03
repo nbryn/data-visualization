@@ -47,19 +47,19 @@ const GroupSchema = gql`
 
   type Group {
     id: String
-    regDate: String
     name: String
+    regDate: String
     currency: String
-    lastMeeting: String
     cycle: Float
+    lastMeeting: String
     boxBalance: Float
     meetingsTotal: Float
     meetingsInCycle: Float
     perShare: Float
     serviceFee: Float
     loanLimit: Float
-    shares: Float
     loans: Float
+    shares: Float
     owner: User
     admin: User
     members: JSON

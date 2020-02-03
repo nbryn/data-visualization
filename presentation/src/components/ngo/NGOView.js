@@ -73,13 +73,12 @@ class NGOView extends Component {
       groupData = this.state.data.map(group => {
         return {
           id: id++,
-          objectID: group.id,
-          regDate: group.regDate,
           name: group.name,
+          regDate: group.regDate,
           currency: group.currency,
           cycle: group.cycle,
-          boxBalance: group.boxBalance,
           lastMeeting: group.lastMeeting,
+          boxBalance: group.boxBalance,
           meetingsTotal: group.meetingsTotal,
           perShare: group.perShare,
           serviceFee: group.serviceFee,
@@ -122,6 +121,8 @@ class NGOView extends Component {
         text: "Owner"
       }
     ];
+
+
 
     return this.state.redirect ? (
       <Redirect

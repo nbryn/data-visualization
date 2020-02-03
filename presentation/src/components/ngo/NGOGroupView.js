@@ -23,7 +23,7 @@ class NGOGroupView extends Component {
 
     const renderGroupInfo = (name, prop) => {
       return (
-        <Row >
+        <Row>
           <div className="col-md-5">
             <FormGroup>
               <ControlLabel>{name}</ControlLabel>
@@ -32,6 +32,51 @@ class NGOGroupView extends Component {
           </div>
         </Row>
       );
+    };
+
+    let groupData = [];
+
+    for (let key in groupInfo) {
+      const ele = {
+        [key]: groupInfo[key]
+      };
+
+      groupData.push(ele);
+    }
+
+    console.log(groupData);
+
+    const properties = [
+      "Group Name",
+      "Registration Date",
+      "Currency",
+      "Cycle",
+      "Box Balance",
+      "Last Meeting",
+      "Loan Service Fee",
+      "Loan Limit",
+      "Amount Per Share",
+      "Total Meetings",
+      "Meetings In Cycle",
+      "Total Loans",
+      "Loans In Cycle",
+      "Total Shares",
+      "Shares In Cycle",
+      "Owner",
+      "Admin"
+    ];
+
+    const show = start => {
+      let counter = 0;
+      let arr = [];
+      while (counter < 8) {
+        counter++;
+        console.log(properties[start]);
+        console.log(groupData[start++]);
+        arr.push(renderGroupInfo(properties[start], groupData[start++]));
+      }
+
+      return arr.map(element => element);
     };
 
     const columns = [
@@ -48,28 +93,8 @@ class NGOGroupView extends Component {
           <div className="content">
             <Grid fluid>
               <Row>
-                <Col lg={3}>
-                  {renderGroupInfo("Group Name", groupInfo.name)}
-                  {renderGroupInfo("Registration Date", groupInfo.regDate)}
-                  {renderGroupInfo("Currency", groupInfo.currency)}
-                  {renderGroupInfo("Cycle", groupInfo.cycle)}
-                  {renderGroupInfo("Last Meeting", groupInfo.lastMeeting)}
-                  {renderGroupInfo("Loan Service Fee", groupInfo.serviceFee)}
-                  {renderGroupInfo("Loan Limit", groupInfo.loanLimit)}
-                  {renderGroupInfo("Amount Per Share", groupInfo.perShare)}
-                </Col>
-                <Col lg={3}>
-                  <div>
-                    {renderGroupInfo("Total Meetings", groupInfo.meetingsTotal)}
-                  </div>
-                  <div>{renderGroupInfo("Meetings In Cycle")}</div>
-                  <div>{renderGroupInfo("Total Loans", groupInfo.loans)}</div>
-                  <div>{renderGroupInfo("Loans In Cycle")}</div>
-                  <div>{renderGroupInfo("Total Shares", groupInfo.shares)}</div>
-                  <div>{renderGroupInfo("Shares In Cycle")}</div>
-                  <div>{renderGroupInfo("Owner", groupInfo.owner)}</div>
-                  <div>{renderGroupInfo("Admin", groupInfo.admin)}</div>
-                </Col>
+                <Col lg={3}>{show(0)}</Col>
+                <Col lg={3}>{show(8)}</Col>
 
                 <Col lg={3}>
                   <BootstrapTable

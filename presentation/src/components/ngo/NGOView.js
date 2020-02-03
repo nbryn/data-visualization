@@ -34,6 +34,8 @@ class NGOView extends Component {
   async fetchData() {
     await this.props.fetchGroupsByNGO('"FHIDO"');
 
+    console.log(this.props.groups);
+
     const newState = this.props.groups.groupData.map(element => {
       return {
         id: element.id,
@@ -49,9 +51,13 @@ class NGOView extends Component {
         loanLimit: element.loanLimit,
         shares: element.shares,
         loans: element.loans,
-        admin: element.admin.name,
-        owner: element.owner.name,
-        members: element.members
+        admin: element.admin.firstName + " " + element.admin.lastName,
+        owner: element.owner.firstName + " " + element.owner.lastName,
+        members: element.members.map(member => {
+          return {
+            name: member.firstName + member.lastName
+          };
+        })
       };
     });
 

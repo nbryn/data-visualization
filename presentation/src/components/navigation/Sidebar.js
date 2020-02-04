@@ -30,6 +30,16 @@ class Sidebar extends Component {
             </li>
             <li>
               <NavLink
+                to="/search"
+                className="nav-link"
+                activeClassName="active"
+              >
+                <i className="pe-7s-graph" />
+                <p>Search</p>
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
                 to="/ngo-view"
                 className="nav-link"
                 activeClassName="active"

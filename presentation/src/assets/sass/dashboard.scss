@@ -5,11 +5,12 @@
 @import "lbd/typography";
 @import "lbd/sidebar-and-main-panel";
 
-@import "lbd/circle.scss";
-@import "lbd/graph.scss";
-@import "lbd/userprofile.scss";
+@import "lbd/circle";
+@import "lbd/graph";
+@import "lbd/userprofile";
 @import "lbd/ngoview";
-@import "lbd/signin.scss";
+@import "lbd/search";
+@import "lbd/signin";
 @import "lbd/navbars";
 @import "lbd/cards";
 @import "lbd/responsive";

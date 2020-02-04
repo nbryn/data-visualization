@@ -150,7 +150,7 @@ async function calculateMeetingFrequency() {
   return groupEngagement;
 }
 
-async function calculateMeetingStats() {
+async function generateMeetingOverview() {
   const result = await fetchAllGroupData();
 
   const groupMeetingData = result.map(element => {
@@ -202,7 +202,7 @@ module.exports = {
   getGroupSizeStats,
   listGroupsByNGO,
   calculateMeetingFrequency,
-  calculateMeetingStats
+  generateMeetingOverview
 };
 
 // ---- Helper Functions ---- //

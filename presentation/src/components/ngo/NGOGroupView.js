@@ -5,7 +5,7 @@ import BootstrapTable from "react-bootstrap-table-next";
 import paginationFactory from "react-bootstrap-table2-paginator";
 
 import { Grid, Row, Col } from "react-bootstrap";
-import { FormGroup, ControlLabel, FormControl } from "react-bootstrap";
+import {ControlLabel, ListGroup, ListGroupItem  } from "react-bootstrap";
 
 import Sidebar from "../navigation/Sidebar";
 import Header from "../navigation/Header";
@@ -27,14 +27,17 @@ class NGOGroupView extends Component {
       }
     }
 
-    const properties = [
+    const column1 = [
       "Group Name",
       "Registration Date",
       "Currency",
       "Cycle",
       "Last Meeting",
       "Box Balance",
-      "Total Meetings",
+      "Total Meetings"
+    ];
+
+    const column2 = [
       "Amount Per Share",
       "Loan Service Fee",
       "Loan Limit",
@@ -44,36 +47,13 @@ class NGOGroupView extends Component {
       "Admin"
     ];
 
-    const generateFields = (name, value) => {
-      return (
-        <Row>
-          <div className="group-view-row">
-            <FormGroup>
-              <ControlLabel>{name}</ControlLabel>
-              <FormControl type="text" placeholder={name} value={value} />
-            </FormGroup>
-          </div>
-        </Row>
-      );
-    };
-
-    const renderGroupData = index => {
-      let row = 0;
-      let arr = [];
-      while (row < 7 && index < properties.length) {
-        row++;
-        arr.push(generateFields(properties[index], groupData[index++]));
-      }
-
-      return arr.map(element => element);
-    };
-
     const columns = [
       {
         dataField: "name",
         text: "Members"
       }
     ];
+    let groupDataIndex = 0;
     return (
       <div className="wrapper">
         <Sidebar />
@@ -83,9 +63,35 @@ class NGOGroupView extends Component {
             <Grid fluid>
               <Row>
                 <div className="group-view-col">
-                  <Col lg={3}>{renderGroupData(0)}</Col>
+                  <Col lg={3}>
+                    {column1.map((prop, index) => (
+                      <Row>
+                        <div className="group-view-row">
+                          <ListGroup>
+                            <ControlLabel>{prop}</ControlLabel>
+                            <ListGroupItem>
+                            {groupData[groupDataIndex++]}
+                            </ListGroupItem>
+                          </ListGroup>
+                        </div>
+                      </Row>
+                    ))}
+                  </Col>
 
-                  <Col lg={3}>{renderGroupData(7)}</Col>
+                  <Col lg={3}>
+                    {column2.map((prop, index) => (
+                      <Row>
+                        <div key={index} className="group-view-row">
+                        <ListGroup>
+                            <ControlLabel>{prop}</ControlLabel>
+                            <ListGroupItem>
+                            {groupData[groupDataIndex++]}
+                            </ListGroupItem>
+                          </ListGroup>
+                        </div>
+                      </Row>
+                    ))}
+                  </Col>
                 </div>
                 <Col lg={3}>
                   <BootstrapTable

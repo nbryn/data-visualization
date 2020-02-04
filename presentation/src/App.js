@@ -3,12 +3,9 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Provider } from "react-redux";
 import Store from "./Store";
 
-
-
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./assets/sass/dashboard.scss?v=1.3.0";
 import "./assets/fonts/pe-icon-7-stroke.css";
-import "./assets/css/ngoview.css";
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 
 import EngagementView from "./components/dashboard/views/EngagementView";

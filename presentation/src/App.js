@@ -18,6 +18,8 @@ import UserView from "./components/dashboard/views/UserView";
 import NGOView from "./components/ngo/NGOView";
 import NGOGroupView from "./components/ngo/NGOGroupView";
 
+import Search from "./components/misc/Search";
+
 import Signin from "./components/user/Signin.js";
 import Profile from "./components/user/UserProfile.js";
 import SecureRoute from "./security/SecureRoute";
@@ -41,6 +43,8 @@ class App extends Component {
 
             <SecureRoute exact path="/ngo-view" component={NGOView} />
             <SecureRoute exact path="/ngo-groupview" component={NGOGroupView} />
+
+            <SecureRoute exact path="/search" component={Search} />
 
             <Route path="*" component={NotFound} />
           </Switch>

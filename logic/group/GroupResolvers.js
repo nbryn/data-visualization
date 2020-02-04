@@ -9,14 +9,16 @@ const {
   getGroupSizeStats,
   listGroupsByNGO,
   calculateMeetingFrequency,
-  calculateMeetingStats
+  generateMeetingOverview
 } = require("./GroupService");
 
 const groupResolvers = {
   Query: {
     groupStats: (root, context) => ({ root, context }),
     groupEngagement: (root, context) => ({ root, context }),
+    groupInfo: (obj, args, root, context) => ({ obj, args, root, context }),
     ngoGroupData: (obj, args, root, context) => ({ obj, args, root, context })
+    
   },
   GroupStats: {
     groupTotal: async (root, context) => {
@@ -72,7 +74,6 @@ const groupResolvers = {
   },
   GroupEngagement: {
     groupsActive: async (root, context) => {
-      //Need to adjust how active groups are counted
       const allGroups = await fetchAllGroups();
       let activeGroups = 0;
 
@@ -90,9 +91,16 @@ const groupResolvers = {
       return meetingFreq;
     },
     groupMeetingStats: async (root, context) => {
-      meetingStats = await calculateMeetingStats();
+      meetingStats = await generateMeetingOverview();
 
       return meetingStats;
+    }
+  },
+  GroupInfo: {
+    groupData: async (obj, args, root, context) => {
+      // const groupData = await getGroupByName(args.group);
+
+      // return groupData;
     }
   },
   NGOGroupData: {
@@ -102,6 +110,7 @@ const groupResolvers = {
       return groupData;
     }
   }
+  
 };
 
 module.exports = groupResolvers;

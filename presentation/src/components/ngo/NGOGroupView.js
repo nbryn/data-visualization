@@ -5,7 +5,7 @@ import BootstrapTable from "react-bootstrap-table-next";
 import paginationFactory from "react-bootstrap-table2-paginator";
 
 import { Grid, Row, Col } from "react-bootstrap";
-import {ControlLabel, ListGroup, ListGroupItem  } from "react-bootstrap";
+import { ControlLabel, ListGroup, ListGroupItem } from "react-bootstrap";
 
 import Sidebar from "../navigation/Sidebar";
 import Header from "../navigation/Header";
@@ -54,7 +54,7 @@ class NGOGroupView extends Component {
         text: "Members"
       }
     ];
-    
+
     return (
       <div className="wrapper">
         <Sidebar />
@@ -67,11 +67,11 @@ class NGOGroupView extends Component {
                   <Col lg={3}>
                     {column1.map((prop, index) => (
                       <Row>
-                        <div className="group-view-row">
+                        <div key={index} className="group-view-row">
                           <ListGroup>
                             <ControlLabel>{prop}</ControlLabel>
                             <ListGroupItem>
-                            {groupData[groupDataIndex++]}
+                              {groupData[groupDataIndex++]}
                             </ListGroupItem>
                           </ListGroup>
                         </div>
@@ -83,10 +83,10 @@ class NGOGroupView extends Component {
                     {column2.map((prop, index) => (
                       <Row>
                         <div key={index} className="group-view-row">
-                        <ListGroup>
+                          <ListGroup>
                             <ControlLabel>{prop}</ControlLabel>
                             <ListGroupItem>
-                            {groupData[groupDataIndex++]}
+                              {groupData[groupDataIndex++]}
                             </ListGroupItem>
                           </ListGroup>
                         </div>

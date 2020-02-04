@@ -18,6 +18,7 @@ class NGOGroupView extends Component {
   render() {
     const groupInfo = this.props.location.state.groupInfo;
 
+    let groupDataIndex = 0;
     let groupData = [];
 
     for (let key in groupInfo) {
@@ -53,7 +54,7 @@ class NGOGroupView extends Component {
         text: "Members"
       }
     ];
-    let groupDataIndex = 0;
+    
     return (
       <div className="wrapper">
         <Sidebar />

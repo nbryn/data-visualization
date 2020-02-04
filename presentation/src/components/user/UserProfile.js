@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import { connect } from "react-redux";
-import { Grid, Row, Col, Button } from "react-bootstrap";
+import { Grid, Row} from "react-bootstrap";
 import { ControlLabel, ListGroup, ListGroupItem } from "react-bootstrap";
 
 import Sidebar from "../navigation/Sidebar.js";
@@ -15,8 +15,7 @@ class UserProfile extends Component {
 
     this.state = {
       email: "",
-      firstName: "",
-      lastName: "",
+      name: "",
       phoneNumber: "",
       gender: "",
       verified: ""
@@ -37,9 +36,12 @@ class UserProfile extends Component {
   }
   render() {
     const properties = ["Email", "Name", "Phone Number", "Gender", "Verified"];
-    console.log(this.state);
+    let data = [];
+
+    for (let key in this.state) {
+      data.push(this.state[key]);
+    }
     return (
-      
       <div className="wrapper">
         <Sidebar />
         <div id="main-panel" className="main-panel" ref="mainPanel">
@@ -47,7 +49,7 @@ class UserProfile extends Component {
           <div className="content">
             <div className="card">
               <div className="header">
-                <h4 className="title">Info</h4>
+                <h3 className="title">User Info</h3>
               </div>
 
               <Grid fluid>
@@ -56,7 +58,7 @@ class UserProfile extends Component {
                     <div className="col-md-6">
                       <ListGroup>
                         <ControlLabel>{element}</ControlLabel>
-                        <ListGroupItem>{this.state.element}</ListGroupItem>
+                        <ListGroupItem>{data[index++].toString().toUpperCase()}</ListGroupItem>
                       </ListGroup>
                     </div>
                   </Row>

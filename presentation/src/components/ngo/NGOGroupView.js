@@ -23,8 +23,8 @@ class NGOGroupView extends Component {
 
     for (let key in groupInfo) {
       if (key != "id") {
-        let ele = groupInfo[key];
-        groupData.push(ele);
+        let info = groupInfo[key];
+        groupData.push(info);
       }
     }
 

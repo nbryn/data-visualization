@@ -18,7 +18,7 @@ import UserView from "./components/dashboard/views/UserView";
 import NGOView from "./components/ngo/NGOView";
 import NGOGroupView from "./components/ngo/NGOGroupView";
 
-import Search from "./components/misc/Search";
+import Search from "./components/ngo/Search";
 
 import Signin from "./components/user/Signin.js";
 import Profile from "./components/user/UserProfile.js";

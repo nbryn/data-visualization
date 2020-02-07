@@ -64,8 +64,8 @@ const GroupSchema = gql`
     members: JSON
   }
 
-  type GroupInfo {
-    groupData(group: String!): Group
+  type GroupData {
+    group(group: String!): Group
   }
 
   type NGOGroupData {
@@ -75,7 +75,7 @@ const GroupSchema = gql`
   extend type Query {
     groupStats: GroupStats
     groupEngagement: GroupEngagement
-    groupInfo: GroupInfo
+    groupData: GroupData
     ngoGroupData: NGOGroupData
   }
 `;

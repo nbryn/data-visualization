@@ -2,11 +2,13 @@ const { fetchDailyData } = require("../../data/fetch/fetchDailyData");
 const { fetchMonthlyData } = require("../../data/fetch/fetchMonthlyData");
 const { fetchTotal } = require("../../data/fetch/fetchTotal");
 const {
+  fetchGroupBy,
   fetchGroupStats,
-  fetchAllGroups
+  fetchAllGroups,
+  fetchGroupSizeData
 } = require("../../data/mappers/GroupMapper");
 const {
-  getGroupSizeStats,
+  listGroupData,
   listGroupsByNGO,
   calculateMeetingFrequency,
   generateMeetingOverview
@@ -16,9 +18,8 @@ const groupResolvers = {
   Query: {
     groupStats: (root, context) => ({ root, context }),
     groupEngagement: (root, context) => ({ root, context }),
-    groupInfo: (obj, args, root, context) => ({ obj, args, root, context }),
+    groupData: (obj, args, root, context) => ({ obj, args, root, context }),
     ngoGroupData: (obj, args, root, context) => ({ obj, args, root, context })
-    
   },
   GroupStats: {
     groupTotal: async (root, context) => {
@@ -27,9 +28,20 @@ const groupResolvers = {
       return groupTotal;
     },
     groupSize: async (root, context) => {
-      const groupSize = await getGroupSizeStats();
+      const result = await fetchGroupSizeData();
 
-      return groupSize;
+      const tempResult = result
+        .filter(element => element._id.groupSize > 6)
+        .map(element => {
+          return {
+            value: element._id.groupSize,
+            count: element.count
+          };
+        });
+
+      const groupSizeStats = tempResult.filter(element => element.count > 2);
+
+      return groupSizeStats;
     },
     groupsNGO: async (root, context) => {
       const result = await fetchGroupStats("$ngoOrganization");
@@ -96,11 +108,14 @@ const groupResolvers = {
       return meetingStats;
     }
   },
-  GroupInfo: {
-    groupData: async (obj, args, root, context) => {
-      // const groupData = await getGroupByName(args.group);
+  GroupData: {
+    group: async (obj, args, root, context) => {
+      console.log("hej");
+      const groupData = await listGroupData(args.group);
 
-      // return groupData;
+      console.log(groupData);
+      
+      return groupData;
     }
   },
   NGOGroupData: {
@@ -110,7 +125,6 @@ const groupResolvers = {
       return groupData;
     }
   }
-  
 };
 
 module.exports = groupResolvers;

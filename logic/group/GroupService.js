@@ -1,5 +1,5 @@
 const {
-  fetchGroupSizeData,
+  fetchGroupBy,
   fetchGroupsByNGO,
   fetchUserIDByRole,
   fetchAllMemberIDsFromGroup,
@@ -14,21 +14,12 @@ const {
 
 const { fetchByID } = require("../../data/fetch/fetchByID");
 
-async function getGroupSizeStats() {
-  const result = await fetchGroupSizeData();
+async function listGroupData(group) {
+  const generalData = await fetchGroupBy("name", group);
 
-  const tempResult = result
-    .filter(element => element._id.groupSize > 6)
-    .map(element => {
-      return {
-        value: element._id.groupSize,
-        count: element.count
-      };
-    });
+  const allGroupData = await retrieveGroupData(generalData[0]);
 
-  const groupSizeStats = tempResult.filter(element => element.count > 2);
-
-  return groupSizeStats;
+  return allGroupData;
 }
 
 async function listGroupsByNGO(ngo) {
@@ -36,44 +27,9 @@ async function listGroupsByNGO(ngo) {
 
   const allGroupData = await Promise.all(
     generalGroupData.map(async group => {
-      const accountData = await fetchAccountDataByGroup(group._id);
-      const loans = await fetchLoansByGroup(group._id);
-      const lastMeetingData = await fetchByID(
-        "groupmeetings",
-        group.meetings[group.meetings.length - 1]
-      );
-      const memberIDs = await fetchAllMemberIDsFromGroup(group._id);
-      const adminIDs = await fetchUserIDByRole("ADMINISTRATOR", group._id);
-      const ownerIDs = await fetchUserIDByRole("OWNER", group._id);
+      const groupData = retrieveGroupData(group);
 
-      const lastMeeting = extractLastMeetingDate(lastMeetingData);
-
-      const members = await getUsersByIDs(memberIDs);
-      const admins = await getUsersByIDs(adminIDs);
-      const owners = await getUsersByIDs(ownerIDs);
-
-      const regDate = extractRegDate(group.registrationDate);
-
-      const { totalShares, boxBalance } = accountData[0];
-
-      return {
-        id: group._id,
-        name: group.name,
-        regDate: regDate,
-        currency: group.currency,
-        lastMeeting: lastMeeting,
-        cycle: group.cycleNumber,
-        meetingsTotal: group.meetings.length,
-        perShare: group.amountPerShare,
-        serviceFee: group.loanServiceFee,
-        loanLimit: group.loanLimit,
-        shares: totalShares,
-        boxBalance: boxBalance,
-        loans: loans,
-        members: members,
-        owner: owners[0],
-        admin: admins[1] ? admins[1] : admins[0]
-      };
+      return groupData;
     })
   );
 
@@ -102,10 +58,11 @@ async function calculateMeetingFrequency() {
         newGroups++;
       } else {
         if (element.meetings[element.meetings.length - 1]) {
-          const daysSinceLastMeeting = calculateDaysSinceLastMeeting(
-            element.meetings[element.meetings.length - 1].meetingDay
+          const lastMeetingDate =
+            element.meetings[element.meetings.length - 1].meetingDay;
+          const daysSinceLastMeeting = calculateTimeSinceLastMeeting(
+            lastMeetingDate
           );
-
           if (daysSinceLastMeeting < 30) {
             meetingLastMonth++;
           } else if (daysSinceLastMeeting < 60) {
@@ -199,7 +156,7 @@ async function generateMeetingOverview() {
 }
 
 module.exports = {
-  getGroupSizeStats,
+  listGroupData,
   listGroupsByNGO,
   calculateMeetingFrequency,
   generateMeetingOverview
@@ -207,7 +164,49 @@ module.exports = {
 
 // ---- Helper Functions ---- //
 
-async function getUsersByIDs(users) {
+async function retrieveGroupData(group) {
+  console.log(group);
+  const accountData = await fetchAccountDataByGroup(group._id);
+  const loans = await fetchLoansByGroup(group._id);
+  const lastMeetingData = await fetchByID(
+    "groupmeetings",
+    group.meetings[group.meetings.length - 1]
+  );
+  const memberIDs = await fetchAllMemberIDsFromGroup(group._id);
+  const adminIDs = await fetchUserIDByRole("ADMINISTRATOR", group._id);
+  const ownerIDs = await fetchUserIDByRole("OWNER", group._id);
+
+  const lastMeeting = extractLastMeetingDate(lastMeetingData);
+
+  const members = await mapIDtoUser(memberIDs);
+  const admins = await mapIDtoUser(adminIDs);
+  const owners = await mapIDtoUser(ownerIDs);
+
+  const regDate = extractRegDate(group.registrationDate);
+
+  const { totalShares, boxBalance } = accountData[0];
+
+  return {
+    id: group._id,
+    name: group.name,
+    regDate: regDate,
+    currency: group.currency,
+    lastMeeting: lastMeeting,
+    cycle: group.cycleNumber,
+    meetingsTotal: group.meetings.length,
+    perShare: group.amountPerShare,
+    serviceFee: group.loanServiceFee,
+    loanLimit: group.loanLimit,
+    shares: totalShares,
+    boxBalance: boxBalance,
+    loans: loans,
+    members: members,
+    owner: owners[0],
+    admin: admins[1] ? admins[1] : admins[0]
+  };
+}
+
+async function mapIDtoUser(users) {
   const result = await Promise.all(
     await users.map(async element => {
       const memberInfo = await fetchByID("users", element.user);
@@ -283,7 +282,7 @@ function calculateTimeSinceReg(registrationDate) {
   return timeSinceReg;
 }
 
-function calculateDaysSinceLastMeeting(lastMeetingDate) {
+function calculateTimeSinceLastMeeting(lastMeetingDate) {
   const currentDate = new Date();
 
   const secondsSinceLastMeeting =

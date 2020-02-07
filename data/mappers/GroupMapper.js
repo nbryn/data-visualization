@@ -51,7 +51,7 @@ async function fetchGroupMembersData() {
   });
 }
 
-async function fetchGroup(groupID) {
+async function fetchGroupBy(criteria, identifier) {
   const connection = await connectToDB();
   return new Promise((resolve, reject) => {
     try {
@@ -59,7 +59,9 @@ async function fetchGroup(groupID) {
         if (err) {
           console.log(err);
         }
-        const result = await collection.find({ _id: groupID });
+        const result = await collection
+          .find({ [criteria]: identifier })
+          .toArray();
 
         if (result) {
           resolve(result);
@@ -200,7 +202,6 @@ async function fetchGroupsByNGO(ngo) {
   });
 }
 
-
 async function fetchAllMemberIDsFromGroup(groupID) {
   const connection = await connectToDB();
   return new Promise((resolve, reject) => {
@@ -258,7 +259,7 @@ async function fetchUserIDByRole(role, groupID) {
 }
 
 module.exports = {
-  fetchGroup,
+  fetchGroupBy,
   fetchGroupMembersData,
   fetchAllGroups,
   fetchGroupStats,

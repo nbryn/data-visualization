@@ -34,8 +34,6 @@ class NGOView extends Component {
   async fetchData() {
     await this.props.fetchGroupsByNGO('"FHIDO"');
 
-    console.log(this.props.groups);
-
     const newState = this.props.groups.groupData.map(element => {
       return {
         id: element.id,

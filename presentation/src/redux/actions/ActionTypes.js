@@ -12,5 +12,6 @@ export const USERS_STATS = "USERS_STATS";
 
 
 // ----- NGO ------- //
-export const ALL_NGO_GROUPS = "ALL_NGO_GROUPS";
-export const NGO_GROUP = "NGO_GROUP";
+export const NGO_GROUPS = "NGO_GROUPS";
+export const GROUP_DATA = "GROUP_DATA"
+

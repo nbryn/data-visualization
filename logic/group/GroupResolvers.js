@@ -110,11 +110,8 @@ const groupResolvers = {
   },
   GroupData: {
     group: async (obj, args, root, context) => {
-      console.log("hej");
       const groupData = await listGroupData(args.group);
 
-      console.log(groupData);
-      
       return groupData;
     }
   },

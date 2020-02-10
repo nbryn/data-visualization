@@ -165,7 +165,6 @@ module.exports = {
 // ---- Helper Functions ---- //
 
 async function retrieveGroupData(group) {
-  console.log(group);
   const accountData = await fetchAccountDataByGroup(group._id);
   const loans = await fetchLoansByGroup(group._id);
   const lastMeetingData = await fetchByID(

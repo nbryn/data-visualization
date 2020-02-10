@@ -1,11 +1,30 @@
 .group-view-col {
-    width: 65%;
+    width: 70%;
+    left: 0px;
   }
   
   .group-view-row {
     width: 70%;
   }
   
+  .all-groups {
+    position: absolute;
+    left: 0px;
+    top: 40px;
+  }
+
+  .panel {
+   margin-top: 15px;
+   margin-left: -15px;
+   margin-right: 25px;
+
+  }
+
+  .ngo-line {
+    border: solid 1px;
+    margin-left: -30px;
+  }
+
   .react-bootstrap-table-pagination-list {
     text-align: right;
     transform: translateX(-50%);

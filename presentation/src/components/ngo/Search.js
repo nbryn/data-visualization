@@ -1,10 +1,12 @@
 import React, { Component } from "react";
-
-import { Grid, Row, Col } from "react-bootstrap";
+import { Grid, Row} from "react-bootstrap";
 import { FormGroup, FormControl, ControlLabel, Button } from "react-bootstrap";
+
 import { connect } from "react-redux";
 import { fetchGroupData } from "../../redux/actions/ngo/SearchAction";
 
+
+import NGOGroupView from "./NGOGroupView";
 import Sidebar from "../navigation/Sidebar";
 import Header from "../navigation/Header";
 
@@ -14,7 +16,8 @@ class Search extends Component {
 
     this.state = {
       searchString: "",
-      renderGroupData: false
+      renderGroupData: false,
+      groupData: []
     };
 
     this.onSubmit = this.onSubmit.bind(this);
@@ -31,21 +34,27 @@ class Search extends Component {
 
     this.setState({
       renderGroupData: true,
-      name: group.name,
-      regDate: group.regDate,
-      currency: group.currency,
-      cycle: group.cycle,
-      lastMeeting: group.lastMeeting,
-      boxBalance: group.boxBalance,
-      meetingsTotal: group.meetingsTotal,
-      perShare: group.perShare,
-      serviceFee: group.serviceFee,
-      loanLimit: group.loanLimit,
-      loans: group.loans,
-      shares: group.shares,
-      owner: group.owner.firstName + " " + group.owner.lastName,
-      admin: group.admin.firstName + " " + group.admin.lastName,
-      members: group.members
+      groupData: [
+        group.name,
+        group.regDate,
+        group.currency,
+        group.cycle,
+        group.lastMeeting,
+        group.boxBalance,
+        group.meetingsTotal,
+        group.perShare,
+        group.serviceFee,
+        group.loanLimit,
+        group.loans,
+        group.shares,
+        group.owner.firstName + " " + group.owner.lastName,
+        group.admin.firstName + " " + group.admin.lastName,
+        group.members.map(member => {
+          return {
+            name: member.firstName + " " + member.lastName
+          };
+        })
+      ]
     });
   }
 
@@ -81,11 +90,17 @@ class Search extends Component {
                         />
                       </FormGroup>
                       <Button variant="primary" type="submit">
-                        Search
+                        Go!
                       </Button>
                     </form>
                   </div>
-                  {this.state.renderGroupData ? <div>Hej</div> : ""}
+                  {this.state.renderGroupData ? (
+                    <NGOGroupView
+                      groupData={this.state.groupData}
+                    ></NGOGroupView>
+                  ) : (
+                    ""
+                  )}
                 </Row>
               </Grid>
             </div>

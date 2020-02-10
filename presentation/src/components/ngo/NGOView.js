@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Redirect } from "react-router-dom";
 import BootstrapTable from "react-bootstrap-table-next";
 import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit";
 import paginationFactory from "react-bootstrap-table2-paginator";
@@ -7,6 +6,7 @@ import paginationFactory from "react-bootstrap-table2-paginator";
 import { Grid, Row, Col } from "react-bootstrap";
 import { connect } from "react-redux";
 
+import NGOGroupView from "./NGOGroupView";
 import Sidebar from "../navigation/Sidebar";
 import Header from "../navigation/Header";
 
@@ -17,9 +17,9 @@ class NGOView extends Component {
     super(props);
 
     this.state = {
-      redirect: false,
-      groupInfo: "",
-      data: {}
+      renderGroupData: false,
+      allGroups: [],
+      groupdata: ""
     };
   }
 
@@ -53,22 +53,22 @@ class NGOView extends Component {
         owner: element.owner.firstName + " " + element.owner.lastName,
         members: element.members.map(member => {
           return {
-            name: member.firstName + member.lastName
+            name: member.firstName + " " + member.lastName
           };
         })
       };
     });
 
     this.setState({
-      data: newState
+      allGroups: newState
     });
   }
   render() {
     let groupData;
     let id = 0;
 
-    if (Array.isArray(this.state.data)) {
-      groupData = this.state.data.map(group => {
+    if (Array.isArray(this.state.allGroups)) {
+      groupData = this.state.allGroups.map(group => {
         return {
           id: id++,
           name: group.name,
@@ -97,9 +97,16 @@ class NGOView extends Component {
       clickToSelect: true,
       style: { backgroundColor: "#c8e6c9" },
       onSelect: (row, isSelect, rowIndex, e) => {
+        let data = [];
+        for (let key in row) {
+          if (key !== "id") {
+            data.push(row[key]);
+          }
+        }
+
         this.setState({
-          redirect: true,
-          groupInfo: row
+          renderGroupData: true,
+          groupData: data
         });
       }
     };
@@ -120,17 +127,7 @@ class NGOView extends Component {
       }
     ];
 
-
-
-    return this.state.redirect ? (
-      <Redirect
-        push
-        to={{
-          pathname: "/ngo-groupview",
-          state: { groupInfo: this.state.groupInfo }
-        }}
-      />
-    ) : (
+    return (
       <div className="wrapper">
         <Sidebar />
 
@@ -140,41 +137,48 @@ class NGOView extends Component {
           "
           />
           <div className="content">
-            <Grid fluid>
-              <Row>
-                <div className="col-md-5">
-                  <ToolkitProvider
-                    keyField="name"
-                    data={groupData}
-                    columns={columns}
-                    striped
-                    hover
-                    condensed
-                    search
-                  >
-                    {props => (
-                      <div>
-                        <h4>
-                          <b>Groups</b>
-                        </h4>
-                        <SearchBar
-                          {...props.searchProps}
-                          placeholder="Search"
-                        />
-                        <BootstrapTable
-                          {...props.baseProps}
-                          keyField="id"
-                          data={groupData ? groupData : []}
-                          columns={columns}
-                          selectRow={selectRow}
-                          pagination={paginationFactory()}
-                        />
-                      </div>
-                    )}
-                  </ToolkitProvider>
-                </div>
-              </Row>
-            </Grid>
+            <div className="all-groups">
+              <Grid fluid>
+                <Row>
+                  <div className="col-md-5">
+                    <ToolkitProvider
+                      keyField="name"
+                      data={groupData}
+                      columns={columns}
+                      striped
+                      hover
+                      condensed
+                      search
+                    >
+                      {props => (
+                        <div>
+                          <h4>
+                            <b>Groups</b>
+                          </h4>
+                          <SearchBar
+                            {...props.searchProps}
+                            placeholder="Search"
+                          />
+                          <BootstrapTable
+                            {...props.baseProps}
+                            keyField="id"
+                            data={groupData ? groupData : []}
+                            columns={columns}
+                            selectRow={selectRow}
+                            pagination={paginationFactory()}
+                          />
+                        </div>
+                      )}
+                    </ToolkitProvider>
+                  </div>
+                </Row>
+                {this.state.renderGroupData ? (
+                  <NGOGroupView groupData={this.state.groupData} />
+                ) : (
+                  ""
+                )}
+              </Grid>
+            </div>
           </div>
         </div>
       </div>

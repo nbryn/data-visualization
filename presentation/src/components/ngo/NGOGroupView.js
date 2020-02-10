@@ -1,32 +1,23 @@
 import React, { Component } from "react";
-
 import BootstrapTable from "react-bootstrap-table-next";
-
 import paginationFactory from "react-bootstrap-table2-paginator";
 
-import { Grid, Row, Col } from "react-bootstrap";
+import { Grid, Row, Col, Panel } from "react-bootstrap";
 import { ControlLabel, ListGroup, ListGroupItem } from "react-bootstrap";
-
-import Sidebar from "../navigation/Sidebar";
-import Header from "../navigation/Header";
 
 class NGOGroupView extends Component {
   constructor(props) {
     super(props);
+
+    this.setState({
+      showHeader: false
+    });
   }
 
   render() {
-    const groupInfo = this.props.location.state.groupInfo;
+    const groupData = this.props.groupData;
 
     let groupDataIndex = 0;
-    let groupData = [];
-
-    for (let key in groupInfo) {
-      if (key != "id") {
-        let info = groupInfo[key];
-        groupData.push(info);
-      }
-    }
 
     const column1 = [
       "Group Name",
@@ -56,57 +47,67 @@ class NGOGroupView extends Component {
     ];
 
     return (
-      <div className="wrapper">
-        <Sidebar />
-        <div id="main-panel" className="main-panel" ref="mainPanel">
-          <Header title="Group Overview" />
-          <div className="content">
-            <Grid fluid>
-              <Row>
-                <div className="group-view-col">
-                  <Col lg={3}>
-                    {column1.map((prop, index) => (
-                      <Row>
-                        <div key={index} className="group-view-row">
-                          <ListGroup>
-                            <ControlLabel>{prop}</ControlLabel>
-                            <ListGroupItem>
-                              {groupData[groupDataIndex++]}
-                            </ListGroupItem>
-                          </ListGroup>
-                        </div>
-                      </Row>
-                    ))}
-                  </Col>
+      
+      <Grid fluid>
+     
+        <hr className="ngo-line"/>
+          <div className="group-view-col">
+          
+            <Col lg={3}>
+           
+            <Panel>
+              {column1.map((prop, index) => (
+                <Row >
+                  <div key={index} className="group-view-row">
+                    <ListGroup>
+                      <ControlLabel>{prop}</ControlLabel>
+                      <ListGroupItem>
+                        {groupData[groupDataIndex++]}
+                      </ListGroupItem>
+                    </ListGroup>
+                  </div>
+                </Row>
+              ))}
+              </Panel>
+              
+            </Col>
+           
 
-                  <Col lg={3}>
-                    {column2.map((prop, index) => (
-                      <Row>
-                        <div key={index} className="group-view-row">
-                          <ListGroup>
-                            <ControlLabel>{prop}</ControlLabel>
-                            <ListGroupItem>
-                              {groupData[groupDataIndex++]}
-                            </ListGroupItem>
-                          </ListGroup>
-                        </div>
-                      </Row>
-                    ))}
-                  </Col>
-                </div>
-                <Col lg={3}>
-                  <BootstrapTable
-                    keyField="id"
-                    data={groupInfo.members}
-                    columns={columns}
-                    pagination={paginationFactory()}
-                  />
-                </Col>
-              </Row>
-            </Grid>
+            <Col lg={3}>
+           
+            <Panel>
+                {column2.map((prop, index) => (
+                  <Row>
+                    <div key={index} className="group-view-row">
+                      <ListGroup>
+                        <ControlLabel>{prop}</ControlLabel>
+                        <ListGroupItem>
+                          {groupData[groupDataIndex++]}
+                        </ListGroupItem>
+                      </ListGroup>
+                    </div>
+                    
+                  </Row>
+                  
+                ))}
+              </Panel>
+            </Col>
+            
           </div>
-        </div>
-      </div>
+          
+         
+          <Col lg={3}>
+            <Row>
+            <BootstrapTable
+              keyField="id"
+              data={groupData[groupData.length - 1]}
+              columns={columns}
+              pagination={paginationFactory()}
+            />
+            </Row>
+          </Col>
+         
+      </Grid>
     );
   }
 }

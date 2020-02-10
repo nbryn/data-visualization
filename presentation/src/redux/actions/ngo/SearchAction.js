@@ -2,7 +2,6 @@ import { fetchFromServer } from "../Fetch";
 import { GROUP_DATA } from "../ActionTypes";
 
 export const fetchGroupData = group => async dispatch => {
-  console.log(group);
   const data = `query{
     groupData{
       group(group: ${group}){
@@ -32,8 +31,6 @@ export const fetchGroupData = group => async dispatch => {
   }`;
 
   const response = await fetchFromServer("post", data);
-
-  console.log(response);
 
   dispatch({
     type: GROUP_DATA,

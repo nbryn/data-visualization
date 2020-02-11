@@ -48,10 +48,6 @@ class MainView extends Component {
 
     let lastUpdatedAt = getCurrentTime();
 
-    console.log(this.props);
-
-    //console.log(stats.userStats.usersLastYear.data);
-
     this.setState({
       userTotal: stats.userStats.userCount,
       usersLastYear: stats.userStats.usersLastYear.data,

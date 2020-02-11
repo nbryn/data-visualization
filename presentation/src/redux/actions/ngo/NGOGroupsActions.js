@@ -9,6 +9,8 @@ export const fetchGroupsByNGO = ngo => async dispatch => {
             regDate   
             currency
             cycle
+            type
+            ngo
             lastMeeting           
             boxBalance
             meetingsTotal

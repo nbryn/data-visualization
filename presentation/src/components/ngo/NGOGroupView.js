@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import BootstrapTable from "react-bootstrap-table-next";
 import paginationFactory from "react-bootstrap-table2-paginator";
 
-import { Grid, Row, Col, Panel } from "react-bootstrap";
+import { Row, Col, Panel } from "react-bootstrap";
 import { ControlLabel, ListGroup, ListGroupItem } from "react-bootstrap";
 
 class NGOGroupView extends Component {
@@ -16,28 +16,25 @@ class NGOGroupView extends Component {
 
   render() {
     const groupData = this.props.groupData;
-
-    console.log(groupData);
-
     let groupDataIndex = 0;
 
-    const column1 = [
-      "Group Name",
-      "Registration Date",
-      "Currency",
-      "Cycle",
-      "Last Meeting"
-    ];
+    const column1 = ["Registration Date", "Currency", "Cycle", "Type", "NGO"];
 
     const column2 = [
+      "Last Meeting",
       "Box Balance",
-      "Total Meetings",
       "Amount Per Share",
       "Loan Service Fee",
       "Loan Limit"
     ];
 
-    const column3 = ["Total Loans", "Total Shares", "Owner", "Admin"];
+    const column3 = [
+      "Total Meetings",
+      "Total Loans",
+      "Total Shares",
+      "Owner",
+      "Admin"
+    ];
 
     const columns = [
       {
@@ -51,7 +48,7 @@ class NGOGroupView extends Component {
         <Row>
           <hr className="groupview-line" />
           <h3 className="groupview-header">
-            <b>Group Info</b>
+            <b>Group: {groupData[groupDataIndex++]}</b>
           </h3>
           <br />
           <div className="group-view-col">

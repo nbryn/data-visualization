@@ -5,6 +5,18 @@ import Logo from "../../assets/img/jamii.png";
 
 class Sidebar extends Component {
   render() {
+    const navLinks = {
+      dashboard: "/dashboard",
+      search: "/search",
+      ngoview: "/ngo-view",
+      finance: "/finance",
+      groups: "/groups",
+      meetings: "/meetings",
+      users: "/users",
+      engagement: "/engagement",
+      profile: "/dashboard"
+    };
+
     return (
       <div
         id="sidebar"
@@ -18,98 +30,20 @@ class Sidebar extends Component {
 
         <div className="sidebar-wrapper">
           <ul className="nav">
-            <li>
-              <NavLink
-                to="/dashboard"
-                className="nav-link"
-                activeClassName="active"
-              >
-                <i className="pe-7s-graph" />
-                <p>Dashboard</p>
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/search"
-                className="nav-link"
-                activeClassName="active"
-              >
-                <i className="pe-7s-graph" />
-                <p>Search</p>
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/ngo-view"
-                className="nav-link"
-                activeClassName="active"
-              >
-                <i className="pe-7s-graph" />
-                <p>NGOView</p>
-              </NavLink>
-            </li>
-
-            <li>
-              <NavLink
-                to="/finance"
-                className="nav-link"
-                activeClassName="active"
-              >
-                <i className="pe-7s-graph" />
-                <p>Finance</p>
-              </NavLink>
-            </li>
-
-            <li>
-              <NavLink
-                to="/groups"
-                className="nav-link"
-                activeClassName="active"
-              >
-                <i className="pe-7s-graph" />
-                <p>Groups</p>
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/meetings"
-                className="nav-link"
-                activeClassName="active"
-              >
-                <i className="pe-7s-graph" />
-                <p>Meetings</p>
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/users"
-                className="nav-link"
-                activeClassName="active"
-              >
-                <i className="pe-7s-graph" />
-                <p>Users</p>
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/engagement"
-                className="nav-link"
-                activeClassName="active"
-              >
-                <i className="pe-7s-graph" />
-                <p>Engagement</p>
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/profile"
-                className="nav-link"
-                activeClassName="active"
-              >
-                <i className="pe-7s-user" />
-                <p>Profile</p>
-              </NavLink>
-            </li>
+            {Object.keys(navLinks).map((element, index) => (
+             
+              <li key={index}>
+                <NavLink
+                  to={navLinks[element]}
+                  className="nav-link"
+                  activeClassName="active"
+                >
+                  <i className="pe-7s-graph" />
+                  <p>{element}</p>
+                </NavLink>
+              </li>
+            
+            ))}
           </ul>
         </div>
       </div>

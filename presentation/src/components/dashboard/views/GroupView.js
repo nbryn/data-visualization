@@ -20,19 +20,7 @@ class GroupView extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      groupTotal: "",
-      groupsToday: "",
-      groupsTodayText: "",
-      groupMonth: "",
-      groupYear: "",
-      groupSize: "",
-      groupsLastMonth: "",
-      groupsLastYear: "",
-      groupsPerCountry: "",
-      groupsPerNGO: "",
-      lastUpdate: ""
-    };
+    this.state = {};
   }
   componentDidMount() {
     this.fetchData();
@@ -49,8 +37,6 @@ class GroupView extends Component {
     const lastMonth = groupStats.groupsLastMonth.data;
     const lastUpdatedAt = getCurrentTime();
 
-    
-
     let groupMonthCount = 0;
     let groupYearCount = 0;
 
@@ -66,8 +52,8 @@ class GroupView extends Component {
         lastMonth[lastMonth.length - 1].day.day +
         "/" +
         lastMonth[lastMonth.length - 1].day.month,
-      groupMonth: groupMonthCount,
-      groupYear: groupYearCount,
+      groupsLastMonthTotal: groupMonthCount,
+      groupsLastYearTotal: groupYearCount,
       groupSize: groupStats.groupSize,
       groupsLastMonth: lastMonth,
       groupsLastYear: groupStats.groupsLastYear.data,
@@ -78,119 +64,108 @@ class GroupView extends Component {
   }
 
   render() {
+    const KPICards = {
+      groupsTotal: { text: "Total Groups", icon: "pe-7s-graph1 text-danger" },
+      groupsToday: {
+        text: `Groups ${this.state.groupsTodayText}`,
+        icon: "pe-7s-users text-info"
+      },
+      groupsLastMonthTotal: {
+        text: "LAst Month",
+        icon: "pe-7s-graph1 text-danger"
+      },
+      groupsLastYearTotal: {
+        text: "Last Year",
+        icon: "pe-7s-graph1 text-danger"
+      }
+    };
     return (
       <div className="wrapper">
         <Sidebar />
         <div id="main-panel" className="main-panel" ref="mainPanel">
           <Header title="Groups" />
-      <div className="content">
-        <Grid fluid>
-          <Row>
-            <Col lg={3} sm={6}>
-              <KPICard
-                bigIcon={<i className="pe-7s-graph1 text-danger" />}
-                statsText="Total Groups"
-                statsValue={this.state.groupTotal}
-                statsIcon={<i className="fa fa-refresh" />}
-                statsIconText={`Last Update: ${this.state.lastUpdate}`}
-              />
-            </Col>
+          <div className="content">
+            <Grid fluid>
+              <Row>
+                {Object.keys(KPICards).map((kpi, index) => (
+                  <Col lg={3} sm={6}>
+                    <KPICard
+                      bigIcon={<i className={KPICards[kpi].icon} />}
+                      statsText={KPICards[kpi].text}
+                      statsValue={this.state[kpi]}
+                      statsIcon={<i className="fa fa-refresh" />}
+                      statsIconText={`Last Update: ${this.state.lastUpdate}`}
+                    />
+                  </Col>
+                ))}
+              </Row>
 
-            <Col lg={3} sm={6}>
-              <KPICard
-                bigIcon={<i className="pe-7s-users text-info" />}
-                statsText={"Groups " + this.state.groupsTodayText}
-                statsValue={this.state.groupsToday}
-                statsIcon={<i className="fa fa-clock-o" />}
-                statsIconText={`Last Update: ${this.state.lastUpdate}`}
-              />
-            </Col>
-            <Col lg={3} sm={6}>
-              <KPICard
-                bigIcon={<i className="pe-7s-users text-info" />}
-                statsText="Last Month"
-                statsValue={this.state.groupMonth}
-                statsIcon={<i className="fa fa-refresh" />}
-                statsIconText={`Last Update: ${this.state.lastUpdate}`}
-              />
-            </Col>
-            <Col lg={3} sm={6}>
-              <KPICard
-                bigIcon={<i className="pe-7s-users text-info" />}
-                statsText="Last Year"
-                statsValue={this.state.groupYear}
-                statsIcon={<i className="fa fa-refresh" />}
-                statsIconText={`Last Update: ${this.state.lastUpdate}`}
-              />
-            </Col>
-          </Row>
-
-          <Row>
-            <Col lg={4} sm={6}>
-              <TotalGraph
-                title="Total Groups"
-                stroke="#228b22"
-                data={this.state.groupsLastYear}
-              />
-            </Col>
-            <Col lg={4} sm={6}>
-              <TopBar
-                title="Groups Per Country"
-                xLabel="Countries"
-                yLabel="Groups"
-                color="#ff0000"
-                data={this.state.groupsPerCountry}
-                css="card-graph card-stats"
-              />
-            </Col>
-            <Col lg={4} sm={6}>
-              <TopBar
-                title="Groups Per NGO"
-                xLabel="NGOs"
-                yLabel="Groups"
-                color="#ff0000"
-                data={this.state.groupsPerNGO}
-                css="card-graph card-stats"
-              />
-            </Col>
-          </Row>
-          <Row>
-            <Col lg={4} sm={6}>
-              <LastMonthBar
-                title="Groups Last Month"
-                color="#228b22"
-                xLabel="Days"
-                yLabel="Groups"
-                data={this.state.groupsLastMonth}
-              />
-            </Col>
-            <Col lg={4} sm={6}>
-              <SizeChart
-                title="Group Size"
-                colors={[
-                  "#a4de6c",
-                  "#67b6ed",
-                  "#8884d8",
-                  "#ff0000",
-                  "#2196f3",
-                  "#228b22"
-                ]}
-                data={this.state.groupSize}
-              />
-            </Col>
-            <Col lg={4} sm={6}>
-              <LastYearBar
-                title="Groups Last Year"
-                color="#2196f3"
-                xLabel="Months"
-                yLabel="Groups"
-                data={this.state.groupsLastYear}
-              />
-            </Col>
-          </Row>
-        </Grid>
-      </div>
-      </div>
+              <Row>
+                <Col lg={4} sm={6}>
+                  <TotalGraph
+                    title="Total Groups"
+                    stroke="#228b22"
+                    data={this.state.groupsLastYear}
+                  />
+                </Col>
+                <Col lg={4} sm={6}>
+                  <TopBar
+                    title="Groups Per Country"
+                    xLabel="Countries"
+                    yLabel="Groups"
+                    color="#ff0000"
+                    data={this.state.groupsPerCountry}
+                    css="card-graph card-stats"
+                  />
+                </Col>
+                <Col lg={4} sm={6}>
+                  <TopBar
+                    title="Groups Per NGO"
+                    xLabel="NGOs"
+                    yLabel="Groups"
+                    color="#ff0000"
+                    data={this.state.groupsPerNGO}
+                    css="card-graph card-stats"
+                  />
+                </Col>
+              </Row>
+              <Row>
+                <Col lg={4} sm={6}>
+                  <LastMonthBar
+                    title="Groups Last Month"
+                    color="#228b22"
+                    xLabel="Days"
+                    yLabel="Groups"
+                    data={this.state.groupsLastMonth}
+                  />
+                </Col>
+                <Col lg={4} sm={6}>
+                  <SizeChart
+                    title="Group Size"
+                    colors={[
+                      "#a4de6c",
+                      "#67b6ed",
+                      "#8884d8",
+                      "#ff0000",
+                      "#2196f3",
+                      "#228b22"
+                    ]}
+                    data={this.state.groupSize}
+                  />
+                </Col>
+                <Col lg={4} sm={6}>
+                  <LastYearBar
+                    title="Groups Last Year"
+                    color="#2196f3"
+                    xLabel="Months"
+                    yLabel="Groups"
+                    data={this.state.groupsLastYear}
+                  />
+                </Col>
+              </Row>
+            </Grid>
+          </div>
+        </div>
       </div>
     );
   }

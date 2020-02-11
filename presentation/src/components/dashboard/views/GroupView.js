@@ -71,7 +71,7 @@ class GroupView extends Component {
         icon: "pe-7s-users text-info"
       },
       groupsLastMonthTotal: {
-        text: "LAst Month",
+        text: "Last Month",
         icon: "pe-7s-graph1 text-danger"
       },
       groupsLastYearTotal: {

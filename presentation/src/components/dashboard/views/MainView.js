@@ -19,19 +19,7 @@ class MainView extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      userTotal: "",
-      usersToday: "",
-      usersLastYear: "",
-      userGender: "",
-      groupTotal: "",
-      groupsLastMonth: "",
-      groupsLastYear: "",
-      meetingTotal: "",
-      meetingsLastYear: "",
-      shareTotal: "",
-      lastUpdate: ""
-    };
+    this.state = {};
   }
   componentDidMount() {
     this.fetchData();
@@ -48,9 +36,6 @@ class MainView extends Component {
 
     let lastUpdatedAt = getCurrentTime();
 
-    console.log(this.props);
-
-    //console.log(stats.userStats.usersLastYear.data);
 
     this.setState({
       userTotal: stats.userStats.userCount,
@@ -61,12 +46,40 @@ class MainView extends Component {
       groupsLastYear: stats.groupStats.groupsLastYear.data,
       meetingTotal: stats.meetingStats.meetingTotal,
       meetingsLastYear: stats.meetingStats.meetingsLastYear.data,
-      shareTotal: stats.shareStats,
+      shareTotal: stats.shareStatsl,
       lastUpdate: lastUpdatedAt
     });
   }
 
   render() {
+    const KPICards = {
+      userTotal: { text: "Total Users", icon: "pe-7s-user text-warning" },
+      groupTotal: { text: "Total Groups", icon: "pe-7s-users text-info" },
+      meetingTotal: {
+        text: "Total Meetings",
+        icon: "pe-7s-graph1 text-danger"
+      },
+      shareTotal: { text: "Total Shares", icon: "pe-7s-wallet text-success" }
+    };
+
+    const totalGraphs = {
+      usersLastYear: {
+        title: "Total Users",
+        yLabel: "Users",
+        stroke: "#ff0000"
+      },
+      groupsLastYear: {
+        title: "Total Groups",
+        yLabel: "Groups",
+        stroke: "#228b22"
+      },
+      meetingsLastYear: {
+        title: "Total Meetings",
+        yLabel: "Meetings",
+        stroke: "#2196f3"
+      }
+    };
+
     return (
       <div className="wrapper">
         <Sidebar />
@@ -76,74 +89,31 @@ class MainView extends Component {
           <div className="content">
             <Grid fluid>
               <Row>
-                <Col lg={3} sm={6}>
-                  <KPICard
-                    bigIcon={<i className="pe-7s-user text-warning" />}
-                    statsText="Total Users"
-                    statsValue={this.state.userTotal}
-                    statsIcon={<i className="fa fa-refresh" />}
-                    statsIconText={`Last Update: ${this.state.lastUpdate}`}
-                  />
-                </Col>
-                <Col lg={3} sm={6}>
-                  <KPICard
-                    bigIcon={<i className="pe-7s-users text-info" />}
-                    statsText="Total Groups"
-                    statsValue={this.state.groupTotal}
-                    statsIcon={<i className="fa fa-refresh" />}
-                    statsIconText={`Last Update: ${this.state.lastUpdate}`}
-                  />
-                </Col>
-
-                <Col lg={3} sm={6}>
-                  <KPICard
-                    bigIcon={<i className="pe-7s-graph1 text-danger" />}
-                    statsText="Total Meetings"
-                    statsValue={this.state.meetingTotal}
-                    statsIcon={<i className="fa fa-clock-o" />}
-                    statsIconText={`Last Update: ${this.state.lastUpdate}`}
-                  />
-                </Col>
-
-                <Col lg={3} sm={6}>
-                  <KPICard
-                    bigIcon={<i className="pe-7s-wallet text-success" />}
-                    statsText="Total Shares"
-                    statsValue={this.state.shareTotal}
-                    statsIcon={<i className="fa fa-calendar-o" />}
-                    statsIconText={`Last Update: ${this.state.lastUpdate}`}
-                  />
-                </Col>
+                {Object.keys(KPICards).map((kpi, index) => (
+                  <Col lg={3} sm={6}>
+                    <KPICard
+                      bigIcon={<i className={KPICards[kpi].icon} />}
+                      statsText={KPICards[kpi].text}
+                      statsValue={this.state[kpi]}
+                      statsIcon={<i className="fa fa-refresh" />}
+                      statsIconText={`Last Update: ${this.state.lastUpdate}`}
+                    />
+                  </Col>
+                ))}
               </Row>
 
               <Row>
-                <Col lg={4} sm={6}>
-                  <TotalGraph
-                    title="Total Users"
-                    xLabel="Months"
-                    yLabel="Users"
-                    stroke="#ff0000"
-                    data={this.state.usersLastYear}
-                  />
-                </Col>
-                <Col lg={4} sm={6}>
-                  <TotalGraph
-                    title="Total Groups"
-                    xLabel="Months"
-                    yLabel="Groups"
-                    stroke="#228b22"
-                    data={this.state.groupsLastYear}
-                  />
-                </Col>
-                <Col lg={4} sm={6}>
-                  <TotalGraph
-                    title="Total Meetings"
-                    xLabel="Months"
-                    yLabel="Meetings"
-                    stroke="#2196f3"
-                    data={this.state.meetingsLastYear}
-                  />
-                </Col>
+                {Object.keys(totalGraphs).map((element, index) => (
+                  <Col lg={4} sm={6}>
+                    <TotalGraph
+                      title={totalGraphs[element].title}
+                      xLabel="Months"
+                      yLabel={totalGraphs[element].yLabel}
+                      stroke={totalGraphs[element].stroke}
+                      data={this.state[element]}
+                    />
+                  </Col>
+                ))}
               </Row>
               <Row>
                 <Col lg={4} sm={6}>

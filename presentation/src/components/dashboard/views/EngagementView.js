@@ -19,12 +19,7 @@ class EngagementView extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      groupsActive: "",
-      groupActivity: "",
-      usersActive: "",
-      lastUpdate: ""
-    };
+    this.state = {};
   }
   componentDidMount() {
     this.fetchData();
@@ -45,11 +40,26 @@ class EngagementView extends Component {
       groupsActive: engagementStats.groupEngagement.groupsActive,
       groupActivity: engagementStats.groupEngagement.groupMeetingFrequency,
       usersActive: engagementStats.userEngagement,
+      ngosActive: "",
+      meetings: "",
+
       lastUpdate: lastUpdatedAt
     });
   }
 
   render() {
+    const KPICards = {
+      usersActive: { text: "Active Users", icon: "pe-7s-graph1 text-danger" },
+      groupsActive: { text: "Active Groups", icon: "pe-7s-users text-info" },
+      ngosActive: {
+        text: "Active NGO's",
+        icon: "pe-7s-users text-info"
+      },
+      meetings: {
+        text: "Meetings in Active Groups",
+        icon: "pe-7s-users text-info"
+      }
+    };
     return (
       <div className="wrapper">
         <Sidebar />
@@ -58,43 +68,17 @@ class EngagementView extends Component {
           <div className="content">
             <Grid fluid>
               <Row>
-                <Col lg={3} sm={6}>
-                  <KPICard
-                    bigIcon={<i className="pe-7s-graph1 text-danger" />}
-                    statsText="Active Users"
-                    statsValue={this.state.usersActive}
-                    statsIcon={<i className="fa fa-refresh" />}
-                    statsIconText={`Last Update: ${this.state.lastUpdate}`}
-                  />
-                </Col>
-
-                <Col lg={3} sm={6}>
-                  <KPICard
-                    bigIcon={<i className="pe-7s-users text-info" />}
-                    statsText="Active Groups"
-                    statsValue={this.state.groupsActive}
-                    statsIcon={<i className="fa fa-clock-o" />}
-                    statsIconText={`Last Update: ${this.state.lastUpdate}`}
-                  />
-                </Col>
-                <Col lg={3} sm={6}>
-                  <KPICard
-                    bigIcon={<i className="pe-7s-users text-info" />}
-                    statsText="Active NGO's"
-                    statsValue=""
-                    statsIcon={<i className="fa fa-refresh" />}
-                    statsIconText={`Last Update: ${this.state.lastUpdate}`}
-                  />
-                </Col>
-                <Col lg={3} sm={6}>
-                  <KPICard
-                    bigIcon={<i className="pe-7s-users text-info" />}
-                    statsText="Meetings In Active Groups"
-                    statsValue=""
-                    statsIcon={<i className="fa fa-refresh" />}
-                    statsIconText={`Last Update: ${this.state.lastUpdate}`}
-                  />
-                </Col>
+                {Object.keys(KPICards).map((kpi, index) => (
+                  <Col lg={3} sm={6}>
+                    <KPICard
+                      bigIcon={<i className={KPICards[kpi].icon} />}
+                      statsText={KPICards[kpi].text}
+                      statsValue={this.state[kpi]}
+                      statsIcon={<i className="fa fa-refresh" />}
+                      statsIconText={`Last Update: ${this.state.lastUpdate}`}
+                    />
+                  </Col>
+                ))}
               </Row>
 
               <Row>

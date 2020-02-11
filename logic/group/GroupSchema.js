@@ -50,6 +50,8 @@ const GroupSchema = gql`
     regDate: String
     currency: String
     cycle: Float
+    type: String
+    ngo: String
     lastMeeting: String
     boxBalance: Float
     meetingsTotal: Float

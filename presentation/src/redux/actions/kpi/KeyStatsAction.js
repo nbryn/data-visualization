@@ -22,8 +22,6 @@ export const fetchKeyStats = () => async dispatch => {
 
   keyStats.shareStats = shareResponse.financeStats.shareStats.shareTotal;
 
-  console.log(keyStats);
-
   dispatch({
     type: KEY_STATS,
     payload: keyStats

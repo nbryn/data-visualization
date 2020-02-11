@@ -1,10 +1,9 @@
 import React, { Component } from "react";
-import { Grid, Row} from "react-bootstrap";
+import { Grid, Row } from "react-bootstrap";
 import { FormGroup, FormControl, ControlLabel, Button } from "react-bootstrap";
 
 import { connect } from "react-redux";
 import { fetchGroupData } from "../../redux/actions/ngo/SearchAction";
-
 
 import NGOGroupView from "./NGOGroupView";
 import Sidebar from "../navigation/Sidebar";
@@ -39,6 +38,8 @@ class Search extends Component {
         group.regDate,
         group.currency,
         group.cycle,
+        group.type,
+        group.ngo,
         group.lastMeeting,
         group.boxBalance,
         group.meetingsTotal,
@@ -71,8 +72,8 @@ class Search extends Component {
 
           <div id="main-panel" className="main-panel" ref="mainPanel">
             <Header
-              title="Group Search
-          "
+              title="Group Search"
+          
             />
             <div className="content">
               <Grid fluid>

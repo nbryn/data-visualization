@@ -18,19 +18,7 @@ class FinanceView extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      shareTotal: "",
-      mostShares: "",
-      sharesPerGroup: "",
-      currencyTotal: "",
-      currencyStats: "",
-      loanTotal: "",
-      loansLastMonth: "",
-      loansLastYear: "",
-      etbOnLoan: "",
-      onLoanPerGroup: "",
-      lastUpdate: ""
-    };
+    this.state = {};
   }
   componentDidMount() {
     this.fetchData();
@@ -74,53 +62,39 @@ class FinanceView extends Component {
   }
 
   render() {
+    const KPICards = {
+      shareTotal: { text: "Total Shares", icon: "pe-7s-graph1 text-danger" },
+      loanTotal: { text: "Total Loans", icon: "pe-7s-users text-info" },
+      etbOnLoan: {
+        text: "ETB On Loan",
+        icon: "pe-7s-wallet text-success"
+      },
+      mostShares: {
+        text: "Most Shares In Group",
+        icon: "pe-7s-wallet text-success"
+      }
+    };
+
     return (
       <div className="wrapper">
         <Sidebar />
-        
-          <div id="main-panel" className="main-panel" ref="mainPanel">
-            <Header title="Finance" />
-            <div className="content">
+
+        <div id="main-panel" className="main-panel" ref="mainPanel">
+          <Header title="Finance" />
+          <div className="content">
             <Grid fluid>
               <Row>
-                <Col lg={3} sm={6}>
-                  <KPICard
-                    bigIcon={<i className="pe-7s-graph1 text-danger" />}
-                    statsText="Total Shares"
-                    statsValue={this.state.shareTotal}
-                    statsIcon={<i className="fa fa-refresh" />}
-                    statsIconText={`Last Update: ${this.state.lastUpdate}`}
-                  />
-                </Col>
-                <Col lg={3} sm={6}>
-                  <KPICard
-                    bigIcon={<i className="pe-7s-users text-info" />}
-                    statsText="Total Loans"
-                    statsValue={this.state.loanTotal}
-                    statsIcon={<i className="fa fa-refresh" />}
-                    statsIconText={`Last Update: ${this.state.lastUpdate}`}
-                  />
-                </Col>
-
-                <Col lg={3} sm={6}>
-                  <KPICard
-                    bigIcon={<i className="pe-7s-users text-info" />}
-                    statsText="ETB On Loan"
-                    statsValue={this.state.etbOnLoan}
-                    statsIcon={<i className="fa fa-clock-o" />}
-                    statsIconText={`Last Update: ${this.state.lastUpdate}`}
-                  />
-                </Col>
-
-                <Col lg={3} sm={6}>
-                  <KPICard
-                    bigIcon={<i className="pe-7s-users text-info" />}
-                    statsText="Most Shares In Group"
-                    statsValue={this.state.mostShares}
-                    statsIcon={<i className="fa fa-refresh" />}
-                    statsIconText={`Last Update: ${this.state.lastUpdate}`}
-                  />
-                </Col>
+                {Object.keys(KPICards).map((kpi, index) => (
+                  <Col lg={3} sm={6}>
+                    <KPICard
+                      bigIcon={<i className={KPICards[kpi].icon} />}
+                      statsText={KPICards[kpi].text}
+                      statsValue={this.state[kpi]}
+                      statsIcon={<i className="fa fa-refresh" />}
+                      statsIconText={`Last Update: ${this.state.lastUpdate}`}
+                    />
+                  </Col>
+                ))}
               </Row>
               <Row>
                 <Col lg={4} sm={6}>

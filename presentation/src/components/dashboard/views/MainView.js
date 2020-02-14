@@ -46,7 +46,7 @@ class MainView extends Component {
       groupsLastYear: stats.groupStats.groupsLastYear.data,
       meetingTotal: stats.meetingStats.meetingTotal,
       meetingsLastYear: stats.meetingStats.meetingsLastYear.data,
-      shareTotal: stats.shareStatsl,
+      shareTotal: stats.shareStats,
       lastUpdate: lastUpdatedAt
     });
   }

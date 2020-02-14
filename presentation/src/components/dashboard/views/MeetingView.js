@@ -18,16 +18,7 @@ class GroupView extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      meetingTotal: "",
-      meetingsToday: "",
-      meetingsTodayText: "",
-      meetingMonth: "",
-      meetingYear: "",
-      meetingsLastMonth: "",
-      meetingsLastYear: "",
-      lastUpdate: ""
-    };
+    this.state = {};
   }
   componentDidMount() {
     this.fetchData();
@@ -39,8 +30,6 @@ class GroupView extends Component {
 
   async fetchData() {
     await this.props.fetchMeetingStats();
-
-    console.log(this.props);
 
     const meetingStats = this.props.meetingStats;
     const lastMonth = meetingStats.meetingsLastMonth.data;
@@ -70,82 +59,68 @@ class GroupView extends Component {
   }
 
   render() {
+    const KPICards = {
+      meetingTotal: { text: "Total Meetings", icon: "pe-7s-user text-warning" },
+      meetingsToday: {
+        text: `Meetings ${this.state.meetingsTodayText}`,
+        icon: "pe-7s-users text-info"
+      },
+      meetingMonth: {
+        text: "Last Month",
+        icon: "pe-7s-graph1 text-danger"
+      },
+      meetingYear: { text: "Last Year", icon: "pe-7s-wallet text-success" }
+    };
     return (
       <div className="wrapper">
-      <Sidebar />
-      <div id="main-panel" className="main-panel" ref="mainPanel">
+        <Sidebar />
+        <div id="main-panel" className="main-panel" ref="mainPanel">
           <Header title="Meetings" />
-      <div className="content">
-        <Grid fluid>
-          <Row>
-            <Col lg={3} sm={6}>
-              <KPICard
-                bigIcon={<i className="pe-7s-graph1 text-danger" />}
-                statsText="Total Meetings"
-                statsValue={this.state.meetingTotal}
-                statsIcon={<i className="fa fa-refresh" />}
-                statsIconText={`Last Update: ${this.state.lastUpdate}`}
-              />
-            </Col>
+          <div className="content">
+            <Grid fluid>
+              <Row>
+                {Object.keys(KPICards).map((element, index) => (
+                  <Col lg={3} sm={6}>
+                    <KPICard
+                      bigIcon={<i className={KPICards[element].icon} />}
+                      statsText={KPICards[element].text}
+                      statsValue={this.state[element]}
+                      statsIcon={<i className="fa fa-refresh" />}
+                      statsIconText={`Last Update: ${this.state.lastUpdate}`}
+                    />
+                  </Col>
+                ))}
+              </Row>
 
-            <Col lg={3} sm={6}>
-              <KPICard
-                bigIcon={<i className="pe-7s-users text-info" />}
-                statsText={"Meetings " + this.state.meetingsTodayText}
-                statsValue={this.state.meetingsToday}
-                statsIcon={<i className="fa fa-clock-o" />}
-                statsIconText={`Last Update: ${this.state.lastUpdate}`}
-              />
-            </Col>
-            <Col lg={3} sm={6}>
-              <KPICard
-                bigIcon={<i className="pe-7s-users text-info" />}
-                statsText="Last Month"
-                statsValue={this.state.meetingMonth}
-                statsIcon={<i className="fa fa-refresh" />}
-                statsIconText={`Last Update: ${this.state.lastUpdate}`}
-              />
-            </Col>
-            <Col lg={3} sm={6}>
-              <KPICard
-                bigIcon={<i className="pe-7s-users text-info" />}
-                statsText="Last Year"
-                statsValue={this.state.meetingYear}
-                statsIcon={<i className="fa fa-refresh" />}
-                statsIconText={`Last Update: ${this.state.lastUpdate}`}
-              />
-            </Col>
-          </Row>
+              <Row>
+                <Col lg={4} sm={6}>
+                  <TotalGraph
+                    title="Total Meetings"
+                    stroke="#228b22"
+                    data={this.state.meetingsLastYear}
+                  />
+                </Col>
+              </Row>
+              <Row>
+                <Col lg={4} sm={6}>
+                  <LastMonthBar
+                    title="Meetings Last Month"
+                    color="#228b22"
+                    data={this.state.meetingsLastMonth}
+                  />
+                </Col>
 
-          <Row>
-            <Col lg={4} sm={6}>
-              <TotalGraph
-                title="Total Meetings"
-                stroke="#228b22"
-                data={this.state.meetingsLastYear}
-              />
-            </Col>
-          </Row>
-          <Row>
-            <Col lg={4} sm={6}>
-              <LastMonthBar
-                title="Meetings Last Month"
-                color="#228b22"
-                data={this.state.meetingsLastMonth}
-              />
-            </Col>
-
-            <Col lg={4} sm={6}>
-              <LastYearBar
-                title="Meetings Last Year"
-                color="#ff0000"
-                data={this.state.meetingsLastYear}
-              />
-            </Col>
-          </Row>
-        </Grid>
-      </div>
-      </div>
+                <Col lg={4} sm={6}>
+                  <LastYearBar
+                    title="Meetings Last Year"
+                    color="#ff0000"
+                    data={this.state.meetingsLastYear}
+                  />
+                </Col>
+              </Row>
+            </Grid>
+          </div>
+        </div>
       </div>
     );
   }

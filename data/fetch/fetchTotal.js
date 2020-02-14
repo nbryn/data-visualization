@@ -1,20 +1,24 @@
 const { connectToDB } = require("../connection");
 
-async function fetchTotal(collectionString) {
+async function fetchTotal(collection) {
   const connection = await connectToDB();
 
   return new Promise((resolve, reject) => {
-    connection.db.collection(collectionString, async (err, collection) => {
-      if (err) {
-        console.log(err);
-      } else {
-        const total = await collection.countDocuments("");
+    try {
+      connection.db.collection(collection, async (err, collection) => {
+        if (err) {
+          console.log(err);
+        } else {
+          const total = await collection.countDocuments("");
 
-        if (total) {
-          resolve(total);
+          if (total) {
+            resolve(total);
+          }
         }
-      }
-    });
+      });
+    } catch (err) {
+      console.log(err);
+    }
   });
 }
 

@@ -4,6 +4,7 @@ async function fetchByID(collection, ID) {
   const connection = await connectToDB();
 
   return new Promise((resolve, reject) => {
+    try {
     connection.db.collection(collection, async (err, collection) => {
       if (err) {
         console.log(err);
@@ -18,6 +19,9 @@ async function fetchByID(collection, ID) {
         }
       }
     });
+  } catch (err) {
+    console.log(err);
+  }
   });
 }
 

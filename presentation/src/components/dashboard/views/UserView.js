@@ -18,17 +18,7 @@ class KPIView extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      userTotal: "",
-      usersToday: "",
-      usersTodayText: "",
-      userMonth: "",
-      userYear: "",
-      usersLastMonth: "",
-      usersLastYear: "",
-      userGender: "",
-      lastUpdate: ""
-    };
+    this.state = {};
   }
   async componentDidMount() {
     this.fetchData();
@@ -48,16 +38,24 @@ class KPIView extends Component {
     let userMonthCount = 0;
     let userYearCount = 0;
 
-    userStats.usersLastMonth.data.forEach(element => (userMonthCount += element.count));
-    userStats.usersLastYear.data.forEach(element => (userYearCount += element.count));
+    userStats.usersLastMonth.data.forEach(
+      element => (userMonthCount += element.count)
+    );
+    userStats.usersLastYear.data.forEach(
+      element => (userYearCount += element.count)
+    );
 
     this.setState({
       userTotal: userStats.userCount,
-      usersToday: userStats.usersLastMonth.data[userStats.usersLastMonth.data.length - 1].count,
+      usersToday:
+        userStats.usersLastMonth.data[userStats.usersLastMonth.data.length - 1]
+          .count,
       usersTodayText:
-        userStats.usersLastMonth.data[userStats.usersLastMonth.data.length - 1].day.day +
+        userStats.usersLastMonth.data[userStats.usersLastMonth.data.length - 1]
+          .day.day +
         "/" +
-        userStats.usersLastMonth.data[userStats.usersLastMonth.data.length - 1].day.month,
+        userStats.usersLastMonth.data[userStats.usersLastMonth.data.length - 1]
+          .day.month,
       userMonth: userMonthCount,
       userYear: userYearCount,
       usersLastMonth: userStats.usersLastMonth.data,
@@ -68,6 +66,18 @@ class KPIView extends Component {
   }
 
   render() {
+    const KPICards = {
+      userTotal: { text: "Total Users", icon: "pe-7s-user text-warning" },
+      usersToday: {
+        text: `Users ${this.state.usersTodayText}`,
+        icon: "pe-7s-users text-info"
+      },
+      userMonth: {
+        text: "Last Month",
+        icon: "pe-7s-graph1 text-danger"
+      },
+      userYear: { text: "Last Year", icon: "pe-7s-wallet text-success" }
+    };
     return (
       <div className="wrapper">
         <Sidebar />
@@ -76,43 +86,17 @@ class KPIView extends Component {
           <div className="content">
             <Grid fluid>
               <Row>
-                <Col lg={3} sm={6}>
-                  <KPICard
-                    bigIcon={<i className="pe-7s-user text-warning" />}
-                    statsText="Total Users"
-                    statsValue={this.state.userTotal}
-                    statsIcon={<i className="fa fa-refresh" />}
-                    statsIconText={`Last Update: ${this.state.lastUpdate}`}
-                  />
-                </Col>
-                <Col lg={3} sm={6}>
-                  <KPICard
-                    bigIcon={<i className="pe-7s-user text-warning" />}
-                    statsText={"Users " + this.state.usersTodayText}
-                    statsValue={this.state.usersToday}
-                    statsIcon={<i className="fa fa-refresh" />}
-                    statsIconText={`Last Update: ${this.state.lastUpdate}`}
-                  />
-                </Col>
-
-                <Col lg={3} sm={6}>
-                  <KPICard
-                    bigIcon={<i className="pe-7s-user text-warning" />}
-                    statsText="Last Month"
-                    statsValue={this.state.userMonth}
-                    statsIcon={<i className="fa fa-calendar-o" />}
-                    statsIconText={`Last Update: ${this.state.lastUpdate}`}
-                  />
-                </Col>
-                <Col lg={3} sm={6}>
-                  <KPICard
-                    bigIcon={<i className="pe-7s-user text-warning" />}
-                    statsText="Last Year"
-                    statsValue={this.state.userTotal}
-                    statsIcon={<i className="fa fa-clock-o" />}
-                    statsIconText={`Last Update: ${this.state.lastUpdate}`}
-                  />
-                </Col>
+                {Object.keys(KPICards).map((element, index) => (
+                  <Col lg={3} sm={6}>
+                    <KPICard
+                      bigIcon={<i className={KPICards[element].icon} />}
+                      statsText={KPICards[element].text}
+                      statsValue={this.state[element]}
+                      statsIcon={<i className="fa fa-refresh" />}
+                      statsIconText={`Last Update: ${this.state.lastUpdate}`}
+                    />
+                  </Col>
+                ))}
               </Row>
 
               <Row>

@@ -42,9 +42,7 @@ async function calculateMeetingFrequency() {
   //Test groups < 6 members & New groups regDate < 14 days
   let testGroups = 0;
   let newGroups = 0;
-  let meetingLastMonth = 0;
-  let meetingLast2Months = 0;
-  let meetingOver2Months = 0;
+  let meetingLastMonth, meetingLast2Months, meetingOver2Months;
 
   meetingData.forEach(element => {
     if (element.members.length < 6) {
@@ -58,18 +56,13 @@ async function calculateMeetingFrequency() {
         newGroups++;
       } else {
         if (element.meetings[element.meetings.length - 1]) {
-          const lastMeetingDate =
-            element.meetings[element.meetings.length - 1].meetingDay;
-          const daysSinceLastMeeting = calculateTimeSinceLastMeeting(
-            lastMeetingDate
-          );
-          if (daysSinceLastMeeting < 30) {
-            meetingLastMonth++;
-          } else if (daysSinceLastMeeting < 60) {
-            meetingLast2Months++;
-          } else {
-            meetingOver2Months++;
-          }
+          const meetingData = calculateTimeSinceLastMeeting(element.meetings);
+
+          [
+            meetingLastMonth,
+            meetingLast2Months,
+            meetingOver2Months
+          ] = meetingData;
         }
       }
     }
@@ -193,7 +186,7 @@ async function retrieveGroupData(group) {
     cycle: group.cycleNumber,
     type: group.groupType,
     ngo: group.ngoState,
-    lastMeeting: lastMeeting,  
+    lastMeeting: lastMeeting,
     meetingsTotal: group.meetings.length,
     perShare: group.amountPerShare,
     serviceFee: group.loanServiceFee,
@@ -283,7 +276,25 @@ function calculateTimeSinceReg(registrationDate) {
   return timeSinceReg;
 }
 
-function calculateTimeSinceLastMeeting(lastMeetingDate) {
+function calculateTimeSinceLastMeeting(meetings) {
+  let meetingLastMonth = 0;
+  let meetingLast2Months = 0;
+  let meetingOver2Months = 0;
+
+  const lastMeetingDate = meetings[meetings.length - 1].meetingDay;
+  const daysSinceLastMeeting = calculateDaysSinceLastMeeting(lastMeetingDate);
+  if (daysSinceLastMeeting < 30) {
+    meetingLastMonth++;
+  } else if (daysSinceLastMeeting < 60) {
+    meetingLast2Months++;
+  } else {
+    meetingOver2Months++;
+  }
+
+  return [meetingLastMonth, meetingLast2Months, meetingOver2Months];
+}
+
+function calculateDaysSinceLastMeeting(lastMeetingDate) {
   const currentDate = new Date();
 
   const secondsSinceLastMeeting =

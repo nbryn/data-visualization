@@ -10,11 +10,11 @@ async function fetchDailyData(collectionToFetch, matchString) {
           console.log(err);
         } else {
           const since = moment()
-            .startOf("day")
-            .subtract(30, "days")
+            .startOf("year")
+            .subtract(0, "days")
             .toDate();
 
-          const signupsInPeriod = await collection
+          const dbResult = await collection
             .aggregate([
               {
                 $match: {
@@ -35,7 +35,8 @@ async function fetchDailyData(collectionToFetch, matchString) {
             ])
             .toArray();
 
-          const signups = signupsInPeriod.map(element => {
+
+          const signups = dbResult.map(element => {
             return {
               day: {
                 year: element._id.year,

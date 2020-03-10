@@ -1,5 +1,8 @@
 const { fetchFinanceData } = require("../../data/fetch/fetchFinanceData");
-const { fetchLoanData } = require("../../data/mappers/FinanceMapper");
+const {
+  fetchLoanData,
+  fetchBoxBalanceData
+} = require("../../data/mappers/FinanceMapper");
 
 async function getCurrencyStats() {
   const result = await fetchFinanceData(
@@ -16,6 +19,27 @@ async function getCurrencyStats() {
   });
 
   return currencyStats;
+}
+
+async function calculateBoxBalanceStats() {
+  const boxBalanceStats = await fetchBoxBalanceData();
+
+  let totalBalance = 0;
+  let highest = 0;
+
+  boxBalanceStats.forEach(element => {
+    if (element.count > 0) {
+      if (element.count > highest) {
+        highest = element.count;
+      }
+      totalBalance += element.count;
+    }
+  });
+
+  return {
+    totalBoxBalance: totalBalance,
+    groupWithMost: highest
+  };
 }
 
 async function calculateShareStats() {
@@ -84,5 +108,6 @@ async function calculateEtbLoanStats() {
 module.exports = {
   getCurrencyStats,
   calculateShareStats,
-  calculateEtbLoanStats
+  calculateEtbLoanStats,
+  calculateBoxBalanceStats
 };

@@ -46,7 +46,7 @@ class GroupView extends Component {
     );
 
     this.setState({
-      groupTotal: groupStats.groupTotal,
+      groupsTotal: groupStats.groupTotal,
       groupsToday: lastMonth[lastMonth.length - 1].count,
       groupsTodayText:
         lastMonth[lastMonth.length - 1].day.day +

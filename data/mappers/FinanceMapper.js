@@ -24,6 +24,41 @@ async function fetchAccountDataByGroup(groupID) {
   });
 }
 
+async function fetchBoxBalanceData() {
+  const connection = await connectToDB();
+  return new Promise((resolve, reject) => {
+    try {
+      connection.db.collection("groupaccounts", async (err, collection) => {
+        if (err) {
+          console.log(err);
+        } else {
+          const dbResult = await collection
+            .aggregate([
+              {
+                $match: { currency: "ETB" }
+              },
+              {
+                $group: {
+                  _id: "$_id",
+                  count: { $sum: "$totalBalance" }
+                }
+              }
+            ])
+            .toArray();
+
+        
+
+          if (dbResult) {
+            resolve(dbResult);
+          }
+        }
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  });
+}
+
 async function fetchLoansByGroup(groupID) {
   const connection = await connectToDB();
   return new Promise((resolve, reject) => {
@@ -81,4 +116,4 @@ async function fetchLoanData() {
   });
 }
 
-module.exports = { fetchLoansByGroup, fetchAccountDataByGroup, fetchLoanData };
+module.exports = { fetchLoansByGroup, fetchAccountDataByGroup, fetchLoanData, fetchBoxBalanceData };

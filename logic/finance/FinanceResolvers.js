@@ -4,7 +4,8 @@ const { fetchTotal } = require("../../data/fetch/fetchTotal");
 const {
   getCurrencyStats,
   calculateShareStats,
-  calculateEtbLoanStats
+  calculateEtbLoanStats,
+  calculateBoxBalanceStats
 } = require("./FinanceService");
 
 const financeResolvers = {

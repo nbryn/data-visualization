@@ -19,6 +19,8 @@ const userResolvers = {
     signin: async (parent, args, context, info) => {
       const result = await validateLogin(args);
 
+      console.log(result);
+
       return result;
     }
   },

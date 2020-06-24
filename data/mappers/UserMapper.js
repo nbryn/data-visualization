@@ -202,6 +202,43 @@ async function fetchGenderStats() {
   });
 }
 
+async function fetchUsersPerCountry() {
+  const connection = await connectToDB();
+
+  return new Promise((resolve, reject) => {
+    try {
+      connection.db.collection("users", async (err, collection) => {
+        if (err) {
+          console.log(err);
+        } else {
+          const result = await collection
+            .aggregate([
+              {
+                $match: { state: "ACTIVE" },
+              },
+              {
+                $group: {
+                  _id: "$phoneCode",
+                  count: { $sum: 1 },
+                },
+              },
+              {
+                $sort: { count: -1 },
+              },
+            ])
+            .toArray();
+
+          if (result) {
+            resolve(result);
+          }
+        }
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  });
+}
+
 module.exports = {
   validateLogin,
   fetchCurrentUser,
@@ -210,4 +247,5 @@ module.exports = {
   fetchGenderStats,
   fetchUsersWithEmail,
   fetchUsersWithPhone,
+  fetchUsersPerCountry
 };

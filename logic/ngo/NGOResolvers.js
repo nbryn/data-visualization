@@ -9,19 +9,12 @@ const ngoResolvers = {
     groupsNGO: async (root, context) => {
       const result = await fetchGroupStats("$ngoOrganization");
 
-      const groupsNGO = result
-        .map((element) => {
-          return {
-            name: element._id,
-            count: element.count,
-          };
-        })
-        .sort((a, b) => {
-          if (a.count < b.count) return 1;
-          if (a.count === b.count) return 0;
-
-          return -1;
-        });
+      const groupsNGO = result.map((element) => {
+        return {
+          ngo: element._id,
+          count: element.count,
+        };
+      });
 
       return groupsNGO;
     },
@@ -34,4 +27,3 @@ const ngoResolvers = {
 };
 
 module.exports = ngoResolvers;
-File logic/ngo/NGOSchema.js ADDED

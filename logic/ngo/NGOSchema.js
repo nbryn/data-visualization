@@ -2,7 +2,7 @@ const { gql } = require("apollo-server");
 
 const NGOSchema = gql`
   type GroupsPerNGO {
-    name: String
+    ngo: String
     count: Float
   }
 

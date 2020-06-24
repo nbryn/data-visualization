@@ -13,10 +13,16 @@ async function fetchGroupStats(groupBy) {
           const result = await collection
             .aggregate([
               {
+                $match: { state: "ACTIVE" },
+              },
+              {
                 $group: {
                   _id: groupBy,
                   count: { $sum: 1 },
                 },
+              },
+              {
+                $sort: { count: -1 },
               },
             ])
             .toArray();
@@ -431,5 +437,5 @@ module.exports = {
   fetchGroupsRegBefore,
   fetchGroupMeetingsSince,
   fetchGroupShareouts,
-  fetchGroupMemberByUser
+  fetchGroupMemberByUser,
 };

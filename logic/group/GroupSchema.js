@@ -11,11 +11,6 @@ const GroupSchema = gql`
     count: Float
   }
 
-  type GroupsPerNGO {
-    name: String
-    count: Float
-  }
-
   type GroupStats {
     groupTotal: Float
     groupSize: [GroupSize]
@@ -23,7 +18,6 @@ const GroupSchema = gql`
     groupsLastMonth: LastMonth
     groupsLastYear: LastYear
     groupsCountry: [GroupsPerCountry]
-    groupsNGO: [GroupsPerNGO]
   }
 
   type GroupMeetingFrequency {

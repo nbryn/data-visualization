@@ -8,11 +8,13 @@ const FinanceSchema = require("./logic/finance/FinanceSchema");
 const GroupSchema = require("./logic/group/GroupSchema");
 const MeetingSchema = require("./logic/meeting/MeetingSchema");
 const UserSchema = require("./logic/user/UserSchema");
+const NGOSchema = require("./logic/ngo/NGOSchema");
 
 const financeResolvers = require("./logic/finance/FinanceResolvers");
 const groupResolvers = require("./logic/group/GroupResolvers");
 const meetingResolvers = require("./logic/meeting/MeetingResolvers");
 const userResolvers = require("./logic/user/UserResolvers");
+const ngoResolvers = require("./logic/ngo/NGOResolvers")
 
 const app = express();
 
@@ -22,7 +24,9 @@ const resolvers = merge(
   financeResolvers,
   groupResolvers,
   meetingResolvers,
-  userResolvers
+  userResolvers,
+  ngoResolvers
+  
 );
 
 const schema = makeExecutableSchema({
@@ -31,7 +35,8 @@ const schema = makeExecutableSchema({
     FinanceSchema,
     GroupSchema,
     MeetingSchema,
-    UserSchema
+    UserSchema,
+    NGOSchema 
   ],
   resolvers
 });

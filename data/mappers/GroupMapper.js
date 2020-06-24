@@ -32,7 +32,7 @@ async function fetchGroupStats(groupBy) {
   });
 }
 
-async function fetchGroupMembersData() {
+async function fetchAllGroupMembers() {
   const connection = await connectToDB();
   return new Promise((resolve, reject) => {
     try {
@@ -373,9 +373,53 @@ async function fetchGroupShareouts(meetingID) {
   });
 }
 
+async function fetchGroupMemberByUser() {
+  const connection = await connectToDB();
+  return new Promise((resolve, reject) => {
+    try {
+      connection.db.collection("groupmembers", async (err, collection) => {
+        if (err) {
+          console.log(err);
+        } else {
+          const dbResult = await collection
+            .aggregate([
+              {
+                $lookup: {
+                  from: "users",
+                  let: {
+                    id: "$_id",
+                    firstName: "$firstName",
+                    lastName: "lastName",
+                  },
+                  pipeline: [
+                    {
+                      $match: {
+                        $expr: {
+                          $and: [{ $eq: ["$$id", "$user"] }],
+                        },
+                      },
+                    },
+                  ],
+                  as: "userGroups",
+                },
+              },
+            ])
+            .toArray();
+
+          if (dbResult) {
+            resolve(dbResult);
+          }
+        }
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  });
+}
+
 module.exports = {
   fetchGroupBy,
-  fetchGroupMembersData,
+  fetchAllGroupMembers,
   fetchAllGroups,
   fetchGroupStats,
   fetchGroupSizeData,
@@ -386,5 +430,6 @@ module.exports = {
   fetchAllMemberIDsFromGroup,
   fetchGroupsRegBefore,
   fetchGroupMeetingsSince,
-  fetchGroupShareouts
+  fetchGroupShareouts,
+  fetchGroupMemberByUser
 };

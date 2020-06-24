@@ -14,7 +14,7 @@ async function validateLogin(args) {
             .toArray();
 
           const error = {
-            error: "Wrong Email/Username"
+            error: "Wrong Email/Username",
           };
 
           if (dbResult[0] == undefined) {
@@ -26,7 +26,7 @@ async function validateLogin(args) {
               resolve(error);
             } else {
               const succes = {
-                token: "123456"
+                token: "123456",
               };
               resolve(succes);
             }
@@ -103,9 +103,12 @@ async function fetchAllUsers() {
       if (err) {
         console.log(err);
       } else {
-        const activeUsers = await collection.distinct("_id", {
-          state: "ACTIVE",
-        });
+        const activeUsers = await collection
+          .find({
+            state: "ACTIVE",
+          })
+          .project({ _id: 1, firstName: 1, lastName: 1 })
+          .toArray();
 
         if (activeUsers) {
           resolve(activeUsers);
@@ -206,5 +209,5 @@ module.exports = {
   fetchAllUsers,
   fetchGenderStats,
   fetchUsersWithEmail,
-  fetchUsersWithPhone
+  fetchUsersWithPhone,
 };

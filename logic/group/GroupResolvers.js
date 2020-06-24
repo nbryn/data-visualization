@@ -13,16 +13,31 @@ const {
   generateMeetingOverview,
 } = require("./GroupService");
 
+const {
+  calculateGroupActivitySince,
+  calculateShareoutActivitySince,
+} = require("./GroupActivityService");
+
 const groupResolvers = {
   Query: {
     groupStats: (root, context) => ({ root, context }),
     groupEngagement: (root, context) => ({ root, context }),
     groupData: (obj, args, root, context) => ({ obj, args, root, context }),
     ngoGroupData: (obj, args, root, context) => ({ obj, args, root, context }),
-    meetingActivity: async (obj, args, root, context) => {
-      const result = await calculateGroupActivitySince(105);
+    groupActivity: async (root, context) => ({ root, context }),
+  },
+  GroupActivity: {
+    meetingActivity: async (root, context) => {
+      const last105Days = await calculateGroupActivitySince(105);
 
-      return { last105Days: result };
+      return {
+        last105Days: last105Days,
+      };
+    },
+    shareoutActivity: async (root, context) => {
+      const groupTotal = await calculateShareoutActivitySince(105);
+
+      return groupTotal;
     },
   },
   GroupStats: {

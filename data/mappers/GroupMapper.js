@@ -341,6 +341,38 @@ async function fetchGroupMeetingsSince(groupID, subtract) {
   });
 }
 
+async function fetchGroupShareouts(meetingID) {
+  const connection = await connectToDB();
+  return new Promise((resolve, reject) => {
+    try {
+      connection.db.collection(
+        "groupmeetingshareouts",
+        async (err, collection) => {
+          if (err) {
+            console.log(err);
+          } else {
+            const dbResult = await collection
+              .find({
+                $and: [
+                  {
+                    meeting: meetingID,
+                  },
+                ],
+              })
+              .toArray();
+
+            if (dbResult) {
+              resolve(dbResult);
+            }
+          }
+        }
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  });
+}
+
 module.exports = {
   fetchGroupBy,
   fetchGroupMembersData,
@@ -353,5 +385,6 @@ module.exports = {
   fetchUserIDByRole,
   fetchAllMemberIDsFromGroup,
   fetchGroupsRegBefore,
-  fetchGroupMeetingsSince
+  fetchGroupMeetingsSince,
+  fetchGroupShareouts
 };

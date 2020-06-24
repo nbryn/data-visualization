@@ -1,7 +1,7 @@
 import { GROUP_STATS } from "../ActionTypes";
 import { fetchFromServer } from "../Fetch";
 
-export const fetchGroupStats = () => async dispatch => {
+export const fetchGroupStats = () => async (dispatch) => {
   const data = `query{
     groupStats{
       groupTotal
@@ -26,21 +26,15 @@ export const fetchGroupStats = () => async dispatch => {
         count
         }
       }
-      groupsCountry{
-        name
-        count
-      }
-      groupsNGO{
-        name
-        count
-      }
     }
   }`;
 
   const response = await fetchFromServer("post", data);
 
+  console.log(response);
+
   dispatch({
     type: GROUP_STATS,
-    payload: response.data.data.groupStats
+    payload: response.data.data.groupStats,
   });
 };

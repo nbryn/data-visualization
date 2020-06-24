@@ -18,32 +18,32 @@ async function fetchDailyData(collectionToFetch, matchString, subtract) {
             .aggregate([
               {
                 $match: {
-                  [matchString]: { $gt: since }
-                }
+                  [matchString]: { $gt: since },
+                  state: "ACTIVE",
+                },
               },
               {
                 $group: {
                   _id: {
                     year: { $year: "$" + matchString },
                     month: { $month: "$" + matchString },
-                    day: { $dayOfMonth: "$" + matchString }
+                    day: { $dayOfMonth: "$" + matchString },
                   },
-                  count: { $sum: 1 }
-                }
+                  count: { $sum: 1 },
+                },
               },
-              { $sort: { _id: 1 } }
+              { $sort: { _id: 1 } },
             ])
             .toArray();
 
-
-          const signups = dbResult.map(element => {
+          const signups = dbResult.map((element) => {
             return {
               day: {
                 year: element._id.year,
                 month: element._id.month,
-                day: element._id.day
+                day: element._id.day,
               },
-              count: element.count
+              count: element.count,
             };
           });
 

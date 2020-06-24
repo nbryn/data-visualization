@@ -36,7 +36,6 @@ class MainView extends Component {
 
     let lastUpdatedAt = getCurrentTime();
 
-
     this.setState({
       userTotal: stats.userStats.userCount,
       usersLastYear: stats.userStats.usersLastYear.data,
@@ -47,8 +46,11 @@ class MainView extends Component {
       meetingTotal: stats.meetingStats.meetingTotal,
       meetingsLastYear: stats.meetingStats.meetingsLastYear.data,
       shareTotal: stats.shareStats,
-      lastUpdate: lastUpdatedAt
+      lastUpdate: lastUpdatedAt,
     });
+
+    let count = 0;
+    this.state.usersLastYear.forEach((ele) => (count += ele.count));
   }
 
   render() {
@@ -57,27 +59,27 @@ class MainView extends Component {
       groupTotal: { text: "Total Groups", icon: "pe-7s-users text-info" },
       meetingTotal: {
         text: "Total Meetings",
-        icon: "pe-7s-graph1 text-danger"
+        icon: "pe-7s-graph1 text-danger",
       },
-      shareTotal: { text: "Total Shares", icon: "pe-7s-wallet text-success" }
+      shareTotal: { text: "Total Shares", icon: "pe-7s-wallet text-success" },
     };
 
     const totalGraphs = {
       usersLastYear: {
         title: "Total Users",
         yLabel: "Users",
-        stroke: "#ff0000"
+        stroke: "#ff0000",
       },
       groupsLastYear: {
         title: "Total Groups",
         yLabel: "Groups",
-        stroke: "#228b22"
+        stroke: "#228b22",
       },
       meetingsLastYear: {
         title: "Total Meetings",
         yLabel: "Meetings",
-        stroke: "#2196f3"
-      }
+        stroke: "#2196f3",
+      },
     };
 
     return (
@@ -151,12 +153,12 @@ class MainView extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    keyStats: state.KPI.keyStats
+    keyStats: state.KPI.keyStats,
   };
 };
 
 export default connect(mapStateToProps, {
-  fetchKeyStats
+  fetchKeyStats,
 })(MainView);

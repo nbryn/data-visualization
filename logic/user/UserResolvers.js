@@ -50,7 +50,7 @@ const userResolvers = {
       return activeUsers;
     },
     usersLastMonth: async (root, context) => {
-      const usersLastMonth = fetchDailyData("users", "signupDate");
+      const usersLastMonth = await fetchDailyData("users", "signupDate", 30);
 
       return { data: usersLastMonth };
     },

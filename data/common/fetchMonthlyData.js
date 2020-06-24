@@ -8,35 +8,37 @@ async function fetchMonthlyData(collectionToFetch, matchString) {
         if (err) {
           console.log(err);
         } else {
-          
-
           const dbResult = await collection
             .aggregate([
+              {
+                $match: {
+                  state: "ACTIVE",
+                },
+              },
               {
                 $group: {
                   _id: {
                     month: { $month: "$" + matchString },
-                    year: { $year: "$" + matchString }
+                    year: { $year: "$" + matchString },
                   },
-                  count: { $sum: 1 }
-                }
+                  count: { $sum: 1 },
+                },
               },
-              { $sort: { _id: 1 } }
+              { $sort: { _id: 1 } },
             ])
             .toArray();
 
-          const signups = dbResult.map(element => {
+          const signups = dbResult.map((element) => {
             return {
               year: element._id.year,
               month: element._id.month,
-              count: element.count
+              count: element.count,
             };
           });
 
           signups.sort((ele1, ele2) => {
             return ele1.year - ele2.year;
           });
-
 
           if (signups) {
             resolve(signups);

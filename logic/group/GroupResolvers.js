@@ -2,7 +2,6 @@ const { fetchDailyData } = require("../../data/common/fetchDailyData");
 const { fetchMonthlyData } = require("../../data/common/fetchMonthlyData");
 const { fetchTotal } = require("../../data/common/fetchTotal");
 const {
-  fetchGroupBy,
   fetchGroupStats,
   fetchAllGroups,
   fetchGroupSizeData,
@@ -20,6 +19,11 @@ const groupResolvers = {
     groupEngagement: (root, context) => ({ root, context }),
     groupData: (obj, args, root, context) => ({ obj, args, root, context }),
     ngoGroupData: (obj, args, root, context) => ({ obj, args, root, context }),
+    meetingActivity: async (obj, args, root, context) => {
+      const result = await calculateGroupActivitySince(105);
+
+      return { last105Days: result };
+    },
   },
   GroupStats: {
     groupTotal: async (root, context) => {

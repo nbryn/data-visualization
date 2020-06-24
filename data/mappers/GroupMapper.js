@@ -1,3 +1,4 @@
+const moment = require("moment");
 const { connectToDB } = require("../connection");
 
 async function fetchGroupStats(groupBy) {
@@ -14,9 +15,9 @@ async function fetchGroupStats(groupBy) {
               {
                 $group: {
                   _id: groupBy,
-                  count: { $sum: 1 }
-                }
-              }
+                  count: { $sum: 1 },
+                },
+              },
             ])
             .toArray();
 
@@ -110,9 +111,9 @@ async function fetchGroupSizeData() {
             {
               $group: {
                 _id: { groupSize: { $size: "$members" } },
-                count: { $sum: 1 }
-              }
-            }
+                count: { $sum: 1 },
+              },
+            },
           ])
           .toArray();
 
@@ -162,9 +163,9 @@ async function fetchGroupMeetingData() {
                   from: "groupmeetings",
                   localField: "_id",
                   foreignField: "group",
-                  as: "meetings"
-                }
-              }
+                  as: "meetings",
+                },
+              },
             ])
             .toArray();
 
@@ -212,7 +213,7 @@ async function fetchAllMemberIDsFromGroup(groupID) {
         } else {
           const dbResult = await collection
             .find({
-              group: groupID
+              group: groupID,
             })
             .project({ user: 1 })
             .toArray();
@@ -238,7 +239,7 @@ async function fetchUserIDByRole(role, groupID) {
         } else {
           const dbResult = await collection
             .find({
-              $and: [{ group: groupID }, { groupRoles: role }]
+              $and: [{ group: groupID }, { groupRoles: role }],
             })
             .project({ user: 1 })
             .toArray();
@@ -246,6 +247,88 @@ async function fetchUserIDByRole(role, groupID) {
           if (role === "(.*?)") {
             console.log(dbResult);
           }
+
+          if (dbResult) {
+            resolve(dbResult);
+          }
+        }
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  });
+}
+
+async function fetchGroupsRegBefore(subtract) {
+  const connection = await connectToDB();
+  return new Promise((resolve, reject) => {
+    try {
+      connection.db.collection("groups", async (err, collection) => {
+        if (err) {
+          console.log(err);
+        } else {
+          const before = moment()
+            .startOf("day")
+            .subtract(subtract, "days")
+            .toDate();
+          const dbResult = await collection
+            .find({
+              $and: [
+                {
+                  state: "ACTIVE",
+                  registrationDate: { $lt: before },
+                },
+              ],
+            })
+            .project({ id_: 1, members: 1, meetings: 1 })
+            .toArray();
+
+          const result = [];
+
+          dbResult.forEach((element) => {
+            if (element.members.length > 6 && element.meetings.length > 2) {
+              let group = {
+                _id: element._id,
+                size: element.members.length,
+                meetings: element.meetings.length,
+              };
+              result.push(group);
+            }
+          });
+
+          if (result) {
+            resolve(result);
+          }
+        }
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  });
+}
+
+async function fetchGroupMeetingsSince(groupID, subtract) {
+  const connection = await connectToDB();
+  return new Promise((resolve, reject) => {
+    try {
+      connection.db.collection("groupmeetings", async (err, collection) => {
+        if (err) {
+          console.log(err);
+        } else {
+          const since = moment()
+            .startOf("day")
+            .subtract(subtract, "days")
+            .toDate();
+          const dbResult = await collection
+            .find({
+              $and: [
+                {
+                  group: groupID,
+                  meetingDay: { $gt: since },
+                },
+              ],
+            })
+            .toArray();
 
           if (dbResult) {
             resolve(dbResult);
@@ -268,5 +351,7 @@ module.exports = {
   fetchAllGroupData,
   fetchGroupsByNGO,
   fetchUserIDByRole,
-  fetchAllMemberIDsFromGroup
+  fetchAllMemberIDsFromGroup,
+  fetchGroupsRegBefore,
+  fetchGroupMeetingsSince
 };

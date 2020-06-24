@@ -67,6 +67,12 @@ const GroupSchema = gql`
     members: JSON
   }
 
+  type MeetingActivity {
+    last300Days: [Float]
+    last200Days: [Float]
+    last105Days: [Float]
+  }
+
   type GroupData {
     group(group: String!): Group
   }
@@ -80,6 +86,7 @@ const GroupSchema = gql`
     groupEngagement: GroupEngagement
     groupData: GroupData
     ngoGroupData: NGOGroupData
+    meetingActivity: MeetingActivity
   }
 `;
 

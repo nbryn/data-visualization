@@ -1,6 +1,6 @@
-const { fetchDailyData } = require("../../data/fetch/fetchDailyData");
-const { fetchMonthlyData } = require("../../data/fetch/fetchMonthlyData");
-const { fetchTotal } = require("../../data/fetch/fetchTotal");
+const { fetchDailyData } = require("../../data/common/fetchDailyData");
+const { fetchMonthlyData } = require("../../data/common/fetchMonthlyData");
+const { fetchTotal } = require("../../data/common/fetchTotal");
 const {
   getCurrencyStats,
   calculateShareStats,

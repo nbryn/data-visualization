@@ -1,17 +1,17 @@
-const { fetchDailyData } = require("../../data/fetch/fetchDailyData");
-const { fetchMonthlyData } = require("../../data/fetch/fetchMonthlyData");
-const { fetchTotal } = require("../../data/fetch/fetchTotal");
+const { fetchDailyData } = require("../../data/common/fetchDailyData");
+const { fetchMonthlyData } = require("../../data/common/fetchMonthlyData");
+const { fetchTotal } = require("../../data/common/fetchTotal");
 const {
   fetchGroupBy,
   fetchGroupStats,
   fetchAllGroups,
-  fetchGroupSizeData
+  fetchGroupSizeData,
 } = require("../../data/mappers/GroupMapper");
 const {
   listGroupData,
   listGroupsByNGO,
   calculateMeetingFrequency,
-  generateMeetingOverview
+  generateMeetingOverview,
 } = require("./GroupService");
 
 const groupResolvers = {
@@ -19,7 +19,7 @@ const groupResolvers = {
     groupStats: (root, context) => ({ root, context }),
     groupEngagement: (root, context) => ({ root, context }),
     groupData: (obj, args, root, context) => ({ obj, args, root, context }),
-    ngoGroupData: (obj, args, root, context) => ({ obj, args, root, context })
+    ngoGroupData: (obj, args, root, context) => ({ obj, args, root, context }),
   },
   GroupStats: {
     groupTotal: async (root, context) => {
@@ -31,25 +31,25 @@ const groupResolvers = {
       const result = await fetchGroupSizeData();
 
       const tempResult = result
-        .filter(element => element._id.groupSize > 6)
-        .map(element => {
+        .filter((element) => element._id.groupSize > 6)
+        .map((element) => {
           return {
             value: element._id.groupSize,
-            count: element.count
+            count: element.count,
           };
         });
 
-      const groupSizeStats = tempResult.filter(element => element.count > 2);
+      const groupSizeStats = tempResult.filter((element) => element.count > 2);
 
       return groupSizeStats;
     },
     groupsNGO: async (root, context) => {
       const result = await fetchGroupStats("$ngoOrganization");
 
-      const groupsNGO = result.map(element => {
+      const groupsNGO = result.map((element) => {
         return {
           name: element._id,
-          count: element.count
+          count: element.count,
         };
       });
 
@@ -58,19 +58,33 @@ const groupResolvers = {
     groupsCountry: async (root, context) => {
       const result = await fetchGroupStats("$country");
 
-      const groupsNGO = result.map(element => {
+      const groupsNGO = result.map((element) => {
         return {
           name: element._id,
-          count: element.count
+          count: element.count,
         };
       });
 
       return groupsNGO;
     },
+    groupsLastWeek: async (root, context) => {
+      const groupsLastWeek = await fetchDailyData(
+        "groups",
+        "registrationDate",
+        7
+      );
+
+      let groups = 0;
+
+      groupsLastWeek.forEach((group) => (groups += group.count));
+
+      return groups;
+    },
     groupsLastMonth: async (root, context) => {
       const groupsLastMonth = await fetchDailyData(
         "groups",
-        "registrationDate"
+        "registrationDate",
+        30
       );
 
       return { data: groupsLastMonth };
@@ -82,14 +96,14 @@ const groupResolvers = {
       );
 
       return { data: groupsLastYear };
-    }
+    },
   },
   GroupEngagement: {
     groupsActive: async (root, context) => {
       const allGroups = await fetchAllGroups();
       let activeGroups = 0;
 
-      allGroups.forEach(group => {
+      allGroups.forEach((group) => {
         if (group.members.length > 6) {
           activeGroups++;
         }
@@ -106,22 +120,22 @@ const groupResolvers = {
       meetingStats = await generateMeetingOverview();
 
       return meetingStats;
-    }
+    },
   },
   GroupData: {
     group: async (obj, args, root, context) => {
       const groupData = await listGroupData(args.group);
 
       return groupData;
-    }
+    },
   },
   NGOGroupData: {
     groupData: async (obj, args, root, context) => {
       const groupData = await listGroupsByNGO(args.ngo);
 
       return groupData;
-    }
-  }
+    },
+  },
 };
 
 module.exports = groupResolvers;

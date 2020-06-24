@@ -1,7 +1,7 @@
 const { GraphQLJSON } = require("graphql-type-json");
 
-const { fetchDailyData } = require("../../data/fetch/fetchDailyData");
-const { fetchMonthlyData } = require("../../data/fetch/fetchMonthlyData");
+const { fetchDailyData } = require("../../data/common/fetchDailyData");
+const { fetchMonthlyData } = require("../../data/common/fetchMonthlyData");
 
 const {
   fetchUsersWithEmail,

@@ -32,30 +32,9 @@ async function validateLogin(args) {
             }
           }
         }
-<<<<<<< HEAD
-      }`;
-
-    const response = await axios({
-      url,
-      method: "post",
-      data: {
-        query: data,
-      },
-    });
-
-    const error = response.data.data.signin.result;
-
-    if (error) {
-      return {
-        error: "Wrong Email/Username",
-      };
-    } else {
-      return response.data.data.signin;
-=======
       });
     } catch (err) {
       console.log(err);
->>>>>>> 728bcfe635b167037360a46fac07aae5d05bf725
     }
   });
 }
@@ -145,7 +124,7 @@ async function fetchUsersWithEmail() {
         console.log(err);
       } else {
         const dbResult = await collection
-          .find({ email: { $ne: null } })
+          .find({ email: { $ne: null }, state: "ACTIVE" })
           .project({ _id: 1, firstName: 1, lastName: 1, email: 1 })
           .toArray();
 
@@ -166,7 +145,7 @@ async function fetchUsersWithPhone() {
         console.log(err);
       } else {
         const dbResult = await collection
-          .find({ phoneNumber: { $ne: null } })
+          .find({ phoneNumber: { $ne: null }, state: "ACTIVE" })
           .project({ _id: 1, firstName: 1, lastName: 1, phoneNumber: 1 })
           .toArray();
 

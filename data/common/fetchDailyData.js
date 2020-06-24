@@ -1,7 +1,7 @@
 const moment = require("moment");
 const { connectToDB } = require("../connection");
 
-async function fetchDailyData(collectionToFetch, matchString) {
+async function fetchDailyData(collectionToFetch, matchString, subtract) {
   const connection = await connectToDB();
   return new Promise((resolve, reject) => {
     try {
@@ -11,7 +11,7 @@ async function fetchDailyData(collectionToFetch, matchString) {
         } else {
           const since = moment()
             .startOf("year")
-            .subtract(0, "days")
+            .subtract(subtract, "days")
             .toDate();
 
           const dbResult = await collection

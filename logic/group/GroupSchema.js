@@ -19,6 +19,7 @@ const GroupSchema = gql`
   type GroupStats {
     groupTotal: Float
     groupSize: [GroupSize]
+    groupsLastWeek: Float
     groupsLastMonth: LastMonth
     groupsLastYear: LastYear
     groupsCountry: [GroupsPerCountry]

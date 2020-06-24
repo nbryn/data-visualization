@@ -209,6 +209,29 @@ async function fetchGroupsByNGO(ngo) {
   });
 }
 
+async function fetchNumberOfGroupsWith(currency) {
+  const connection = await connectToDB();
+  return new Promise((resolve, reject) => {
+    try {
+      connection.db.collection("groups", async (err, collection) => {
+        if (err) {
+          console.log(err);
+        } else {
+          const dbResult = await collection
+            .find({ state: "ACTIVE", currency })
+            .count();
+
+          if (dbResult) {
+            resolve(dbResult);
+          }
+        }
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  });
+}
+
 async function fetchAllMemberIDsFromGroup(groupID) {
   const connection = await connectToDB();
   return new Promise((resolve, reject) => {
@@ -438,4 +461,5 @@ module.exports = {
   fetchGroupMeetingsSince,
   fetchGroupShareouts,
   fetchGroupMemberByUser,
+  fetchNumberOfGroupsWith
 };

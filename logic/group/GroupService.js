@@ -12,7 +12,7 @@ const {
   fetchLoansByGroup
 } = require("../../data/mappers/FinanceMapper");
 
-const { fetchByID } = require("../../data/fetch/fetchByID");
+const { fetchByID } = require("../../data/common/fetchByID");
 
 async function listGroupData(group) {
   const generalData = await fetchGroupBy("name", group);

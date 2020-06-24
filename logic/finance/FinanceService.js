@@ -1,4 +1,4 @@
-const { fetchFinanceData } = require("../../data/fetch/fetchFinanceData");
+const { fetchFinanceData } = require("../../data/common/fetchFinanceData");
 const {
   fetchLoanData,
   fetchBoxBalanceData

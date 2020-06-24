@@ -36,18 +36,16 @@ const countryResolvers = {
       return usersCountry;
     },
   },
-  Country: {
-    CountryStats: {
-      country: async (obj, args, root, context) => {
-        const groups = await calculateNumberOfGroups(args.country);
+  CountryStats: {
+    country: async (obj, args, root, context) => {
+      const groups = await calculateNumberOfGroups(args.country);
 
-        const users = await calculateNumberOfUsers(args.country);
+      const users = await calculateNumberOfUsers(args.country);
 
-        return {
-          groups,
-          users,
-        };
-      },
+      return {
+        groups,
+        users,
+      };
     },
   },
 };

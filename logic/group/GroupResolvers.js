@@ -62,30 +62,6 @@ const groupResolvers = {
 
       return groupSizeStats;
     },
-    groupsNGO: async (root, context) => {
-      const result = await fetchGroupStats("$ngoOrganization");
-
-      const groupsNGO = result.map((element) => {
-        return {
-          name: element._id,
-          count: element.count,
-        };
-      });
-
-      return groupsNGO;
-    },
-    groupsCountry: async (root, context) => {
-      const result = await fetchGroupStats("$country");
-
-      const groupsNGO = result.map((element) => {
-        return {
-          name: element._id,
-          count: element.count,
-        };
-      });
-
-      return groupsNGO;
-    },
     groupsLastWeek: async (root, context) => {
       const groupsLastWeek = await fetchDailyData(
         "groups",

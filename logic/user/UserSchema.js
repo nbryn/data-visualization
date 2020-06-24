@@ -20,6 +20,11 @@ const UserSchema = gql`
     count: Float
   }
 
+  type UserInfo {
+    usersWithPhone: [User]
+    usersWithEmail: [User]
+  }
+
   type UserStats {
     userCount: Float!
     usersActive: Float
@@ -31,6 +36,7 @@ const UserSchema = gql`
   extend type Query {
     me: JSON
     userStats: UserStats
+    userInfo: UserInfo
   }
 
   type Mutation {

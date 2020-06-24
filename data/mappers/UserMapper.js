@@ -1,34 +1,38 @@
-const axios = require("axios");
 const { connectToDB } = require("../connection");
-const { setTokenInHeader } = require("../../logic/auth/Auth");
-
-const url =
-  "https://yzembapdse.execute-api.eu-central-1.amazonaws.com/production/graphql";
 
 async function validateLogin(args) {
-  try {
-    const data = `mutation {
-        signin(input: {
-          channel: ANDROID
-          username: "${args.input.username}"
-          password: "${args.input.password}"
-        }) {
-          ... on ValidationError {
-            result {
-              field
-              errors
+  const connection = await connectToDB();
+
+  return new Promise((resolve, reject) => {
+    try {
+      connection.db.collection("users", async (err, collection) => {
+        if (err) {
+          console.log(err);
+        } else {
+          const dbResult = await collection
+            .find({ email: `${args.input.username}` })
+            .toArray();
+
+          const error = {
+            error: "Wrong Email/Username"
+          };
+
+          if (dbResult[0] == undefined) {
+            resolve(error);
+          } else {
+            const { password } = dbResult[0];
+
+            if (!password || password !== args.input.password) {
+              resolve(error);
+            } else {
+              const succes = {
+                token: "123456"
+              };
+              resolve(succes);
             }
           }
-    
-          ... on Login {
-            token
-            refreshToken
-            deviceId
-            user {
-              email
-            }  
-          }
         }
+<<<<<<< HEAD
       }`;
 
     const response = await axios({
@@ -47,10 +51,13 @@ async function validateLogin(args) {
       };
     } else {
       return response.data.data.signin;
+=======
+      });
+    } catch (err) {
+      console.log(err);
+>>>>>>> 728bcfe635b167037360a46fac07aae5d05bf725
     }
-  } catch (err) {
-    console.log(err);
-  }
+  });
 }
 
 async function fetchCurrentUser(context) {

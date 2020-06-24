@@ -40,13 +40,15 @@ class GroupView extends Component {
     let groupMonthCount = 0;
     let groupYearCount = 0;
 
+    console.log(this.props);
+
     lastMonth.forEach(element => (groupMonthCount += element.count));
     groupStats.groupsLastYear.data.forEach(
       element => (groupYearCount += element.count)
     );
 
     this.setState({
-      groupTotal: groupStats.groupTotal,
+      groupsTotal: groupStats.groupTotal,
       groupsToday: lastMonth[lastMonth.length - 1].count,
       groupsTodayText:
         lastMonth[lastMonth.length - 1].day.day +

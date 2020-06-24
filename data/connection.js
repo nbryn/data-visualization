@@ -10,7 +10,7 @@ async function connectToDB() {
     return connection;
   } else {
     try {
-      await mongoose.connect(process.env.MONGODB_URI_PROD, {
+      await mongoose.connect(process.env.MONGODB_URI, {
         useNewUrlParser: true
       });
 

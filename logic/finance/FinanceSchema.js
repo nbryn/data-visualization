@@ -42,6 +42,11 @@ const FinanceSchema = gql`
     groupLoan: [GroupLoan]
   }
 
+  type BoxBalanceStats {
+    totalBoxBalance: Float
+    groupWithMost: Float
+  }
+
   type FinanceStats {
     currencyTotal: Float
     currencyStats: CurrencyStats
@@ -50,6 +55,7 @@ const FinanceSchema = gql`
     loansLastYear: LastYear
     shareStats: ShareStats
     etbStats: EtbStats
+    boxBalanceStats: BoxBalanceStats
   }
 
   extend type Query {

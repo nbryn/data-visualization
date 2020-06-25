@@ -13,7 +13,6 @@ const { calculateActiveUsers } = require("./UserService");
 const {
   validateLogin,
   fetchUserCount,
-  fetchCurrentUser,
   fetchGenderStats,
 } = require("../../data/mappers/UserMapper");
 
@@ -24,19 +23,12 @@ const userResolvers = {
     signin: async (parent, args, context, info) => {
       const result = await validateLogin(args);
 
-      console.log(result);
-
       return result;
     },
   },
   Query: {
     userStats: (root, context) => ({ root, context }),
     userInfo: (root, context) => ({ root, context }),
-    me: async (parent, args, context, info) => {
-      const result = await fetchCurrentUser(context);
-
-      return result;
-    },
   },
   UserStats: {
     userCount: async (root, context) => {

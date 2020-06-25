@@ -20,13 +20,29 @@ async function validateLogin(args) {
           if (dbResult[0] == undefined) {
             resolve(error);
           } else {
-            const { password } = dbResult[0];
+            const {
+              password,
+              email,
+              firstName,
+              lastName,
+              phoneNumber,
+              gender,
+              verified,
+            } = dbResult[0];
 
             if (!password || password !== args.input.password) {
               resolve(error);
             } else {
               const succes = {
                 token: "123456",
+                user: {
+                  firstName,
+                  lastName,
+                  email,
+                  phoneNumber,
+                  gender,
+                  verified,
+                },
               };
               resolve(succes);
             }
@@ -37,44 +53,6 @@ async function validateLogin(args) {
       console.log(err);
     }
   });
-}
-
-async function fetchCurrentUser(context) {
-  setTokenInHeader(context);
-
-  const data = `query{
-        me{
-          id
-          updatedAt
-          email
-          phoneCode
-          phoneNumber
-          username
-          firstName
-          lastName
-          image
-          gender
-          active
-          verified
-          language
-        }
-      }`;
-
-  let response;
-
-  try {
-    response = await axios({
-      url,
-      method: "post",
-      data: {
-        query: data,
-      },
-    });
-
-    return response.data.data.me;
-  } catch (err) {
-    console.log(err);
-  }
 }
 
 async function fetchUserCount() {
@@ -268,12 +246,11 @@ async function fetchNumberOfUsersFrom(country) {
 
 module.exports = {
   validateLogin,
-  fetchCurrentUser,
   fetchUserCount,
   fetchAllUsers,
   fetchGenderStats,
   fetchUsersWithEmail,
   fetchUsersWithPhone,
   fetchUsersPerCountry,
-  fetchNumberOfUsersFrom
+  fetchNumberOfUsersFrom,
 };

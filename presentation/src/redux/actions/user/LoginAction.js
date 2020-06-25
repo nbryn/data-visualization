@@ -1,7 +1,8 @@
+import { SET_CURRENT_USER } from "../ActionTypes";
 import { fetchFromServer } from "../Fetch";
 import { setTokenInLocalStorage } from "../../../security/Token";
 
-export const login = (username, password, history) => async dispatch => {
+export const login = (username, password, history) => async (dispatch) => {
   const data = `mutation signin {
     data:
      signin(input: {
@@ -12,8 +13,6 @@ export const login = (username, password, history) => async dispatch => {
 
   const response = await fetchFromServer("post", data);
 
-
-
   const error = response.data.data.data.error;
 
   if (error) {
@@ -21,7 +20,11 @@ export const login = (username, password, history) => async dispatch => {
   } else {
     setTokenInLocalStorage(response);
 
+    dispatch({
+      type: SET_CURRENT_USER,
+      payload: response.data.data,
+    });
+
     history.push("/dashboard");
   }
-
 };

@@ -12,7 +12,7 @@ class Sidebar extends Component {
       meetings: "/meetings",
       users: "/users",
       // engagement: "/engagement",
-      // profile: "/profile",
+      profile: "/profile",
       ngoview: "/ngo-view",
       search: "/search",
     };

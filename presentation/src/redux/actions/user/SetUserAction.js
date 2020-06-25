@@ -11,8 +11,6 @@ export const setCurrentUser = () => async dispatch => {
 
   const response = await fetchFromServer("post", data);
 
-  console.log(response);
-
   dispatch({
     type: SET_CURRENT_USER,
     payload: response.data.data

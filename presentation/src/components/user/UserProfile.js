@@ -1,13 +1,11 @@
 import React, { Component } from "react";
 
 import { connect } from "react-redux";
-import { Grid, Row} from "react-bootstrap";
+import { Grid, Row } from "react-bootstrap";
 import { ControlLabel, ListGroup, ListGroupItem } from "react-bootstrap";
 
 import Sidebar from "../navigation/Sidebar.js";
 import Header from "../navigation/Header.js";
-
-import { setCurrentUser } from "../../redux/actions/user/SetUserAction";
 
 class UserProfile extends Component {
   constructor(props) {
@@ -18,20 +16,21 @@ class UserProfile extends Component {
       name: "",
       phoneNumber: "",
       gender: "",
-      verified: ""
+      verified: "",
     };
   }
   async componentDidMount() {
-    const temp = await this.props.setCurrentUser();
+    const { currentUser } = this.props;
 
-    const user = this.props.user.currentUser.me;
+    console.log(this.props);
+    console.log(currentUser);
 
     this.setState({
-      email: user.email,
-      name: user.firstName + " " + user.lastName,
-      phoneNumber: user.phoneNumber,
-      gender: user.gender,
-      verified: user.verified
+      email: currentUser.email,
+      name: currentUser.firstName + " " + currentUser.lastName,
+      phoneNumber: currentUser.phoneNumber,
+      gender: currentUser.gender,
+      verified: currentUser.verified,
     });
   }
   render() {
@@ -58,7 +57,9 @@ class UserProfile extends Component {
                     <div className="col-md-6">
                       <ListGroup>
                         <ControlLabel>{element}</ControlLabel>
-                        <ListGroupItem>{data[index++].toString().toUpperCase()}</ListGroupItem>
+                        <ListGroupItem>
+                          {data[index++].toString().toUpperCase()}
+                        </ListGroupItem>
                       </ListGroup>
                     </div>
                   </Row>
@@ -72,10 +73,10 @@ class UserProfile extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    currentUser: state.currentUser
+    currentUser: state.user.currentUser,
   };
 };
 
-export default connect(mapStateToProps, { setCurrentUser })(UserProfile);
+export default connect(mapStateToProps)(UserProfile);

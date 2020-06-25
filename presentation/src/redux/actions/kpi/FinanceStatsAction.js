@@ -54,8 +54,6 @@ export const fetchFinanceStats = () => async dispatch => {
 
   const response = await fetchFromServer("post", data);
 
-  console.log(response);
-
   dispatch({
     type: FINANCE_STATS,
     payload: response.data.data.financeStats

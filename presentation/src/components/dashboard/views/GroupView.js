@@ -14,6 +14,8 @@ import LastMonthBar from "../charts/bar/LastMonthBar";
 import LastYearBar from "../charts/bar/LastYearBar";
 
 import { fetchGroupStats } from "../../../redux/actions/kpi/GroupStatsAction";
+import { fetchGroupsPerNGO } from "../../../redux/actions/ngo/GroupsPerNGOAction";
+import { fetchGeneralCountryStats } from "../../../redux/actions/country/GeneralCountryStatsAction";
 import { getCurrentTime } from "../../../util/Date";
 
 class GroupView extends Component {
@@ -32,19 +34,21 @@ class GroupView extends Component {
 
   async fetchData() {
     await this.props.fetchGroupStats();
+    await this.props.fetchGroupsPerNGO();
+    await this.props.fetchGeneralCountryStats();
 
-    const groupStats = this.props.groupStats;
+    console.log(this.props);
+
+    const { groupStats, groupsNGO, groupsCountry } = this.props;
     const lastMonth = groupStats.groupsLastMonth.data;
     const lastUpdatedAt = getCurrentTime();
 
     let groupMonthCount = 0;
     let groupYearCount = 0;
 
-    console.log(this.props);
-
-    lastMonth.forEach(element => (groupMonthCount += element.count));
+    lastMonth.forEach((element) => (groupMonthCount += element.count));
     groupStats.groupsLastYear.data.forEach(
-      element => (groupYearCount += element.count)
+      (element) => (groupYearCount += element.count)
     );
 
     this.setState({
@@ -59,9 +63,9 @@ class GroupView extends Component {
       groupSize: groupStats.groupSize,
       groupsLastMonth: lastMonth,
       groupsLastYear: groupStats.groupsLastYear.data,
-      groupsPerCountry: groupStats.groupsCountry,
-      groupsPerNGO: groupStats.groupsNGO,
-      lastUpdate: lastUpdatedAt
+      groupsPerCountry: groupsCountry,
+      groupsPerNGO: groupsNGO,
+      lastUpdate: lastUpdatedAt,
     });
   }
 
@@ -70,16 +74,16 @@ class GroupView extends Component {
       groupsTotal: { text: "Total Groups", icon: "pe-7s-graph1 text-danger" },
       groupsToday: {
         text: `Groups ${this.state.groupsTodayText}`,
-        icon: "pe-7s-users text-info"
+        icon: "pe-7s-users text-info",
       },
       groupsLastMonthTotal: {
         text: "Last Month",
-        icon: "pe-7s-graph1 text-danger"
+        icon: "pe-7s-graph1 text-danger",
       },
       groupsLastYearTotal: {
         text: "Last Year",
-        icon: "pe-7s-graph1 text-danger"
-      }
+        icon: "pe-7s-graph1 text-danger",
+      },
     };
     return (
       <div className="wrapper">
@@ -150,7 +154,7 @@ class GroupView extends Component {
                       "#8884d8",
                       "#ff0000",
                       "#2196f3",
-                      "#228b22"
+                      "#228b22",
                     ]}
                     data={this.state.groupSize}
                   />
@@ -173,10 +177,14 @@ class GroupView extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    groupStats: state.KPI.groupStats
+    groupStats: state.KPI.groupStats,
+    groupsNGO: state.NGO.groupsNGO,
+    groupsCountry: state.country.groupsCountry
   };
 };
 
-export default connect(mapStateToProps, { fetchGroupStats })(GroupView);
+export default connect(mapStateToProps, { fetchGroupStats, fetchGroupsPerNGO, fetchGeneralCountryStats })(
+  GroupView
+);

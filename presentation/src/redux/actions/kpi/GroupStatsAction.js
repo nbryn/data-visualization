@@ -31,8 +31,6 @@ export const fetchGroupStats = () => async (dispatch) => {
 
   const response = await fetchFromServer("post", data);
 
-  console.log(response);
-
   dispatch({
     type: GROUP_STATS,
     payload: response.data.data.groupStats,

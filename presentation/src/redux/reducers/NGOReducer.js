@@ -1,4 +1,4 @@
-import { NGO_GROUPS, GROUP_DATA } from "../actions/ActionTypes";
+import { NGO_GROUPS, GROUP_DATA, GROUPS_PER_NGO } from "../actions/ActionTypes";
 
 export default function(state = {}, action) {
   switch (action.type) {
@@ -9,6 +9,10 @@ export default function(state = {}, action) {
     case GROUP_DATA:
       return Object.assign({}, state, {
         groupData: action.payload
+      });
+      case GROUPS_PER_NGO:
+      return Object.assign({}, state, {
+        groupsNGO: action.payload.groupsNGO
       });
     default:
       return state;

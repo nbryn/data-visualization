@@ -1,7 +1,5 @@
 node_modules
-/build
-/client/node_modules
 .env
 npm-debug.log*
 
-/presentation/node_modules
+presentation/node_modules

@@ -1,22 +1,22 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Grid, Row, Col } from "react-bootstrap";
-import { KPICard } from "../util/KPICard";
+import { KPICard } from "../components/dashboard/common/KPICard";
 
-import Sidebar from "../../navigation/Sidebar";
-import Header from "../../navigation/Header";
+import Sidebar from "../components/navigation/Sidebar";
+import Header from "../components/navigation/Header";
 
-import TotalGraph from "../charts/graph/TotalGraph";
-import SizeChart from "../charts/circle/SizeChart";
+import TotalGraph from "../components/dashboard/charts/graph/TotalGraph";
+import SizeChart from "../components/dashboard/charts/circle/SizeChart";
 
-import TopBar from "../charts/bar/TopBar";
-import LastMonthBar from "../charts/bar/LastMonthBar";
-import LastYearBar from "../charts/bar/LastYearBar";
+import TopBar from "../components/dashboard/charts/bar/TopBar";
+import LastMonthBar from "../components/dashboard/charts/bar/LastMonthBar";
+import LastYearBar from "../components/dashboard/charts/bar/LastYearBar";
 
-import { fetchGroupStats } from "../../../redux/actions/kpi/GroupStatsAction";
-import { fetchGroupsPerNGO } from "../../../redux/actions/ngo/GroupsPerNGOAction";
-import { fetchGeneralCountryStats } from "../../../redux/actions/country/GeneralCountryStatsAction";
-import { getCurrentTime } from "../../../util/Date";
+import { fetchGroupStats } from "../redux/actions/kpi/GroupStatsAction";
+import { fetchGroupsPerNGO } from "../redux/actions/ngo/GroupsPerNGOAction";
+import { fetchGeneralCountryStats } from "../redux/actions/country/GeneralCountryStatsAction";
+import { getCurrentTime } from "../util/Date";
 
 class GroupView extends Component {
   constructor(props) {

@@ -1,20 +1,20 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 
-import Logo from "../../assets/img/jamii.png";
+import Logo from "../../assets/img/dashboard.jpeg";
 
 class Sidebar extends Component {
   render() {
     const navLinks = {
       dashboard: "/dashboard",
-      search: "/search",
-      ngoview: "/ngo-view",
       finance: "/finance",
       groups: "/groups",
       meetings: "/meetings",
       users: "/users",
-      engagement: "/engagement",
-      profile: "/dashboard"
+      // engagement: "/engagement",
+      // profile: "/profile",
+      ngoview: "/ngo-view",
+      search: "/search",
     };
 
     return (
@@ -22,7 +22,7 @@ class Sidebar extends Component {
         id="sidebar"
         className="sidebar"
         data-color="black"
-        data-image="../../assets/img/jamiipay.jpeg"
+        data-image="../../assets/img/dashboard.png"
       >
         <div className="logo">
           <img src={Logo} />
@@ -31,7 +31,6 @@ class Sidebar extends Component {
         <div className="sidebar-wrapper">
           <ul className="nav">
             {Object.keys(navLinks).map((element, index) => (
-             
               <li key={index}>
                 <NavLink
                   to={navLinks[element]}
@@ -42,7 +41,6 @@ class Sidebar extends Component {
                   <p>{element}</p>
                 </NavLink>
               </li>
-            
             ))}
           </ul>
         </div>

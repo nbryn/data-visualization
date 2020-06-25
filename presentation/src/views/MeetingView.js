@@ -1,18 +1,18 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Grid, Row, Col } from "react-bootstrap";
-import { KPICard } from "../util/KPICard";
+import { KPICard } from "../components/dashboard/common/KPICard";
 
-import Sidebar from "../../navigation/Sidebar";
-import Header from "../../navigation/Header";
+import Sidebar from "../components/navigation/Sidebar";
+import Header from "../components/navigation/Header";
 
-import TotalGraph from "../charts/graph/TotalGraph";
+import TotalGraph from "../components/dashboard/charts/graph/TotalGraph";
 
-import LastMonthBar from "../charts/bar/LastMonthBar";
-import LastYearBar from "../charts/bar/LastYearBar";
+import LastMonthBar from "../components/dashboard/charts/bar/LastMonthBar";
+import LastYearBar from "../components/dashboard/charts/bar/LastYearBar";
 
-import { fetchMeetingStats } from "../../../redux/actions/kpi/MeetingStatsAction";
-import { getCurrentTime } from "../../../util/Date";
+import { fetchMeetingStats } from "../redux/actions/kpi/MeetingStatsAction";
+import { getCurrentTime } from "../util/Date";
 
 class GroupView extends Component {
   constructor(props) {

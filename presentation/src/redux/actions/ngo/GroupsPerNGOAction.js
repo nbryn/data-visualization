@@ -5,7 +5,7 @@ export const fetchGroupsPerNGO = () => async (dispatch) => {
     const data = `query {
         ngoStats {
           groupsNGO {
-            ngo
+            name
             count
           }
         }

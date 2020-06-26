@@ -1,8 +1,8 @@
 const { fetchGroupStats } = require("../../data/mappers/GroupMapper");
-const { fetchUsersPerCountry } = require("../../data/mappers/UserMapper");
 const {
   calculateNumberOfGroups,
   calculateNumberOfUsers,
+  calculateNumberOfUsersForAllCountries,
 } = require("./CountryService");
 
 const countryResolvers = {
@@ -16,7 +16,7 @@ const countryResolvers = {
 
       const groupsCountry = result.map((element) => {
         return {
-          country: element._id,
+          name: element._id,
           count: element.count,
         };
       });
@@ -24,16 +24,9 @@ const countryResolvers = {
       return groupsCountry;
     },
     usersCountry: async (root, context) => {
-      const result = await fetchUsersPerCountry();
+      const usersPerCountry = await calculateNumberOfUsersForAllCountries();
 
-      const usersCountry = result.map((element) => {
-        return {
-          country: element._id,
-          count: element.count,
-        };
-      });
-
-      return usersCountry;
+      return usersPerCountry;
     },
   },
   CountryStats: {

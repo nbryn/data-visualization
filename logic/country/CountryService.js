@@ -1,5 +1,8 @@
 const { fetchNumberOfGroupsWith } = require("../../data/mappers/GroupMapper");
-const { fetchNumberOfUsersFrom } = require("../../data/mappers/UserMapper");
+const {
+  fetchNumberOfUsersFrom,
+  fetchUsersPerCountry,
+} = require("../../data/mappers/UserMapper");
 
 const getCountry = require("country-currency-map").getCountry;
 
@@ -7,8 +10,25 @@ const countryCodes = require("country-codes-list");
 
 const countries = countryCodes.customList(
   "countryNameEn",
-  "[{countryCode}] {countryNameEn}: {countryCallingCode}"
+  "{countryCode} {countryNameEn}: {countryCallingCode}"
 );
+
+async function calculateNumberOfUsersForAllCountries() {
+  const result = await fetchUsersPerCountry();
+
+  const usersPerCountry = result.map((country) => {
+    return {
+      name: Object.keys(countries).find(
+        (ele) =>
+          countries[ele].substring(countries[ele].lastIndexOf(":") + 2) ===
+          country._id
+      ),
+      count: country.count,
+    };
+  });
+
+  return usersPerCountry;
+}
 
 async function calculateNumberOfGroups(country) {
   const currency = getCountry(country).currency;
@@ -22,6 +42,9 @@ async function calculateNumberOfUsers(country) {
   const phoneCode = countries[country].substring(
     countries[country].lastIndexOf(":") + 2
   );
+
+  console.log(countries);
+
   const users = await fetchNumberOfUsersFrom(phoneCode);
 
   return users;
@@ -30,4 +53,5 @@ async function calculateNumberOfUsers(country) {
 module.exports = {
   calculateNumberOfGroups,
   calculateNumberOfUsers,
+  calculateNumberOfUsersForAllCountries,
 };

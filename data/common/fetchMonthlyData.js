@@ -36,10 +36,6 @@ async function fetchMonthlyData(collectionToFetch, matchString) {
             };
           });
 
-          signups.sort((ele1, ele2) => {
-            return ele1.year - ele2.year;
-          });
-
           if (signups) {
             resolve(signups);
           }

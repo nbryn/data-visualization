@@ -11,7 +11,7 @@ const CountrySchema = gql`
   }
 
   type PerCountry {
-    country: String
+    name: String
     count: Float
   }
 

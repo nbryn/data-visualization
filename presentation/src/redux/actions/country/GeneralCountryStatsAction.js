@@ -5,11 +5,11 @@ export const fetchGeneralCountryStats = () => async (dispatch) => {
     const data = `query {
         generalCountryStats {
           groupsCountry {
-            country
+            name
             count
           }
           usersCountry{
-            country
+            name
             count
           }
         }

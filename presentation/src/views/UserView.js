@@ -12,7 +12,9 @@ import LastMonthBar from "../components/dashboard/charts/bar/LastMonthBar";
 import LastYearBar from "../components/dashboard/charts/bar/LastYearBar";
 
 import { fetchUserStats } from "../redux/actions/kpi/UserStatsAction";
+import { fetchGeneralCountryStats } from "../redux/actions/country/GeneralCountryStatsAction";
 import { getCurrentTime } from "../util/Date";
+import TopBar from "../components/dashboard/charts/bar/TopBar";
 
 class KPIView extends Component {
   constructor(props) {
@@ -30,6 +32,9 @@ class KPIView extends Component {
 
   async fetchData() {
     await this.props.fetchUserStats();
+    await this.props.fetchGeneralCountryStats();
+
+    console.log(this.props);
 
     const userStats = this.props.userStats;
 
@@ -39,10 +44,10 @@ class KPIView extends Component {
     let userYearCount = 0;
 
     userStats.usersLastMonth.data.forEach(
-      element => (userMonthCount += element.count)
+      (element) => (userMonthCount += element.count)
     );
     userStats.usersLastYear.data.forEach(
-      element => (userYearCount += element.count)
+      (element) => (userYearCount += element.count)
     );
 
     this.setState({
@@ -61,7 +66,8 @@ class KPIView extends Component {
       usersLastMonth: userStats.usersLastMonth.data,
       usersLastYear: userStats.usersLastYear.data,
       userGender: userStats.userGenderStats,
-      lastUpdate: lastUpdatedAt
+      usersCountry: this.props.usersCountry,
+      lastUpdate: lastUpdatedAt,
     });
   }
 
@@ -70,13 +76,13 @@ class KPIView extends Component {
       userTotal: { text: "Total Users", icon: "pe-7s-user text-warning" },
       usersToday: {
         text: `Users ${this.state.usersTodayText}`,
-        icon: "pe-7s-users text-info"
+        icon: "pe-7s-users text-info",
       },
       userMonth: {
         text: "Last Month",
-        icon: "pe-7s-graph1 text-danger"
+        icon: "pe-7s-graph1 text-danger",
       },
-      userYear: { text: "Last Year", icon: "pe-7s-wallet text-success" }
+      userYear: { text: "Last Year", icon: "pe-7s-wallet text-success" },
     };
     return (
       <div className="wrapper">
@@ -105,6 +111,16 @@ class KPIView extends Component {
                     title="Total Users"
                     stroke="#ff0000"
                     data={this.state.usersLastYear}
+                  />
+                </Col>
+                <Col lg={4} sm={6}>
+                  <TopBar
+                    title="Users Per Country"
+                    color="#1828E8"
+                    xLabel="Country"
+                    yLabel="Users"
+                    data={this.state.usersCountry}
+                    css="card-graph card-stats"
                   />
                 </Col>
               </Row>
@@ -140,12 +156,14 @@ class KPIView extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    userStats: state.KPI.userStats
+    userStats: state.KPI.userStats,
+    usersCountry: state.country.usersCountry,
   };
 };
 
 export default connect(mapStateToProps, {
-  fetchUserStats
+  fetchUserStats,
+  fetchGeneralCountryStats,
 })(KPIView);

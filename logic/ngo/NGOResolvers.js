@@ -11,7 +11,7 @@ const ngoResolvers = {
 
       const groupsNGO = result.map((element) => {
         return {
-          ngo: element._id,
+          name: element._id,
           count: element.count,
         };
       });

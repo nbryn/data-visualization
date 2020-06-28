@@ -5,7 +5,7 @@ import paginationFactory from "react-bootstrap-table2-paginator";
 import { Row, Col, Panel } from "react-bootstrap";
 import { ControlLabel, ListGroup, ListGroupItem } from "react-bootstrap";
 
-class NGOGroupView extends Component {
+class Group extends Component {
   constructor(props) {
     super(props);
 
@@ -120,4 +120,4 @@ class NGOGroupView extends Component {
   }
 }
 
-export default NGOGroupView;
+export default Group;

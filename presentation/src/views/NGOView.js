@@ -3,14 +3,14 @@ import BootstrapTable from "react-bootstrap-table-next";
 import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit";
 import paginationFactory from "react-bootstrap-table2-paginator";
 
-import { Grid, Row, Col } from "react-bootstrap";
+import { Grid, Row } from "react-bootstrap";
 import { connect } from "react-redux";
 
-import NGOGroupView from "./NGOGroupView";
-import Sidebar from "../navigation/Sidebar";
-import Header from "../navigation/Header";
+import NGOGroupView from "../components/ngo/Group";
+import Sidebar from "../components/navigation/Sidebar";
+import Header from "../components/navigation/Header";
 
-import { fetchGroupsByNGO } from "../../redux/actions/ngo/NGOGroupsActions";
+import { fetchGroupsByNGO } from "../redux/actions/ngo/NGOGroupsActions";
 
 class NGOView extends Component {
   constructor(props) {
@@ -33,8 +33,6 @@ class NGOView extends Component {
 
   async fetchData() {
     await this.props.fetchGroupsByNGO('"FHIDO"');
-
-    console.log(this.props);
 
     const newState = this.props.groups.groupData.map(element => {
       return {

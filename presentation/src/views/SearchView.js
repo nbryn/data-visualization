@@ -3,20 +3,20 @@ import { Grid, Row } from "react-bootstrap";
 import { FormGroup, FormControl, ControlLabel, Button } from "react-bootstrap";
 
 import { connect } from "react-redux";
-import { fetchGroupData } from "../../redux/actions/ngo/SearchAction";
+import { fetchGroupData } from "../redux/actions/ngo/SearchAction";
 
-import NGOGroupView from "./NGOGroupView";
-import Sidebar from "../navigation/Sidebar";
-import Header from "../navigation/Header";
+import Group from "../components/ngo/Group";
+import Sidebar from "../components/navigation/Sidebar";
+import Header from "../components/navigation/Header";
 
-class Search extends Component {
+class SearchView extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       searchString: "",
       renderGroupData: false,
-      groupData: []
+      groupData: [],
     };
 
     this.onSubmit = this.onSubmit.bind(this);
@@ -50,18 +50,18 @@ class Search extends Component {
         group.shares,
         group.owner.firstName + " " + group.owner.lastName,
         group.admin.firstName + " " + group.admin.lastName,
-        group.members.map(member => {
+        group.members.map((member) => {
           return {
-            name: member.firstName + " " + member.lastName
+            name: member.firstName + " " + member.lastName,
           };
-        })
-      ]
+        }),
+      ],
     });
   }
 
   onChange(e) {
     this.setState({
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   }
   render() {
@@ -71,10 +71,7 @@ class Search extends Component {
           <Sidebar />
 
           <div id="main-panel" className="main-panel" ref="mainPanel">
-            <Header
-              title="Group Search"
-          
-            />
+            <Header title="Group Search" />
             <div className="content">
               <Grid fluid>
                 <Row>
@@ -96,9 +93,7 @@ class Search extends Component {
                     </form>
                   </div>
                   {this.state.renderGroupData ? (
-                    <NGOGroupView
-                      groupData={this.state.groupData}
-                    ></NGOGroupView>
+                    <Group groupData={this.state.groupData}></Group>
                   ) : (
                     ""
                   )}
@@ -112,10 +107,10 @@ class Search extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    groupData: state.NGO.groupData
+    groupData: state.NGO.groupData,
   };
 };
 
-export default connect(mapStateToProps, { fetchGroupData })(Search);
+export default connect(mapStateToProps, { fetchGroupData })(SearchView);

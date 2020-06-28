@@ -6,7 +6,7 @@ import Store from "./Store";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./assets/sass/dashboard.scss?v=1.3.0";
 import "./assets/fonts/pe-icon-7-stroke.css";
-import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
+import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 
 import EngagementView from "./views/EngagementView";
 import FinanceView from "./views/FinanceView";
@@ -14,11 +14,8 @@ import GroupView from "./views/GroupView";
 import MainView from "./views/MainView";
 import MeetingView from "./views/MeetingView";
 import UserView from "./views/UserView";
-
-import NGOView from "./components/ngo/NGOView";
-import NGOGroupView from "./components/ngo/NGOGroupView";
-
-import Search from "./components/ngo/Search";
+import NGOView from "./views/NGOView";
+import SearchView from "./views/SearchView";
 
 import Signin from "./components/user/Signin.js";
 import Profile from "./components/user/UserProfile.js";
@@ -42,9 +39,8 @@ class App extends Component {
             <SecureRoute exact path="/profile" component={Profile} />
 
             <SecureRoute exact path="/ngo-view" component={NGOView} />
-            <SecureRoute exact path="/ngo-groupview" component={NGOGroupView} />
 
-            <SecureRoute exact path="/search" component={Search} />
+            <SecureRoute exact path="/search" component={SearchView} />
 
             <Route path="*" component={NotFound} />
           </Switch>

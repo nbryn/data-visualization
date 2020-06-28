@@ -1,10 +1,14 @@
 import { GROUPS_PER_NGO } from "../ActionTypes";
 import { fetchFromServer } from "../Fetch";
 
-export const fetchGroupsPerNGO = () => async (dispatch) => {
+export const fetchNGOStats = () => async (dispatch) => {
     const data = `query {
         ngoStats {
           groupsNGO {
+            name
+            count
+          }
+          usersNGO {
             name
             count
           }

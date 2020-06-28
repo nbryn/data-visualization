@@ -12,7 +12,8 @@ export default function(state = {}, action) {
       });
       case GROUPS_PER_NGO:
       return Object.assign({}, state, {
-        groupsNGO: action.payload.groupsNGO
+        groupsNGO: action.payload.groupsNGO,
+        usersNGO: action.payload.usersNGO
       });
     default:
       return state;

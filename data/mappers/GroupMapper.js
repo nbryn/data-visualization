@@ -38,6 +38,41 @@ async function fetchGroupStats(groupBy) {
   });
 }
 
+async function fetchGroupMembersPerNGO() {
+  const connection = await connectToDB();
+
+  return new Promise((resolve, reject) => {
+    try {
+      connection.db.collection("groups", async (err, collection) => {
+        if (err) {
+          console.log(err);
+        } else {
+          const result = await collection
+            .aggregate([
+              {
+                $match: { state: "ACTIVE" },
+              },
+              {
+                $group: {
+                  _id: "$ngoOrganization",
+                  count: { $sum: 1 },
+                  groups: { $push: { groupSize: { $size: "$members" } } },
+                },
+              },
+            ])
+            .toArray();
+
+          if (result) {
+            resolve(result);
+          }
+        }
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  });
+}
+
 async function fetchAllGroupMembers() {
   const connection = await connectToDB();
   return new Promise((resolve, reject) => {
@@ -461,5 +496,6 @@ module.exports = {
   fetchGroupMeetingsSince,
   fetchGroupShareouts,
   fetchGroupMemberByUser,
-  fetchNumberOfGroupsWith
+  fetchNumberOfGroupsWith,
+  fetchGroupMembersPerNGO,
 };

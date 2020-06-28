@@ -13,10 +13,13 @@ import LastYearBar from "../components/dashboard/charts/bar/LastYearBar";
 
 import { fetchUserStats } from "../redux/actions/kpi/UserStatsAction";
 import { fetchGeneralCountryStats } from "../redux/actions/country/GeneralCountryStatsAction";
+import {fetchNGOStats} from "../redux/actions/ngo/NGOStatsAction";
+
+
 import { getCurrentTime } from "../util/Date";
 import TopBar from "../components/dashboard/charts/bar/TopBar";
 
-class KPIView extends Component {
+class UserView extends Component {
   constructor(props) {
     super(props);
 
@@ -32,6 +35,7 @@ class KPIView extends Component {
 
   async fetchData() {
     await this.props.fetchUserStats();
+    await this.props.fetchNGOStats();
     await this.props.fetchGeneralCountryStats();
 
     console.log(this.props);
@@ -67,6 +71,7 @@ class KPIView extends Component {
       usersLastYear: userStats.usersLastYear.data,
       userGender: userStats.userGenderStats,
       usersCountry: this.props.usersCountry,
+      usersNGO: this.props.usersNGO,
       lastUpdate: lastUpdatedAt,
     });
   }
@@ -123,6 +128,16 @@ class KPIView extends Component {
                     css="card-graph card-stats"
                   />
                 </Col>
+                <Col lg={4} sm={6}>
+                  <TopBar
+                    title="Users Per NGO"
+                    color="#1828E8"
+                    xLabel="NGO"
+                    yLabel="Users"
+                    data={this.state.usersNGO}
+                    css="card-graph card-stats"
+                  />
+                </Col>
               </Row>
               <Row>
                 <Col lg={4} sm={6}>
@@ -160,10 +175,12 @@ const mapStateToProps = (state) => {
   return {
     userStats: state.KPI.userStats,
     usersCountry: state.country.usersCountry,
+    usersNGO: state.NGO.usersNGO
   };
 };
 
 export default connect(mapStateToProps, {
   fetchUserStats,
   fetchGeneralCountryStats,
-})(KPIView);
+  fetchNGOStats
+})(UserView);

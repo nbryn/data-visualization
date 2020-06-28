@@ -1,6 +1,8 @@
 const { fetchAllUsers } = require("../../data/mappers/UserMapper");
 const {
   fetchAllGroupMembers,
+  fetchGroupStats,
+  fetchGroupMembersPerNGO,
   fetchGroupMemberByUser,
 } = require("../../data/mappers/GroupMapper");
 
@@ -39,4 +41,28 @@ async function calculateGroupsPerUser() {
   return result;
 }
 
-module.exports = { calculateGroupsPerUser };
+async function calculateUsersPerNGO() {
+  const result = await fetchGroupMembersPerNGO();
+
+  const usersPerNGO = result
+    .map((ele) => {
+      let userCount = 0;
+
+      ele.groups.forEach((members) => (userCount += members.groupSize));
+
+      return {
+        name: ele._id,
+        count: userCount,
+      };
+    })
+    .sort((a, b) => {
+      if (a.count > b.count) return -1;
+      if (b.count > a.count) return 1;
+
+      return 0;
+    });
+
+  return usersPerNGO;
+}
+
+module.exports = { calculateGroupsPerUser, calculateUsersPerNGO };

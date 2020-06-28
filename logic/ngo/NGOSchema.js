@@ -1,7 +1,7 @@
 const { gql } = require("apollo-server");
 
 const NGOSchema = gql`
-  type GroupsPerNGO {
+  type GroupsPer {
     name: String
     count: Float
   }
@@ -13,8 +13,9 @@ const NGOSchema = gql`
   }
 
   type NGOStats {
-    groupsNGO: [GroupsPerNGO]
+    groupsNGO: [GroupsPer]
     groupsUser: [GroupsPerUser]
+    usersNGO: [GroupsPer]
   }
 
   extend type Query {

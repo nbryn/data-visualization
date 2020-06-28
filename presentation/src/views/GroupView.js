@@ -14,7 +14,7 @@ import LastMonthBar from "../components/dashboard/charts/bar/LastMonthBar";
 import LastYearBar from "../components/dashboard/charts/bar/LastYearBar";
 
 import { fetchGroupStats } from "../redux/actions/kpi/GroupStatsAction";
-import { fetchGroupsPerNGO } from "../redux/actions/ngo/GroupsPerNGOAction";
+import { fetchNGOStats } from "../redux/actions/ngo/NGOStatsAction";
 import { fetchGeneralCountryStats } from "../redux/actions/country/GeneralCountryStatsAction";
 import { getCurrentTime } from "../util/Date";
 
@@ -34,7 +34,7 @@ class GroupView extends Component {
 
   async fetchData() {
     await this.props.fetchGroupStats();
-    await this.props.fetchGroupsPerNGO();
+    await this.props.fetchNGOStats();
     await this.props.fetchGeneralCountryStats();
 
     console.log(this.props);
@@ -185,6 +185,6 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { fetchGroupStats, fetchGroupsPerNGO, fetchGeneralCountryStats })(
+export default connect(mapStateToProps, { fetchGroupStats, fetchNGOStats, fetchGeneralCountryStats })(
   GroupView
 );

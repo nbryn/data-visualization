@@ -1,6 +1,6 @@
 const { fetchGroupStats } = require("../../data/mappers/GroupMapper");
-const { calculateGroupsPerUser } = require("./NGOService");
-const { fetchGroupMemberByUser } = require("../../data/mappers/GroupMapper");
+const { calculateGroupsPerUser, calculateUsersPerNGO } = require("./NGOService");
+
 const ngoResolvers = {
   Query: {
     ngoStats: async (root, context) => ({ root, context }),
@@ -17,6 +17,11 @@ const ngoResolvers = {
       });
 
       return groupsNGO;
+    },
+    usersNGO: async (root, context) => {
+      const usersNGO = await calculateUsersPerNGO();
+
+      return usersNGO;
     },
     groupsUser: async (root, context) => {
       const groupsUser = await calculateGroupsPerUser();

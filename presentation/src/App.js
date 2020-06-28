@@ -15,7 +15,7 @@ import MainView from "./views/MainView";
 import MeetingView from "./views/MeetingView";
 import UserView from "./views/UserView";
 import NGOView from "./views/NGOView";
-import SearchView from "./views/SearchView";
+import GroupSearchView from "./views/GroupSearchView";
 
 import Signin from "./components/user/Signin.js";
 import Profile from "./components/user/UserProfile.js";
@@ -36,11 +36,10 @@ class App extends Component {
             <SecureRoute exact path="/groups" component={GroupView} />
             <SecureRoute exact path="/meetings" component={MeetingView} />
             <SecureRoute exact path="/users" component={UserView} />
+
             <SecureRoute exact path="/profile" component={Profile} />
-
             <SecureRoute exact path="/ngo-view" component={NGOView} />
-
-            <SecureRoute exact path="/search" component={SearchView} />
+            <SecureRoute exact path="/search" component={GroupSearchView} />
 
             <Route path="*" component={NotFound} />
           </Switch>

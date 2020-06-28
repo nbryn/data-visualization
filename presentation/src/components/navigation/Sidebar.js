@@ -7,10 +7,10 @@ class Sidebar extends Component {
   render() {
     const navLinks = {
       dashboard: "/dashboard",
-      finance: "/finance",
       groups: "/groups",
-      meetings: "/meetings",
       users: "/users",
+      finance: "/finance",
+      meetings: "/meetings",
       // engagement: "/engagement",
       profile: "/profile",
       ngoview: "/ngo-view",

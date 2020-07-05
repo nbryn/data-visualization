@@ -1,7 +1,7 @@
 import { MEETING_STATS } from "../ActionTypes";
 import { fetchFromServer } from "../Fetch";
 
-export const fetchMeetingStats = () => async dispatch => {
+export const fetchMeetingStats = () => async (dispatch) => {
   const data = `query{
     meetingStats{
       meetingTotal
@@ -23,6 +23,10 @@ export const fetchMeetingStats = () => async dispatch => {
           
         }
       }
+      meetingsPerGroup {
+        name
+        count
+      }
     }
   }`;
 
@@ -30,6 +34,6 @@ export const fetchMeetingStats = () => async dispatch => {
 
   dispatch({
     type: MEETING_STATS,
-    payload: response.data.data.meetingStats
+    payload: response.data.data.meetingStats,
   });
 };

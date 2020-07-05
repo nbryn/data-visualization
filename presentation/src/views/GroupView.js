@@ -36,9 +36,7 @@ class GroupView extends Component {
     await this.props.fetchGroupStats();
     await this.props.fetchNGOStats();
     await this.props.fetchGeneralCountryStats();
-
-    console.log(this.props);
-
+    
     const { groupStats, groupsNGO, groupsCountry } = this.props;
     const lastMonth = groupStats.groupsLastMonth.data;
     const lastUpdatedAt = getCurrentTime();

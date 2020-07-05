@@ -8,6 +8,7 @@ import Header from "../components/navigation/Header";
 
 import TotalGraph from "../components/dashboard/charts/graph/TotalGraph";
 
+import TopBar from "../components/dashboard/charts/bar/TopBar";
 import LastMonthBar from "../components/dashboard/charts/bar/LastMonthBar";
 import LastYearBar from "../components/dashboard/charts/bar/LastYearBar";
 
@@ -38,9 +39,9 @@ class GroupView extends Component {
     let meetingMonthCount = 0;
     let meetingYearCount = 0;
 
-    lastMonth.forEach(element => (meetingMonthCount += element.count));
+    lastMonth.forEach((element) => (meetingMonthCount += element.count));
     meetingStats.meetingsLastYear.data.forEach(
-      element => (meetingYearCount += element.count)
+      (element) => (meetingYearCount += element.count)
     );
 
     this.setState({
@@ -54,7 +55,8 @@ class GroupView extends Component {
       meetingYear: meetingYearCount,
       meetingsLastMonth: lastMonth,
       meetingsLastYear: meetingStats.meetingsLastYear.data,
-      lastUpdate: lastUpdatedAt
+      meetingsPerGroup: meetingStats.meetingsPerGroup,
+      lastUpdate: lastUpdatedAt,
     });
   }
 
@@ -63,13 +65,13 @@ class GroupView extends Component {
       meetingTotal: { text: "Total Meetings", icon: "pe-7s-user text-warning" },
       meetingsToday: {
         text: `Meetings ${this.state.meetingsTodayText}`,
-        icon: "pe-7s-users text-info"
+        icon: "pe-7s-users text-info",
       },
       meetingMonth: {
         text: "Last Month",
-        icon: "pe-7s-graph1 text-danger"
+        icon: "pe-7s-graph1 text-danger",
       },
-      meetingYear: { text: "Last Year", icon: "pe-7s-wallet text-success" }
+      meetingYear: { text: "Last Year", icon: "pe-7s-wallet text-success" },
     };
     return (
       <div className="wrapper">
@@ -100,6 +102,16 @@ class GroupView extends Component {
                     data={this.state.meetingsLastYear}
                   />
                 </Col>
+                <Col lg={4} sm={6}>
+                  <TopBar
+                    title="Meetings Per Group"
+                    xLabel="Groups"
+                    yLabel="Meetings"
+                    color="#ff0000"
+                    data={this.state.meetingsPerGroup}
+                    css="card-graph card-stats"
+                  />
+                </Col>
               </Row>
               <Row>
                 <Col lg={4} sm={6}>
@@ -126,9 +138,9 @@ class GroupView extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    meetingStats: state.KPI.meetingStats
+    meetingStats: state.KPI.meetingStats,
   };
 };
 

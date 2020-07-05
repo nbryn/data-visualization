@@ -10,7 +10,7 @@ const DefaultSchema = gql`
 
   type PerValue {
     value: String
-    count Float
+    count: Float
   }
 
   type Day {

@@ -1,10 +1,11 @@
 const { fetchTotal } = require("../../data/common/fetchTotal");
 const { fetchDailyData } = require("../../data/common/fetchDailyData");
 const { fetchMonthlyData } = require("../../data/common/fetchMonthlyData");
+const { calculateMeetingsPerGroup } = require("./MeetingService");
 
 const meetingResolvers = {
   Query: {
-    meetingStats: (root, context) => ({ root, context })
+    meetingStats: (root, context) => ({ root, context }),
   },
   MeetingStats: {
     meetingTotal: async (root, context) => {
@@ -27,8 +28,13 @@ const meetingResolvers = {
       );
 
       return { data: meetingsLastYear };
-    }
-  }
+    },
+    meetingsPerGroup: async (root, context) => {
+      const meetingsPerGroup = await calculateMeetingsPerGroup();
+
+      return meetingsPerGroup.slice(0, 10);
+    },
+  },
 };
 
 module.exports = meetingResolvers;

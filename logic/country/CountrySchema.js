@@ -10,7 +10,6 @@ const CountrySchema = gql`
     country(country: String!): Country
   }
 
-
   type GeneralCountryStats {
     groupsCountry: [PerUnit]
     usersCountry: [PerUnit]

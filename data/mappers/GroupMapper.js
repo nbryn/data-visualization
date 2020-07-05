@@ -1,5 +1,30 @@
 const moment = require("moment");
+const ObjectId = require("mongodb").ObjectId;
 const { connectToDB } = require("../connection");
+
+async function fetchGroupByID(id) {
+  const connection = await connectToDB();
+
+  return new Promise((resolve, reject) => {
+    try {
+      connection.db.collection("groups", async (err, collection) => {
+        if (err) {
+          console.log(err);
+        } else {
+          const result = await collection.find(ObjectId(id))
+          .project({name: 1, currency: 1})
+          .toArray();
+
+          if (result) {
+            resolve(result);
+          }
+        }
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  });
+}
 
 async function fetchGroupStats(groupBy) {
   const connection = await connectToDB();
@@ -482,6 +507,7 @@ async function fetchGroupMemberByUser() {
 }
 
 module.exports = {
+  fetchGroupByID,
   fetchGroupBy,
   fetchAllGroupMembers,
   fetchAllGroups,

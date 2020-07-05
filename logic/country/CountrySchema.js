@@ -18,6 +18,7 @@ const CountrySchema = gql`
   type GeneralCountryStats {
     groupsCountry: [PerCountry]
     usersCountry: [PerCountry]
+    meetingsCountry: [PerCountry]
   }
 
   extend type Query {

@@ -2,7 +2,6 @@ const { fetchDailyData } = require("../../data/common/fetchDailyData");
 const { fetchMonthlyData } = require("../../data/common/fetchMonthlyData");
 const { fetchTotal } = require("../../data/common/fetchTotal");
 const {
-  fetchGroupStats,
   fetchAllGroups,
   fetchGroupSizeData,
 } = require("../../data/mappers/GroupMapper");

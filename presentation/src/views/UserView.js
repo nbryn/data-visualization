@@ -38,8 +38,6 @@ class UserView extends Component {
     await this.props.fetchNGOStats();
     await this.props.fetchGeneralCountryStats();
 
-    console.log(this.props);
-
     const userStats = this.props.userStats;
 
     let lastUpdatedAt = getCurrentTime();

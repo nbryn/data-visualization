@@ -1,22 +1,12 @@
 const { gql } = require("apollo-server");
 
 const GroupSchema = gql`
-  type GroupSize {
-    value: String
-    count: Float
-  }
-
   type GroupStats {
     groupTotal: Float
-    groupSize: [GroupSize]
+    groupSize: [PerValue]
     groupsLastWeek: Float
     groupsLastMonth: LastMonth
     groupsLastYear: LastYear
-  }
-
-  type GroupMeetingFrequency {
-    value: String
-    count: Float
   }
 
   type GroupMeetingStats {
@@ -29,7 +19,7 @@ const GroupSchema = gql`
 
   type GroupEngagement {
     groupsActive: Float
-    groupMeetingFrequency: [GroupMeetingFrequency]
+    groupMeetingFrequency: [PerValue]
     groupMeetingStats: [GroupMeetingStats]
   }
 

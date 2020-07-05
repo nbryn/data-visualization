@@ -15,11 +15,6 @@ const UserSchema = gql`
     gender: String
   }
 
-  type UserGenderStats {
-    value: String
-    count: Float
-  }
-
   type UserInfo {
     usersWithPhone: [User]
     usersWithEmail: [User]
@@ -30,7 +25,7 @@ const UserSchema = gql`
     usersActive: Float
     usersLastMonth: LastMonth
     usersLastYear: LastYear
-    userGenderStats: [UserGenderStats]
+    userGenderStats: [PerValue]
   }
 
   extend type Query {

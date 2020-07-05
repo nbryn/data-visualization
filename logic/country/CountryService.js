@@ -32,7 +32,9 @@ async function calculateNumberOfUsersPerCountry() {
 }
 
 async function calculateNumberOfMeetingsPerCountry() {
-  const result = await fetchMeetingPerGroup();
+  const meetingsPerGroup = await fetchMeetingPerGroup();
+
+  
 
   console.log(result);
 }

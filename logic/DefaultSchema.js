@@ -3,6 +3,16 @@ const { gql } = require("apollo-server");
 const DefaultSchema = gql`
   scalar JSON
 
+  type PerUnit {
+    name: String
+    count: Float
+  }
+
+  type PerValue {
+    value: String
+    count Float
+  }
+
   type Day {
     year: Float!
     month: Float!

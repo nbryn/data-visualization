@@ -10,15 +10,11 @@ const CountrySchema = gql`
     country(country: String!): Country
   }
 
-  type PerCountry {
-    name: String
-    count: Float
-  }
 
   type GeneralCountryStats {
-    groupsCountry: [PerCountry]
-    usersCountry: [PerCountry]
-    meetingsCountry: [PerCountry]
+    groupsCountry: [PerUnit]
+    usersCountry: [PerUnit]
+    meetingsCountry: [PerUnit]
   }
 
   extend type Query {

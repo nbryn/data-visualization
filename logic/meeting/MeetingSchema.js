@@ -5,6 +5,7 @@ const MeetingSchema = gql`
     meetingTotal: Float
     meetingsLastMonth: LastMonth
     meetingsLastYear: LastYear
+    meetingsPerGroup: [PerUnit]
   }
 
   extend type Query {

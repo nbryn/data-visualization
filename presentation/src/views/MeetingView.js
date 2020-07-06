@@ -12,10 +12,11 @@ import TopBar from "../components/dashboard/charts/bar/TopBar";
 import LastMonthBar from "../components/dashboard/charts/bar/LastMonthBar";
 import LastYearBar from "../components/dashboard/charts/bar/LastYearBar";
 
+import { fetchGeneralCountryStats } from "../redux/actions/country/GeneralCountryStatsAction";
 import { fetchMeetingStats } from "../redux/actions/kpi/MeetingStatsAction";
 import { getCurrentTime } from "../util/Date";
 
-class GroupView extends Component {
+class MeetingView extends Component {
   constructor(props) {
     super(props);
 
@@ -31,6 +32,8 @@ class GroupView extends Component {
 
   async fetchData() {
     await this.props.fetchMeetingStats();
+    await this.props.fetchGeneralCountryStats();
+
 
     const meetingStats = this.props.meetingStats;
     const lastMonth = meetingStats.meetingsLastMonth.data;
@@ -56,6 +59,7 @@ class GroupView extends Component {
       meetingsLastMonth: lastMonth,
       meetingsLastYear: meetingStats.meetingsLastYear.data,
       meetingsPerGroup: meetingStats.meetingsPerGroup,
+      meetingsPerCountry: this.props.meetingsCountry,
       lastUpdate: lastUpdatedAt,
     });
   }
@@ -105,10 +109,20 @@ class GroupView extends Component {
                 <Col lg={4} sm={6}>
                   <TopBar
                     title="Meetings Per Group"
-                    xLabel="Groups"
+                    xLabel="Group"
                     yLabel="Meetings"
                     color="#ff0000"
                     data={this.state.meetingsPerGroup}
+                    css="card-graph card-stats"
+                  />
+                </Col>
+                <Col lg={4} sm={6}>
+                  <TopBar
+                    title="Meetings Per Country"
+                    xLabel="Country"
+                    yLabel="Meetings"
+                    color="#ff0000"
+                    data={this.state.meetingsPerCountry}
                     css="card-graph card-stats"
                   />
                 </Col>
@@ -141,7 +155,11 @@ class GroupView extends Component {
 const mapStateToProps = (state) => {
   return {
     meetingStats: state.KPI.meetingStats,
+    meetingsCountry: state.country.meetingsCountry,
   };
 };
 
-export default connect(mapStateToProps, { fetchMeetingStats })(GroupView);
+export default connect(mapStateToProps, {
+  fetchMeetingStats,
+  fetchGeneralCountryStats,
+})(MeetingView);

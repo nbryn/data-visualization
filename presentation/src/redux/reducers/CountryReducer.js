@@ -6,6 +6,7 @@ export default function(state = {}, action) {
       return Object.assign({}, state, {
         groupsCountry: action.payload.groupsCountry,
         usersCountry: action.payload.usersCountry,
+        meetingsCountry: action.payload.meetingsCountry,
 
       });
    

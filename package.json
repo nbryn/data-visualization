@@ -16,11 +16,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://nbryn@bitbucket.org/jamiipay/jamiipay-web-dashboard.git"
+    "url": "git+https://https://github.com/nbryn/dashboard.git"
   },
   "author": "nbryn",
   "license": "ISC",
-  "homepage": "https://bitbucket.org/jamiipay/jamiipay-web-dashboard#readme",
+  "homepage": "",
   "dependencies": {
     "apollo-server": "^2.9.12",
     "apollo-server-express": "^2.9.12",
@@ -32,6 +32,7 @@
     "graphql": "^14.5.8",
     "graphql-tools": "^4.0.6",
     "graphql-type-json": "^0.3.1",
+    "iso-country-currency": "^0.5.1",
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
     "mongoose": "^5.7.12",

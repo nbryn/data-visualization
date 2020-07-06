@@ -12,6 +12,10 @@ export const fetchGeneralCountryStats = () => async (dispatch) => {
             name
             count
           }
+          meetingsCountry {
+            name
+            count
+          }
         }
       }`;
   

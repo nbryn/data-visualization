@@ -1,12 +1,12 @@
 const { fetchNumberOfGroupsWith } = require("../../data/mappers/GroupMapper");
-const { fetchMeetingPerGroup } = require("../../data/mappers/MeetingMapper");
+const { calculateMeetingsPerGroup } = require("../meeting/MeetingService");
 const {
   fetchNumberOfUsersFrom,
   fetchUsersPerCountry,
 } = require("../../data/mappers/UserMapper");
 
+const isoCurrency = require("iso-country-currency");
 const getCountry = require("country-currency-map").getCountry;
-
 const countryCodes = require("country-codes-list");
 
 const countries = countryCodes.customList(
@@ -14,10 +14,10 @@ const countries = countryCodes.customList(
   "{countryCode} {countryNameEn}: {countryCallingCode}"
 );
 
-async function calculateNumberOfUsersPerCountry() {
-  const result = await fetchUsersPerCountry();
+async function calculateUsersPerCountry() {
+  const tempUsersPerCountry = await fetchUsersPerCountry();
 
-  const usersPerCountry = result.map((country) => {
+  const usersPerCountry = tempUsersPerCountry.map((country) => {
     return {
       name: Object.keys(countries).find(
         (ele) =>
@@ -31,10 +31,37 @@ async function calculateNumberOfUsersPerCountry() {
   return usersPerCountry;
 }
 
-async function calculateNumberOfMeetingsPerCountry() {
-  const meetingsPerGroup = await fetchMeetingPerGroup();
+async function calculateMeetingsPerCountry() {
+  const meetingsPerGroup = await calculateMeetingsPerGroup();
 
-  console.log(result);
+  const meetingsPerCountry = [];
+
+  meetingsPerGroup.forEach((element) => {
+    const index = meetingsPerCountry.findIndex(
+      (x) => x.currency === element.currency
+    );
+    if (index === -1) {
+      const countries = isoCurrency.getAllCountriesByCurrencyOrSymbol(
+        "currency",
+        element.currency
+      );
+      let country;
+
+      if (element.currency === "USD") country = "United States";
+      else if (element.currency === "DKK") country = "Denmark";
+      else country = countries[0];
+
+      meetingsPerCountry.push({
+        name: country,
+        count: element.count,
+        currency: element.currency,
+      });
+    } else {
+      meetingsPerCountry[index].count += element.count;
+    }
+  });
+
+  return meetingsPerCountry;
 }
 
 async function calculateNumberOfGroups(country) {
@@ -58,6 +85,6 @@ async function calculateNumberOfUsers(country) {
 module.exports = {
   calculateNumberOfGroups,
   calculateNumberOfUsers,
-  calculateNumberOfUsersPerCountry,
-  calculateNumberOfMeetingsPerCountry,
+  calculateUsersPerCountry,
+  calculateMeetingsPerCountry,
 };

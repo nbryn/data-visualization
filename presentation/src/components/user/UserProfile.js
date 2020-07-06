@@ -22,9 +22,6 @@ class UserProfile extends Component {
   async componentDidMount() {
     const { currentUser } = this.props;
 
-    console.log(this.props);
-    console.log(currentUser);
-
     this.setState({
       email: currentUser.email,
       name: currentUser.firstName + " " + currentUser.lastName,

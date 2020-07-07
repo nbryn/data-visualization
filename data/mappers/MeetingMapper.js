@@ -56,7 +56,37 @@ async function fetchMeetingPerGroup() {
   });
 }
 
+async function fetchMeetingShares() {
+  const connection = await connectToDB();
+  return new Promise((resolve, reject) => {
+    try {
+      connection.db.collection("groupmeetings", async (err, collection) => {
+        if (err) {
+          console.log(err);
+        } else {
+          const result = await collection
+            .find({
+              $expr: { $gte: [{ $size: "$shares" }, 1] },
+              state: "ENDED",
+            })
+            .project({
+              _id: 1,
+              shares: 1,
+            })
+            .toArray();
+          if (result) {
+            resolve(result);
+          }
+        }
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  });
+}
+
 module.exports = {
   fetchAllMeetings,
   fetchMeetingPerGroup,
+  fetchMeetingShares,
 };

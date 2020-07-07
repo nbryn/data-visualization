@@ -32,8 +32,8 @@ class LastYearBar extends Component {
 
   render() {
     const title = this.props.title;
-    const yLabel = { value: "Users", angle: -90, position: "insideLeft" };
-    const xLabel = { value: "Months", position: "center", dy: +10 };
+    const yLabel = { value: this.props.yLabel, angle: -90, position: "insideLeft" };
+    const xLabel = { value: this.props.xLabel, position: "center", dy: +10 };
 
     return (
       <div className="card-circle card-stats">

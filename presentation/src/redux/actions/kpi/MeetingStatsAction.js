@@ -27,6 +27,10 @@ export const fetchMeetingStats = () => async (dispatch) => {
         name
         count
       }
+      sharesPerMeeting {
+        name
+        count
+      }
     }
   }`;
 

@@ -141,6 +141,8 @@ class UserView extends Component {
                 <Col lg={4} sm={6}>
                   <LastMonthBar
                     title="Users Per Day"
+                    xLabel="Day"
+                    yLabel="Users"
                     color="#228b22"
                     data={this.state.usersLastMonth}
                   />
@@ -156,6 +158,8 @@ class UserView extends Component {
                 <Col lg={4} sm={6}>
                   <LastYearBar
                     title="Users Per Month"
+                    xLabel="Month"
+                    yLabel="Users"
                     color="#ff0000"
                     data={this.state.usersLastYear}
                   />

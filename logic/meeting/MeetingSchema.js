@@ -6,6 +6,7 @@ const MeetingSchema = gql`
     meetingsLastMonth: LastMonth
     meetingsLastYear: LastYear
     meetingsPerGroup: [PerUnit]
+    sharesPerMeeting: [PerUnit]
   }
 
   extend type Query {

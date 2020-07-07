@@ -59,6 +59,7 @@ class MeetingView extends Component {
       meetingsLastMonth: lastMonth,
       meetingsLastYear: meetingStats.meetingsLastYear.data,
       meetingsPerGroup: meetingStats.meetingsPerGroup,
+      sharesPerMeeting: meetingStats.sharesPerMeeting,
       meetingsPerCountry: this.props.meetingsCountry,
       lastUpdate: lastUpdatedAt,
     });
@@ -131,6 +132,8 @@ class MeetingView extends Component {
                 <Col lg={4} sm={6}>
                   <LastMonthBar
                     title="Meetings Last Month"
+                    xLabel="Day"
+                    yLabel="Meetings"
                     color="#228b22"
                     data={this.state.meetingsLastMonth}
                   />
@@ -139,8 +142,20 @@ class MeetingView extends Component {
                 <Col lg={4} sm={6}>
                   <LastYearBar
                     title="Meetings Last Year"
+                    xLabel="Month"
+                    yLabel="Meetings"
                     color="#ff0000"
                     data={this.state.meetingsLastYear}
+                  />
+                </Col>
+                <Col lg={4} sm={6}>
+                  <TopBar
+                    title="Meetings With Most Shares"
+                    xLabel="Meeting"
+                    yLabel="Shares"
+                    color="#ff0000"
+                    data={this.state.sharesPerMeeting}
+                    css="card-circle card-stats"
                   />
                 </Col>
               </Row>

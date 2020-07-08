@@ -19,7 +19,7 @@ class NGOView extends Component {
     this.state = {
       renderGroupData: false,
       allGroups: [],
-      groupdata: "",
+      groupData: "",
     };
   }
 
@@ -34,23 +34,13 @@ class NGOView extends Component {
   async fetchData() {
     await this.props.fetchGroupsByNGO('"FHIDO"');
 
-    const newState = this.props.groups.groupData.map((element) => {
+    const { groupData } = this.props.groups;
+
+    let id = 0;
+    const newState = groupData.map((element) => {
       return {
-        id: element.id,
-        regDate: element.regDate,
-        name: element.name,
-        currency: element.currency,
-        cycle: element.cycle,
-        type: element.type,
-        ngo: element.ngo,
-        boxBalance: element.boxBalance,
-        lastMeeting: element.lastMeeting,
-        meetingsTotal: element.meetingsTotal,
-        perShare: element.perShare,
-        serviceFee: element.serviceFee,
-        loanLimit: element.loanLimit,
-        shares: element.shares,
-        loans: element.loans,
+        id: id++,
+        ...element,
         admin: element.admin.firstName + " " + element.admin.lastName,
         owner: element.owner.firstName + " " + element.owner.lastName,
         members: element.members.map((member) => {
@@ -66,34 +56,6 @@ class NGOView extends Component {
     });
   }
   render() {
-    let groupData;
-    let id = 0;
-
-    if (Array.isArray(this.state.allGroups)) {
-      groupData = this.state.allGroups.map((group) => {
-        return {
-          id: id++,
-          name: group.name,
-          regDate: group.regDate,
-          currency: group.currency,
-          cycle: group.cycle,
-          group: group.type,
-          ngo: group.ngo,
-          lastMeeting: group.lastMeeting,
-          boxBalance: group.boxBalance,
-          meetingsTotal: group.meetingsTotal,
-          perShare: group.perShare,
-          serviceFee: group.serviceFee,
-          loanLimit: group.loanLimit,
-          shares: group.shares,
-          loans: group.loans,
-          admin: group.admin,
-          owner: group.owner,
-          members: group.members,
-        };
-      });
-    }
-
     const { SearchBar } = Search;
 
     const selectRow = {
@@ -101,11 +63,9 @@ class NGOView extends Component {
       clickToSelect: true,
       style: { backgroundColor: "#c8e6c9" },
       onSelect: (row, isSelect, rowIndex, e) => {
-        let data = [];
+        const data = [];
         for (let key in row) {
-          if (key !== "id") {
-            data.push(row[key]);
-          }
+          if (key !== "id") data.push(row[key]);
         }
 
         this.setState({
@@ -147,7 +107,7 @@ class NGOView extends Component {
                   <div className="col-md-5">
                     <ToolkitProvider
                       keyField="name"
-                      data={groupData}
+                      data={this.state.allGroups}
                       columns={columns}
                       striped
                       hover
@@ -166,7 +126,7 @@ class NGOView extends Component {
                           <BootstrapTable
                             {...props.baseProps}
                             keyField="id"
-                            data={groupData ? groupData : []}
+                            data={this.state.allGroups}
                             columns={columns}
                             selectRow={selectRow}
                             pagination={paginationFactory()}

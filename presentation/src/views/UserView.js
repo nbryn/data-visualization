@@ -129,7 +129,7 @@ class UserView extends Component {
                 <Col lg={4} sm={6}>
                   <TopBar
                     title="Users Per NGO"
-                    color="#1828E8"
+                    color="#2196f3"
                     xLabel="NGO"
                     yLabel="Users"
                     data={this.state.usersNGO}

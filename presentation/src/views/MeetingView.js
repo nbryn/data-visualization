@@ -122,7 +122,7 @@ class MeetingView extends Component {
                     title="Meetings Per Country"
                     xLabel="Country"
                     yLabel="Meetings"
-                    color="#ff0000"
+                    color="#228b22"
                     data={this.state.meetingsPerCountry}
                     css="card-graph card-stats"
                   />
@@ -134,7 +134,7 @@ class MeetingView extends Component {
                     title="Meetings Last Month"
                     xLabel="Day"
                     yLabel="Meetings"
-                    color="#228b22"
+                    color="#1828E8"
                     data={this.state.meetingsLastMonth}
                   />
                 </Col>
@@ -144,7 +144,7 @@ class MeetingView extends Component {
                     title="Meetings Last Year"
                     xLabel="Month"
                     yLabel="Meetings"
-                    color="#ff0000"
+                    color="#8918E8"
                     data={this.state.meetingsLastYear}
                   />
                 </Col>
@@ -153,7 +153,7 @@ class MeetingView extends Component {
                     title="Meetings With Most Shares"
                     xLabel="Meeting"
                     yLabel="Shares"
-                    color="#ff0000"
+                    color="#2196f3"
                     data={this.state.sharesPerMeeting}
                     css="card-circle card-stats"
                   />

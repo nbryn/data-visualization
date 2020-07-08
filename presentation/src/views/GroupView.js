@@ -117,7 +117,7 @@ class GroupView extends Component {
                     title="Groups Per Country"
                     xLabel="Countries"
                     yLabel="Groups"
-                    color="#ff0000"
+                    color="#1828E8"
                     data={this.state.groupsPerCountry}
                     css="card-graph card-stats"
                   />
@@ -137,7 +137,7 @@ class GroupView extends Component {
                 <Col lg={4} sm={6}>
                   <LastMonthBar
                     title="Groups Last Month"
-                    color="#228b22"
+                    color="#8918E8"
                     xLabel="Days"
                     yLabel="Groups"
                     data={this.state.groupsLastMonth}

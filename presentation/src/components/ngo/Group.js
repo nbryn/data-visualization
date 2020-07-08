@@ -10,7 +10,7 @@ class Group extends Component {
     super(props);
 
     this.setState({
-      showHeader: false
+      showHeader: false,
     });
   }
 
@@ -25,7 +25,7 @@ class Group extends Component {
       "Box Balance",
       "Amount Per Share",
       "Loan Service Fee",
-      "Loan Limit"
+      "Loan Limit",
     ];
 
     const column3 = [
@@ -33,14 +33,14 @@ class Group extends Component {
       "Total Loans",
       "Total Shares",
       "Owner",
-      "Admin"
+      "Admin",
     ];
 
     const columns = [
       {
         dataField: "name",
-        text: "Members"
-      }
+        text: "Members",
+      },
     ];
 
     return (

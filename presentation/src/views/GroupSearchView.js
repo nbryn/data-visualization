@@ -29,33 +29,27 @@ class SearchView extends Component {
 
     await this.props.fetchGroupData(`"${searchString}"`);
 
-    const group = this.props.groupData.group;
+    const { group } = this.props.groupData;
 
-    this.setState({
-      renderGroupData: true,
-      groupData: [
-        group.name,
-        group.regDate,
-        group.currency,
-        group.cycle,
-        group.type,
-        group.ngo,
-        group.lastMeeting,
-        group.boxBalance,
-        group.meetingsTotal,
-        group.perShare,
-        group.serviceFee,
-        group.loanLimit,
-        group.loans,
-        group.shares,
-        group.owner.firstName + " " + group.owner.lastName,
-        group.admin.firstName + " " + group.admin.lastName,
-        group.members.map((member) => {
+    const groupData = Object.keys(group).map((data) => {
+      if (data === "owner") {
+        return group[data].firstName + " " + group.owner.lastName;
+      } else if (data === "admin") {
+        return group[data].firstName + " " + group.admin.lastName;
+      } else if (data === "members") {
+        return group[data].map((member) => {
           return {
             name: member.firstName + " " + member.lastName,
           };
-        }),
-      ],
+        });
+      } else {
+        return group[data];
+      }
+    });
+
+    this.setState({
+      renderGroupData: true,
+      groupData,
     });
   }
 
@@ -92,10 +86,8 @@ class SearchView extends Component {
                       </Button>
                     </form>
                   </div>
-                  {this.state.renderGroupData ? (
+                  {this.state.renderGroupData && (
                     <Group groupData={this.state.groupData}></Group>
-                  ) : (
-                    ""
                   )}
                 </Row>
               </Grid>

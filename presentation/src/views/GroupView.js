@@ -36,17 +36,17 @@ class GroupView extends Component {
     await this.props.fetchGroupStats();
     await this.props.fetchNGOStats();
     await this.props.fetchGeneralCountryStats();
-    
+
     const { groupStats, groupsNGO, groupsCountry } = this.props;
     const lastMonth = groupStats.groupsLastMonth.data;
     const lastUpdatedAt = getCurrentTime();
 
-    let groupMonthCount = 0;
-    let groupYearCount = 0;
+    let groupsLastMonth = 0;
+    let groupsLastYear = 0;
 
-    lastMonth.forEach((element) => (groupMonthCount += element.count));
+    lastMonth.forEach((element) => (groupsLastMonth += element.count));
     groupStats.groupsLastYear.data.forEach(
-      (element) => (groupYearCount += element.count)
+      (element) => (groupsLastYear += element.count)
     );
 
     this.setState({
@@ -56,8 +56,8 @@ class GroupView extends Component {
         lastMonth[lastMonth.length - 1].day.day +
         "/" +
         lastMonth[lastMonth.length - 1].day.month,
-      groupsLastMonthTotal: groupMonthCount,
-      groupsLastYearTotal: groupYearCount,
+      groupsLastMonthTotal: groupsLastMonth,
+      groupsLastYearTotal: groupsLastYear,
       groupSize: groupStats.groupSize,
       groupsLastMonth: lastMonth,
       groupsLastYear: groupStats.groupsLastYear.data,
@@ -179,10 +179,12 @@ const mapStateToProps = (state) => {
   return {
     groupStats: state.KPI.groupStats,
     groupsNGO: state.NGO.groupsNGO,
-    groupsCountry: state.country.groupsCountry
+    groupsCountry: state.country.groupsCountry,
   };
 };
 
-export default connect(mapStateToProps, { fetchGroupStats, fetchNGOStats, fetchGeneralCountryStats })(
-  GroupView
-);
+export default connect(mapStateToProps, {
+  fetchGroupStats,
+  fetchNGOStats,
+  fetchGeneralCountryStats,
+})(GroupView);

@@ -1,23 +1,23 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Grid, Row, Col } from "react-bootstrap";
-import { KPICard } from "../components/dashboard/common/KPICard";
+import { KPICard } from "../../components/dashboard/common/KPICard";
 
-import Sidebar from "../components/navigation/Sidebar";
-import Header from "../components/navigation/Header";
+import Sidebar from "../../components/navigation/Sidebar";
+import Header from "../../components/navigation/Header";
 
-import TotalGraph from "../components/dashboard/charts/graph/TotalGraph";
-import SizeChart from "../components/dashboard/charts/circle/SizeChart";
-import LastMonthBar from "../components/dashboard/charts/bar/LastMonthBar";
-import LastYearBar from "../components/dashboard/charts/bar/LastYearBar";
+import TotalGraph from "../../components/dashboard/charts/graph/TotalGraph";
+import SizeChart from "../../components/dashboard/charts/circle/SizeChart";
+import LastMonthBar from "../../components/dashboard/charts/bar/LastMonthBar";
+import LastYearBar from "../../components/dashboard/charts/bar/LastYearBar";
 
-import { fetchUserStats } from "../redux/actions/kpi/UserStatsAction";
-import { fetchGeneralCountryStats } from "../redux/actions/country/GeneralCountryStatsAction";
-import {fetchNGOStats} from "../redux/actions/ngo/NGOStatsAction";
+import { fetchUserStats } from "../../redux/actions/kpi/UserStatsAction";
+import { fetchGeneralCountryStats } from "../../redux/actions/country/GeneralCountryStatsAction";
+import {fetchNGOStats} from "../../redux/actions/ngo/NGOStatsAction";
 
 
-import { getCurrentTime } from "../util/Date";
-import TopBar from "../components/dashboard/charts/bar/TopBar";
+import { getCurrentTime } from "../../util/Date";
+import TopBar from "../../components/dashboard/charts/bar/TopBar";
 
 class UserView extends Component {
   constructor(props) {

@@ -3,11 +3,11 @@ import { Grid, Row } from "react-bootstrap";
 import { FormGroup, FormControl, ControlLabel, Button } from "react-bootstrap";
 
 import { connect } from "react-redux";
-import { fetchGroupData } from "../redux/actions/ngo/SearchAction";
+import { fetchGroupData } from "../../redux/actions/ngo/SearchAction";
 
-import Group from "../components/ngo/Group";
-import Sidebar from "../components/navigation/Sidebar";
-import Header from "../components/navigation/Header";
+import InfoPage from "../../components/common/InfoPage";
+import Sidebar from "../../components/navigation/Sidebar";
+import Header from "../../components/navigation/Header";
 
 class SearchView extends Component {
   constructor(props) {
@@ -87,7 +87,7 @@ class SearchView extends Component {
                     </form>
                   </div>
                   {this.state.renderGroupData && (
-                    <Group groupData={this.state.groupData}></Group>
+                    <InfoPage groupData={this.state.groupData}/>
                   )}
                 </Row>
               </Grid>

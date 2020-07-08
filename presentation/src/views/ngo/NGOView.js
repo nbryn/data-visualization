@@ -6,11 +6,11 @@ import paginationFactory from "react-bootstrap-table2-paginator";
 import { Grid, Row } from "react-bootstrap";
 import { connect } from "react-redux";
 
-import NGOGroupView from "../components/ngo/Group";
-import Sidebar from "../components/navigation/Sidebar";
-import Header from "../components/navigation/Header";
+import InfoPage from "../../components/common/InfoPage";
+import Sidebar from "../../components/navigation/Sidebar";
+import Header from "../../components/navigation/Header";
 
-import { fetchGroupsByNGO } from "../redux/actions/ngo/NGOGroupsActions";
+import { fetchGroupsByNGO } from "../../redux/actions/ngo/NGOGroupsActions";
 
 class NGOView extends Component {
   constructor(props) {
@@ -19,7 +19,7 @@ class NGOView extends Component {
     this.state = {
       renderGroupData: false,
       allGroups: [],
-      groupdata: ""
+      groupdata: "",
     };
   }
 
@@ -34,7 +34,7 @@ class NGOView extends Component {
   async fetchData() {
     await this.props.fetchGroupsByNGO('"FHIDO"');
 
-    const newState = this.props.groups.groupData.map(element => {
+    const newState = this.props.groups.groupData.map((element) => {
       return {
         id: element.id,
         regDate: element.regDate,
@@ -53,16 +53,16 @@ class NGOView extends Component {
         loans: element.loans,
         admin: element.admin.firstName + " " + element.admin.lastName,
         owner: element.owner.firstName + " " + element.owner.lastName,
-        members: element.members.map(member => {
+        members: element.members.map((member) => {
           return {
-            name: member.firstName + " " + member.lastName
+            name: member.firstName + " " + member.lastName,
           };
-        })
+        }),
       };
     });
 
     this.setState({
-      allGroups: newState
+      allGroups: newState,
     });
   }
   render() {
@@ -70,7 +70,7 @@ class NGOView extends Component {
     let id = 0;
 
     if (Array.isArray(this.state.allGroups)) {
-      groupData = this.state.allGroups.map(group => {
+      groupData = this.state.allGroups.map((group) => {
         return {
           id: id++,
           name: group.name,
@@ -89,7 +89,7 @@ class NGOView extends Component {
           loans: group.loans,
           admin: group.admin,
           owner: group.owner,
-          members: group.members
+          members: group.members,
         };
       });
     }
@@ -110,25 +110,25 @@ class NGOView extends Component {
 
         this.setState({
           renderGroupData: true,
-          groupData: data
+          groupData: data,
         });
-      }
+      },
     };
 
     const columns = [
       {
         dataField: "name",
-        text: "Name"
+        text: "Name",
       },
 
       {
         dataField: "admin",
-        text: "Admin"
+        text: "Admin",
       },
       {
         dataField: "owner",
-        text: "Owner"
-      }
+        text: "Owner",
+      },
     ];
 
     return (
@@ -154,7 +154,7 @@ class NGOView extends Component {
                       condensed
                       search
                     >
-                      {props => (
+                      {(props) => (
                         <div>
                           <h4>
                             <b>Groups</b>
@@ -176,10 +176,8 @@ class NGOView extends Component {
                     </ToolkitProvider>
                   </div>
                 </Row>
-                {this.state.renderGroupData ? (
-                  <NGOGroupView groupData={this.state.groupData} />
-                ) : (
-                  ""
+                {this.state.renderGroupData && (
+                  <InfoPage groupData={this.state.groupData} />
                 )}
               </Grid>
             </div>
@@ -190,9 +188,9 @@ class NGOView extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    groups: state.NGO.groups
+    groups: state.NGO.groups,
   };
 };
 

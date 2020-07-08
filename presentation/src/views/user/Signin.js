@@ -1,7 +1,7 @@
-import React, { Component } from "react";
 import { Alert } from "react-bootstrap";
-
 import { connect } from "react-redux";
+import React, { Component } from "react";
+
 import { login } from "../../redux/actions/user/LoginAction";
 
 class Signin extends Component {

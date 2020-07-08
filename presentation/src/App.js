@@ -8,17 +8,17 @@ import "./assets/sass/dashboard.scss?v=1.3.0";
 import "./assets/fonts/pe-icon-7-stroke.css";
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 
-import EngagementView from "./views/EngagementView";
-import FinanceView from "./views/FinanceView";
-import GroupView from "./views/GroupView";
-import MainView from "./views/MainView";
-import MeetingView from "./views/MeetingView";
-import UserView from "./views/UserView";
-import NGOView from "./views/NGOView";
-import GroupSearchView from "./views/GroupSearchView";
+import EngagementView from "./views/dashboard/EngagementView";
+import FinanceView from "./views/dashboard/FinanceView";
+import GroupView from "./views/dashboard/GroupView";
+import MainView from "./views/dashboard/MainView";
+import MeetingView from "./views/dashboard/MeetingView";
+import UserView from "./views/dashboard/UserView";
+import NGOView from "./views/ngo/NGOView";
+import GroupSearchView from "./views/search/GroupSearchView";
 
-import Signin from "./components/user/Signin.js";
-import Profile from "./components/user/UserProfile.js";
+import Signin from "./views/user/Signin.js";
+import Profile from "./views/user/UserProfile.js";
 import SecureRoute from "./security/SecureRoute";
 import NotFound from "./components/navigation/NotFound";
 

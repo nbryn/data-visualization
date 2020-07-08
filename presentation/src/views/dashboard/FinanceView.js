@@ -1,18 +1,18 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Grid, Row, Col } from "react-bootstrap";
-import { KPICard } from "../components/dashboard/common/KPICard";
+import { KPICard } from "../../components/dashboard/common/KPICard";
 
-import Sidebar from "../components/navigation/Sidebar";
-import Header from "../components/navigation/Header";
+import Sidebar from "../../components/navigation/Sidebar";
+import Header from "../../components/navigation/Header";
 
-import TotalGraph from "../components/dashboard/charts/graph/TotalGraph";
-import LastYearBar from "../components/dashboard/charts/bar/LastYearBar";
-import LastMonthBar from "../components/dashboard/charts/bar/LastMonthBar";
-import TopBar from "../components/dashboard/charts/bar/TopBar";
+import TotalGraph from "../../components/dashboard/charts/graph/TotalGraph";
+import LastYearBar from "../../components/dashboard/charts/bar/LastYearBar";
+import LastMonthBar from "../../components/dashboard/charts/bar/LastMonthBar";
+import TopBar from "../../components/dashboard/charts/bar/TopBar";
 
-import { fetchFinanceStats } from "../redux/actions/kpi/FinanceStatsAction";
-import { getCurrentTime } from "../util/Date";
+import { fetchFinanceStats } from "../../redux/actions/kpi/FinanceStatsAction";
+import { getCurrentTime } from "../../util/Date";
 
 class FinanceView extends Component {
   constructor(props) {

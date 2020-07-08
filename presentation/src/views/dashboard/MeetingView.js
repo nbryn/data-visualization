@@ -1,20 +1,20 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Grid, Row, Col } from "react-bootstrap";
-import { KPICard } from "../components/dashboard/common/KPICard";
+import { KPICard } from "../../components/dashboard/common/KPICard";
 
-import Sidebar from "../components/navigation/Sidebar";
-import Header from "../components/navigation/Header";
+import Sidebar from "../../components/navigation/Sidebar";
+import Header from "../../components/navigation/Header";
 
-import TotalGraph from "../components/dashboard/charts/graph/TotalGraph";
+import TotalGraph from "../../components/dashboard/charts/graph/TotalGraph";
 
-import TopBar from "../components/dashboard/charts/bar/TopBar";
-import LastMonthBar from "../components/dashboard/charts/bar/LastMonthBar";
-import LastYearBar from "../components/dashboard/charts/bar/LastYearBar";
+import TopBar from "../../components/dashboard/charts/bar/TopBar";
+import LastMonthBar from "../../components/dashboard/charts/bar/LastMonthBar";
+import LastYearBar from "../../components/dashboard/charts/bar/LastYearBar";
 
-import { fetchGeneralCountryStats } from "../redux/actions/country/GeneralCountryStatsAction";
-import { fetchMeetingStats } from "../redux/actions/kpi/MeetingStatsAction";
-import { getCurrentTime } from "../util/Date";
+import { fetchGeneralCountryStats } from "../../redux/actions/country/GeneralCountryStatsAction";
+import { fetchMeetingStats } from "../../redux/actions/kpi/MeetingStatsAction";
+import { getCurrentTime } from "../../util/Date";
 
 class MeetingView extends Component {
   constructor(props) {

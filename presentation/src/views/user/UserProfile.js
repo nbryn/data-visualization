@@ -4,8 +4,8 @@ import { connect } from "react-redux";
 import { Grid, Row } from "react-bootstrap";
 import { ControlLabel, ListGroup, ListGroupItem } from "react-bootstrap";
 
-import Sidebar from "../navigation/Sidebar.js";
-import Header from "../navigation/Header.js";
+import Sidebar from "../../components/navigation/Sidebar.js";
+import Header from "../../components/navigation/Header.js";
 
 class UserProfile extends Component {
   constructor(props) {

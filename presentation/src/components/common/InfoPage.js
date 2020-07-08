@@ -15,7 +15,7 @@ class Group extends Component {
   }
 
   render() {
-    const groupData = this.props.groupData;
+    const { groupData } = this.props;
     let groupDataIndex = 0;
 
     const column1 = ["Registration Date", "Currency", "Cycle", "Type", "NGO"];

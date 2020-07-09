@@ -6,7 +6,7 @@ class TopBar extends Component {
     super(props);
 
     this.state = {
-      data: {},
+      data: [],
     };
   }
 
@@ -28,23 +28,24 @@ class TopBar extends Component {
   }
 
   render() {
-    const { data, title, yLabel, xLabel, color, css } = this.props.title;
+    const { title, yLabel, xLabel, color, css } = this.props;
+    const { data } = this.state;
 
-    const yLabelData = {
-      value: yLabelData,
+    const yLabelConfig = {
+      value: yLabel,
       angle: -90,
       position: "insideLeft",
       dx: -10,
     };
-    const xLabelData = { value: xLabel, position: "center", dy: +10 };
+    const xLabelConfig = { value: xLabel, position: "center", dy: +10 };
 
     return (
       <div className={css}>
         <Barr
           title={title}
           data={data}
-          yLabel={yLabelData}
-          xLabel={xLabelData}
+          yLabel={yLabelConfig}
+          xLabel={xLabelConfig}
           color={color}
         />
       </div>

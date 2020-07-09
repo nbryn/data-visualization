@@ -1,19 +1,15 @@
-import React, { Component } from "react";
 import { connect } from "react-redux";
+import React, { Component } from "react";
 import { Grid, Row, Col } from "react-bootstrap";
 import { KPICard } from "../../components/dashboard/common/KPICard";
 
-import Sidebar from "../../components/navigation/Sidebar";
-import Header from "../../components/navigation/Header";
-
-import TotalGraph from "../../components/dashboard/charts/graph/TotalGraph";
-import SizeChart from "../../components/dashboard/charts/circle/SizeChart";
-
-import LastMonthBar from "../../components/dashboard/charts/bar/LastMonthBar";
-import LastYearBar from "../../components/dashboard/charts/bar/LastYearBar";
-
 import { fetchEngagementStats } from "../../redux/actions/kpi/EngagementStatsAction";
+import Header from "../../components/navigation/Header";
 import { getCurrentTime } from "../../util/Date";
+import LastMonthBar from "../../components/dashboard/charts/bar/LastMonthBar";
+import Sidebar from "../../components/navigation/Sidebar";
+import SizeChart from "../../components/dashboard/charts/circle/SizeChart";
+import TotalGraph from "../../components/dashboard/charts/graph/TotalGraph";
 
 class EngagementView extends Component {
   constructor(props) {
@@ -43,7 +39,7 @@ class EngagementView extends Component {
       ngosActive: "",
       meetings: "",
 
-      lastUpdate: lastUpdatedAt
+      lastUpdate: lastUpdatedAt,
     });
   }
 
@@ -53,12 +49,12 @@ class EngagementView extends Component {
       groupsActive: { text: "Active Groups", icon: "pe-7s-users text-info" },
       ngosActive: {
         text: "Active NGO's",
-        icon: "pe-7s-users text-info"
+        icon: "pe-7s-users text-info",
       },
       meetings: {
         text: "Meetings in Active Groups",
-        icon: "pe-7s-users text-info"
-      }
+        icon: "pe-7s-users text-info",
+      },
     };
     return (
       <div className="wrapper">
@@ -106,9 +102,9 @@ class EngagementView extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    engagementStats: state.KPI.engagementStats
+    engagementStats: state.KPI.engagementStats,
   };
 };
 

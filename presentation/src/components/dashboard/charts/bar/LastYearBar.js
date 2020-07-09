@@ -8,7 +8,7 @@ class LastYearBar extends Component {
     super(props);
 
     this.state = {
-      data: {}
+      data: [],
     };
   }
 
@@ -16,33 +16,34 @@ class LastYearBar extends Component {
     if (this.props.data !== prevProps.data) {
       const data = this.props.data;
 
-      const newState = data.map(element => {
-        let month = convertNumberToMonth(element.month)
+      const newState = data.map((element) => {
+        let month = convertNumberToMonth(element.month);
         return {
           name: month + " '" + element.year.toString().substring(2),
-          value: element.count
+          value: element.count,
         };
       });
 
       this.setState({
-        data: newState
+        data: newState,
       });
     }
   }
 
   render() {
-    const title = this.props.title;
-    const yLabel = { value: this.props.yLabel, angle: -90, position: "insideLeft" };
-    const xLabel = { value: this.props.xLabel, position: "center", dy: +10 };
+    const { title, color, xLabel, yLabel } = this.props;
+    const { data } = this.state;
+    const yLabelConfig = { value: yLabel, angle: -90, position: "insideLeft" };
+    const xLabelConfig = { value: xLabel, position: "center", dy: +10 };
 
     return (
       <div className="card-circle card-stats">
-        <Barr 
+        <Barr
           title={title}
-          data={this.state.data}
-          yLabel={yLabel}
-          xLabel={xLabel}
-          color={this.props.color}
+          data={data}
+          yLabel={yLabelConfig}
+          xLabel={xLabelConfig}
+          color={color}
         />
       </div>
     );

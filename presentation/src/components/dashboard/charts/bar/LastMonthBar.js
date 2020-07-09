@@ -6,7 +6,7 @@ class LastMonthBar extends Component {
     super(props);
 
     this.state = {
-      data: {},
+      data: [],
     };
   }
 
@@ -29,23 +29,24 @@ class LastMonthBar extends Component {
   }
 
   render() {
-    const { title, yLabel, xLabel } = this.props;
+    const { title, yLabel, xLabel, color } = this.props;
+    const { data } = this.state;
 
-    const yLabelData = {
+    const yLabelConfig = {
       value: yLabel,
       angle: -90,
       position: "insideLeft",
     };
-    const xLabelData = { value: xLabel, position: "inside", dy: +10 };
+    const xLabelConfig = { value: xLabel, position: "inside", dy: +10 };
 
     return (
       <div className="card-circle card-stats">
         <Barr
           title={title}
-          data={this.state.data}
-          yLabel={yLabelData}
-          xLabel={xLabelData}
-          color={this.props.color}
+          data={data}
+          yLabel={yLabelConfig}
+          xLabel={xLabelConfig}
+          color={color}
         />
       </div>
     );

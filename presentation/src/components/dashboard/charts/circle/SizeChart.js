@@ -29,10 +29,11 @@ class SizeChart extends Component {
 
   render() {
     const { title, colors } = this.props;
+    const { data } = this.state;
 
     return (
       <div className="card-circle card-stats">
-        <CircleChart title={title} data={this.state.data} colors={colors} />
+        <CircleChart title={title} data={data} colors={colors} />
       </div>
     );
   }

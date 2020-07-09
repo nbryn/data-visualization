@@ -33,22 +33,23 @@ class TotalGraph extends Component {
     }
   }
   render() {
-    const { data, title, stroke, yLabel, xLabel } = this.props;
+    const {title, stroke, yLabel, xLabel } = this.props;
+    const {data} = this.state;
 
-    const yLabelData = {
+    const yLabelConfig = {
       value: yLabel,
       angle: -90,
       position: "insideLeft",
     };
-    const xLabelData = { value: xLabel, position: "center", dy: 10 };
+    const xLabelConfig = { value: xLabel, position: "center", dy: 10 };
 
     return (
       <div className="card-graph card-stats">
         <GraphChart
           title={title}
           data={data}
-          xLabel={xLabelData}
-          yLabel={yLabelData}
+          xLabel={xLabelConfig}
+          yLabel={yLabelConfig}
           stroke={stroke}
         />
       </div>

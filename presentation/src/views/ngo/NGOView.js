@@ -56,6 +56,7 @@ class NGOView extends Component {
   }
   render() {
     const { SearchBar } = Search;
+    const { allGroups, groupData } = this.state;
 
     const selectRow = {
       mode: "radio",
@@ -74,6 +75,31 @@ class NGOView extends Component {
       },
     };
 
+    const column1 = ["Registration Date", "Currency", "Cycle", "Type", "NGO"];
+
+    const column2 = [
+      "Last Meeting",
+      "Box Balance",
+      "Amount Per Share",
+      "Loan Service Fee",
+      "Loan Limit",
+    ];
+
+    const column3 = [
+      "Total Meetings",
+      "Total Loans",
+      "Total Shares",
+      "Owner",
+      "Admin",
+    ];
+
+    const columnsInfoPageMembers = [
+      {
+        dataField: "name",
+        text: "Members",
+      },
+    ];
+
     const columns = [
       {
         dataField: "name",
@@ -89,6 +115,8 @@ class NGOView extends Component {
         text: "Owner",
       },
     ];
+
+
 
     return (
       <div className="wrapper">
@@ -106,7 +134,7 @@ class NGOView extends Component {
                   <div className="col-md-5">
                     <ToolkitProvider
                       keyField="name"
-                      data={this.state.allGroups}
+                      data={allGroups}
                       columns={columns}
                       striped
                       hover
@@ -125,7 +153,7 @@ class NGOView extends Component {
                           <BootstrapTable
                             {...props.baseProps}
                             keyField="id"
-                            data={this.state.allGroups}
+                            data={allGroups}
                             columns={columns}
                             selectRow={selectRow}
                             pagination={paginationFactory()}
@@ -136,7 +164,13 @@ class NGOView extends Component {
                   </div>
                 </Row>
                 {this.state.renderGroupData && (
-                  <InfoPage groupData={this.state.groupData} />
+                  <InfoPage
+                    groupData={groupData}
+                    columns={columnsInfoPageMembers}
+                    column1={column1}
+                    column2={column2}
+                    column3={column3}
+                  />
                 )}
               </Grid>
             </div>

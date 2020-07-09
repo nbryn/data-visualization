@@ -59,6 +59,32 @@ class SearchView extends Component {
     });
   }
   render() {
+    const { groupData, renderGroupData, searchString } = this.state;
+
+    const column1 = ["Registration Date", "Currency", "Cycle", "Type", "NGO"];
+
+    const column2 = [
+      "Last Meeting",
+      "Box Balance",
+      "Amount Per Share",
+      "Loan Service Fee",
+      "Loan Limit",
+    ];
+
+    const column3 = [
+      "Total Meetings",
+      "Total Loans",
+      "Total Shares",
+      "Owner",
+      "Admin",
+    ];
+
+    const columns = [
+      {
+        dataField: "name",
+        text: "Members",
+      },
+    ];
     return (
       <div>
         <div className="wrapper">
@@ -77,7 +103,7 @@ class SearchView extends Component {
                           type="text"
                           placeholder="Group Name"
                           name="searchString"
-                          value={this.state.searchString}
+                          value={searchString}
                           onChange={this.onChange}
                         />
                       </FormGroup>
@@ -86,8 +112,14 @@ class SearchView extends Component {
                       </Button>
                     </form>
                   </div>
-                  {this.state.renderGroupData && (
-                    <InfoPage groupData={this.state.groupData}/>
+                  {renderGroupData && (
+                    <InfoPage
+                      groupData={groupData}
+                      columns={columns}
+                      column1={column1}
+                      column2={column2}
+                      column3={column3}
+                    />
                   )}
                 </Row>
               </Grid>

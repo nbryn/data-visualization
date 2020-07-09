@@ -5,7 +5,7 @@ import paginationFactory from "react-bootstrap-table2-paginator";
 import { Row, Col, Panel } from "react-bootstrap";
 import { ControlLabel, ListGroup, ListGroupItem } from "react-bootstrap";
 
-class Group extends Component {
+class InfoPage extends Component {
   constructor(props) {
     super(props);
 
@@ -15,33 +15,8 @@ class Group extends Component {
   }
 
   render() {
-    const { groupData } = this.props;
+    const { groupData, columns, column1, column2, column3 } = this.props;
     let groupDataIndex = 0;
-
-    const column1 = ["Registration Date", "Currency", "Cycle", "Type", "NGO"];
-
-    const column2 = [
-      "Last Meeting",
-      "Box Balance",
-      "Amount Per Share",
-      "Loan Service Fee",
-      "Loan Limit",
-    ];
-
-    const column3 = [
-      "Total Meetings",
-      "Total Loans",
-      "Total Shares",
-      "Owner",
-      "Admin",
-    ];
-
-    const columns = [
-      {
-        dataField: "name",
-        text: "Members",
-      },
-    ];
 
     return (
       <div>
@@ -53,7 +28,7 @@ class Group extends Component {
           <br />
           <div className="group-view-col">
             <div className="col-md-2">
-              <Col lg={3}>
+              <Col md={3} lg={3}>
                 <Panel>
                   {column1.map((prop, index) => (
                     <div key={index} className="group-view-row">
@@ -70,7 +45,7 @@ class Group extends Component {
             </div>
 
             <div className="col-md-2">
-              <Col lg={3}>
+              <Col md={3} lg={3}>
                 <Panel>
                   {column2.map((prop, index) => (
                     <div key={index} className="group-view-row">
@@ -87,7 +62,7 @@ class Group extends Component {
             </div>
 
             <div className="col-md-2">
-              <Col lg={3}>
+              <Col md={3} lg={3}>
                 <Panel>
                   {column3.map((prop, index) => (
                     <div key={index} className="group-view-row">
@@ -104,7 +79,7 @@ class Group extends Component {
             </div>
           </div>
 
-          <Col lg={3}>
+          <Col md={3} lg={3}>
             <Row>
               <BootstrapTable
                 keyField="id"
@@ -120,4 +95,4 @@ class Group extends Component {
   }
 }
 
-export default Group;
+export default InfoPage;

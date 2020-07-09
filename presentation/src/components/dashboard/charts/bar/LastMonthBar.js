@@ -30,21 +30,21 @@ class LastMonthBar extends Component {
 
   render() {
     const { title, yLabel, xLabel } = this.props;
-    
-    const yLabel = {
+
+    const yLabelData = {
       value: yLabel,
       angle: -90,
       position: "insideLeft",
     };
-    const xLabel = { value: xLabel, position: "inside", dy: +10 };
+    const xLabelData = { value: xLabel, position: "inside", dy: +10 };
 
     return (
       <div className="card-circle card-stats">
         <Barr
           title={title}
           data={this.state.data}
-          yLabel={yLabel}
-          xLabel={xLabel}
+          yLabel={yLabelData}
+          xLabel={xLabelData}
           color={this.props.color}
         />
       </div>

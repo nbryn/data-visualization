@@ -13,8 +13,7 @@ import LastYearBar from "../../components/dashboard/charts/bar/LastYearBar";
 
 import { fetchUserStats } from "../../redux/actions/kpi/UserStatsAction";
 import { fetchGeneralCountryStats } from "../../redux/actions/country/GeneralCountryStatsAction";
-import {fetchNGOStats} from "../../redux/actions/ngo/NGOStatsAction";
-
+import { fetchNGOStats } from "../../redux/actions/ngo/NGOStatsAction";
 
 import { getCurrentTime } from "../../util/Date";
 import TopBar from "../../components/dashboard/charts/bar/TopBar";
@@ -38,7 +37,14 @@ class UserView extends Component {
     await this.props.fetchNGOStats();
     await this.props.fetchGeneralCountryStats();
 
-    const userStats = this.props.userStats;
+    const { usersCountry, usersNGO, userStats } = this.props;
+
+    const {
+      usersLastMonth,
+      usersLastYear,
+      userGenderStats,
+      userCount,
+    } = userStats;
 
     let lastUpdatedAt = getCurrentTime();
 
@@ -53,23 +59,19 @@ class UserView extends Component {
     );
 
     this.setState({
-      userTotal: userStats.userCount,
-      usersToday:
-        userStats.usersLastMonth.data[userStats.usersLastMonth.data.length - 1]
-          .count,
+      userTotal: userCount,
+      usersToday: usersLastMonth.data[usersLastMonth.data.length - 1].count,
       usersTodayText:
-        userStats.usersLastMonth.data[userStats.usersLastMonth.data.length - 1]
-          .day.day +
+        usersLastMonth.data[usersLastMonth.data.length - 1].day.day +
         "/" +
-        userStats.usersLastMonth.data[userStats.usersLastMonth.data.length - 1]
-          .day.month,
+        usersLastMonth.data[usersLastMonth.data.length - 1].day.month,
       userMonth: userMonthCount,
       userYear: userYearCount,
-      usersLastMonth: userStats.usersLastMonth.data,
-      usersLastYear: userStats.usersLastYear.data,
-      userGender: userStats.userGenderStats,
-      usersCountry: this.props.usersCountry,
-      usersNGO: this.props.usersNGO,
+      usersLastMonth: usersLastMonth.data,
+      usersLastYear: usersLastYear.data,
+      userGender: userGenderStats,
+      usersCountry: usersCountry,
+      usersNGO: usersNGO,
       lastUpdate: lastUpdatedAt,
     });
   }
@@ -96,7 +98,7 @@ class UserView extends Component {
             <Grid fluid>
               <Row>
                 {Object.keys(KPICards).map((element, index) => (
-                  <Col lg={3} sm={6}>
+                  <Col lg={3} sm={6} key={index}>
                     <KPICard
                       bigIcon={<i className={KPICards[element].icon} />}
                       statsText={KPICards[element].text}
@@ -177,12 +179,12 @@ const mapStateToProps = (state) => {
   return {
     userStats: state.KPI.userStats,
     usersCountry: state.country.usersCountry,
-    usersNGO: state.NGO.usersNGO
+    usersNGO: state.NGO.usersNGO,
   };
 };
 
 export default connect(mapStateToProps, {
   fetchUserStats,
   fetchGeneralCountryStats,
-  fetchNGOStats
+  fetchNGOStats,
 })(UserView);

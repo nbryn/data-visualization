@@ -34,9 +34,16 @@ class MeetingView extends Component {
     await this.props.fetchMeetingStats();
     await this.props.fetchGeneralCountryStats();
 
+    const { meetingStats, meetingsCountry } = this.props;
+    const {
+      meetingTotal,
+      meetingsLastMonth,
+      meetingsLastYear,
+      meetingsPerGroup,
+      sharesPerMeeting,
+    } = meetingStats;
+    const lastMonth = meetingsLastMonth.data;
 
-    const meetingStats = this.props.meetingStats;
-    const lastMonth = meetingStats.meetingsLastMonth.data;
     let lastUpdatedAt = getCurrentTime();
 
     let meetingMonthCount = 0;
@@ -48,7 +55,7 @@ class MeetingView extends Component {
     );
 
     this.setState({
-      meetingTotal: meetingStats.meetingTotal,
+      meetingTotal: meetingTotal,
       meetingsToday: lastMonth[lastMonth.length - 1].count,
       meetingsTodayText:
         lastMonth[lastMonth.length - 1].day.day +
@@ -57,10 +64,10 @@ class MeetingView extends Component {
       meetingMonth: meetingMonthCount,
       meetingYear: meetingYearCount,
       meetingsLastMonth: lastMonth,
-      meetingsLastYear: meetingStats.meetingsLastYear.data,
-      meetingsPerGroup: meetingStats.meetingsPerGroup,
-      sharesPerMeeting: meetingStats.sharesPerMeeting,
-      meetingsPerCountry: this.props.meetingsCountry,
+      meetingsLastYear: meetingsLastYear.data,
+      meetingsPerGroup: meetingsPerGroup,
+      sharesPerMeeting: sharesPerMeeting,
+      meetingsPerCountry: meetingsCountry,
       lastUpdate: lastUpdatedAt,
     });
   }

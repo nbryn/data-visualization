@@ -33,19 +33,20 @@ class MainView extends Component {
     await this.props.fetchKeyStats();
 
     const { keyStats } = this.props;
+    const { userStats, shareStats, groupStats, meetingStats } = keyStats;
 
     let lastUpdatedAt = getCurrentTime();
 
     this.setState({
-      userTotal: keyStats.userStats.userCount,
-      usersLastYear: keyStats.userStats.usersLastYear.data,
-      userGender: keyStats.userStats.userGenderStats,
-      groupTotal: keyStats.groupStats.groupTotal,
-      groupsLastMonth: keyStats.groupStats.groupsLastMonth.data,
-      groupsLastYear: keyStats.groupStats.groupsLastYear.data,
-      meetingTotal: keyStats.meetingStats.meetingTotal,
-      meetingsLastYear: keyStats.meetingStats.meetingsLastYear.data,
-      shareTotal: keyStats.shareStats,
+      userTotal: userStats.userCount,
+      usersLastYear: userStats.usersLastYear.data,
+      userGender: userStats.userGenderStats,
+      groupTotal: groupStats.groupTotal,
+      groupsLastMonth: groupStats.groupsLastMonth.data,
+      groupsLastYear: groupStats.groupsLastYear.data,
+      meetingTotal: meetingStats.meetingTotal,
+      meetingsLastYear: meetingStats.meetingsLastYear.data,
+      shareTotal: shareStats,
       lastUpdate: lastUpdatedAt,
     });
 

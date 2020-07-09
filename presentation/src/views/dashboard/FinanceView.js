@@ -1,18 +1,16 @@
-import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Grid, Row, Col } from "react-bootstrap";
-import { KPICard } from "../../components/dashboard/common/KPICard";
-
-import Sidebar from "../../components/navigation/Sidebar";
-import Header from "../../components/navigation/Header";
-
-import TotalGraph from "../../components/dashboard/charts/graph/TotalGraph";
-import LastYearBar from "../../components/dashboard/charts/bar/LastYearBar";
-import LastMonthBar from "../../components/dashboard/charts/bar/LastMonthBar";
-import TopBar from "../../components/dashboard/charts/bar/TopBar";
+import React, { Component } from "react";
 
 import { fetchFinanceStats } from "../../redux/actions/kpi/FinanceStatsAction";
 import { getCurrentTime } from "../../util/Date";
+import Header from "../../components/navigation/Header";
+import { KPICard } from "../../components/dashboard/common/KPICard";
+import LastMonthBar from "../../components/dashboard/charts/bar/LastMonthBar";
+import LastYearBar from "../../components/dashboard/charts/bar/LastYearBar";
+import Sidebar from "../../components/navigation/Sidebar";
+import TopBar from "../../components/dashboard/charts/bar/TopBar";
+import TotalGraph from "../../components/dashboard/charts/graph/TotalGraph";
 
 class FinanceView extends Component {
   constructor(props) {
@@ -31,33 +29,33 @@ class FinanceView extends Component {
   async fetchData() {
     await this.props.fetchFinanceStats();
 
-    const financeStats = this.props.financeStats;
+    const { financeStats } = this.props;
+    const { shareStats, currencyStats, etbStats } = financeStats;
+
     let lastUpdatedAt = getCurrentTime();
 
-    // Move to backend?
-    const loanPerGroup = financeStats.etbStats.groupLoan.map(element => {
+    // TODO: Move to backend?
+    const loansPerGroup = etbStats.groupLoan.map((element) => {
       return {
         name: element.name.substring(0, 5),
-        count: element.count
+        count: element.count,
       };
     });
 
-    loanPerGroup.sort((ele1, ele2) => {
-      return ele2.count - ele1.count;
-    });
+    loansPerGroup.sort((ele1, ele2) => ele2.count - ele1.count);
 
     this.setState({
-      shareTotal: financeStats.shareStats.shareTotal,
-      mostShares: financeStats.shareStats.mostShares.count,
-      sharesPerGroup: financeStats.shareStats.groupShares,
-      currencyTotal: financeStats.currencyStats.numberOfCurrencies,
-      currencyStats: financeStats.currencyStats.currency,
+      shareTotal: shareStats.shareTotal,
+      mostShares: shareStats.mostShares.count,
+      sharesPerGroup: shareStats.groupShares,
+      currencyTotal: currencyStats.numberOfCurrencies,
+      currencyStats: currencyStats.currency,
       loanTotal: financeStats.loanTotal,
       loansLastMonth: financeStats.loansLastMonth.data,
       loansLastYear: financeStats.loansLastYear.data,
-      etbOnLoan: financeStats.etbStats.etbOnLoan,
-      onLoanPerGroup: loanPerGroup.splice(0, 10),
-      lastUpdate: lastUpdatedAt
+      etbOnLoan: etbStats.etbOnLoan,
+      onLoanPerGroup: loansPerGroup.splice(0, 10),
+      lastUpdate: lastUpdatedAt,
     });
   }
 
@@ -67,12 +65,12 @@ class FinanceView extends Component {
       loanTotal: { text: "Total Loans", icon: "pe-7s-users text-info" },
       etbOnLoan: {
         text: "ETB On Loan",
-        icon: "pe-7s-wallet text-success"
+        icon: "pe-7s-wallet text-success",
       },
       mostShares: {
         text: "Most Shares In Group",
-        icon: "pe-7s-wallet text-success"
-      }
+        icon: "pe-7s-wallet text-success",
+      },
     };
 
     return (
@@ -165,9 +163,9 @@ class FinanceView extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    financeStats: state.KPI.financeStats
+    financeStats: state.KPI.financeStats,
   };
 };
 

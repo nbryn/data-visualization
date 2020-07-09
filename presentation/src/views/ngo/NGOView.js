@@ -6,6 +6,12 @@ import paginationFactory from "react-bootstrap-table2-paginator";
 import { Grid, Row } from "react-bootstrap";
 import { connect } from "react-redux";
 
+import {
+  infoPageColumn1,
+  infoPageColumn2,
+  infoPageColumn3,
+} from "../../util/InfoPageGroupColumns";
+
 import InfoPage from "../../components/common/InfoPage";
 import Sidebar from "../../components/navigation/Sidebar";
 import Header from "../../components/navigation/Header";
@@ -56,7 +62,7 @@ class NGOView extends Component {
   }
   render() {
     const { SearchBar } = Search;
-    const { allGroups, groupData } = this.state;
+    const { allGroups, groupData, renderGroupData } = this.state;
 
     const selectRow = {
       mode: "radio",
@@ -116,8 +122,6 @@ class NGOView extends Component {
       },
     ];
 
-
-
     return (
       <div className="wrapper">
         <Sidebar />
@@ -163,13 +167,13 @@ class NGOView extends Component {
                     </ToolkitProvider>
                   </div>
                 </Row>
-                {this.state.renderGroupData && (
+                {renderGroupData && (
                   <InfoPage
                     groupData={groupData}
                     columns={columnsInfoPageMembers}
-                    column1={column1}
-                    column2={column2}
-                    column3={column3}
+                    column1={infoPageColumn1}
+                    column2={infoPageColumn2}
+                    column3={infoPageColumn3}
                   />
                 )}
               </Grid>

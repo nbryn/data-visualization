@@ -1,13 +1,17 @@
-import React, { Component } from "react";
-import { Grid, Row } from "react-bootstrap";
-import { FormGroup, FormControl, ControlLabel, Button } from "react-bootstrap";
-
 import { connect } from "react-redux";
-import { fetchGroupData } from "../../redux/actions/ngo/SearchAction";
+import { FormGroup, FormControl, ControlLabel, Button } from "react-bootstrap";
+import { Grid, Row } from "react-bootstrap";
+import React, { Component } from "react";
 
+import {
+  infoPageColumn1,
+  infoPageColumn2,
+  infoPageColumn3,
+} from "../../util/InfoPageGroupColumns";
+import { fetchGroupData } from "../../redux/actions/ngo/SearchAction";
+import Header from "../../components/navigation/Header";
 import InfoPage from "../../components/common/InfoPage";
 import Sidebar from "../../components/navigation/Sidebar";
-import Header from "../../components/navigation/Header";
 
 class SearchView extends Component {
   constructor(props) {
@@ -61,24 +65,6 @@ class SearchView extends Component {
   render() {
     const { groupData, renderGroupData, searchString } = this.state;
 
-    const column1 = ["Registration Date", "Currency", "Cycle", "Type", "NGO"];
-
-    const column2 = [
-      "Last Meeting",
-      "Box Balance",
-      "Amount Per Share",
-      "Loan Service Fee",
-      "Loan Limit",
-    ];
-
-    const column3 = [
-      "Total Meetings",
-      "Total Loans",
-      "Total Shares",
-      "Owner",
-      "Admin",
-    ];
-
     const columns = [
       {
         dataField: "name",
@@ -116,9 +102,9 @@ class SearchView extends Component {
                     <InfoPage
                       groupData={groupData}
                       columns={columns}
-                      column1={column1}
-                      column2={column2}
-                      column3={column3}
+                      column1={infoPageColumn1}
+                      column2={infoPageColumn2}
+                      column3={infoPageColumn3}
                     />
                   )}
                 </Row>

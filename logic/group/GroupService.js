@@ -4,12 +4,12 @@ const {
   fetchUserIDByRole,
   fetchAllMemberIDsFromGroup,
   fetchGroupMeetingData,
-  fetchAllGroupData
+  fetchAllGroupData,
 } = require("../../data/mappers/GroupMapper");
 
 const {
   fetchAccountDataByGroup,
-  fetchLoansByGroup
+  fetchLoansByGroup,
 } = require("../../data/mappers/FinanceMapper");
 
 const { fetchByID } = require("../../data/common/fetchByID");
@@ -26,7 +26,7 @@ async function listGroupsByNGO(ngo) {
   const generalGroupData = await fetchGroupsByNGO(ngo);
 
   const allGroupData = await Promise.all(
-    generalGroupData.map(async group => {
+    generalGroupData.map(async (group) => {
       const groupData = retrieveGroupData(group);
 
       return groupData;
@@ -42,15 +42,13 @@ async function calculateMeetingFrequency() {
   //Test groups < 6 members & New groups regDate < 14 days
   let testGroups = 0;
   let newGroups = 0;
-  let meetingLastMonth, meetingLast2Months, meetingOver2Months;
+  let meetingsLastMonth, meetingsLast2Months, meetingOver2Months;
 
-  meetingData.forEach(element => {
+  meetingData.forEach((element) => {
     if (element.members.length < 6) {
       testGroups++;
     } else {
-      const sinceReg = calculateTimeSinceReg(element.registrationDate);
-
-      const { daysSinceReg } = sinceReg;
+      const { daysSinceReg } = calculateTimeSinceReg(element.registrationDate);
 
       if (daysSinceReg < 14) {
         newGroups++;
@@ -59,9 +57,9 @@ async function calculateMeetingFrequency() {
           const meetingData = calculateTimeSinceLastMeeting(element.meetings);
 
           [
-            meetingLastMonth,
-            meetingLast2Months,
-            meetingOver2Months
+            meetingsLastMonth,
+            meetingsLast2Months,
+            meetingOver2Months,
           ] = meetingData;
         }
       }
@@ -72,22 +70,22 @@ async function calculateMeetingFrequency() {
 
   const testGroupData = {
     value: "Test Groups",
-    count: testGroups
+    count: testGroups,
   };
 
   const lastMonthData = {
     value: "< 1",
-    count: meetingLastMonth
+    count: meetingsLastMonth,
   };
 
   const lastTwoMonthsData = {
     value: "< 2",
-    count: meetingLast2Months
+    count: meetingsLast2Months,
   };
 
   const overTwoMonthsData = {
     value: "> 2",
-    count: meetingOver2Months
+    count: meetingOver2Months,
   };
 
   groupEngagement.push(
@@ -103,7 +101,7 @@ async function calculateMeetingFrequency() {
 async function generateMeetingOverview() {
   const result = await fetchAllGroupData();
 
-  const groupMeetingData = result.map(element => {
+  const groupMeetingData = result.map((element) => {
     const sinceReg = calculateTimeSinceReg(element.registrationDate);
 
     const { daysSinceReg } = sinceReg;
@@ -141,7 +139,7 @@ async function generateMeetingOverview() {
       memberCount: element.members.length + 1,
       members: element.members,
       meetingSupposed: supposedMeetings,
-      meetingActual: element.meetings.length + 1
+      meetingActual: element.meetings.length + 1,
     };
   });
 
@@ -152,7 +150,7 @@ module.exports = {
   listGroupData,
   listGroupsByNGO,
   calculateMeetingFrequency,
-  generateMeetingOverview
+  generateMeetingOverview,
 };
 
 // ---- Helper Functions ---- //
@@ -196,13 +194,13 @@ async function retrieveGroupData(group) {
     loans: loans,
     members: members,
     owner: owners[0],
-    admin: admins[1] ? admins[1] : admins[0]
+    admin: admins[1] || admins[0],
   };
 }
 
 async function mapIDtoUser(users) {
   const result = await Promise.all(
-    await users.map(async element => {
+    await users.map(async (element) => {
       const memberInfo = await fetchByID("users", element.user);
 
       return {
@@ -210,7 +208,7 @@ async function mapIDtoUser(users) {
         firstName: memberInfo[0].firstName,
         lastName: memberInfo[0].lastName,
         email: element.email,
-        gender: element.gender
+        gender: element.gender,
       };
     })
   );
@@ -251,7 +249,7 @@ function calculateTimeSinceReg(registrationDate) {
   let timeSinceReg = {
     daysSinceReg: "",
     monthsSinceReg: "",
-    regDate: ""
+    regDate: "",
   };
   const currentDate = new Date();
 

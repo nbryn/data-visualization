@@ -6,37 +6,33 @@ class SizeChart extends Component {
     super(props);
 
     this.state = {
-      data: []
+      data: [],
     };
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.data !== prevProps.data) {
-      const data = this.props.data;
+      const { data } = this.props;
 
-      const newState = data.map(element => {
+      const newState = data.map((element) => {
         return {
           name: element.value,
-          value: element.count
+          value: element.count,
         };
       });
 
       this.setState({
-        data: newState
+        data: newState,
       });
     }
   }
 
   render() {
-    const title = this.props.title;
+    const { title, colors } = this.props;
 
     return (
       <div className="card-circle card-stats">
-        <CircleChart
-          title={title}
-          data={this.state.data}
-          colors={this.props.colors}
-        />
+        <CircleChart title={title} data={this.state.data} colors={colors} />
       </div>
     );
   }

@@ -9,10 +9,7 @@ class Signin extends Component {
     super(props);
 
     this.state = {
-      email: "",
-      password: "",
       showAlert: false,
-      errorMessage: ""
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -27,17 +24,16 @@ class Signin extends Component {
     }
   }
 
-  handleChange = event => {
+  handleChange = (event) => {
     this.setState({
-      [event.target.name]: event.target.value
+      [event.target.name]: event.target.value,
     });
   };
 
-  handleSubmit = async event => {
+  handleSubmit = async (event) => {
     event.preventDefault();
 
-    const email = this.state.email;
-    const password = this.state.password;
+    const { email, password } = this.state;
 
     // Login returns error if login fails
     const loginError = await this.props.login(
@@ -51,7 +47,7 @@ class Signin extends Component {
         email: "",
         password: "",
         showAlert: true,
-        errorMessage: loginError
+        errorMessage: loginError,
       });
     }
   };
@@ -116,9 +112,9 @@ class Signin extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    user: state.user
+    user: state.user,
   };
 };
 

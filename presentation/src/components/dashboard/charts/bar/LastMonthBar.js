@@ -6,36 +6,41 @@ class LastMonthBar extends Component {
     super(props);
 
     this.state = {
-      data: {}
+      data: {},
     };
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.data !== prevProps.data) {
-      const data = this.props.data;
+      const { data } = this.props;
 
-      const newState = data.map(element => {
-        let date = element.day.day + "/" + element.day.month
+      const newState = data.map((element) => {
+        let date = element.day.day + "/" + element.day.month;
         return {
           name: date,
-          value: element.count
+          value: element.count,
         };
       });
 
       this.setState({
-        data: newState
+        data: newState,
       });
     }
   }
 
   render() {
-    const title = this.props.title;
-    const yLabel = { value: this.props.yLabel, angle: -90, position: "insideLeft" };
-    const xLabel = { value: this.props.xLabel, position: "inside", dy: +10 };
+    const { title, yLabel, xLabel } = this.props;
+    
+    const yLabel = {
+      value: yLabel,
+      angle: -90,
+      position: "insideLeft",
+    };
+    const xLabel = { value: xLabel, position: "inside", dy: +10 };
 
     return (
       <div className="card-circle card-stats">
-        <Barr 
+        <Barr
           title={title}
           data={this.state.data}
           yLabel={yLabel}

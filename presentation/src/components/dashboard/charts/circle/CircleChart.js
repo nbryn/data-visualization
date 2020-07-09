@@ -7,9 +7,9 @@ class CircleChart extends Component {
     super(props);
 
     this.state = {
-      colors: ""
+      colors: "",
     };
-    
+
     this.renderLabel = this.renderLabel.bind(this);
   }
 
@@ -19,36 +19,35 @@ class CircleChart extends Component {
 
   componentDidMount() {
     this.setState({
-      colors: this.props.colors
+      colors: this.props.colors,
     });
   }
   render() {
+    const { data, colors, title } = this.props;
     return (
       <ResponsiveContainer width={400} height="80%">
-        
-          <div className="content">
-            <Col xs={8}>
-              <div className="numbers">
-                <p>{this.props.title}</p>
-              </div>
-            </Col>
-            <PieChart width={350} height={300}>
-              <Pie
-                label={this.renderLabel}
-                dataKey="value"
-                nameKey="name"
-                data={this.props.data}
-                cx="50%"
-                cy="50%"
-                outerRadius={100}
-                fill="#82ca9d"
-              >
-                {this.props.data.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={this.state.colors[index]} />
-                ))}
-              </Pie>
-            </PieChart>
-          
+        <div className="content">
+          <Col xs={8}>
+            <div className="numbers">
+              <p>{title}</p>
+            </div>
+          </Col>
+          <PieChart width={350} height={300}>
+            <Pie
+              label={this.renderLabel}
+              dataKey="value"
+              nameKey="name"
+              data={data}
+              cx="50%"
+              cy="50%"
+              outerRadius={100}
+              fill="#82ca9d"
+            >
+              {data.map((entry, index) => (
+                <Cell key={`cell-${index}`} fill={colors[index]} />
+              ))}
+            </Pie>
+          </PieChart>
         </div>
       </ResponsiveContainer>
     );

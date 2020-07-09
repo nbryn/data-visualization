@@ -8,24 +8,24 @@ class TotalGraph extends Component {
     super(props);
 
     this.state = {
-      data: []
+      data: [],
     };
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.data !== prevProps.data) {
-      const data = this.props.data;
+      const { data } = this.props;
 
       let total = 0;
       let month, year;
-      const newState = data.map(element => {
+      const newState = data.map((element) => {
         total += element.count;
         year = element.year.toString().substring(2);
         month = convertNumberToMonth(element.month);
 
         return {
           name: month + " '" + year,
-          value: total
+          value: total,
         };
       });
 
@@ -33,22 +33,22 @@ class TotalGraph extends Component {
     }
   }
   render() {
-    const title = this.props.title;
-    const stroke = this.props.stroke;
-    const yLabel = {
-      value: this.props.yLabel,
+    const { data, title, stroke, yLabel, xLabel } = this.props;
+
+    const yLabelData = {
+      value: yLabel,
       angle: -90,
-      position: "insideLeft"
+      position: "insideLeft",
     };
-    const xLabel = { value: this.props.xLabel, position: "center", dy: 10 };
+    const xLabelData = { value: xLabel, position: "center", dy: 10 };
 
     return (
       <div className="card-graph card-stats">
         <GraphChart
           title={title}
-          data={this.state.data}
-          xLabel={xLabel}
-          yLabel={yLabel}
+          data={data}
+          xLabel={xLabelData}
+          yLabel={yLabelData}
           stroke={stroke}
         />
       </div>

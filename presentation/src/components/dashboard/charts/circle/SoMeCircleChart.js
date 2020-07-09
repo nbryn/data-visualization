@@ -7,41 +7,31 @@ class SoMeCircleChart extends Component {
     super(props);
 
     this.state = {
-      first: "",
-      second: "",
-      third: "",
-      fourth: "",
-      colors: []
-    };
-  }
-
-  componentDidMount() {
-    this.setState({
       first: 100,
       second: 200,
       third: 300,
-      fourth: 400
-    });
+      fourth: 400,
+    };
   }
 
   render() {
     const data = [
       {
         name: "Group A",
-        value: this.state.first
+        value: this.state.first,
       },
       {
         name: "Group B",
-        value: this.state.second
+        value: this.state.second,
       },
       {
         name: "Group C",
-        value: this.state.third
+        value: this.state.third,
       },
       {
         name: "Group D",
-        value: this.state.fourth
-      }
+        value: this.state.fourth,
+      },
     ];
 
     const colors = [
@@ -50,7 +40,7 @@ class SoMeCircleChart extends Component {
       "#d0ed57",
       "#a4de6c",
       "#8ddlel",
-      "#82ca9d"
+      "#82ca9d",
     ];
 
     return (

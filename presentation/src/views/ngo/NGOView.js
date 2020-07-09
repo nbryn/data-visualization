@@ -19,7 +19,6 @@ class NGOView extends Component {
     this.state = {
       renderGroupData: false,
       allGroups: [],
-      groupData: "",
     };
   }
 

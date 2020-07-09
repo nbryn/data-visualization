@@ -81,24 +81,6 @@ class NGOView extends Component {
       },
     };
 
-    const column1 = ["Registration Date", "Currency", "Cycle", "Type", "NGO"];
-
-    const column2 = [
-      "Last Meeting",
-      "Box Balance",
-      "Amount Per Share",
-      "Loan Service Fee",
-      "Loan Limit",
-    ];
-
-    const column3 = [
-      "Total Meetings",
-      "Total Loans",
-      "Total Shares",
-      "Owner",
-      "Admin",
-    ];
-
     const columnsInfoPageMembers = [
       {
         dataField: "name",

@@ -15,7 +15,7 @@ const financeResolvers = require("./logic/finance/FinanceResolvers");
 const groupResolvers = require("./logic/group/GroupResolvers");
 const meetingResolvers = require("./logic/meeting/MeetingResolvers");
 const userResolvers = require("./logic/user/UserResolvers");
-const ngoResolvers = require("./logic/ngo/NGOResolvers")
+const ngoResolvers = require("./logic/ngo/NGOResolvers");
 const countryResolvers = require("./logic/country/CountryResolvers");
 
 const app = express();
@@ -29,7 +29,6 @@ const resolvers = merge(
   userResolvers,
   ngoResolvers,
   countryResolvers
-  
 );
 
 const schema = makeExecutableSchema({
@@ -40,26 +39,26 @@ const schema = makeExecutableSchema({
     MeetingSchema,
     UserSchema,
     NGOSchema,
-    CountrySchema 
+    CountrySchema,
   ],
-  resolvers
+  resolvers,
 });
 
 const corsOptions = {
   origin: "http://localhost:3000",
-  credentials: true
+  credentials: true,
 };
 
 const server = new ApolloServer({
   schema: schema,
   context: async ({ req }) => ({
-    token: req.headers["authorization"]
-  })
+    token: req.headers["authorization"],
+  }),
 });
 
 server.applyMiddleware({
   app,
-  cors: corsOptions
+  cors: corsOptions,
 });
 
 if (process.env.NODE_ENV === "PRODUCTION") {

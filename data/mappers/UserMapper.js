@@ -1,54 +1,60 @@
-const { connectToDB } = require("../connection");
+const { getModel } = require("../connection");
 
 async function validateLogin(args) {
-  const connection = await connectToDB();
+  const UserModel = await getModel("User");
 
-  return new Promise((resolve, reject) => {
+  return new Promise(async (resolve, reject) => {
     try {
-      connection.db.collection("users", async (err, collection) => {
-        if (err) {
-          console.log(err);
-        } else {
-          const dbResult = await collection
-            .find({ email: `${args.input.username}` })
-            .toArray();
-
-          const error = {
-            error: "Wrong Email/Username",
-          };
-
-          if (dbResult[0] == undefined) {
-            resolve(error);
-          } else {
-            const {
-              password,
-              email,
-              firstName,
-              lastName,
-              phoneNumber,
-              gender,
-              verified,
-            } = dbResult[0];
-
-            if (!password || password !== args.input.password) {
-              resolve(error);
-            } else {
-              const succes = {
-                token: "123456",
-                user: {
-                  firstName,
-                  lastName,
-                  email,
-                  phoneNumber,
-                  gender,
-                  verified,
-                },
-              };
-              resolve(succes);
-            }
-          }
-        }
+      const kk = await UserModel.find({
+        email: `${args.input.username}`,
       });
+      console.log(kk);
+      // connection.db.collection("user", async (err, collection) => {
+      //   if (err) {
+      //     console.log(err);
+      //   } else {
+      //     const dbResult = await collection
+      //       .find({ email: `${args.input.username}` })
+      //       .toArray();
+
+      //     console.log(dbResult);
+
+      //     const error = {
+      //       error: "Wrong Email/Username",
+      //     };
+
+      //     if (dbResult[0] == undefined) {
+      //       resolve(error);
+      //     } else {
+      //       const {
+      //         password,
+      //         email,
+      //         firstName,
+      //         lastName,
+      //         phoneNumber,
+      //         gender,
+      //         verified,
+      //       } = dbResult[0];
+
+      //       if (!password || password !== args.input.password) {
+      //         resolve(error);
+      //       } else {
+      //         const succes = {
+      //           token: "123456",
+      //           user: {
+      //             firstName,
+      //             lastName,
+      //             email,
+      //             phoneNumber,
+      //             gender,
+      //             verified,
+      //           },
+      //         };
+      //         resolve(succes);
+      //       }
+      //     }
+      //   }
+      // });
     } catch (err) {
       console.log(err);
     }

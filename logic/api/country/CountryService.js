@@ -1,9 +1,9 @@
-const { fetchNumberOfGroupsWith } = require("../../data/mappers/GroupMapper");
+const { fetchNumberOfGroupsWith } = require("../../../data/mappers/GroupMapper");
 const { calculateMeetingsPerGroup } = require("../meeting/MeetingService");
 const {
   fetchNumberOfUsersFrom,
   fetchUsersPerCountry,
-} = require("../../data/mappers/UserMapper");
+} = require("../../../data/mappers/UserMapper");
 
 const isoCurrency = require("iso-country-currency");
 const getCountry = require("country-currency-map").getCountry;

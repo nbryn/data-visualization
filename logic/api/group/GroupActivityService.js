@@ -1,8 +1,11 @@
 const {
   fetchGroupsRegBefore,
+  // fetchGroupShareouts,
+} = require("../../../data/mappers/GroupMapper");
+
+const {
   fetchGroupMeetingsSince,
-  fetchGroupShareouts,
-} = require("../../data/mappers/GroupMapper");
+} = require("../../../data/mappers/MeetingMapper");
 
 async function calculateGroupActivitySince(since) {
   const groups = await fetchGroupsRegBefore(since);

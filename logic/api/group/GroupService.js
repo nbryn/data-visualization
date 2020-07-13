@@ -1,18 +1,21 @@
 const {
   fetchGroupBy,
   fetchGroupsByNGO,
-  fetchUserIDByRole,
-  fetchAllMemberIDsFromGroup,
   fetchGroupMeetingData,
   fetchAllGroupData,
-} = require("../../data/mappers/GroupMapper");
+} = require("../../../data/mappers/GroupMapper");
+
+const {
+  fetchUserIDByRole,
+  fetchAllMemberIDsFromGroup,
+} = require("../../../data/mappers/GroupMemberMapper");
 
 const {
   fetchAccountDataByGroup,
   fetchLoansByGroup,
-} = require("../../data/mappers/FinanceMapper");
+} = require("../../../data/mappers/FinanceMapper");
 
-const { fetchByID } = require("../../data/common/fetchByID");
+const { fetchByID } = require("../../../data/common/fetchByID");
 
 async function listGroupData(group) {
   const generalData = await fetchGroupBy("name", group);

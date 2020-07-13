@@ -1,12 +1,12 @@
 const { GraphQLJSON } = require("graphql-type-json");
 
-const { fetchDailyData } = require("../../data/common/fetchDailyData");
-const { fetchMonthlyData } = require("../../data/common/fetchMonthlyData");
+const { fetchDailyData } = require("../../../data/common/fetchDailyData");
+const { fetchMonthlyData } = require("../../../data/common/fetchMonthlyData");
 
 const {
   fetchUsersWithEmail,
   fetchUsersWithPhone,
-} = require("../../data/mappers/UserMapper");
+} = require("../../../data/mappers/UserMapper");
 
 const { calculateActiveUsers } = require("./UserService");
 
@@ -14,7 +14,7 @@ const {
   validateLogin,
   fetchUserCount,
   fetchGenderStats,
-} = require("../../data/mappers/UserMapper");
+} = require("../../../data/mappers/UserMapper");
 
 const userResolvers = {
   JSON: GraphQLJSON,

@@ -1,527 +1,263 @@
 const moment = require("moment");
 const ObjectId = require("mongodb").ObjectId;
-const { connectToDB } = require("../connection");
+
+const { getModel } = require("../connection");
 
 async function fetchGroupByID(id) {
-  const connection = await connectToDB();
+  const groupModel = await getModel("Group");
 
-  return new Promise((resolve, reject) => {
-    try {
-      connection.db.collection("groups", async (err, collection) => {
-        if (err) {
-          console.log(err);
-        } else {
-          const result = await collection.find(ObjectId(id))
-          .project({name: 1, currency: 1})
-          .toArray();
+  try {
+    const group = await groupModel
+      .find(ObjectId(id))
+      .project({ name: 1, currency: 1 })
+      .toArray();
 
-          if (result) {
-            resolve(result);
-          }
-        }
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  });
+    return group;
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 async function fetchGroupStats(groupBy) {
-  const connection = await connectToDB();
+  const groupModel = await getModel("Group");
 
-  return new Promise((resolve, reject) => {
-    try {
-      connection.db.collection("groups", async (err, collection) => {
-        if (err) {
-          console.log(err);
-        } else {
-          const result = await collection
-            .aggregate([
-              {
-                $match: { state: "ACTIVE" },
-              },
-              {
-                $group: {
-                  _id: groupBy,
-                  count: { $sum: 1 },
-                },
-              },
-              {
-                $sort: { count: -1 },
-              },
-            ])
-            .toArray();
+  try {
+    const groupStats = await groupModel
+      .aggregate([
+        {
+          $match: { state: "ACTIVE" },
+        },
+        {
+          $group: {
+            _id: groupBy,
+            count: { $sum: 1 },
+          },
+        },
+        {
+          $sort: { count: -1 },
+        },
+      ])
+      .toArray();
 
-          if (result) {
-            resolve(result);
-          }
-        }
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  });
+    return groupStats;
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 async function fetchGroupMembersPerNGO() {
-  const connection = await connectToDB();
+  const groupModel = await getModel("Group");
 
-  return new Promise((resolve, reject) => {
-    try {
-      connection.db.collection("groups", async (err, collection) => {
-        if (err) {
-          console.log(err);
-        } else {
-          const result = await collection
-            .aggregate([
-              {
-                $match: { state: "ACTIVE" },
-              },
-              {
-                $group: {
-                  _id: "$ngoOrganization",
-                  count: { $sum: 1 },
-                  groups: { $push: { groupSize: { $size: "$members" } } },
-                },
-              },
-            ])
-            .toArray();
+  try {
+    const groupMembersPerNGO = await groupModel
+      .aggregate([
+        {
+          $match: { state: "ACTIVE" },
+        },
+        {
+          $group: {
+            _id: "$ngoOrganization",
+            count: { $sum: 1 },
+            groups: { $push: { groupSize: { $size: "$members" } } },
+          },
+        },
+      ])
+      .toArray();
 
-          if (result) {
-            resolve(result);
-          }
-        }
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  });
-}
-
-async function fetchAllGroupMembers() {
-  const connection = await connectToDB();
-  return new Promise((resolve, reject) => {
-    try {
-      connection.db.collection("groupmembers", async (err, collection) => {
-        if (err) {
-          console.log(err);
-        }
-        const result = await collection.find({ state: "ACTIVE" }).toArray();
-
-        if (result) {
-          resolve(result);
-        }
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  });
+    return groupMembersPerNGO;
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 async function fetchGroupBy(criteria, identifier) {
-  const connection = await connectToDB();
-  return new Promise((resolve, reject) => {
-    try {
-      connection.db.collection("groups", async (err, collection) => {
-        if (err) {
-          console.log(err);
-        }
-        const result = await collection
-          .find({ [criteria]: identifier })
-          .toArray();
+  const groupModel = await getModel("Group");
 
-        if (result) {
-          resolve(result);
-        }
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  });
+  try {
+    const result = await groupModel.find({ [criteria]: identifier }).toArray();
+
+    return result;
+  } catch (err) {
+    console.log(err);
+  }
 }
 
-//Only field fetched is members
+//Only field fetched is member id's
 async function fetchAllGroups() {
-  const connection = await connectToDB();
-  return new Promise((resolve, reject) => {
-    try {
-      connection.db.collection("groups", async (err, collection) => {
-        if (err) {
-          console.log(err);
-        }
-        const result = await collection
-          .find({ state: "ACTIVE" })
-          .project({ _id: 1, members: 1 })
-          .toArray();
+  const groupModel = await getModel("Group");
 
-        if (result) {
-          resolve(result);
-        }
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  });
+  try {
+    const groupMembers = await groupModel
+      .find({ state: "ACTIVE" })
+      .project({ _id: 1, members: 1 })
+      .toArray();
+
+    return groupMembers;
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 async function fetchGroupSizeData() {
-  const connection = await connectToDB();
-  return new Promise((resolve, reject) => {
-    try {
-      connection.db.collection("groups", async (err, collection) => {
-        if (err) {
-          console.log(err);
-        }
-        const dbResult = await collection
-          .aggregate([
-            {
-              $group: {
-                _id: { groupSize: { $size: "$members" } },
-                count: { $sum: 1 },
-              },
-            },
-          ])
-          .toArray();
+  const groupModel = await getModel("Group");
 
-        if (dbResult) {
-          resolve(dbResult);
-        }
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  });
+  try {
+    const groupSizeData = await groupModel
+      .aggregate([
+        {
+          $group: {
+            _id: { groupSize: { $size: "$members" } },
+            count: { $sum: 1 },
+          },
+        },
+      ])
+      .toArray();
+
+    return groupSizeData;
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 async function fetchAllGroupData() {
-  const connection = await connectToDB();
-  return new Promise((resolve, reject) => {
-    try {
-      connection.db.collection("groups", async (err, collection) => {
-        if (err) {
-          console.log(err);
-        } else {
-          const result = await collection.find({}).toArray();
+  const groupModel = await getModel("Group");
 
-          if (result) {
-            resolve(result);
-          }
-        }
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  });
+  try {
+    const allGroupData = await groupModel.find({}).toArray();
+
+    return allGroupData;
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 async function fetchGroupMeetingData() {
-  const connection = await connectToDB();
-  return new Promise((resolve, reject) => {
-    try {
-      connection.db.collection("groups", async (err, collection) => {
-        if (err) {
-          console.log(err);
-        } else {
-          const dbResult = await collection
-            .aggregate([
-              {
-                $lookup: {
-                  from: "groupmeetings",
-                  localField: "_id",
-                  foreignField: "group",
-                  as: "meetings",
-                },
-              },
-            ])
-            .toArray();
+  const groupModel = await getModel("Group");
 
-          if (dbResult) {
-            resolve(dbResult);
-          }
-        }
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  });
+  try {
+    const groupMeetingData = await groupModel
+      .aggregate([
+        {
+          $lookup: {
+            from: "groupmeetings",
+            localField: "_id",
+            foreignField: "group",
+            as: "meetings",
+          },
+        },
+      ])
+      .toArray();
+
+    return groupMeetingData;
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 async function fetchGroupsByNGO(ngo) {
-  const connection = await connectToDB();
-  return new Promise((resolve, reject) => {
-    try {
-      connection.db.collection("groups", async (err, collection) => {
-        if (err) {
-          console.log(err);
-        } else {
-          const dbResult = await collection
-            .find({ ngoOrganization: ngo })
-            .toArray();
+  const groupModel = await getModel("Group");
 
-          if (dbResult) {
-            resolve(dbResult);
-          }
-        }
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  });
+  try {
+    const groupsNGO = await groupModel.find({ ngoOrganization: ngo }).toArray();
+
+    return groupsNGO;
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 async function fetchNumberOfGroupsWith(currency) {
-  const connection = await connectToDB();
-  return new Promise((resolve, reject) => {
-    try {
-      connection.db.collection("groups", async (err, collection) => {
-        if (err) {
-          console.log(err);
-        } else {
-          const dbResult = await collection
-            .find({ state: "ACTIVE", currency })
-            .count();
+  const groupModel = await getModel("Group");
 
-          if (dbResult) {
-            resolve(dbResult);
-          }
-        }
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  });
+  try {
+    const groupsWithCurrency = await groupModel
+      .find({ state: "ACTIVE", currency })
+      .count();
+
+    return groupsWithCurrency;
+  } catch (err) {
+    console.log(err);
+  }
 }
 
-async function fetchAllMemberIDsFromGroup(groupID) {
-  const connection = await connectToDB();
-  return new Promise((resolve, reject) => {
-    try {
-      connection.db.collection("groupmembers", async (err, collection) => {
-        if (err) {
-          console.log(err);
-        } else {
-          const dbResult = await collection
-            .find({
-              group: groupID,
-            })
-            .project({ user: 1 })
-            .toArray();
 
-          if (dbResult) {
-            resolve(dbResult);
-          }
-        }
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  });
-}
-
-async function fetchUserIDByRole(role, groupID) {
-  const connection = await connectToDB();
-  return new Promise((resolve, reject) => {
-    try {
-      connection.db.collection("groupmembers", async (err, collection) => {
-        if (err) {
-          console.log(err);
-        } else {
-          const dbResult = await collection
-            .find({
-              $and: [{ group: groupID }, { groupRoles: role }],
-            })
-            .project({ user: 1 })
-            .toArray();
-
-          if (role === "(.*?)") {
-            console.log(dbResult);
-          }
-
-          if (dbResult) {
-            resolve(dbResult);
-          }
-        }
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  });
-}
 
 async function fetchGroupsRegBefore(subtract) {
-  const connection = await connectToDB();
-  return new Promise((resolve, reject) => {
-    try {
-      connection.db.collection("groups", async (err, collection) => {
-        if (err) {
-          console.log(err);
-        } else {
-          const before = moment()
-            .startOf("day")
-            .subtract(subtract, "days")
-            .toDate();
-          const dbResult = await collection
-            .find({
-              $and: [
-                {
-                  state: "ACTIVE",
-                  registrationDate: { $lt: before },
-                },
-              ],
-            })
-            .project({ id_: 1, members: 1, meetings: 1 })
-            .toArray();
+  const groupModel = await getModel("Group");
 
-          const result = [];
+  try {
+    const before = moment().startOf("day").subtract(subtract, "days").toDate();
+    const dbResult = await groupModel
+      .find({
+        $and: [
+          {
+            state: "ACTIVE",
+            registrationDate: { $lt: before },
+          },
+        ],
+      })
+      .project({ id_: 1, members: 1, meetings: 1 })
+      .toArray();
 
-          dbResult.forEach((element) => {
-            if (element.members.length > 6 && element.meetings.length > 2) {
-              let group = {
-                _id: element._id,
-                size: element.members.length,
-                meetings: element.meetings.length,
-              };
-              result.push(group);
-            }
-          });
+    const result = [];
 
-          if (result) {
-            resolve(result);
-          }
-        }
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  });
+    dbResult.forEach((element) => {
+      if (element.members.length > 6 && element.meetings.length > 2) {
+        let group = {
+          _id: element._id,
+          size: element.members.length,
+          meetings: element.meetings.length,
+        };
+        result.push(group);
+      }
+    });
+  } catch (err) {
+    console.log(err);
+  }
 }
 
-async function fetchGroupMeetingsSince(groupID, subtract) {
-  const connection = await connectToDB();
-  return new Promise((resolve, reject) => {
-    try {
-      connection.db.collection("groupmeetings", async (err, collection) => {
-        if (err) {
-          console.log(err);
-        } else {
-          const since = moment()
-            .startOf("day")
-            .subtract(subtract, "days")
-            .toDate();
-          const dbResult = await collection
-            .find({
-              $and: [
-                {
-                  group: groupID,
-                  meetingDay: { $gt: since },
-                },
-              ],
-            })
-            .toArray();
+// async function fetchGroupShareouts(meetingID) {
+//   const groupModel = await getModel("Group");
 
-          if (dbResult) {
-            resolve(dbResult);
-          }
-        }
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  });
-}
+//     try {
+//       connection.db.groupModel(
+//         "groupmeetingshareouts",
+//         async (err, groupModel) => {
+//           if (err) {
+//             console.log(err);
+//           } else {
+//             const dbResult = await groupModel
+//               .find({
+//                 $and: [
+//                   {
+//                     meeting: meetingID,
+//                   },
+//                 ],
+//               })
+//               .toArray();
 
-async function fetchGroupShareouts(meetingID) {
-  const connection = await connectToDB();
-  return new Promise((resolve, reject) => {
-    try {
-      connection.db.collection(
-        "groupmeetingshareouts",
-        async (err, collection) => {
-          if (err) {
-            console.log(err);
-          } else {
-            const dbResult = await collection
-              .find({
-                $and: [
-                  {
-                    meeting: meetingID,
-                  },
-                ],
-              })
-              .toArray();
-
-            if (dbResult) {
-              resolve(dbResult);
-            }
-          }
-        }
-      );
-    } catch (err) {
-      console.log(err);
-    }
-  });
-}
-
-async function fetchGroupMemberByUser() {
-  const connection = await connectToDB();
-  return new Promise((resolve, reject) => {
-    try {
-      connection.db.collection("groupmembers", async (err, collection) => {
-        if (err) {
-          console.log(err);
-        } else {
-          const dbResult = await collection
-            .aggregate([
-              {
-                $lookup: {
-                  from: "users",
-                  let: {
-                    id: "$_id",
-                    firstName: "$firstName",
-                    lastName: "lastName",
-                  },
-                  pipeline: [
-                    {
-                      $match: {
-                        $expr: {
-                          $and: [{ $eq: ["$$id", "$user"] }],
-                        },
-                      },
-                    },
-                  ],
-                  as: "userGroups",
-                },
-              },
-            ])
-            .toArray();
-
-          if (dbResult) {
-            resolve(dbResult);
-          }
-        }
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  });
-}
+//             if (dbResult) {
+//               resolve(dbResult);
+//             }
+//           }
+//         }
+//       );
+//     } catch (err) {
+//       console.log(err);
+//     }
+//   });
+// }
 
 module.exports = {
   fetchGroupByID,
   fetchGroupBy,
-  fetchAllGroupMembers,
   fetchAllGroups,
   fetchGroupStats,
   fetchGroupSizeData,
   fetchGroupMeetingData,
   fetchAllGroupData,
   fetchGroupsByNGO,
-  fetchUserIDByRole,
-  fetchAllMemberIDsFromGroup,
   fetchGroupsRegBefore,
-  fetchGroupMeetingsSince,
-  fetchGroupShareouts,
-  fetchGroupMemberByUser,
   fetchNumberOfGroupsWith,
   fetchGroupMembersPerNGO,
 };

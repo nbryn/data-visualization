@@ -28,6 +28,41 @@ async function fetchAllMeetings() {
   });
 }
 
+async function fetchGroupMeetingsSince(groupID, subtract) {
+  const groupModel = await getModel("Group");
+
+  return new Promise((resolve, reject) => {
+    try {
+      connection.db.groupModel("groupmeetings", async (err, groupModel) => {
+        if (err) {
+          console.log(err);
+        } else {
+          const since = moment()
+            .startOf("day")
+            .subtract(subtract, "days")
+            .toDate();
+          const dbResult = await groupModel
+            .find({
+              $and: [
+                {
+                  group: groupID,
+                  meetingDay: { $gt: since },
+                },
+              ],
+            })
+            .toArray();
+
+          if (dbResult) {
+            resolve(dbResult);
+          }
+        }
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  });
+}
+
 async function fetchMeetingPerGroup() {
   const connection = await connectToDB();
   return new Promise((resolve, reject) => {
@@ -89,4 +124,5 @@ module.exports = {
   fetchAllMeetings,
   fetchMeetingPerGroup,
   fetchMeetingShares,
+  fetchGroupMeetingsSince,
 };

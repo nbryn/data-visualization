@@ -1,4 +1,4 @@
-const { fetchGroupStats } = require("../../data/mappers/GroupMapper");
+const { fetchGroupStats } = require("../../../data/mappers/GroupMapper");
 const { calculateGroupsPerUser, calculateUsersPerNGO } = require("./NGOService");
 
 const ngoResolvers = {

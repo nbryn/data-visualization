@@ -1,8 +1,8 @@
 const {
   fetchMeetingPerGroup,
   fetchMeetingShares,
-} = require("../../data/mappers/MeetingMapper");
-const { fetchGroupByID } = require("../../data/mappers/GroupMapper.js");
+} = require("../../../data/mappers/MeetingMapper");
+const { fetchGroupByID } = require("../../../data/mappers/GroupMapper.js");
 
 async function calculateMeetingsPerGroup() {
   const meetingsPerGroup = await fetchMeetingPerGroup();

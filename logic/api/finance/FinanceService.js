@@ -1,8 +1,8 @@
-const { fetchFinanceData } = require("../../data/common/fetchFinanceData");
+const { fetchFinanceData } = require("../../../data/common/fetchFinanceData");
 const {
   fetchLoanData,
   fetchBoxBalanceData
-} = require("../../data/mappers/FinanceMapper");
+} = require("../../../data/mappers/FinanceMapper");
 
 async function getCurrencyStats() {
   const result = await fetchFinanceData(

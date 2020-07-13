@@ -1,8 +1,8 @@
+const { fetchAllGroups } = require("../../../data/mappers/GroupMapper");
 const {
   fetchAllGroupMembers,
-  fetchAllGroups,
-} = require("../../data/mappers/GroupMapper");
-const { fetchAllUsers } = require("../../data/mappers/UserMapper");
+} = require("../../../data/mappers/GroupMemberMapper");
+const { fetchAllUsers } = require("../../../data/mappers/UserMapper");
 
 async function calculateActiveUsers() {
   const allGroupMembers = await fetchAllGroupMembers();

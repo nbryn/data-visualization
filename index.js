@@ -3,20 +3,20 @@ const { merge } = require("lodash");
 const { makeExecutableSchema } = require("graphql-tools");
 const express = require("express");
 
-const DefaultSchema = require("./logic/DefaultSchema");
-const FinanceSchema = require("./logic/finance/FinanceSchema");
-const GroupSchema = require("./logic/group/GroupSchema");
-const MeetingSchema = require("./logic/meeting/MeetingSchema");
-const UserSchema = require("./logic/user/UserSchema");
-const NGOSchema = require("./logic/ngo/NGOSchema");
-const CountrySchema = require("./logic/country/CountrySchema");
+const DefaultSchema = require("./logic/api/DefaultSchema");
+const FinanceSchema = require("./logic/api/finance/FinanceSchema");
+const GroupSchema = require("./logic/api/group/GroupSchema");
+const MeetingSchema = require("./logic/api/meeting/MeetingSchema");
+const UserSchema = require("./logic/api/user/UserSchema");
+const NGOSchema = require("./logic/api/ngo/NGOSchema");
+const CountrySchema = require("./logic/api/country/CountrySchema");
 
-const financeResolvers = require("./logic/finance/FinanceResolvers");
-const groupResolvers = require("./logic/group/GroupResolvers");
-const meetingResolvers = require("./logic/meeting/MeetingResolvers");
-const userResolvers = require("./logic/user/UserResolvers");
-const ngoResolvers = require("./logic/ngo/NGOResolvers");
-const countryResolvers = require("./logic/country/CountryResolvers");
+const financeResolvers = require("./logic/api/finance/FinanceResolvers");
+const groupResolvers = require("./logic/api/group/GroupResolvers");
+const meetingResolvers = require("./logic/api/meeting/MeetingResolvers");
+const userResolvers = require("./logic/api/user/UserResolvers");
+const ngoResolvers = require("./logic/api/ngo/NGOResolvers");
+const countryResolvers = require("./logic/api/country/CountryResolvers");
 
 const app = express();
 

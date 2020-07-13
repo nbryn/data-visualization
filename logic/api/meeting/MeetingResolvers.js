@@ -1,6 +1,6 @@
-const { fetchTotal } = require("../../data/common/fetchTotal");
-const { fetchDailyData } = require("../../data/common/fetchDailyData");
-const { fetchMonthlyData } = require("../../data/common/fetchMonthlyData");
+const { fetchTotal } = require("../../../data/common/fetchTotal");
+const { fetchDailyData } = require("../../../data/common/fetchDailyData");
+const { fetchMonthlyData } = require("../../../data/common/fetchMonthlyData");
 const { calculateMeetingsPerGroup, calculateSharesPerMeeting } = require("./MeetingService");
 
 const meetingResolvers = {

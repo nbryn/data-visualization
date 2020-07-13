@@ -26,8 +26,6 @@ const userSchema = new Schema({
   password: String,
   phoneCode: String,
   phoneNumber: String,
-  newPhoneCode: String,
-  newPhoneNumber: String,
   pinCode: String,
   signupDate: Date,
   state: {

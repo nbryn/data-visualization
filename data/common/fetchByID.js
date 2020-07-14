@@ -1,28 +1,15 @@
-const { connectToDB } = require("../connection");
+const { getModel } = require("../connection");
 
 async function fetchByID(collection, ID) {
-  const connection = await connectToDB();
+  const model = await getModel(collection);
 
-  return new Promise((resolve, reject) => {
-    try {
-    connection.db.collection(collection, async (err, collection) => {
-      if (err) {
-        console.log(err);
-      } else {
-        const dbResult = await collection
-          .find({ _id: ID })
-          .toArray();
+  try {
+    const dbResult = await model.find({ _id: ID });
 
-   
-        if (dbResult) {
-          resolve(dbResult);
-        }
-      }
-    });
+    return dbResult;
   } catch (err) {
     console.log(err);
   }
-  });
 }
 
 module.exports = { fetchByID };

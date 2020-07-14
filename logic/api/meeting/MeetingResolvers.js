@@ -9,13 +9,13 @@ const meetingResolvers = {
   },
   MeetingStats: {
     meetingTotal: async (root, context) => {
-      const meetingTotal = await fetchTotal("groupmeetings");
+      const meetingTotal = await fetchTotal("GroupMeeting");
 
       return meetingTotal;
     },
     meetingsLastMonth: async (root, context) => {
       const meetingsLastMonth = await fetchDailyData(
-        "groupmeetings",
+        "GroupMeeting",
         "meetingDay"
       );
 
@@ -23,7 +23,7 @@ const meetingResolvers = {
     },
     meetingsLastYear: async (root, context) => {
       const meetingsLastYear = await fetchMonthlyData(
-        "groupmeetings",
+        "GroupMeeting",
         "meetingDay"
       );
 

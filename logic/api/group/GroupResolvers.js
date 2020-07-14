@@ -41,7 +41,7 @@ const groupResolvers = {
   },
   GroupStats: {
     groupTotal: async (root, context) => {
-      const groupTotal = await fetchTotal("groups");
+      const groupTotal = await fetchTotal("Group");
 
       return groupTotal;
     },
@@ -63,7 +63,7 @@ const groupResolvers = {
     },
     groupsLastWeek: async (root, context) => {
       const groupsLastWeek = await fetchDailyData(
-        "groups",
+        "Group",
         "registrationDate",
         7
       );
@@ -76,7 +76,7 @@ const groupResolvers = {
     },
     groupsLastMonth: async (root, context) => {
       const groupsLastMonth = await fetchDailyData(
-        "groups",
+        "Group",
         "registrationDate",
         30
       );
@@ -85,7 +85,7 @@ const groupResolvers = {
     },
     groupsLastYear: async (root, context) => {
       const groupsLastYear = await fetchMonthlyData(
-        "groups",
+        "Group",
         "registrationDate"
       );
 

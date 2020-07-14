@@ -1,25 +1,15 @@
-const { connectToDB } = require("../connection");
+const { getModel } = require("../connection");
 
 async function fetchTotal(collection) {
-  const connection = await connectToDB();
+  const model = await getModel(collection);
 
-  return new Promise((resolve, reject) => {
-    try {
-      connection.db.collection(collection, async (err, collection) => {
-        if (err) {
-          console.log(err);
-        } else {
-          const total = await collection.countDocuments("");
+  try {
+    const total = await model.countDocuments("");
 
-          if (total) {
-            resolve(total);
-          }
-        }
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  });
+    return total;
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 module.exports = { fetchTotal };

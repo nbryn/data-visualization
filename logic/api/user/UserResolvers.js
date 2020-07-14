@@ -42,12 +42,12 @@ const userResolvers = {
       return activeUsers;
     },
     usersLastMonth: async (root, context) => {
-      const usersLastMonth = await fetchDailyData("users", "signupDate", 30);
+      const usersLastMonth = await fetchDailyData("User", "signupDate", 30);
 
       return { data: usersLastMonth };
     },
     usersLastYear: async (root, context) => {
-      const result = await fetchMonthlyData("users", "signupDate");
+      const result = await fetchMonthlyData("User", "signupDate");
 
       return {
         data: result,

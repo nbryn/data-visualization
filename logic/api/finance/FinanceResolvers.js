@@ -25,13 +25,13 @@ const financeResolvers = {
     },
 
     loanTotal: async ({ root, context }) => {
-      const loanTotal = await fetchTotal("groupmeetingloans");
+      const loanTotal = await fetchTotal("GroupMeetingLoan");
 
       return loanTotal;
     },
     loansLastMonth: async ({ root, context }) => {
       const loansLastMonth = await fetchDailyData(
-        "groupmeetingloans",
+        "GroupMeetingLoan",
         "registrationDate"
       );
 
@@ -41,7 +41,7 @@ const financeResolvers = {
     },
     loansLastYear: async ({ root, context }) => {
       const loansLastYear = await fetchMonthlyData(
-        "groupmeetingloans",
+        "GroupMeetingLoan",
         "registrationDate"
       );
 

@@ -4,14 +4,11 @@ async function fetchAllMeetings() {
   const groupMeetingModel = await getModel("GroupMeeting");
 
   try {
-    const allMeetingData = await groupMeetingModel
-      .aggregate([
-        {
-          $match: { state: "ENDED" },
-        },
-      ])
-      .toArray();
-
+    const allMeetingData = await groupMeetingModel.aggregate([
+      {
+        $match: { state: "ENDED" },
+      },
+    ]);
     return allMeetingData;
   } catch (err) {
     console.log(err);
@@ -23,17 +20,14 @@ async function fetchGroupMeetingsSince(groupID, subtract) {
 
   try {
     const since = moment().startOf("day").subtract(subtract, "days").toDate();
-    const groupMeetingsSince = await groupMeetingModel
-      .find({
-        $and: [
-          {
-            group: groupID,
-            meetingDay: { $gt: since },
-          },
-        ],
-      })
-      .toArray();
-
+    const groupMeetingsSince = await groupMeetingModel.find({
+      $and: [
+        {
+          group: groupID,
+          meetingDay: { $gt: since },
+        },
+      ],
+    });
     return groupMeetingsSince;
   } catch (err) {
     console.log(err);
@@ -44,16 +38,13 @@ async function fetchMeetingsPerGroup() {
   const groupMeetingModel = await getModel("GroupMeeting");
 
   try {
-    const meetingsPerGroup = await groupMeetingModel
-      .aggregate([
-        { $match: { state: "ENDED" } },
-        { $group: { _id: "$group", count: { $sum: 1 } } },
-        {
-          $sort: { count: -1 },
-        },
-      ])
-      .toArray();
-
+    const meetingsPerGroup = await groupMeetingModel.aggregate([
+      { $match: { state: "ENDED" } },
+      { $group: { _id: "$group", count: { $sum: 1 } } },
+      {
+        $sort: { count: -1 },
+      },
+    ]);
     return meetingsPerGroup;
   } catch (err) {
     console.log(err);
@@ -72,9 +63,7 @@ async function fetchMeetingShares() {
       .project({
         _id: 1,
         shares: 1,
-      })
-      .toArray();
-
+      });
     return meetingShares;
   } catch (err) {
     console.log(err);

@@ -63,12 +63,11 @@ async function fetchAllUsers() {
   const userModel = await getModel("User");
 
   try {
-    const activeUsers = await userModel.find({
-      state: "ACTIVE",
-    })
-      .project({ _id: 1, firstName: 1, lastName: 1 })
-      .toArray();
-
+    const activeUsers = await userModel
+      .find({
+        state: "ACTIVE",
+      })
+      .project({ _id: 1, firstName: 1, lastName: 1 });
     return activeUsers;
   } catch (error) {
     console.log(error);
@@ -78,26 +77,24 @@ async function fetchAllUsers() {
 async function fetchUsersWithEmail() {
   const userModel = await getModel("User");
 
-  const fetchUsersWithEmail = await userModel.find({
-    email: { $ne: null },
-    state: "ACTIVE",
-  })
-    .project({ _id: 1, firstName: 1, lastName: 1, email: 1 })
-    .toArray();
-
+  const fetchUsersWithEmail = await userModel
+    .find({
+      email: { $ne: null },
+      state: "ACTIVE",
+    })
+    .project({ _id: 1, firstName: 1, lastName: 1, email: 1 });
   return fetchUsersWithEmail;
 }
 
 async function fetchUsersWithPhone() {
   const userModel = await getModel("User");
 
-  const usersUsersWithPhone = await userModel.find({
-    phoneNumber: { $ne: null },
-    state: "ACTIVE",
-  })
-    .project({ _id: 1, firstName: 1, lastName: 1, phoneNumber: 1 })
-    .toArray();
-
+  const usersUsersWithPhone = await userModel
+    .find({
+      phoneNumber: { $ne: null },
+      state: "ACTIVE",
+    })
+    .project({ _id: 1, firstName: 1, lastName: 1, phoneNumber: 1 });
   return usersUsersWithPhone;
 }
 
@@ -117,7 +114,7 @@ async function fetchGenderStats() {
           count: { $sum: 1 },
         },
       },
-    ]).toArray();
+    ]);
 
     const genders = genderStats.map((element) => {
       return {
@@ -125,6 +122,7 @@ async function fetchGenderStats() {
         count: element.count,
       };
     });
+
     return genders;
   } catch (err) {
     console.log(err);
@@ -148,7 +146,7 @@ async function fetchUsersPerCountry() {
       {
         $sort: { count: -1 },
       },
-    ]).toArray();
+    ]);
 
     return usersPerCountry;
   } catch (err) {

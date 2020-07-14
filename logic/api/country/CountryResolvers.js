@@ -1,10 +1,11 @@
-const { fetchGroupStats } = require("../../../data/mappers/GroupMapper");
+const actionRunner = require("../../util/ActionRunner");
 const {
   calculateNumberOfGroups,
   calculateNumberOfUsers,
   calculateUsersPerCountry,
   calculateMeetingsPerCountry,
 } = require("./CountryService");
+const { fetchGroupStats } = require("../../../data/mappers/GroupMapper");
 
 const countryResolvers = {
   Query: {
@@ -13,38 +14,46 @@ const countryResolvers = {
   },
   GeneralCountryStats: {
     groupsCountry: async (root, context) => {
-      const result = await fetchGroupStats("$country");
+      return actionRunner(async () => {
+        const result = await fetchGroupStats("$country");
 
-      const groupsCountry = result.map((element) => {
-        return {
-          name: element._id,
-          count: element.count,
-        };
+        const groupsCountry = result.map((element) => {
+          return {
+            name: element._id,
+            count: element.count,
+          };
+        });
+
+        return groupsCountry;
       });
-
-      return groupsCountry;
     },
     usersCountry: async (root, context) => {
-      const usersPerCountry = await calculateUsersPerCountry();
+      return actionRunner(async () => {
+        const usersPerCountry = await calculateUsersPerCountry();
 
-      return usersPerCountry;
+        return usersPerCountry;
+      });
     },
     meetingsCountry: async (root, context) => {
-      const meetingsPerCountry = await calculateMeetingsPerCountry();
+      return actionRunner(async () => {
+        const meetingsPerCountry = await calculateMeetingsPerCountry();
 
-      return meetingsPerCountry;
+        return meetingsPerCountry;
+      });
     },
   },
   CountryStats: {
     country: async (obj, args, root, context) => {
-      const groups = await calculateNumberOfGroups(args.country);
+      return actionRunner(async () => {
+        const groups = await calculateNumberOfGroups(args.country);
 
-      const users = await calculateNumberOfUsers(args.country);
+        const users = await calculateNumberOfUsers(args.country);
 
-      return {
-        groups,
-        users,
-      };
+        return {
+          groups,
+          users,
+        };
+      });
     },
   },
 };

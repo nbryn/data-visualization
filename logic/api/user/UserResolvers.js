@@ -1,20 +1,19 @@
 const { GraphQLJSON } = require("graphql-type-json");
 
+const actionRunner = require("../../util/ActionRunner");
 const { fetchDailyData } = require("../../../data/common/fetchDailyData");
 const { fetchMonthlyData } = require("../../../data/common/fetchMonthlyData");
-
+const {
+  fetchGenderStats,
+  fetchUserCount,
+  validateLogin,
+} = require("../../../data/mappers/UserMapper");
 const {
   fetchUsersWithEmail,
   fetchUsersWithPhone,
 } = require("../../../data/mappers/UserMapper");
 
 const { calculateActiveUsers } = require("./UserService");
-
-const {
-  validateLogin,
-  fetchUserCount,
-  fetchGenderStats,
-} = require("../../../data/mappers/UserMapper");
 
 const userResolvers = {
   JSON: GraphQLJSON,
@@ -32,48 +31,62 @@ const userResolvers = {
   },
   UserStats: {
     userCount: async (root, context) => {
-      const userCount = await fetchUserCount();
+      return actionRunner(async () => {
+        const userCount = await fetchUserCount();
 
-      return userCount;
+        return userCount;
+      });
     },
     usersActive: async (root, context) => {
-      const activeUsers = calculateActiveUsers();
+      return actionRunner(async () => {
+        const activeUsers = calculateActiveUsers();
 
-      return activeUsers;
+        return activeUsers;
+      });
     },
     usersLastMonth: async (root, context) => {
-      const usersLastMonth = await fetchDailyData("User", "signupDate", 30);
+      return actionRunner(async () => {
+        const usersLastMonth = await fetchDailyData("User", "signupDate", 30);
 
-      return { data: usersLastMonth };
+        return { data: usersLastMonth };
+      });
     },
     usersLastYear: async (root, context) => {
-      const result = await fetchMonthlyData("User", "signupDate");
+      return actionRunner(async () => {
+        const result = await fetchMonthlyData("User", "signupDate");
 
-      return {
-        data: result,
-      };
+        return {
+          data: result,
+        };
+      });
     },
     userGenderStats: async (root, context) => {
-      const result = await fetchGenderStats();
+      return actionRunner(async () => {
+        const result = await fetchGenderStats();
 
-      return result;
+        return result;
+      });
     },
   },
   UserInfo: {
     usersWithPhone: async (root, context) => {
-      const result = await fetchUsersWithPhone();
+      return actionRunner(async () => {
+        const result = await fetchUsersWithPhone();
 
-      const final = removeDuplicates(result, true);
+        const final = removeDuplicates(result, true);
 
-      return final;
+        return final;
+      });
     },
 
     usersWithEmail: async (root, context) => {
-      const result = await fetchUsersWithEmail();
+      return actionRunner(async () => {
+        const result = await fetchUsersWithEmail();
 
-      const final = removeDuplicates(result, false);
+        const final = removeDuplicates(result, false);
 
-      return final;
+        return final;
+      });
     },
   },
 };

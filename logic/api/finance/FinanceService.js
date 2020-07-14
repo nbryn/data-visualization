@@ -4,7 +4,7 @@ const { fetchLoanData } = require("../../../data/mappers/GroupMapper");
 
 async function getCurrencyStats() {
   const result = await fetchFinanceData(
-    "groupaccounts",
+    "GroupAccount",
     "totalBalance",
     "$currency"
   );

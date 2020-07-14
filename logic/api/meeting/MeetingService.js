@@ -1,11 +1,11 @@
 const {
-  fetchMeetingPerGroup,
+  fetchMeetingsPerGroup,
   fetchMeetingShares,
 } = require("../../../data/mappers/MeetingMapper");
 const { fetchGroupByID } = require("../../../data/mappers/GroupMapper.js");
 
 async function calculateMeetingsPerGroup() {
-  const meetingsPerGroup = await fetchMeetingPerGroup();
+  const meetingsPerGroup = await fetchMeetingsPerGroup();
 
   const groups = await Promise.all(
     meetingsPerGroup.map(async (entry) => {
@@ -25,12 +25,7 @@ async function calculateMeetingsPerGroup() {
 async function calculateSharesPerMeeting() {
   const meetingShares = await fetchMeetingShares();
 
-  meetingShares.sort((a, b) => {
-    if (a.shares.length > b.shares.length) return -1;
-    if (b.shares.length > a.shares.length) return 1;
-
-    return 0;
-  });
+  meetingShares.sort((a, b) => b.shares.length - a.shares.length);
 
   const temp = meetingShares.slice(0, 10);
 

@@ -1,5 +1,9 @@
+const actionRunner = require("../../util/ActionRunner");
+const {
+  calculateGroupsPerUser,
+  calculateUsersPerNGO,
+} = require("./NGOService");
 const { fetchGroupStats } = require("../../../data/mappers/GroupMapper");
-const { calculateGroupsPerUser, calculateUsersPerNGO } = require("./NGOService");
 
 const ngoResolvers = {
   Query: {
@@ -7,26 +11,32 @@ const ngoResolvers = {
   },
   NGOStats: {
     groupsNGO: async (root, context) => {
-      const result = await fetchGroupStats("$ngoOrganization");
+      return actionRunner(async () => {
+        const result = await fetchGroupStats("$ngoOrganization");
 
-      const groupsNGO = result.map((element) => {
-        return {
-          name: element._id,
-          count: element.count,
-        };
+        const groupsNGO = result.map((element) => {
+          return {
+            name: element._id,
+            count: element.count,
+          };
+        });
+
+        return groupsNGO;
       });
-
-      return groupsNGO;
     },
     usersNGO: async (root, context) => {
-      const usersNGO = await calculateUsersPerNGO();
+      return actionRunner(async () => {
+        const usersNGO = await calculateUsersPerNGO();
 
-      return usersNGO;
+        return usersNGO;
+      });
     },
     groupsUser: async (root, context) => {
-      const groupsUser = await calculateGroupsPerUser();
+      return actionRunner(async () => {
+        const groupsUser = await calculateGroupsPerUser();
 
-      return groupsUser;
+        return groupsUser;
+      });
     },
   },
 };

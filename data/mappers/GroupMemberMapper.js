@@ -3,78 +3,65 @@ const { getModel } = require("../connection");
 async function fetchAllGroupMembers() {
   const groupMemberModel = await getModel("GroupMember");
 
-  try {
-    const allGroupMembers = await groupMemberModel.find({ state: "ACTIVE" });
-    return allGroupMembers;
-  } catch (err) {
-    console.log(err);
-  }
+  const allGroupMembers = await groupMemberModel.find({ state: "ACTIVE" });
+  return allGroupMembers;
 }
 
 async function fetchAllMemberIDsFromGroup(groupID) {
   const groupMemberModel = await getModel("GroupMember");
 
-  try {
-    const memberIDs = await groupMemberModel
-      .find({
-        group: groupID,
-      })
-      .project({ user: 1 });
-    return memberIDs;
-  } catch (err) {
-    console.log(err);
-  }
+  const memberIDs = await groupMemberModel.find(
+    {
+      group: groupID,
+    },
+    { projection: { user: 1 } }
+  );
+
+  return memberIDs;
 }
 
 async function fetchGroupMemberByUser() {
   const groupMemberModel = await getModel("GroupMember");
 
-  try {
-    const groupMemberUsers = await groupMemberModel.aggregate([
-      {
-        $lookup: {
-          from: "users",
-          let: {
-            id: "$_id",
-            firstName: "$firstName",
-            lastName: "lastName",
-          },
-          pipeline: [
-            {
-              $match: {
-                $expr: {
-                  $and: [{ $eq: ["$$id", "$user"] }],
-                },
+  const groupMemberUsers = await groupMemberModel.aggregate([
+    {
+      $lookup: {
+        from: "users",
+        let: {
+          id: "$_id",
+          firstName: "$firstName",
+          lastName: "lastName",
+        },
+        pipeline: [
+          {
+            $match: {
+              $expr: {
+                $and: [{ $eq: ["$$id", "$user"] }],
               },
             },
-          ],
-          as: "userGroups",
-        },
+          },
+        ],
+        as: "userGroups",
       },
-    ]);
-    return groupMemberUsers;
-  } catch (err) {
-    console.log(err);
-  }
+    },
+  ]);
+  return groupMemberUsers;
 }
 
 async function fetchUserIDByRole(role, groupID) {
   const groupMemberModel = await getModel("GroupMember");
 
-  try {
-    const userIDs = await groupMemberModel
-      .find({
-        $and: [{ group: groupID }, { groupRoles: role }],
-      })
-      .project({ user: 1 });
-    if (role === "(.*?)") {
-      console.log(dbResult);
-    }
-
-    return userIDs;
-  } catch (err) {
-    console.log(err);
+  const userIDs = await groupMemberModel.find(
+    {
+      $and: [{ group: groupID }, { groupRoles: role }],
+    },
+    { projection: { user: 1 } }
+  );
+  if (role === "(.*?)") {
+    console.log(dbResult);
   }
+
+  return userIDs;
 }
 
 module.exports = {

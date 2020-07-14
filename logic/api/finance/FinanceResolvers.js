@@ -1,77 +1,90 @@
+const actionRunner = require("../../util/ActionRunner");
+const {
+  calculateEtbLoanStats,
+  calculateShareStats,
+  getCurrencyStats,
+  
+} = require("./FinanceService");
 const { fetchDailyData } = require("../../../data/common/fetchDailyData");
 const { fetchMonthlyData } = require("../../../data/common/fetchMonthlyData");
 const { fetchTotal } = require("../../../data/common/fetchTotal");
-const {
-  getCurrencyStats,
-  calculateShareStats,
-  calculateEtbLoanStats,
-} = require("./FinanceService");
 
 const financeResolvers = {
   Query: {
-    financeStats: (root, context) => ({ root, context })
+    financeStats: (root, context) => ({ root, context }),
   },
 
   FinanceStats: {
     currencyStats: async ({ root, context }) => {
-      const currencyStats = await getCurrencyStats();
+      return actionRunner(async () => {
+        const currencyStats = await getCurrencyStats();
 
-      const numberOfCurrencies = currencyStats.length;
+        const numberOfCurrencies = currencyStats.length;
 
-      return {
-        numberOfCurrencies: numberOfCurrencies,
-        currency: currencyStats
-      };
+        return {
+          numberOfCurrencies: numberOfCurrencies,
+          currency: currencyStats,
+        };
+      });
     },
 
     loanTotal: async ({ root, context }) => {
-      const loanTotal = await fetchTotal("GroupMeetingLoan");
+      return actionRunner(async () => {
+        const loanTotal = await fetchTotal("GroupMeetingLoan");
 
-      return loanTotal;
+        return loanTotal;
+      });
     },
     loansLastMonth: async ({ root, context }) => {
-      const loansLastMonth = await fetchDailyData(
-        "GroupMeetingLoan",
-        "registrationDate"
-      );
+      return actionRunner(async () => {
+        const loansLastMonth = await fetchDailyData(
+          "GroupMeetingLoan",
+          "registrationDate"
+        );
 
-      return {
-        data: loansLastMonth
-      };
+        return {
+          data: loansLastMonth,
+        };
+      });
     },
     loansLastYear: async ({ root, context }) => {
-      const loansLastYear = await fetchMonthlyData(
-        "GroupMeetingLoan",
-        "registrationDate"
-      );
+      return actionRunner(async () => {
+        const loansLastYear = await fetchMonthlyData(
+          "GroupMeetingLoan",
+          "registrationDate"
+        );
 
-      return {
-        data: loansLastYear
-      };
+        return {
+          data: loansLastYear,
+        };
+      });
     },
     shareStats: async ({ root, context }) => {
-      const shareStats = await calculateShareStats();
+      return actionRunner(async () => {
+        const shareStats = await calculateShareStats();
 
-      const { shareTotal } = shareStats;
-      const { mostShares } = shareStats;
+        const { mostShares, shareTotal } = shareStats;
 
-      return {
-        shareTotal: shareTotal,
-        groupShares: shareStats.shareStats,
-        mostShares: mostShares
-      };
+        return {
+          shareTotal: shareTotal,
+          groupShares: shareStats.shareStats,
+          mostShares: mostShares,
+        };
+      });
     },
     etbStats: async ({ root, context }) => {
-      const etbStats = await calculateEtbLoanStats();
+      return actionRunner(async () => {
+        const etbStats = await calculateEtbLoanStats();
 
-      const { ETBLoanTotal } = etbStats;
+        const { ETBLoanTotal } = etbStats;
 
-      return {
-        etbOnLoan: ETBLoanTotal,
-        groupLoan: etbStats.ETBLoanGroup
-      };
-    }
-  }
+        return {
+          etbOnLoan: ETBLoanTotal,
+          groupLoan: etbStats.ETBLoanGroup,
+        };
+      });
+    },
+  },
 };
 
 module.exports = financeResolvers;

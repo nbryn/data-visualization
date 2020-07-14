@@ -22,6 +22,7 @@ const groupMeetingSchema = new Schema({
   meetingDay: Date,
   meetingEnded: Date,
   meetingNumber: Number,
+  shares: [{ type: mongoose.Schema.Types.ObjectId, ref: 'GroupMeetingShare' }],
   state: {
     type: String,
     enum: GroupMeetingStatesArray,

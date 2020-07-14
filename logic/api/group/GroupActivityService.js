@@ -1,7 +1,6 @@
-const {
-  fetchGroupsRegBefore,
-  // fetchGroupShareouts,
-} = require("../../../data/mappers/GroupMapper");
+const { fetchGroupsRegBefore } = require("../../../data/mappers/GroupMapper");
+
+const { fetchGroupShareouts } = require("../../../data/mappers/FinanceMapper");
 
 const {
   fetchGroupMeetingsSince,

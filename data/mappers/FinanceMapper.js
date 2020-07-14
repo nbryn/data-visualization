@@ -1,119 +1,79 @@
-const { connectToDB } = require("../connection");
+const { getModel } = require("../connection");
 
 async function fetchAccountDataByGroup(groupID) {
-  const connection = await connectToDB();
-  return new Promise((resolve, reject) => {
-    try {
-      connection.db.collection("groupaccounts", async (err, collection) => {
-        if (err) {
-          console.log(err);
-        } else {
-          const dbResult = await collection
-            .find({ group: groupID })
-            .project({ totalShares: 1, boxBalance: 1 })
-            .toArray();
+  const groupAccountModel = await getModel("GroupAccount");
 
-          if (dbResult) {
-            resolve(dbResult);
-          }
-        }
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  });
+  try {
+    const accountData = await groupAccountModel
+      .find({ group: groupID })
+      .project({ totalShares: 1, boxBalance: 1 })
+      .toArray();
+
+    return accountData;
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 async function fetchBoxBalanceData() {
-  const connection = await connectToDB();
-  return new Promise((resolve, reject) => {
-    try {
-      connection.db.collection("groupaccounts", async (err, collection) => {
-        if (err) {
-          console.log(err);
-        } else {
-          const dbResult = await collection
-            .aggregate([
-              {
-                $match: { currency: "ETB" }
-              },
-              {
-                $group: {
-                  _id: "$_id",
-                  count: { $sum: "$totalBalance" }
-                }
-              }
-            ])
-            .toArray();
+  const groupAccountModel = await getModel("GroupAccount");
 
-        
+  try {
+    const boxBalanceData = await groupAccountModel
+      .aggregate([
+        {
+          $match: { currency: "ETB" },
+        },
+        {
+          $group: {
+            _id: "$_id",
+            count: { $sum: "$totalBalance" },
+          },
+        },
+      ])
+      .toArray();
 
-          if (dbResult) {
-            resolve(dbResult);
-          }
-        }
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  });
+    return boxBalanceData;
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 async function fetchLoansByGroup(groupID) {
-  const connection = await connectToDB();
-  return new Promise((resolve, reject) => {
-    try {
-      connection.db.collection("groupmeetingloans", async (err, collection) => {
-        if (err) {
-          console.log(err);
-        } else {
-          const dbResult = await collection.count({ group: groupID });
+  const groupMeetingLoanModel = await getModel("GroupMeetingLoan");
 
-          if (dbResult < 1) {
-            resolve(dbResult);
-          }
+  try {
+    const loanData = await groupMeetingLoanModel.count({ group: groupID });
 
-          if (dbResult) {
-            resolve(dbResult);
-          }
-        }
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  });
+    return loanData;
+  } catch (err) {
+    console.log(err);
+  }
 }
 
-async function fetchLoanData() {
-  const connection = await connectToDB();
-  return new Promise((resolve, reject) => {
-    try {
-      connection.db.collection("groups", async (err, collection) => {
-        if (err) {
-          console.log(err);
-        } else {
-          const result = await collection
-            .aggregate([
-              {
-                $lookup: {
-                  from: "groupaccounts",
-                  localField: "_id",
-                  foreignField: "group",
-                  as: "shares"
-                }
-              }
-            ])
-            .toArray();
+async function fetchGroupShareouts(meetingID) {
+  const groupMeetingShareoutModel = await getModel("GroupMeetingShareout");
 
-          if (result) {
-            resolve(result);
-          }
-        }
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  });
+  try {
+    const groupShareouts = await groupMeetingShareoutModel
+      .find({
+        $and: [
+          {
+            meeting: meetingID,
+          },
+        ],
+      })
+      .toArray();
+
+    return groupShareouts;
+  } catch (err) {
+    console.log(err);
+  }
 }
 
-module.exports = { fetchLoansByGroup, fetchAccountDataByGroup, fetchLoanData, fetchBoxBalanceData };
+module.exports = {
+  fetchLoansByGroup,
+  fetchAccountDataByGroup,
+  fetchBoxBalanceData,
+  fetchGroupShareouts,
+};

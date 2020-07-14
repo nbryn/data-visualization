@@ -15,21 +15,18 @@ const GroupMeetingStatesArray = [
   GroupMeetingState.ENDED,
 ];
 
-const groupMeetingSchema = new Schema(
-  {
-    group: { type: mongoose.Schema.Types.ObjectId, ref: "Group" },
-    registrationDate: Date,
-    cycleNumber: Number,
-    meetingDay: Date,
-    meetingEnded: Date,
-    meetingNumber: Number,
-    state: {
-      type: String,
-      enum: GroupMeetingStatesArray,
-      default: GroupMeetingState.CREATING,
-    },
+const groupMeetingSchema = new Schema({
+  group: { type: mongoose.Schema.Types.ObjectId, ref: "Group" },
+  registrationDate: Date,
+  cycleNumber: Number,
+  meetingDay: Date,
+  meetingEnded: Date,
+  meetingNumber: Number,
+  state: {
+    type: String,
+    enum: GroupMeetingStatesArray,
+    default: GroupMeetingState.CREATING,
   },
-  { timestamps: true }
-);
+});
 
 module.exports = groupMeetingSchema;

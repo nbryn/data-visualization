@@ -5,7 +5,6 @@ const {
   getCurrencyStats,
   calculateShareStats,
   calculateEtbLoanStats,
-  calculateBoxBalanceStats
 } = require("./FinanceService");
 
 const financeResolvers = {

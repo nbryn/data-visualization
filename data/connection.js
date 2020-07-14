@@ -1,15 +1,21 @@
 const mongoose = require("mongoose");
 require("dotenv").config();
 
+const groupAccountSchema = require("../logic/entities/GroupAccount");
+const groupMeetingLoanSchema = require("../logic/entities/GroupMeetingLoan");
 const groupMeetingSchema = require("../logic/entities/GroupMeeting");
+const groupMeetingShareoutSchema = require("../logic/entities/GroupMeetingShareout");
 const groupMemberSchema = require("../logic/entities/GroupMember");
 const groupSchema = require("../logic/entities/Group");
 const userSchema = require("../logic/entities/User");
 
-let userModel;
-let groupModel;
+let groupAccountModel;
+let groupMeetingLoanModel;
 let groupMeetingModel;
+let groupMeetingShareoutModel;
 let groupMemberModel;
+let groupModel;
+let userModel;
 
 let connection;
 let isConnected;
@@ -18,13 +24,21 @@ async function getModel(model) {
   if (!isConnected) connection = await connectToDB();
 
   switch (model) {
-    case "User":
-      if (!userModel) userModel = connection.model("User", userSchema);
-      return userModel;
+    case "GroupAccount":
+      if (!groupAccountModel)
+        groupAccountModel = connection.model(
+          "GroupAccount",
+          groupAccountSchema
+        );
+      return groupAccountModel;
 
-    case "Group":
-      if (!groupModel) groupModel = connection.model("Group", groupSchema);
-      return groupModel;
+    case "GroupMeetingLoan":
+      if (!groupMeetingLoanModel)
+        groupMeetingLoanModel = connection.model(
+          "GroupMeetingLoan",
+          groupMeetingLoanSchema
+        );
+      return groupMeetingLoanModel;
 
     case "GroupMeeting":
       if (!groupMeetingModel)
@@ -32,12 +46,28 @@ async function getModel(model) {
           "GroupMeeting",
           groupMeetingSchema
         );
-      return groupModel;
-      
+      return groupMeetingModel;
+
+    case "GroupMeetingShareout":
+      if (!groupMeetingShareoutModel)
+        groupMeetingShareoutModel = connection.model(
+          "GroupMeetingShareout",
+          groupMeetingShareoutSchema
+        );
+      return groupMeetingLoanModel;
+
     case "GroupMember":
       if (!groupMemberModel)
-        groupModel = connection.model("GroupMember", groupMemberSchema);
+        groupMemberModel = connection.model("GroupMember", groupMemberSchema);
       return groupMemberModel;
+
+    case "Group":
+      if (!groupModel) groupModel = connection.model("Group", groupSchema);
+      return groupModel;
+      
+    case "User":
+      if (!userModel) userModel = connection.model("User", userSchema);
+      return userModel;
   }
 }
 

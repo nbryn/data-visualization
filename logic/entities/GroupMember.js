@@ -33,28 +33,25 @@ const GroupMemberRolesArray = [
   GroupMemberRole.MONEYCOUNTER,
 ];
 
-const groupMemberSchema = new Schema(
-  {
-    group: { type: mongoose.Schema.Types.ObjectId, ref: "Group" },
-    user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-    registrationDate: Date,
-    addedDate: Date,
-    memberNumber: Number,
-    ngoNumber: String,
-    groupRoles: [
-      {
-        type: String,
-        enum: GroupMemberRolesArray,
-        default: GroupMemberRole.MEMBER,
-      },
-    ],
-    state: {
+const groupMemberSchema = new Schema({
+  group: { type: mongoose.Schema.Types.ObjectId, ref: "Group" },
+  user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+  registrationDate: Date,
+  addedDate: Date,
+  memberNumber: Number,
+  ngoNumber: String,
+  groupRoles: [
+    {
       type: String,
-      enum: GroupMemberStatesArray,
-      default: GroupMemberState.ACTIVE,
+      enum: GroupMemberRolesArray,
+      default: GroupMemberRole.MEMBER,
     },
+  ],
+  state: {
+    type: String,
+    enum: GroupMemberStatesArray,
+    default: GroupMemberState.ACTIVE,
   },
-  { timestamps: true }
-);
+});
 
 module.exports = groupMemberSchema;

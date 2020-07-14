@@ -180,8 +180,6 @@ async function fetchNumberOfGroupsWith(currency) {
   }
 }
 
-
-
 async function fetchGroupsRegBefore(subtract) {
   const groupModel = await getModel("Group");
 
@@ -216,37 +214,28 @@ async function fetchGroupsRegBefore(subtract) {
   }
 }
 
-// async function fetchGroupShareouts(meetingID) {
-//   const groupModel = await getModel("Group");
+async function fetchLoanData() {
+  const groupModel = await getModel("Group");
 
-//     try {
-//       connection.db.groupModel(
-//         "groupmeetingshareouts",
-//         async (err, groupModel) => {
-//           if (err) {
-//             console.log(err);
-//           } else {
-//             const dbResult = await groupModel
-//               .find({
-//                 $and: [
-//                   {
-//                     meeting: meetingID,
-//                   },
-//                 ],
-//               })
-//               .toArray();
+  try {
+    const loanData = await groupModel
+      .aggregate([
+        {
+          $lookup: {
+            from: "groupaccounts",
+            localField: "_id",
+            foreignField: "group",
+            as: "shares",
+          },
+        },
+      ])
+      .toArray();
 
-//             if (dbResult) {
-//               resolve(dbResult);
-//             }
-//           }
-//         }
-//       );
-//     } catch (err) {
-//       console.log(err);
-//     }
-//   });
-// }
+    return loanData;
+  } catch (err) {
+    console.log(err);
+  }
+}
 
 module.exports = {
   fetchGroupByID,
@@ -260,4 +249,5 @@ module.exports = {
   fetchGroupsRegBefore,
   fetchNumberOfGroupsWith,
   fetchGroupMembersPerNGO,
+  fetchLoanData,
 };

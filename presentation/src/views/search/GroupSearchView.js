@@ -1,5 +1,6 @@
 import { connect } from "react-redux";
-import { FormGroup, FormControl, ControlLabel, Button } from "react-bootstrap";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import { Button, ControlLabel, FormGroup, FormControl } from "react-bootstrap";
 import { Grid, Row } from "react-bootstrap";
 import React, { Component } from "react";
 
@@ -18,8 +19,8 @@ class SearchView extends Component {
     super(props);
 
     this.state = {
+      loading: false,
       searchString: "",
-      renderGroupData: false,
       groupData: [],
     };
 
@@ -30,6 +31,10 @@ class SearchView extends Component {
   async onSubmit(e) {
     e.preventDefault();
     const { searchString } = this.state;
+
+    this.setState({
+      loading: true,
+    });
 
     await this.props.fetchGroupData(`"${searchString}"`);
 
@@ -52,7 +57,7 @@ class SearchView extends Component {
     });
 
     this.setState({
-      renderGroupData: true,
+      loading: false,
       groupData,
     });
   }
@@ -63,7 +68,7 @@ class SearchView extends Component {
     });
   }
   render() {
-    const { groupData, renderGroupData, searchString } = this.state;
+    const { groupData, searchString, loading } = this.state;
 
     const columns = [
       {
@@ -98,7 +103,8 @@ class SearchView extends Component {
                       </Button>
                     </form>
                   </div>
-                  {renderGroupData && (
+                  {loading && <CircularProgress className="spinner" />}
+                  {groupData.length !== 0 && (
                     <InfoPage
                       groupData={groupData}
                       columns={columns}

@@ -1,20 +1,19 @@
-import React, { Component } from "react";
 import BootstrapTable from "react-bootstrap-table-next";
-import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit";
-import paginationFactory from "react-bootstrap-table2-paginator";
-
-import { Grid, Row } from "react-bootstrap";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import { connect } from "react-redux";
+import { Grid, Row } from "react-bootstrap";
+import React, { Component } from "react";
+import paginationFactory from "react-bootstrap-table2-paginator";
+import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit";
 
 import {
   infoPageColumn1,
   infoPageColumn2,
   infoPageColumn3,
 } from "../../util/InfoPageGroupColumns";
-
+import Header from "../../components/navigation/Header";
 import InfoPage from "../../components/common/InfoPage";
 import Sidebar from "../../components/navigation/Sidebar";
-import Header from "../../components/navigation/Header";
 
 import { fetchGroupsByNGO } from "../../redux/actions/ngo/NGOGroupsActions";
 
@@ -23,7 +22,6 @@ class NGOView extends Component {
     super(props);
 
     this.state = {
-      renderGroupData: false,
       allGroups: [],
     };
   }
@@ -62,7 +60,7 @@ class NGOView extends Component {
   }
   render() {
     const { SearchBar } = Search;
-    const { allGroups, groupData, renderGroupData } = this.state;
+    const { allGroups, groupData } = this.state;
 
     const selectRow = {
       mode: "radio",
@@ -75,7 +73,6 @@ class NGOView extends Component {
         }
 
         this.setState({
-          renderGroupData: true,
           groupData: data,
         });
       },
@@ -149,7 +146,8 @@ class NGOView extends Component {
                     </ToolkitProvider>
                   </div>
                 </Row>
-                {renderGroupData && (
+                {allGroups.length === 0 && <CircularProgress />}
+                {groupData && (
                   <InfoPage
                     groupData={groupData}
                     columns={columnsInfoPageMembers}

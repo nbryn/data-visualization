@@ -1,6 +1,7 @@
 import React, { Component } from "react";
+import { Cell, PieChart, Pie, ResponsiveContainer } from "recharts";
 import { Col } from "react-bootstrap";
-import { ResponsiveContainer, Cell, PieChart, Pie } from "recharts";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 class CircleChart extends Component {
   constructor(props) {
@@ -32,22 +33,28 @@ class CircleChart extends Component {
               <p>{title}</p>
             </div>
           </Col>
-          <PieChart width={350} height={300}>
-            <Pie
-              label={this.renderLabel}
-              dataKey="value"
-              nameKey="name"
-              data={data}
-              cx="50%"
-              cy="50%"
-              outerRadius={100}
-              fill="#82ca9d"
-            >
-              {data.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={colors[index]} />
-              ))}
-            </Pie>
-          </PieChart>
+          {data.length === 0 ? (
+            <div className="spinner">
+              <CircularProgress />{" "}
+            </div>
+          ) : (
+            <PieChart width={350} height={300}>
+              <Pie
+                label={this.renderLabel}
+                dataKey="value"
+                nameKey="name"
+                data={data}
+                cx="50%"
+                cy="50%"
+                outerRadius={100}
+                fill="#82ca9d"
+              >
+                {data.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={colors[index]} />
+                ))}
+              </Pie>
+            </PieChart>
+          )}
         </div>
       </ResponsiveContainer>
     );

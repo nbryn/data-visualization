@@ -28,6 +28,7 @@ async function fetchGroupStats(groupBy) {
       $sort: { count: -1 },
     },
   ]);
+
   return groupStats;
 }
 
@@ -46,6 +47,7 @@ async function fetchGroupMembersPerNGO() {
       },
     },
   ]);
+
   return groupMembersPerNGO;
 }
 
@@ -80,6 +82,7 @@ async function fetchGroupSizeData() {
       },
     },
   ]);
+
   return groupSizeData;
 }
 
@@ -104,6 +107,7 @@ async function fetchGroupMeetingData() {
       },
     },
   ]);
+
   return groupMeetingData;
 }
 
@@ -153,6 +157,8 @@ async function fetchGroupsRegBefore(subtract) {
       result.push(group);
     }
   });
+
+  return result;
 }
 
 async function fetchLoanData() {
@@ -168,6 +174,7 @@ async function fetchLoanData() {
       },
     },
   ]);
+
   return loanData;
 }
 

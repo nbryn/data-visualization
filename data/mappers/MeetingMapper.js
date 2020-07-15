@@ -8,6 +8,7 @@ async function fetchAllMeetings() {
       $match: { state: "ENDED" },
     },
   ]);
+
   return allMeetingData;
 }
 
@@ -23,6 +24,7 @@ async function fetchGroupMeetingsSince(groupID, subtract) {
       },
     ],
   });
+
   return groupMeetingsSince;
 }
 

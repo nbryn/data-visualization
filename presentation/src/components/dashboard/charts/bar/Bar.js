@@ -1,15 +1,14 @@
-import React, { Component } from "react";
-
-import { Col } from "react-bootstrap";
-
 import {
   BarChart,
   Bar,
-  XAxis,
-  YAxis,
   CartesianGrid,
   ResponsiveContainer,
+  XAxis,
+  YAxis,
 } from "recharts";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import { Col } from "react-bootstrap";
+import React, { Component } from "react";
 
 class Barr extends Component {
   render() {
@@ -22,22 +21,28 @@ class Barr extends Component {
               <p>{title}</p>
             </div>
           </Col>
-          <BarChart
-            width={400}
-            height={300}
-            data={data}
-            margin={{
-              top: 5,
-              right: 30,
-              left: 20,
-              bottom: 5,
-            }}
-          >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis label={xLabel} dataKey="name" />
-            <YAxis label={yLabel} />
-            <Bar dataKey="value" fill={color} />
-          </BarChart>
+          {data.length === 0 ? (
+            <div className="spinner">
+              <CircularProgress />
+            </div>
+          ) : (
+            <BarChart
+              width={400}
+              height={300}
+              data={data}
+              margin={{
+                top: 5,
+                right: 30,
+                left: 20,
+                bottom: 5,
+              }}
+            >
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis label={xLabel} dataKey="name" />
+              <YAxis label={yLabel} />
+              <Bar dataKey="value" fill={color} />
+            </BarChart>
+          )}
         </div>
       </ResponsiveContainer>
     );

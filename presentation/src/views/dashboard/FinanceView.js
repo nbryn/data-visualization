@@ -5,7 +5,7 @@ import React, { Component } from "react";
 import { fetchFinanceStats } from "../../redux/actions/kpi/FinanceStatsAction";
 import { getCurrentTime } from "../../util/Date";
 import Header from "../../components/navigation/Header";
-import { KPICard } from "../../components/dashboard/common/KPICard";
+import { KPICard } from "../../components/dashboard/kpi/KPICard";
 import LastMonthBar from "../../components/dashboard/charts/bar/LastMonthBar";
 import LastYearBar from "../../components/dashboard/charts/bar/LastYearBar";
 import Sidebar from "../../components/navigation/Sidebar";

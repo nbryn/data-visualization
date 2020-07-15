@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import Spinner from "react-bootstrap/Spinner";
+
 import Barr from "./Bar";
 
 class LastMonthBar extends Component {
@@ -32,6 +34,8 @@ class LastMonthBar extends Component {
     const { title, yLabel, xLabel, color } = this.props;
     const { data } = this.state;
 
+    console.log(data.length);
+
     const yLabelConfig = {
       value: yLabel,
       angle: -90,
@@ -41,6 +45,7 @@ class LastMonthBar extends Component {
 
     return (
       <div className="card-circle card-stats">
+        
         <Barr
           title={title}
           data={data}

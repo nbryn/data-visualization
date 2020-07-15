@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import React, { Component } from "react";
 import { Grid, Row, Col } from "react-bootstrap";
-import { KPICard } from "../../components/dashboard/common/KPICard";
+import { KPICard } from "../../components/dashboard/kpi/KPICard";
 
 import { fetchEngagementStats } from "../../redux/actions/kpi/EngagementStatsAction";
 import Header from "../../components/navigation/Header";

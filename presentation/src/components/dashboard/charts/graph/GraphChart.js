@@ -1,10 +1,11 @@
 import React, { Component } from "react";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import { Col } from "react-bootstrap";
 import {
-  ResponsiveContainer,
+  CartesianGrid,
   LineChart,
   Line,
-  CartesianGrid,
+  ResponsiveContainer,
   YAxis,
   XAxis,
 } from "recharts";
@@ -20,17 +21,23 @@ class GraphChart extends Component {
               <p>{title}</p>
             </div>
           </Col>
-          <LineChart width={350} height={300} data={data}>
-            <XAxis label={xLabel} dataKey="name" />
-            <YAxis label={yLabel} dataKey="value" />
-            <CartesianGrid stroke="#eee" strokeDasharray="5 5" />
-            <Line
-              strokeWidth={3}
-              type="monotone"
-              dataKey="value"
-              stroke={stroke}
-            />
-          </LineChart>
+          {data.length === 0 ? (
+            <div className="spinner">
+              <CircularProgress />
+            </div>
+          ) : (
+            <LineChart width={350} height={300} data={data}>
+              <XAxis label={xLabel} dataKey="name" />
+              <YAxis label={yLabel} dataKey="value" />
+              <CartesianGrid stroke="#eee" strokeDasharray="5 5" />
+              <Line
+                strokeWidth={3}
+                type="monotone"
+                dataKey="value"
+                stroke={stroke}
+              />
+            </LineChart>
+          )}
         </div>
       </ResponsiveContainer>
     );

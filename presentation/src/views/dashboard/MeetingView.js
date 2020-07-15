@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Grid, Row, Col } from "react-bootstrap";
-import { KPICard } from "../../components/dashboard/common/KPICard";
+import { KPICard } from "../../components/dashboard/kpi/KPICard";
 
 import Sidebar from "../../components/navigation/Sidebar";
 import Header from "../../components/navigation/Header";

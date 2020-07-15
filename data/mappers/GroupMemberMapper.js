@@ -45,6 +45,7 @@ async function fetchGroupMemberByUser() {
       },
     },
   ]);
+  
   return groupMemberUsers;
 }
 

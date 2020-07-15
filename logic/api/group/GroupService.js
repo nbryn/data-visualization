@@ -162,7 +162,7 @@ async function retrieveGroupData(group) {
   const accountData = await fetchAccountDataByGroup(group._id);
   const loans = await fetchLoansByGroup(group._id);
   const lastMeetingData = await fetchByID(
-    "groupmeetings",
+    "GroupMeeting",
     group.meetings[group.meetings.length - 1]
   );
   const memberIDs = await fetchAllMemberIDsFromGroup(group._id);
@@ -204,7 +204,7 @@ async function retrieveGroupData(group) {
 async function mapIDtoUser(users) {
   const result = await Promise.all(
     await users.map(async (element) => {
-      const memberInfo = await fetchByID("users", element.user);
+      const memberInfo = await fetchByID("User", element.user);
 
       return {
         id: element.user,

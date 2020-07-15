@@ -3,10 +3,7 @@ const { getModel } = require("../connection");
 async function fetchAccountDataByGroup(groupID) {
   const groupAccountModel = await getModel("GroupAccount");
 
-  const accountData = await groupAccountModel.find(
-    { group: groupID },
-    { projection: { totalShares: 1, boxBalance: 1 } }
-  );
+  const accountData = await groupAccountModel.find({ group: groupID });
 
   return accountData;
 }

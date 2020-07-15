@@ -10,12 +10,9 @@ async function fetchAllGroupMembers() {
 async function fetchAllMemberIDsFromGroup(groupID) {
   const groupMemberModel = await getModel("GroupMember");
 
-  const memberIDs = await groupMemberModel.find(
-    {
-      group: groupID,
-    },
-    { projection: { user: 1 } }
-  );
+  const memberIDs = await groupMemberModel.find({
+    group: groupID,
+  });
 
   return memberIDs;
 }
@@ -45,19 +42,16 @@ async function fetchGroupMemberByUser() {
       },
     },
   ]);
-  
+
   return groupMemberUsers;
 }
 
 async function fetchUserIDByRole(role, groupID) {
   const groupMemberModel = await getModel("GroupMember");
 
-  const userIDs = await groupMemberModel.find(
-    {
-      $and: [{ group: groupID }, { groupRoles: role }],
-    },
-    { projection: { user: 1 } }
-  );
+  const userIDs = await groupMemberModel.find({
+    $and: [{ group: groupID }, { groupRoles: role }],
+  });
   if (role === "(.*?)") {
     console.log(dbResult);
   }

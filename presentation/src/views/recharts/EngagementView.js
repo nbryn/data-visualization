@@ -1,15 +1,15 @@
 import { connect } from "react-redux";
 import React, { Component } from "react";
 import { Grid, Row, Col } from "react-bootstrap";
-import { KPICard } from "../../components/dashboard/kpi/KPICard";
+import { KPICard } from "../../components/kpi/KPICard";
 
 import { fetchEngagementStats } from "../../redux/actions/kpi/EngagementStatsAction";
 import Header from "../../components/navigation/Header";
 import { getCurrentTime } from "../../util/Date";
-import BarContainer from "../../components/dashboard/recharts/bar/BarChartContainer";
+import BarContainer from "../../components/recharts/BarChartContainer";
 import Sidebar from "../../components/navigation/Sidebar";
-import SizeChart from "../../components/dashboard/recharts/circle/SizeChart";
-import TotalGraph from "../../components/dashboard/recharts/graph/TotalGraph";
+import SizeChart from "../../components/recharts/SizeChart";
+import TotalGraph from "../../components/recharts/LineChartContainer";
 
 class EngagementView extends Component {
   constructor(props) {

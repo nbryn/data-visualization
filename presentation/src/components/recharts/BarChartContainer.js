@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import BarChart from "./BarChart";
-import { convertNumberToMonth } from "../../../../util/Date";
+import { convertNumberToMonth } from "../../util/Date";
 
 class BarChartContainer extends Component {
   constructor(props) {
@@ -28,13 +28,12 @@ class BarChartContainer extends Component {
         newState = data.map((element) => {
           let date =
             type === "Year"
-              ? convertNumberToMonth(element.month, type)
+              ? convertNumberToMonth(element.month) +
+                " '" +
+                element.year.toString().substring(2)
               : element.day.day + "/" + element.day.month;
           return {
-            name:
-              type === "Year"
-                ? date + " '" + element.year.toString().substring(2)
-                : date,
+            name: date,
             value: element.count,
           };
         });

@@ -2,13 +2,13 @@ import { Col, Grid, Row } from "react-bootstrap";
 import { connect } from "react-redux";
 import React, { Component } from "react";
 
-import BarChartContainer from "../../components/dashboard/recharts/bar/BarChartContainer";
+import BarChartContainer from "../../components/recharts/BarChartContainer";
 import { fetchFinanceStats } from "../../redux/actions/kpi/FinanceStatsAction";
 import { getCurrentTime } from "../../util/Date";
 import Header from "../../components/navigation/Header";
-import { KPICard } from "../../components/dashboard/kpi/KPICard";
+import { KPICard } from "../../components/kpi/KPICard";
 import Sidebar from "../../components/navigation/Sidebar";
-import TotalGraph from "../../components/dashboard/recharts/graph/TotalGraph";
+import LineChartContainer from "../../components/recharts/LineChartContainer";
 
 
 class FinanceView extends Component {
@@ -95,7 +95,7 @@ class FinanceView extends Component {
               </Row>
               <Row>
                 <Col lg={4} sm={6}>
-                  <TotalGraph
+                  <LineChartContainer
                     title="Total Loans"
                     xLabel="Months"
                     yLabel="Loans"

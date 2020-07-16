@@ -2,14 +2,14 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Grid, Row, Col } from "react-bootstrap";
 
-import BarChartContainer from "../../components/dashboard/recharts/bar/BarChartContainer";
+import BarChartContainer from "../../components/recharts/BarChartContainer";
 import { fetchGeneralCountryStats } from "../../redux/actions/country/GeneralCountryStatsAction";
 import { fetchMeetingStats } from "../../redux/actions/kpi/MeetingStatsAction";
 import { getCurrentTime } from "../../util/Date";
 import Header from "../../components/navigation/Header";
-import { KPICard } from "../../components/dashboard/kpi/KPICard";
+import { KPICard } from "../../components/kpi/KPICard";
 import Sidebar from "../../components/navigation/Sidebar";
-import TotalGraph from "../../components/dashboard/recharts/graph/TotalGraph";
+import LineChartContainer from "../../components/recharts/LineChartContainer";
 
 
 class MeetingView extends Component {
@@ -38,6 +38,7 @@ class MeetingView extends Component {
       meetingsPerGroup,
       sharesPerMeeting,
     } = meetingStats;
+    
     const lastMonth = meetingsLastMonth.data;
 
     let lastUpdatedAt = getCurrentTime();
@@ -104,7 +105,7 @@ class MeetingView extends Component {
 
               <Row>
                 <Col lg={4} sm={6}>
-                  <TotalGraph
+                  <LineChartContainer
                     title="Total Meetings"
                     stroke="#228b22"
                     data={this.state.meetingsLastYear}

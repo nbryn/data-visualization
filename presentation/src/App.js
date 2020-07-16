@@ -1,21 +1,23 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Provider } from "react-redux";
-import Store from "./Store";
+import store from "./redux/store.ts";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./assets/sass/dashboard.scss?v=1.3.0";
 import "./assets/fonts/pe-icon-7-stroke.css";
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 
-import EngagementView from "./views/dashboard/EngagementView";
-import FinanceView from "./views/dashboard/FinanceView";
-import GroupView from "./views/dashboard/GroupView";
-import MainView from "./views/dashboard/MainView";
-import MeetingView from "./views/dashboard/MeetingView";
-import UserView from "./views/dashboard/UserView";
+import EngagementView from "./views/recharts/EngagementView";
+import FinanceView from "./views/recharts/FinanceView";
+import GroupView from "./views/recharts/GroupView";
+import RechartsMainView from "./views/recharts/MainView";
+import MeetingView from "./views/recharts/MeetingView";
+import UserView from "./views/recharts/UserView";
 import NGOView from "./views/ngo/NGOView";
 import GroupSearchView from "./views/search/GroupSearchView";
+
+import MainViews from "./views/chartjs/MainView";
 
 import Signin from "./views/user/Signin.js";
 import Profile from "./views/user/UserProfile.js";
@@ -25,12 +27,14 @@ import NotFound from "./components/navigation/NotFound";
 class App extends Component {
   render() {
     return (
-      <Provider store={Store}>
+      <Provider store={store}>
         <Router>
           <Switch>
             <Route exact path="/" component={Signin} />
 
-            <SecureRoute exact path="/dashboard" component={MainView} />
+            <SecureRoute exact path="/mainviews" component={MainViews} />
+
+            <SecureRoute exact path="/dashboard" component={RechartsMainView} />
             <SecureRoute exact path="/engagement" component={EngagementView} />
             <SecureRoute exact path="/finance" component={FinanceView} />
             <SecureRoute exact path="/groups" component={GroupView} />

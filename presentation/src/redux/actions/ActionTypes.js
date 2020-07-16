@@ -9,6 +9,8 @@ export const FINANCE_STATS = "FINANCE_STATS";
 export const GROUP_STATS = "GROUP_STATS";
 export const MEETING_STATS = "MEETING_STATS";
 export const USERS_STATS = "USERS_STATS";
+export const USERS_LAST_MONTH = "USERS_LAST_MONTH";
+export const USERS_LAST_YEAR = "USERS_LAST_YEAR";
 
 // ----- NGO ------- //
 export const NGO_GROUPS = "NGO_GROUPS";

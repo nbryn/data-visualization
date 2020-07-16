@@ -36,3 +36,4 @@ export const fetchGroupStats = () => async (dispatch) => {
     payload: response.data.data.groupStats,
   });
 };
+

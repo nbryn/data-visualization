@@ -4,35 +4,44 @@ import {
   FINANCE_STATS,
   GROUP_STATS,
   MEETING_STATS,
-  USERS_STATS
+  USERS_STATS,
+  USERS_LAST_MONTH,
+  USERS_LAST_YEAR,
 } from "../actions/ActionTypes";
 
-export default function(state = {}, action) {
+export default function (state = {}, action) {
   switch (action.type) {
     case KEY_STATS:
       return Object.assign({}, state, {
-        keyStats: action.payload
+        keyStats: action.payload,
       });
     case ENGAGEMENT_STATS:
       return Object.assign({}, state, {
-        engagementStats: action.payload
+        engagementStats: action.payload,
       });
     case FINANCE_STATS:
       return Object.assign({}, state, {
-        financeStats: action.payload
+        financeStats: action.payload,
       });
     case GROUP_STATS:
       return Object.assign({}, state, {
-        groupStats: action.payload
+        groupStats: action.payload,
       });
     case MEETING_STATS:
       return Object.assign({}, state, {
-        meetingStats: action.payload
+        meetingStats: action.payload,
       });
-
     case USERS_STATS:
       return Object.assign({}, state, {
-        userStats: action.payload
+        userStats: action.payload,
+      });
+    case USERS_LAST_MONTH:
+      return Object.assign({}, state, {
+        usersLastMonth: action.payload.usersLastMonth.data,
+      });
+    case USERS_LAST_YEAR:
+      return Object.assign({}, state, {
+        usersLastYear: action.payload.usersLastYear.data,
       });
 
     default:

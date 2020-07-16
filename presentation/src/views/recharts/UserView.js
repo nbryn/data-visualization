@@ -2,18 +2,16 @@ import { connect } from "react-redux";
 import { Col, Grid, Row } from "react-bootstrap";
 import React, { Component } from "react";
 
-import BarChartContainer from "../../components/dashboard/recharts/bar/BarChartContainer";
-import { fetchUserStats } from "../../redux/actions/kpi/UserStatsAction";
+import BarChartContainer from "../../components/recharts/BarChartContainer";
+import { fetchUserStats } from "../../redux/actions/kpi/UserActions";
 import { fetchGeneralCountryStats } from "../../redux/actions/country/GeneralCountryStatsAction";
 import { fetchNGOStats } from "../../redux/actions/ngo/NGOStatsAction";
 import { getCurrentTime } from "../../util/Date";
 import Header from "../../components/navigation/Header";
-import { KPICard } from "../../components/dashboard/kpi/KPICard";
+import { KPICard } from "../../components/kpi/KPICard";
 import Sidebar from "../../components/navigation/Sidebar";
-import SizeChart from "../../components/dashboard/recharts/circle/SizeChart";
-import TotalGraph from "../../components/dashboard/recharts/graph/TotalGraph";
-
-
+import SizeChart from "../../components/recharts/SizeChart";
+import LineChartContainer from "../../components/recharts/LineChartContainer";
 
 class UserView extends Component {
   constructor(props) {
@@ -109,7 +107,7 @@ class UserView extends Component {
 
               <Row>
                 <Col lg={4} sm={6}>
-                  <TotalGraph
+                  <LineChartContainer
                     title="Total Users"
                     stroke="#ff0000"
                     data={this.state.usersLastYear}

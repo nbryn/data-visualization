@@ -6,6 +6,7 @@ import Logo from "../../assets/img/dashboard.jpeg";
 class Sidebar extends Component {
   render() {
     const navLinks = {
+      chartjsdashboard: "/mainviews",
       dashboard: "/dashboard",
       groups: "/groups",
       users: "/users",

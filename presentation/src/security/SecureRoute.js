@@ -8,15 +8,15 @@ class SecureRoute extends Component {
     const token = localStorage.getItem("Token");
     return (
       <Route>
-        {token ? <Component {...this.props} /> : <Redirect to="/" />} />
+        {token ? <Component {...this.props} /> : <Redirect to="/" />}
       </Route>
     );
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    user: state.user
+    user: state.user,
   };
 };
 

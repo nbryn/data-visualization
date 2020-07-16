@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import LineChart from "./LineChart.js";
 
-import { convertNumberToMonth } from "../../../../util/Date";
+import { convertNumberToMonth } from "../../util/Date";
 
-class TotalGraph extends Component {
+class LineChartContainer extends Component {
   constructor(props) {
     super(props);
 
@@ -57,4 +57,4 @@ class TotalGraph extends Component {
   }
 }
 
-export default TotalGraph;
+export default LineChartContainer;

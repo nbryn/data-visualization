@@ -2,15 +2,14 @@ import { connect } from "react-redux";
 import { Col, Grid, Row } from "react-bootstrap";
 import React, { Component } from "react";
 
-import BarChartContainer from "../../components/dashboard/recharts/bar/BarChartContainer";
+import BarChartContainer from "../../components/recharts/BarChartContainer";
 import { fetchKeyStats } from "../../redux/actions/kpi/KeyStatsAction";
 import { getCurrentTime } from "../../util/Date";
 import Header from "../../components/navigation/Header";
-import { KPICard } from "../../components/dashboard/kpi/KPICard";
+import { KPICard } from "../../components/kpi/KPICard";
 import Sidebar from "../../components/navigation/Sidebar";
-import SizeChart from "../../components/dashboard/recharts/circle/SizeChart";
-import TotalGraph from "../../components/dashboard/recharts/graph/TotalGraph";
-
+import SizeChart from "../../components/recharts/SizeChart";
+import LineChartContainer from "../../components/recharts/LineChartContainer";
 
 class MainView extends Component {
   constructor(props) {
@@ -62,7 +61,7 @@ class MainView extends Component {
       shareTotal: { text: "Total Shares", icon: "pe-7s-wallet text-success" },
     };
 
-    const totalGraphs = {
+    const LineChartContainers = {
       usersLastYear: {
         title: "Total Users",
         yLabel: "Users",
@@ -103,13 +102,13 @@ class MainView extends Component {
               </Row>
 
               <Row>
-                {Object.keys(totalGraphs).map((element, index) => (
+                {Object.keys(LineChartContainers).map((element, index) => (
                   <Col lg={4} sm={6}>
-                    <TotalGraph
-                      title={totalGraphs[element].title}
+                    <LineChartContainer
+                      title={LineChartContainers[element].title}
                       xLabel="Months"
-                      yLabel={totalGraphs[element].yLabel}
-                      stroke={totalGraphs[element].stroke}
+                      yLabel={LineChartContainers[element].yLabel}
+                      stroke={LineChartContainers[element].stroke}
                       data={this.state[element]}
                     />
                   </Col>

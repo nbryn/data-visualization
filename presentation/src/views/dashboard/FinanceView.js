@@ -1,16 +1,15 @@
+import { Col, Grid, Row } from "react-bootstrap";
 import { connect } from "react-redux";
-import { Grid, Row, Col } from "react-bootstrap";
 import React, { Component } from "react";
 
+import BarChartContainer from "../../components/dashboard/recharts/bar/BarChartContainer";
 import { fetchFinanceStats } from "../../redux/actions/kpi/FinanceStatsAction";
 import { getCurrentTime } from "../../util/Date";
 import Header from "../../components/navigation/Header";
 import { KPICard } from "../../components/dashboard/kpi/KPICard";
-import LastMonthBar from "../../components/dashboard/charts/bar/LastMonthBar";
-import LastYearBar from "../../components/dashboard/charts/bar/LastYearBar";
 import Sidebar from "../../components/navigation/Sidebar";
-import TopBar from "../../components/dashboard/charts/bar/TopBar";
-import TotalGraph from "../../components/dashboard/charts/graph/TotalGraph";
+import TotalGraph from "../../components/dashboard/recharts/graph/TotalGraph";
+
 
 class FinanceView extends Component {
   constructor(props) {
@@ -105,7 +104,8 @@ class FinanceView extends Component {
                   />
                 </Col>
                 <Col lg={4} sm={6}>
-                  <TopBar
+                  <BarChartContainer
+                    type="Top"
                     title="Most Shares"
                     color="#1828E8"
                     xLabel="Group Name"
@@ -115,7 +115,8 @@ class FinanceView extends Component {
                   />
                 </Col>
                 <Col lg={4} sm={6}>
-                  <TopBar
+                  <BarChartContainer
+                    type="Top"
                     title="ETB On Loan"
                     color="#2196f3"
                     xLabel="Group Name"
@@ -127,7 +128,8 @@ class FinanceView extends Component {
               </Row>
               <Row>
                 <Col lg={4} sm={6}>
-                  <LastYearBar
+                  <BarChartContainer
+                    type="Year"
                     title="Loans Per Month"
                     color="#8918E8"
                     xLabel="Month"
@@ -136,7 +138,8 @@ class FinanceView extends Component {
                   />
                 </Col>
                 <Col lg={4} sm={6}>
-                  <LastMonthBar
+                  <BarChartContainer
+                    type="Month"
                     title="Loans Per Day"
                     color="#ff0000"
                     xLabel="Day"
@@ -145,7 +148,8 @@ class FinanceView extends Component {
                   />
                 </Col>
                 <Col lg={4} sm={6}>
-                  <TopBar
+                  <BarChartContainer
+                    type="Top"
                     title="Currencies"
                     color="#2196f3"
                     xLabel="Currency"

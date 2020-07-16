@@ -28,7 +28,7 @@ export const fetchKeyStats = () => async dispatch => {
   });
 };
 
-async function fetchKeyGroupStats() {
+export async function fetchKeyGroupStats() {
   const groupQuery = `query{
     groupStats{
       groupTotal    

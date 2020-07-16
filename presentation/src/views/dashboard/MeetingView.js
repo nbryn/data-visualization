@@ -1,20 +1,16 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Grid, Row, Col } from "react-bootstrap";
-import { KPICard } from "../../components/dashboard/kpi/KPICard";
 
-import Sidebar from "../../components/navigation/Sidebar";
-import Header from "../../components/navigation/Header";
-
-import TotalGraph from "../../components/dashboard/charts/graph/TotalGraph";
-
-import TopBar from "../../components/dashboard/charts/bar/TopBar";
-import LastMonthBar from "../../components/dashboard/charts/bar/LastMonthBar";
-import LastYearBar from "../../components/dashboard/charts/bar/LastYearBar";
-
+import BarChartContainer from "../../components/dashboard/recharts/bar/BarChartContainer";
 import { fetchGeneralCountryStats } from "../../redux/actions/country/GeneralCountryStatsAction";
 import { fetchMeetingStats } from "../../redux/actions/kpi/MeetingStatsAction";
 import { getCurrentTime } from "../../util/Date";
+import Header from "../../components/navigation/Header";
+import { KPICard } from "../../components/dashboard/kpi/KPICard";
+import Sidebar from "../../components/navigation/Sidebar";
+import TotalGraph from "../../components/dashboard/recharts/graph/TotalGraph";
+
 
 class MeetingView extends Component {
   constructor(props) {
@@ -115,7 +111,8 @@ class MeetingView extends Component {
                   />
                 </Col>
                 <Col lg={4} sm={6}>
-                  <TopBar
+                  <BarChartContainer
+                    type="Top"
                     title="Meetings Per Group"
                     xLabel="Group"
                     yLabel="Meetings"
@@ -125,7 +122,8 @@ class MeetingView extends Component {
                   />
                 </Col>
                 <Col lg={4} sm={6}>
-                  <TopBar
+                  <BarChartContainer
+                    type="Top"
                     title="Meetings Per Country"
                     xLabel="Country"
                     yLabel="Meetings"
@@ -137,7 +135,8 @@ class MeetingView extends Component {
               </Row>
               <Row>
                 <Col lg={4} sm={6}>
-                  <LastMonthBar
+                  <BarChartContainer
+                    type="Month"
                     title="Meetings Last Month"
                     xLabel="Day"
                     yLabel="Meetings"
@@ -147,7 +146,8 @@ class MeetingView extends Component {
                 </Col>
 
                 <Col lg={4} sm={6}>
-                  <LastYearBar
+                  <BarChartContainer
+                    type="Year"
                     title="Meetings Last Year"
                     xLabel="Month"
                     yLabel="Meetings"
@@ -156,7 +156,8 @@ class MeetingView extends Component {
                   />
                 </Col>
                 <Col lg={4} sm={6}>
-                  <TopBar
+                  <BarChartContainer
+                    type="Top"
                     title="Meetings With Most Shares"
                     xLabel="Meeting"
                     yLabel="Shares"

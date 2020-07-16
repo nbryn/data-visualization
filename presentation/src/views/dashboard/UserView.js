@@ -1,22 +1,19 @@
-import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Grid, Row, Col } from "react-bootstrap";
-import { KPICard } from "../../components/dashboard/kpi/KPICard";
+import { Col, Grid, Row } from "react-bootstrap";
+import React, { Component } from "react";
 
-import Sidebar from "../../components/navigation/Sidebar";
-import Header from "../../components/navigation/Header";
-
-import TotalGraph from "../../components/dashboard/charts/graph/TotalGraph";
-import SizeChart from "../../components/dashboard/charts/circle/SizeChart";
-import LastMonthBar from "../../components/dashboard/charts/bar/LastMonthBar";
-import LastYearBar from "../../components/dashboard/charts/bar/LastYearBar";
-
+import BarChartContainer from "../../components/dashboard/recharts/bar/BarChartContainer";
 import { fetchUserStats } from "../../redux/actions/kpi/UserStatsAction";
 import { fetchGeneralCountryStats } from "../../redux/actions/country/GeneralCountryStatsAction";
 import { fetchNGOStats } from "../../redux/actions/ngo/NGOStatsAction";
-
 import { getCurrentTime } from "../../util/Date";
-import TopBar from "../../components/dashboard/charts/bar/TopBar";
+import Header from "../../components/navigation/Header";
+import { KPICard } from "../../components/dashboard/kpi/KPICard";
+import Sidebar from "../../components/navigation/Sidebar";
+import SizeChart from "../../components/dashboard/recharts/circle/SizeChart";
+import TotalGraph from "../../components/dashboard/recharts/graph/TotalGraph";
+
+
 
 class UserView extends Component {
   constructor(props) {
@@ -119,7 +116,8 @@ class UserView extends Component {
                   />
                 </Col>
                 <Col lg={4} sm={6}>
-                  <TopBar
+                  <BarChartContainer
+                    type="Top"
                     title="Users Per Country"
                     color="#1828E8"
                     xLabel="Country"
@@ -129,7 +127,8 @@ class UserView extends Component {
                   />
                 </Col>
                 <Col lg={4} sm={6}>
-                  <TopBar
+                  <BarChartContainer
+                    type="Top"
                     title="Users Per NGO"
                     color="#2196f3"
                     xLabel="NGO"
@@ -141,7 +140,8 @@ class UserView extends Component {
               </Row>
               <Row>
                 <Col lg={4} sm={6}>
-                  <LastMonthBar
+                  <BarChartContainer
+                    type="Month"
                     title="Users Per Day"
                     xLabel="Day"
                     yLabel="Users"
@@ -158,7 +158,8 @@ class UserView extends Component {
                 </Col>
 
                 <Col lg={4} sm={6}>
-                  <LastYearBar
+                  <BarChartContainer
+                    type="Year"
                     title="Users Per Month"
                     xLabel="Month"
                     yLabel="Users"

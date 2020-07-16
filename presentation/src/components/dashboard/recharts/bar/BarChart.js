@@ -1,5 +1,5 @@
 import {
-  BarChart,
+  BarChart as BChart,
   Bar,
   CartesianGrid,
   ResponsiveContainer,
@@ -10,7 +10,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import { Col } from "react-bootstrap";
 import React, { Component } from "react";
 
-class Barr extends Component {
+class BarChart extends Component {
   render() {
     const { data, color, yLabel, xLabel, title } = this.props;
     return (
@@ -26,7 +26,7 @@ class Barr extends Component {
               <CircularProgress />
             </div>
           ) : (
-            <BarChart
+            <BChart
               width={400}
               height={300}
               data={data}
@@ -41,7 +41,7 @@ class Barr extends Component {
               <XAxis label={xLabel} dataKey="name" />
               <YAxis label={yLabel} />
               <Bar dataKey="value" fill={color} />
-            </BarChart>
+            </BChart>
           )}
         </div>
       </ResponsiveContainer>
@@ -49,4 +49,4 @@ class Barr extends Component {
   }
 }
 
-export default Barr;
+export default BarChart;

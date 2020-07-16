@@ -6,10 +6,10 @@ import { KPICard } from "../../components/dashboard/kpi/KPICard";
 import { fetchEngagementStats } from "../../redux/actions/kpi/EngagementStatsAction";
 import Header from "../../components/navigation/Header";
 import { getCurrentTime } from "../../util/Date";
-import LastMonthBar from "../../components/dashboard/charts/bar/LastMonthBar";
+import BarContainer from "../../components/dashboard/recharts/bar/BarChartContainer";
 import Sidebar from "../../components/navigation/Sidebar";
-import SizeChart from "../../components/dashboard/charts/circle/SizeChart";
-import TotalGraph from "../../components/dashboard/charts/graph/TotalGraph";
+import SizeChart from "../../components/dashboard/recharts/circle/SizeChart";
+import TotalGraph from "../../components/dashboard/recharts/graph/TotalGraph";
 
 class EngagementView extends Component {
   constructor(props) {
@@ -84,7 +84,7 @@ class EngagementView extends Component {
               </Row>
               <Row>
                 <Col lg={4} sm={6}>
-                  <LastMonthBar title="Engagement" color="#228b22" data="" />
+                  <BarContainer title="Engagement" color="#228b22" data="" />
                 </Col>
                 <Col lg={4} sm={6}>
                   <SizeChart

@@ -1,22 +1,17 @@
-import React, { Component } from "react";
+import { Col, Grid, Row } from "react-bootstrap";
 import { connect } from "react-redux";
-import { Grid, Row, Col } from "react-bootstrap";
-import { KPICard } from "../../components/dashboard/kpi/KPICard";
+import React, { Component } from "react";
 
-import Sidebar from "../../components/navigation/Sidebar";
-import Header from "../../components/navigation/Header";
-
-import TotalGraph from "../../components/dashboard/charts/graph/TotalGraph";
-import SizeChart from "../../components/dashboard/charts/circle/SizeChart";
-
-import TopBar from "../../components/dashboard/charts/bar/TopBar";
-import LastMonthBar from "../../components/dashboard/charts/bar/LastMonthBar";
-import LastYearBar from "../../components/dashboard/charts/bar/LastYearBar";
-
+import BarChartContainer from "../../components/dashboard/recharts/bar/BarChartContainer";
 import { fetchGroupStats } from "../../redux/actions/kpi/GroupStatsAction";
 import { fetchNGOStats } from "../../redux/actions/ngo/NGOStatsAction";
 import { fetchGeneralCountryStats } from "../../redux/actions/country/GeneralCountryStatsAction";
 import { getCurrentTime } from "../../util/Date";
+import Header from "../../components/navigation/Header";
+import { KPICard } from "../../components/dashboard/kpi/KPICard";
+import Sidebar from "../../components/navigation/Sidebar";
+import SizeChart from "../../components/dashboard/recharts/circle/SizeChart";
+import TotalGraph from "../../components/dashboard/recharts/graph/TotalGraph";
 
 class GroupView extends Component {
   constructor(props) {
@@ -40,6 +35,8 @@ class GroupView extends Component {
     const { groupStats, groupsNGO, groupsCountry } = this.props;
     const lastMonth = groupStats.groupsLastMonth.data;
     const lastUpdatedAt = getCurrentTime();
+
+    console.log(groupStats);
 
     let groupsLastMonth = 0;
     let groupsLastYear = 0;
@@ -113,9 +110,10 @@ class GroupView extends Component {
                   />
                 </Col>
                 <Col lg={4} sm={6}>
-                  <TopBar
+                  <BarChartContainer
+                    type="Top"
                     title="Groups Per Country"
-                    xLabel="Countries"
+                    xLabel="Country"
                     yLabel="Groups"
                     color="#1828E8"
                     data={this.state.groupsPerCountry}
@@ -123,9 +121,10 @@ class GroupView extends Component {
                   />
                 </Col>
                 <Col lg={4} sm={6}>
-                  <TopBar
+                  <BarChartContainer
+                    type="Top"
                     title="Groups Per NGO"
-                    xLabel="NGOs"
+                    xLabel="NGO"
                     yLabel="Groups"
                     color="#ff0000"
                     data={this.state.groupsPerNGO}
@@ -135,10 +134,11 @@ class GroupView extends Component {
               </Row>
               <Row>
                 <Col lg={4} sm={6}>
-                  <LastMonthBar
+                  <BarChartContainer
+                    type="Month"
                     title="Groups Last Month"
                     color="#8918E8"
-                    xLabel="Days"
+                    xLabel="Day"
                     yLabel="Groups"
                     data={this.state.groupsLastMonth}
                   />
@@ -158,10 +158,11 @@ class GroupView extends Component {
                   />
                 </Col>
                 <Col lg={4} sm={6}>
-                  <LastYearBar
+                  <BarChartContainer
+                    type="Year"
                     title="Groups Last Year"
                     color="#2196f3"
-                    xLabel="Months"
+                    xLabel="Month"
                     yLabel="Groups"
                     data={this.state.groupsLastYear}
                   />

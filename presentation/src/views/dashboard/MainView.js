@@ -1,19 +1,16 @@
-import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Grid, Row, Col } from "react-bootstrap";
-import { KPICard } from "../../components/dashboard/kpi/KPICard";
+import { Col, Grid, Row } from "react-bootstrap";
+import React, { Component } from "react";
 
-import Sidebar from "../../components/navigation/Sidebar";
-import Header from "../../components/navigation/Header";
-
-import TotalGraph from "../../components/dashboard/charts/graph/TotalGraph";
-import LastYearBar from "../../components/dashboard/charts/bar/LastYearBar";
-import LastMonthBar from "../../components/dashboard/charts/bar/LastMonthBar";
-import SizeChart from "../../components/dashboard/charts/circle/SizeChart";
-
+import BarChartContainer from "../../components/dashboard/recharts/bar/BarChartContainer";
 import { fetchKeyStats } from "../../redux/actions/kpi/KeyStatsAction";
-
 import { getCurrentTime } from "../../util/Date";
+import Header from "../../components/navigation/Header";
+import { KPICard } from "../../components/dashboard/kpi/KPICard";
+import Sidebar from "../../components/navigation/Sidebar";
+import SizeChart from "../../components/dashboard/recharts/circle/SizeChart";
+import TotalGraph from "../../components/dashboard/recharts/graph/TotalGraph";
+
 
 class MainView extends Component {
   constructor(props) {
@@ -120,9 +117,10 @@ class MainView extends Component {
               </Row>
               <Row>
                 <Col lg={4} sm={6}>
-                  <LastMonthBar
+                  <BarChartContainer
+                    type="Month"
                     title="Groups Last Month"
-                    xLabel="Months"
+                    xLabel="Day"
                     yLabel="Groups"
                     color="#228b22"
                     data={this.state.groupsLastMonth}
@@ -137,7 +135,8 @@ class MainView extends Component {
                 </Col>
 
                 <Col lg={4} sm={6}>
-                  <LastYearBar
+                  <BarChartContainer
+                    type="Year"
                     title="Users Last Year"
                     xLabel="Months"
                     yLabel="Users"

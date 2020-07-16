@@ -3,14 +3,14 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import { Col } from "react-bootstrap";
 import {
   CartesianGrid,
-  LineChart,
   Line,
+  LineChart as Chart,
   ResponsiveContainer,
   YAxis,
   XAxis,
 } from "recharts";
 
-class GraphChart extends Component {
+class LineChart extends Component {
   render() {
     const { data, xLabel, yLabel, stroke, title } = this.props;
     return (
@@ -26,7 +26,7 @@ class GraphChart extends Component {
               <CircularProgress />
             </div>
           ) : (
-            <LineChart width={350} height={300} data={data}>
+            <Chart width={350} height={300} data={data}>
               <XAxis label={xLabel} dataKey="name" />
               <YAxis label={yLabel} dataKey="value" />
               <CartesianGrid stroke="#eee" strokeDasharray="5 5" />
@@ -36,11 +36,11 @@ class GraphChart extends Component {
                 dataKey="value"
                 stroke={stroke}
               />
-            </LineChart>
+            </Chart>
           )}
         </div>
       </ResponsiveContainer>
     );
   }
 }
-export default GraphChart;
+export default LineChart;

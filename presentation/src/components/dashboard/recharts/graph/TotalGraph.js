@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import GraphChart from "./GraphChart.js";
+import LineChart from "./LineChart.js";
 
 import { convertNumberToMonth } from "../../../../util/Date";
 
@@ -33,8 +33,8 @@ class TotalGraph extends Component {
     }
   }
   render() {
-    const {title, stroke, yLabel, xLabel } = this.props;
-    const {data} = this.state;
+    const { title, stroke, yLabel, xLabel } = this.props;
+    const { data } = this.state;
 
     const yLabelConfig = {
       value: yLabel,
@@ -45,7 +45,7 @@ class TotalGraph extends Component {
 
     return (
       <div className="card-graph card-stats">
-        <GraphChart
+        <LineChart
           title={title}
           data={data}
           xLabel={xLabelConfig}

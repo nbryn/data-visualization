@@ -11,7 +11,6 @@ export class KPICard extends Component {
       statsIconText,
       bigIcon,
     } = this.props;
-    console.log(statsValue);
     return (
       <div className="card card-stats">
         <div className="content">

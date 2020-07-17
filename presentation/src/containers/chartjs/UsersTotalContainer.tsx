@@ -1,44 +1,17 @@
-import React, { useEffect, useState } from "react";
-import {
-  Button,
-  Card,
-  CardActions,
-  CardContent,
-  Grid,
-} from "@material-ui/core";
-
-//import PeopleIcon from "@material-ui/icons/People";
+import { Card, CardContent } from "@material-ui/core";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { makeStyles } from "@material-ui/core/styles";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 import { ChartData } from "./types";
-
 import LineChart from "../../components/chartjs/LineChart";
 import { RootState } from "../../redux/store";
-// import { useChart } from "./useChart";
-
-const useStyles = makeStyles((theme) => ({
-  peopleIcon: {
-    float: "right",
-  },
-  chart: {
-    position: "absolute",
-    left: -240,
-    top: 50,
-    height: 400,
-  },
-  chartContent: {
-    width: 500,
-    height: 500,
-  },
-}));
 
 const UsersTotalContainer: React.FC = () => {
-  const classes = useStyles();
-
   const [loading, setLoading] = useState(true);
   const [period, setPeriod] = useState("Year");
+
   const [labels, setLabels] = useState<string[]>([]);
   const [chartData, setChartData] = useState<ChartData>({
     counter: 0,
@@ -53,9 +26,9 @@ const UsersTotalContainer: React.FC = () => {
     (state) => state.KPI.usersLastYear
   );
 
-  const handleChangeInterval = async (
+  const handleChangeInterval = (
     e: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  ): void => {
     const interval: string = e.target.value;
     setLoading(true);
     if (interval === "Month") {
@@ -82,11 +55,11 @@ const UsersTotalContainer: React.FC = () => {
   }, [period, usersLastYear, usersLastMonth]);
 
   return (
-    <Card className={classes.chart}>
+    <Card>
       {loading ? (
         <CircularProgress />
       ) : (
-        <CardContent className={classes.chartContent}>
+        <CardContent>
           <LineChart
             updateInterval={handleChangeInterval}
             labels={labels}

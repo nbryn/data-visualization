@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 import Logo from "../../assets/img/dashboard.jpeg";
 
@@ -16,6 +16,9 @@ class Sidebar extends Component {
       finance: "/finance",
       meetings: "/meetings",
       // engagement: "/engagement",
+    };
+
+    const miscLinks = {
       profile: "/profile",
       ngoview: "/ngo-view",
       search: "/search",
@@ -54,6 +57,19 @@ class Sidebar extends Component {
               <li key={index}>
                 <NavLink
                   to={rechartsLinks[element]}
+                  className="nav-link"
+                  activeClassName="active"
+                >
+                  <i className="pe-7s-graph" />
+                  <p>{element}</p>
+                </NavLink>
+              </li>
+            ))}
+            <li>Misc</li>
+            {Object.keys(miscLinks).map((element, index) => (
+              <li key={index}>
+                <NavLink
+                  to={miscLinks[element]}
                   className="nav-link"
                   activeClassName="active"
                 >

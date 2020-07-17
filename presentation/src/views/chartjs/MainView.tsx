@@ -15,7 +15,7 @@ type Props = {
   usersLastYear: Function;
 };
 
-class MainViews extends Component<Props> {
+class MainView extends Component<Props> {
   constructor(props: Props) {
     super(props);
   }
@@ -36,10 +36,8 @@ class MainViews extends Component<Props> {
           <div className="content">
             <div className="container">
               <Row>
-                <Col lg={3} sm={6}>
-                  <div className="chartjs-main">
-                    <UsersTotalContainer />
-                  </div>
+                <Col lg={6} sm={6}>
+                  <UsersTotalContainer />
                 </Col>
               </Row>
             </div>
@@ -55,4 +53,4 @@ const mapDispatchToProps = (dispatch: any) => ({
   usersLastMonth: () => dispatch(fetchUsersLastMonth()),
 });
 
-export default connect(null, mapDispatchToProps)(MainViews);
+export default connect(null, mapDispatchToProps)(MainView);

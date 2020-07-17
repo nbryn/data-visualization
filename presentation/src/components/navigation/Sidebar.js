@@ -1,12 +1,15 @@
 import React, { Component } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 
 import Logo from "../../assets/img/dashboard.jpeg";
 
 class Sidebar extends Component {
   render() {
-    const navLinks = {
-      chartjsdashboard: "/mainviews",
+    const chartjsLinks = {
+      dashboard: "/mainviews",
+    };
+
+    const rechartsLinks = {
       dashboard: "/dashboard",
       groups: "/groups",
       users: "/users",
@@ -31,10 +34,26 @@ class Sidebar extends Component {
 
         <div className="sidebar-wrapper">
           <ul className="nav">
-            {Object.keys(navLinks).map((element, index) => (
+            <li>Chartjs</li>
+
+            {Object.keys(chartjsLinks).map((element, index) => (
               <li key={index}>
                 <NavLink
-                  to={navLinks[element]}
+                  to={chartjsLinks[element]}
+                  className="nav-link"
+                  activeClassName="active"
+                >
+                  <i className="pe-7s-graph" />
+                  <p>{element}</p>
+                </NavLink>
+              </li>
+            ))}
+
+            <li>Recharts</li>
+            {Object.keys(rechartsLinks).map((element, index) => (
+              <li key={index}>
+                <NavLink
+                  to={rechartsLinks[element]}
                   className="nav-link"
                   activeClassName="active"
                 >

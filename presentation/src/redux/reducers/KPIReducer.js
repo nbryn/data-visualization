@@ -37,11 +37,11 @@ export default function (state = {}, action) {
       });
     case USERS_LAST_MONTH:
       return Object.assign({}, state, {
-        usersLastMonth: action.payload.usersLastMonth.data,
+        usersLastMonth: action.payload,
       });
     case USERS_LAST_YEAR:
       return Object.assign({}, state, {
-        usersLastYear: action.payload.usersLastYear.data,
+        usersLastYear: action.payload,
       });
 
     default:

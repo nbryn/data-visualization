@@ -7,6 +7,7 @@ import { Dataset, Chart } from "./types";
 
 interface Props extends Dataset {
   labels: string[];
+  currentInterval: string;
   updateInterval: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -17,9 +18,10 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(-1),
   },
   counter: {
-    width: 100,
+    marginTop: -10,
+    marginBottom: 55,
+    width: 150,
     float: "left",
-    marginTop: theme.spacing(-2),
   },
 }));
 
@@ -59,7 +61,12 @@ const LineChart: React.FC<Props> = (props: Props) => {
 
   return (
     <>
-      <div className={classes.counter}>{/* <h4>{props.counter}</h4> */}</div>
+      <div className={classes.counter}>
+        <h5>
+          Last {props.currentInterval}: {props.counter}
+        </h5>
+      </div>
+
       <div className={classes.dropdown}>
         <TextField
           id="interval"
@@ -68,10 +75,18 @@ const LineChart: React.FC<Props> = (props: Props) => {
           select
           onChange={props.updateInterval}
         >
-          <MenuItem key="Month" value="Month">
+          <MenuItem
+            key="Month"
+            value="Month"
+            disabled={props.currentInterval === "Month" ? true : false}
+          >
             Last Month
           </MenuItem>
-          <MenuItem key="Year" value="Year">
+          <MenuItem
+            key="Year"
+            value="Year"
+            disabled={props.currentInterval === "Year" ? true : false}
+          >
             Last Year
           </MenuItem>
         </TextField>

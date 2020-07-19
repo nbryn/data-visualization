@@ -1,5 +1,5 @@
-import { GENERAL_COUNTRY_STATS } from "../ActionTypes";
-import { fetchFromServer } from "../Fetch";
+import { GENERAL_COUNTRY_STATS } from "../ActionTypes.ts";
+import { fetchFromServer } from "../Fetch.ts";
 
 export const fetchGeneralCountryStats = () => async (dispatch) => {
     const data = `query {
@@ -19,10 +19,10 @@ export const fetchGeneralCountryStats = () => async (dispatch) => {
         }
       }`;
   
-    const response = await fetchFromServer("post", data);
+    const response = await fetchFromServer("generalCountryStats", data);
   
     dispatch({
       type: GENERAL_COUNTRY_STATS,
-      payload: response.data.data.generalCountryStats,
+      payload: response,
     });
   };

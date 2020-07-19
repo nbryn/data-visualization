@@ -1,5 +1,9 @@
-import { USERS_LAST_MONTH, USERS_LAST_YEAR, USERS_STATS } from "../ActionTypes";
-import { fetchFromServer } from "../Fetch";
+import {
+  USERS_LAST_MONTH,
+  USERS_LAST_YEAR,
+  USERS_STATS,
+} from "../ActionTypes.ts";
+import { fetchFromServer } from "../Fetch.ts";
 import { convertNumberToMonth } from "../../../util/Date";
 
 export const fetchUserStats = () => async (dispatch) => {
@@ -7,22 +11,18 @@ export const fetchUserStats = () => async (dispatch) => {
     userStats{
       userCount
       usersLastMonth{
-        data{
           day{
             day
             month
             year
           }
           count
-        }
       }
       usersLastYear{
-        data{
           year
           month
           count
         }
-      }
       userGenderStats{
         value
         count
@@ -30,34 +30,28 @@ export const fetchUserStats = () => async (dispatch) => {
     }
   }`;
 
-  const response = await fetchFromServer("post", data);
+  const response = await fetchFromServer("userStats", data);
 
-  if (response.data.errors) {
-    return response.data.errors[0].extensions.code;
-  } else {
-    dispatch({
-      type: USERS_STATS,
-      payload: response.data.data.userStats,
-    });
-  }
+  dispatch({
+    type: USERS_STATS,
+    payload: response,
+  });
 };
 
 export const fetchUsersLastMonth = () => async (dispatch) => {
   const data = `query {
     userStats {
       usersLastMonth {
-        data {
           count
           day {
             day
             month
             year
-          }
         }
       }
     }
   }`;
-  const response = await fetchFromServer("post", data);
+  const response = await fetchFromServer("userStats", data);
 
   const usersLastMonth = {
     labels: [],
@@ -65,13 +59,12 @@ export const fetchUsersLastMonth = () => async (dispatch) => {
     counter: 0,
   };
 
-  usersLastMonth.labels = response.data.data.userStats.usersLastMonth.data.map(
+  usersLastMonth.labels = response.usersLastMonth.map(
     (element) => element.day.day + "/" + element.day.month
   );
-  usersLastMonth.chartData = response.data.data.userStats.usersLastMonth.data.map(
+  usersLastMonth.chartData = response.usersLastMonth.map(
     (element) => (usersLastMonth.counter += element.count)
   );
-
 
   dispatch({
     type: USERS_LAST_MONTH,
@@ -83,16 +76,14 @@ export const fetchUsersLastYear = () => async (dispatch) => {
   const data = `query {
     userStats {
       usersLastYear {
-        data {
           count
           year
           month
-        }
       }
     }
   }`;
 
-  const response = await fetchFromServer("post", data);
+  const response = await fetchFromServer("userStats", data);
 
   const usersLastYear = {
     labels: [],
@@ -100,16 +91,13 @@ export const fetchUsersLastYear = () => async (dispatch) => {
     counter: 0,
   };
 
-  usersLastYear.labels = response.data.data.userStats.usersLastYear.data.map(
-    (element) => {
-      return (
-        convertNumberToMonth(element.month) +
-        element.year.toString().substring(2)
-      );
-    }
-  );
+  usersLastYear.labels = response.usersLastYear.map((element) => {
+    return (
+      convertNumberToMonth(element.month) + element.year.toString().substring(2)
+    );
+  });
 
-  usersLastYear.chartData = response.data.data.userStats.usersLastYear.data.map(
+  usersLastYear.chartData = response.usersLastYear.map(
     (element) => (usersLastYear.counter += element.count)
   );
 

@@ -7,7 +7,7 @@ import {
   USERS_STATS,
   USERS_LAST_MONTH,
   USERS_LAST_YEAR,
-} from "../actions/ActionTypes";
+} from "../actions/ActionTypes.ts";
 
 export default function (state = {}, action) {
   switch (action.type) {

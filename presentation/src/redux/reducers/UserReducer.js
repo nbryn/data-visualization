@@ -1,4 +1,4 @@
-import { SET_CURRENT_USER } from "../actions/ActionTypes";
+import { SET_CURRENT_USER } from "../actions/ActionTypes.ts";
 
 export default function (state = {}, action) {
   switch (action.type) {

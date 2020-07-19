@@ -11,7 +11,6 @@ import { KPICard } from "../../components/kpi/KPICard";
 import Sidebar from "../../components/navigation/Sidebar";
 import LineChartContainer from "../../components/recharts/LineChartContainer";
 
-
 class MeetingView extends Component {
   constructor(props) {
     super(props);
@@ -38,7 +37,7 @@ class MeetingView extends Component {
       meetingsPerGroup,
       sharesPerMeeting,
     } = meetingStats;
-    
+
     const lastMonth = meetingsLastMonth;
 
     let lastUpdatedAt = getCurrentTime();
@@ -47,7 +46,7 @@ class MeetingView extends Component {
     let meetingYearCount = 0;
 
     lastMonth.forEach((element) => (meetingMonthCount += element.count));
-    meetingStats.meetingsLastYear.data.forEach(
+    meetingStats.meetingsLastYear.forEach(
       (element) => (meetingYearCount += element.count)
     );
 

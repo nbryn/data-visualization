@@ -46,10 +46,10 @@ class UserView extends Component {
     let userMonthCount = 0;
     let userYearCount = 0;
 
-    userStats.usersLastMonth.data.forEach(
+    userStats.usersLastMonth.forEach(
       (element) => (userMonthCount += element.count)
     );
-    userStats.usersLastYear.data.forEach(
+    userStats.usersLastYear.forEach(
       (element) => (userYearCount += element.count)
     );
 

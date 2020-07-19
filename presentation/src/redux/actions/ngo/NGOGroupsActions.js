@@ -1,5 +1,5 @@
-import { NGO_GROUPS } from "../ActionTypes";
-import { fetchFromServer } from "../Fetch";
+import { NGO_GROUPS } from "../ActionTypes.ts";
+import { fetchFromServer } from "../Fetch.ts";
 
 export const fetchGroupsByNGO = ngo => async dispatch => {
   const data = `query{

@@ -1,5 +1,5 @@
-import { SET_CURRENT_USER } from "../ActionTypes";
-import { fetchFromServer } from "../Fetch";
+import { SET_CURRENT_USER } from "../ActionTypes.ts";
+import { fetchFromServer } from "../Fetch.ts";
 import { setTokenInLocalStorage } from "../../../security/Token";
 
 export const login = (username, password, history) => async (dispatch) => {

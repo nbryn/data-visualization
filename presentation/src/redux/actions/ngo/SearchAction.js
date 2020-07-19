@@ -1,5 +1,5 @@
-import { fetchFromServer } from "../Fetch";
-import { GROUP_DATA } from "../ActionTypes";
+import { fetchFromServer } from "../Fetch.ts";
+import { GROUP_DATA } from "../ActionTypes.ts";
 
 export const fetchGroupData = group => async dispatch => {
   const data = `query{

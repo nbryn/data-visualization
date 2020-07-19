@@ -1,27 +1,22 @@
-import { MEETING_STATS } from "../ActionTypes";
-import { fetchFromServer } from "../Fetch";
+import { MEETING_STATS } from "../ActionTypes.ts";
+import { fetchFromServer } from "../Fetch.ts";
 
 export const fetchMeetingStats = () => async (dispatch) => {
   const data = `query{
     meetingStats{
       meetingTotal
       meetingsLastMonth{
-        data{
           count
           day{
             year
             month
             day
           }
-        }
       }
       meetingsLastYear{
-        data{
           year
           month
           count
-          
-        }
       }
       meetingsPerGroup {
         name
@@ -34,10 +29,10 @@ export const fetchMeetingStats = () => async (dispatch) => {
     }
   }`;
 
-  const response = await fetchFromServer("post", data);
+  const response = await fetchFromServer("meetingStats", data);
 
   dispatch({
     type: MEETING_STATS,
-    payload: response.data.data.meetingStats,
+    payload: response,
   });
 };

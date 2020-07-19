@@ -1,5 +1,5 @@
-import { GROUP_STATS } from "../ActionTypes";
-import { fetchFromServer } from "../Fetch";
+import { GROUP_STATS } from "../ActionTypes.ts";
+import { fetchFromServer } from "../Fetch.ts";
 
 export const fetchGroupStats = () => async (dispatch) => {
   const data = `query{
@@ -25,11 +25,11 @@ export const fetchGroupStats = () => async (dispatch) => {
     }
   }`;
 
-  const response = await fetchFromServer("post", data);
+  const response = await fetchFromServer("groupStats", data);
 
   dispatch({
     type: GROUP_STATS,
-    payload: response.data.data.groupStats,
+    payload: response,
   });
 };
 

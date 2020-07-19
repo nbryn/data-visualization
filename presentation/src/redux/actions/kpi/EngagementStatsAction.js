@@ -1,5 +1,5 @@
-import { ENGAGEMENT_STATS } from "../ActionTypes";
-import { fetchFromServer } from "../Fetch";
+import { ENGAGEMENT_STATS } from "../ActionTypes.ts";
+import { fetchFromServer } from "../Fetch.ts";
 
 export const fetchEngagementStats = () => async dispatch => {
   let engagementStats = {
@@ -34,9 +34,9 @@ async function fetchGroupEngagementStats() {
     }
   }`;
 
-  const response = await fetchFromServer("post", groupQuery);
+  const response = await fetchFromServer("groupEngagement", groupQuery);
 
-  return response.data.data;
+  return response;
 }
 
 async function fetchUserEngagementStats() {
@@ -46,8 +46,8 @@ async function fetchUserEngagementStats() {
     }
   }`;
 
-  const response = await fetchFromServer("post", userQuery);
+  const response = await fetchFromServer("userStats", userQuery);
 
-  return response.data.data;
+  return response;
 }
 

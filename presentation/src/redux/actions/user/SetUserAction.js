@@ -1,5 +1,5 @@
-import { SET_CURRENT_USER } from "../ActionTypes";
-import { fetchFromServer } from "../Fetch";
+import { SET_CURRENT_USER } from "../ActionTypes.ts";
+import { fetchFromServer } from "../Fetch.ts";
 import { setTokenInHeader } from "../../../security/Token";
 
 export const setCurrentUser = () => async dispatch => {

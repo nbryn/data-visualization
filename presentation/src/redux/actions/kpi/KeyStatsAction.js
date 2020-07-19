@@ -1,30 +1,30 @@
-import { fetchFromServer } from "../Fetch";
-import { KEY_STATS } from "../ActionTypes";
+import { fetchFromServer } from "../Fetch.ts";
+import { KEY_STATS } from "../ActionTypes.ts";
 
-export const fetchKeyStats = () => async dispatch => {
+export const fetchKeyStats = () => async (dispatch) => {
   let keyStats = {
     groupStats: "",
     userStats: "",
     shareStats: "",
-    meetingStats: ""
+    meetingStats: "",
   };
 
   const groupResponse = await fetchKeyGroupStats();
-  keyStats.groupStats = groupResponse.groupStats;
+  keyStats.groupStats = groupResponse;
 
   const userResponse = await fetchKeyUserStats();
-  keyStats.userStats = userResponse.userStats;
+  keyStats.userStats = userResponse;
 
   const meetingResponse = await fetchKeyMeetingStats();
-  keyStats.meetingStats = meetingResponse.meetingStats;
+  keyStats.meetingStats = meetingResponse;
 
   const shareResponse = await fetchKeyFinanceStats();
 
-  keyStats.shareStats = shareResponse.financeStats.shareStats.shareTotal;
+  keyStats.shareStats = shareResponse.shareStats.shareTotal;
 
   dispatch({
     type: KEY_STATS,
-    payload: keyStats
+    payload: keyStats,
   });
 };
 
@@ -48,9 +48,9 @@ export async function fetchKeyGroupStats() {
     }
     }`;
 
-  const response = await fetchFromServer("post", groupQuery);
+  const response = await fetchFromServer("groupStats", groupQuery);
 
-  return response.data.data;
+  return response;
 }
 
 async function fetchKeyUserStats() {
@@ -69,9 +69,9 @@ async function fetchKeyUserStats() {
     }
     }`;
 
-  const response = await fetchFromServer("post", userQuery);
+  const response = await fetchFromServer("userStats", userQuery);
 
-  return response.data.data;
+  return response;
 }
 
 async function fetchKeyMeetingStats() {
@@ -85,9 +85,9 @@ async function fetchKeyMeetingStats() {
         }          
     }
   }`;
-  const response = await fetchFromServer("post", meetingQuery);
+  const response = await fetchFromServer("meetingStats", meetingQuery);
 
-  return response.data.data;
+  return response;
 }
 
 async function fetchKeyFinanceStats() {
@@ -98,7 +98,7 @@ async function fetchKeyFinanceStats() {
       }
     }
   }`;
-  const response = await fetchFromServer("post", shareQuery);
+  const response = await fetchFromServer("financeStats", shareQuery);
 
-  return response.data.data;
+  return response;
 }

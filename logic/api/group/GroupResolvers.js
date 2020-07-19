@@ -95,7 +95,7 @@ const groupResolvers = {
           30
         );
 
-        return { data: groupsLastMonth };
+        return groupsLastMonth;
       });
     },
     groupsLastYear: async (root, context) => {
@@ -105,7 +105,7 @@ const groupResolvers = {
           "registrationDate"
         );
 
-        return { data: groupsLastYear };
+        return groupsLastYear;
       });
     },
   },

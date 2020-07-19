@@ -3,7 +3,6 @@ const {
   calculateEtbLoanStats,
   calculateShareStats,
   getCurrencyStats,
-  
 } = require("./FinanceService");
 const { fetchDailyData } = require("../../../data/common/fetchDailyData");
 const { fetchMonthlyData } = require("../../../data/common/fetchMonthlyData");
@@ -42,9 +41,7 @@ const financeResolvers = {
           "registrationDate"
         );
 
-        return {
-          data: loansLastMonth,
-        };
+        return loansLastMonth;
       });
     },
     loansLastYear: async ({ root, context }) => {
@@ -54,9 +51,7 @@ const financeResolvers = {
           "registrationDate"
         );
 
-        return {
-          data: loansLastYear,
-        };
+        return loansLastYear;
       });
     },
     shareStats: async ({ root, context }) => {

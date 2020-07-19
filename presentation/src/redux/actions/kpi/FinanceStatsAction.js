@@ -13,21 +13,17 @@ export const fetchFinanceStats = () => async dispatch => {
       }
       loanTotal
       loansLastMonth{
-        data{
           day{
             year
             month
             day
           }
           count
-        }
       }
       loansLastYear{
-        data{
           year
           month
           count
-        }
       }
       shareStats{
         shareTotal

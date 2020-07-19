@@ -39,7 +39,7 @@ class MeetingView extends Component {
       sharesPerMeeting,
     } = meetingStats;
     
-    const lastMonth = meetingsLastMonth.data;
+    const lastMonth = meetingsLastMonth;
 
     let lastUpdatedAt = getCurrentTime();
 
@@ -61,7 +61,7 @@ class MeetingView extends Component {
       meetingMonth: meetingMonthCount,
       meetingYear: meetingYearCount,
       meetingsLastMonth: lastMonth,
-      meetingsLastYear: meetingsLastYear.data,
+      meetingsLastYear: meetingsLastYear,
       meetingsPerGroup: meetingsPerGroup,
       sharesPerMeeting: sharesPerMeeting,
       meetingsPerCountry: meetingsCountry,

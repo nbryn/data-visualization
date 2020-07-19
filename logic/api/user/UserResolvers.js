@@ -48,16 +48,14 @@ const userResolvers = {
       return actionRunner(async () => {
         const usersLastMonth = await fetchDailyData("User", "signupDate", 30);
 
-        return { data: usersLastMonth };
+        return usersLastMonth;
       });
     },
     usersLastYear: async (root, context) => {
       return actionRunner(async () => {
         const result = await fetchMonthlyData("User", "signupDate");
 
-        return {
-          data: result,
-        };
+        return result;
       });
     },
     userGenderStats: async (root, context) => {
@@ -93,6 +91,7 @@ const userResolvers = {
 
 module.exports = userResolvers;
 
+// TODO: Move to service
 function removeDuplicates(needsFiltering, phone) {
   const s = [];
 

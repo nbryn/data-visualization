@@ -30,14 +30,6 @@ const DefaultSchema = gql`
     count: Float
   }
 
-  type LastMonth {
-    data: [NumberDay]!
-  }
-
-  type LastYear {
-    data: [NumberMonth]!
-  }
-
   type Query {
     _empty: String
   }

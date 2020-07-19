@@ -55,15 +55,15 @@ class UserView extends Component {
 
     this.setState({
       userTotal: userCount,
-      usersToday: usersLastMonth.data[usersLastMonth.data.length - 1].count,
+      usersToday: usersLastMonth[usersLastMonth.length - 1].count,
       usersTodayText:
-        usersLastMonth.data[usersLastMonth.data.length - 1].day.day +
+        usersLastMonth[usersLastMonth.length - 1].day.day +
         "/" +
-        usersLastMonth.data[usersLastMonth.data.length - 1].day.month,
+        usersLastMonth[usersLastMonth.length - 1].day.month,
       userMonth: userMonthCount,
       userYear: userYearCount,
-      usersLastMonth: usersLastMonth.data,
-      usersLastYear: usersLastYear.data,
+      usersLastMonth: usersLastMonth,
+      usersLastYear: usersLastYear,
       userGender: userGenderStats,
       usersCountry: usersCountry,
       usersNGO: usersNGO,

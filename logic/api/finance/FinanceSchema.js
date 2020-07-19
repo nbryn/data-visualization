@@ -51,8 +51,8 @@ const FinanceSchema = gql`
     currencyTotal: Float
     currencyStats: CurrencyStats
     loanTotal: Float
-    loansLastMonth: LastMonth
-    loansLastYear: LastYear
+    loansLastMonth: [NumberDay]
+    loansLastYear: [NumberMonth]
     shareStats: ShareStats
     etbStats: EtbStats
     boxBalanceStats: BoxBalanceStats

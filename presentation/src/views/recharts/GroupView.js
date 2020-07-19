@@ -33,7 +33,7 @@ class GroupView extends Component {
     await this.props.fetchGeneralCountryStats();
 
     const { groupStats, groupsNGO, groupsCountry } = this.props;
-    const lastMonth = groupStats.groupsLastMonth.data;
+    const lastMonth = groupStats.groupsLastMonth;
     const lastUpdatedAt = getCurrentTime();
 
     console.log(groupStats);
@@ -42,7 +42,7 @@ class GroupView extends Component {
     let groupsLastYear = 0;
 
     lastMonth.forEach((element) => (groupsLastMonth += element.count));
-    groupStats.groupsLastYear.data.forEach(
+    groupStats.groupsLastYear.forEach(
       (element) => (groupsLastYear += element.count)
     );
 
@@ -57,7 +57,7 @@ class GroupView extends Component {
       groupsLastYearTotal: groupsLastYear,
       groupSize: groupStats.groupSize,
       groupsLastMonth: lastMonth,
-      groupsLastYear: groupStats.groupsLastYear.data,
+      groupsLastYear: groupStats.groupsLastYear,
       groupsPerCountry: groupsCountry,
       groupsPerNGO: groupsNGO,
       lastUpdate: lastUpdatedAt,

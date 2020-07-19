@@ -26,7 +26,7 @@ const meetingResolvers = {
           "meetingDay"
         );
 
-        return { data: meetingsLastMonth };
+        return meetingsLastMonth;
       });
     },
     meetingsLastYear: async (root, context) => {
@@ -36,7 +36,7 @@ const meetingResolvers = {
           "meetingDay"
         );
 
-        return { data: meetingsLastYear };
+        return meetingsLastYear;
       });
     },
     meetingsPerGroup: async (root, context) => {

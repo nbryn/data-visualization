@@ -33,22 +33,18 @@ export async function fetchKeyGroupStats() {
     groupStats{
       groupTotal    
      groupsLastMonth{
-        data{
           count
           day{
             year
             month
             day
           }     
-        }
     }
     groupsLastYear{
-        data{
           year
           month
           count  
-        }
-      }      
+        }     
     }
     }`;
 
@@ -66,12 +62,10 @@ async function fetchKeyUserStats() {
         count
        }
       usersLastYear{
-        data{
           year
           month
           count
-        }
-      }       
+        }     
     }
     }`;
 
@@ -85,12 +79,10 @@ async function fetchKeyMeetingStats() {
     meetingStats{
       meetingTotal
       meetingsLastYear{
-        data{
           year
           month
           count
-        }
-      }            
+        }          
     }
   }`;
   const response = await fetchFromServer("post", meetingQuery);

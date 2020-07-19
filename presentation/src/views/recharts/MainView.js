@@ -35,13 +35,13 @@ class MainView extends Component {
 
     this.setState({
       userTotal: userStats.userCount,
-      usersLastYear: userStats.usersLastYear.data,
+      usersLastYear: userStats.usersLastYear,
       userGender: userStats.userGenderStats,
       groupTotal: groupStats.groupTotal,
-      groupsLastMonth: groupStats.groupsLastMonth.data,
-      groupsLastYear: groupStats.groupsLastYear.data,
+      groupsLastMonth: groupStats.groupsLastMonth,
+      groupsLastYear: groupStats.groupsLastYear,
       meetingTotal: meetingStats.meetingTotal,
-      meetingsLastYear: meetingStats.meetingsLastYear.data,
+      meetingsLastYear: meetingStats.meetingsLastYear,
       shareTotal: shareStats,
       lastUpdate: lastUpdatedAt,
     });

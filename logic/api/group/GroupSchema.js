@@ -5,8 +5,8 @@ const GroupSchema = gql`
     groupTotal: Float
     groupSize: [PerValue]
     groupsLastWeek: Float
-    groupsLastMonth: LastMonth
-    groupsLastYear: LastYear
+    groupsLastMonth: [NumberDay]
+    groupsLastYear: [NumberMonth]
   }
 
   type GroupMeetingStats {

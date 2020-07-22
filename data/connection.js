@@ -1,13 +1,13 @@
 const mongoose = require("mongoose");
 require("dotenv").config();
 
-const groupAccountSchema = require("../logic/entities/GroupAccount");
-const groupMeetingLoanSchema = require("../logic/entities/GroupMeetingLoan");
-const groupMeetingSchema = require("../logic/entities/GroupMeeting");
-const groupMeetingShareoutSchema = require("../logic/entities/GroupMeetingShareout");
-const groupMemberSchema = require("../logic/entities/GroupMember");
-const groupSchema = require("../logic/entities/Group");
-const userSchema = require("../logic/entities/User");
+const groupAccountSchema = require("../logic/entities/GroupAccount.ts");
+const groupMeetingLoanSchema = require("../logic/entities/GroupMeetingLoan.ts");
+const groupMeetingSchema = require("../logic/entities/GroupMeeting.ts");
+const groupMeetingShareoutSchema = require("../logic/entities/GroupMeetingShareout.ts");
+const groupMemberSchema = require("../logic/entities/GroupMember.ts");
+const groupSchema = require("../logic/entities/Group.ts");
+const userSchema = require("../logic/entities/User.ts");
 
 let groupAccountModel;
 let groupMeetingLoanModel;

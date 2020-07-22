@@ -12,11 +12,6 @@ import SizeChart from "../../components/recharts/SizeChart";
 import LineChartContainer from "../../components/recharts/LineChartContainer";
 
 class MainView extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {};
-  }
   componentDidMount() {
     this.fetchData();
 

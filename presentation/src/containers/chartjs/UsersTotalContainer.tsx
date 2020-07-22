@@ -29,6 +29,7 @@ const UsersTotalContainer: React.FC = () => {
   const handleChangeInterval = (
     e: React.ChangeEvent<HTMLInputElement>
   ): void => {
+    // @ts-ignore
     const interval: string = e.target.value;
     setLoading(true);
     if (interval === "Month") {

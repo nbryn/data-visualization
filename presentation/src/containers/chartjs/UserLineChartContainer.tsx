@@ -8,13 +8,13 @@ import { ChartData } from "./types";
 import {
   fetchUsersLastMonth,
   fetchUsersLastYear,
-} from "../../redux/actions/kpi/UserActions";
-import {Interval, resolveInterval} from "./interval";
+} from "../../redux/actions/UserActions";
+import { Interval, resolveInterval } from "./interval";
 import LineChart from "../../components/chartjs/LineChart";
 import { RootState } from "../../redux/store";
 
 const UserLineChartContainer: React.FC = (): ReactElement => {
-  const {WEEK, MONTH, YEAR} = Interval;
+  const { WEEK, MONTH, YEAR } = Interval;
 
   const [loading, setLoading] = useState(true);
   const [period, setPeriod] = useState<Interval>(YEAR);
@@ -26,15 +26,15 @@ const UserLineChartContainer: React.FC = (): ReactElement => {
   });
 
   const usersLastWeek = useSelector<RootState, any>(
-    (state) => state.KPI.usersLastWeek
+    (state) => state.userStats.usersLastWeek
   );
 
   const usersLastMonth = useSelector<RootState, any>(
-    (state) => state.KPI.usersLastMonth
+    (state) => state.userStats.usersLastMonth
   );
 
   const usersLastYear = useSelector<RootState, any>(
-    (state) => state.KPI.usersLastYear
+    (state) => state.userStats.usersLastYear
   );
 
   const dispatch = useDispatch();
@@ -70,7 +70,7 @@ const UserLineChartContainer: React.FC = (): ReactElement => {
     updateData(YEAR, usersLastYear);
 
     setLoading(false);
-  }, [usersLastYear]);
+  }, [usersLastYear, YEAR]);
 
   return (
     <Card>

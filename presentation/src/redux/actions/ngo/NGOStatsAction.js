@@ -1,4 +1,4 @@
-import { GROUPS_PER_NGO } from "../ActionTypes.ts";
+import { GROUPS_PER_NGO } from "../../reducers/NGOReducer";
 import { fetchFromServer } from "../Fetch.ts";
 
 export const fetchNGOStats = () => async (dispatch) => {

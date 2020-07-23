@@ -8,10 +8,80 @@ const initialState = {
     usersLastMonth: [],
     usersLastYear: [],
   },
+  UserStats: {
+    userStats: [],
+    usersTotal: 0,
+    usersLastWeek: [],
+    usersLastMonth: [],
+    usersLastYear: [],
+  },
+  GroupStats: {
+    groupStats: [],
+    groupsTotal: 0,
+    groupsLastWeek: [],
+    groupsLastMonth: [],
+    groupsLastYear: [],
+  },
+  MeetingStats: {
+    meetingStats: [],
+    meetingsTotal: 0,
+    meetingsLastWeek: [],
+    meetingsLastMonth: [],
+    meetingsLastYear: [],
+  },
+  FinanceStats: {
+    financeStats: [],
+    currencyTotal: null,
+    currencyStats: [],
+    loanTotal: null,
+    loansLastMonth: [],
+    loansLastYear: [],
+    sharesTotal: 0,
+    shareStats: [],
+    etbStats: [],
+    boxBalanceStats: [],
+  },
 };
 const middleWare = [thunk];
 
 let store;
+
+export interface UserState {
+  usersTotal: number;
+  usersLastWeek: Array<any>;
+  usersLastMonth: Array<any>;
+  usersLastYear: Array<any>;
+  userStats: any;
+}
+
+export interface GroupState {
+  groupsTotal: number;
+  groupsLastWeek: Array<any>;
+  groupsLastMonth: Array<any>;
+  groupsLastYear: Array<any>;
+  groupStats: any;
+}
+
+export interface MeetingState {
+  meetingsTotal: number;
+  meetingsLastWeek: Array<any>;
+  meetingsLastMonth: Array<any>;
+  meetingsLastYear: Array<any>;
+  meetingStats: any;
+}
+
+export interface FinanceState {
+  currencyTotal: number;
+  currencyStats: Array<any>;
+  loanTotal: number;
+  loansLastMonth: Array<any>;
+  loansLastYear: Array<any>;
+  sharesTotal: number;
+  shareStats: Array<any>;
+  etbStats: Array<any>;
+  boxBalanceStats: Array<any>;
+  financeStats: any;
+}
 
 export interface KPIState {
   [key: string]: any;
@@ -19,13 +89,14 @@ export interface KPIState {
   financeStats: any;
   groupStats: any;
   meetingStats: any;
-  userStats: any;
-  usersLastYear: Array<any>;
-  usersLastMonth: Array<any>;
 }
 
 export interface RootState {
   KPI: KPIState;
+  userStats: UserState;
+  groupStats: GroupState;
+  meetingStats: MeetingState;
+  financeStats: FinanceState;
 }
 
 const ReactReduxDevTools =

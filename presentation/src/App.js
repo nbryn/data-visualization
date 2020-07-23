@@ -17,7 +17,7 @@ import UserView from "./views/recharts/UserView";
 import NGOView from "./views/ngo/NGOView";
 import GroupSearchView from "./views/search/GroupSearchView";
 
-import MainViews from "./views/chartjs/MainView";
+import ChartsjMainView from "./views/chartjs/MainView";
 
 import Signin from "./views/user/Signin.js";
 import Profile from "./views/user/UserProfile.js";
@@ -32,7 +32,7 @@ class App extends Component {
           <Switch>
             <Route exact path="/" component={Signin} />
 
-            <SecureRoute exact path="/mainviews" component={MainViews} />
+            <SecureRoute exact path="/chartjs-main" component={ChartsjMainView} />
 
             <SecureRoute exact path="/dashboard" component={RechartsMainView} />
             <SecureRoute exact path="/engagement" component={EngagementView} />

@@ -4,17 +4,21 @@ import React, { Component } from "react";
 
 import BarChartContainer from "../../components/recharts/BarChartContainer";
 import { fetchKeyStats } from "../../redux/actions/kpi/KeyStatsAction";
-import { getCurrentTime } from "../../util/Date";
 import Header from "../../components/navigation/Header";
-import { KPICard } from "../../components/kpi/KPICard";
+import LineChartContainer from "../../components/recharts/LineChartContainer";
 import Sidebar from "../../components/navigation/Sidebar";
 import SizeChart from "../../components/recharts/SizeChart";
-import LineChartContainer from "../../components/recharts/LineChartContainer";
+import {
+  TotalMeetingsKPIContainer,
+  TotalGroupsKPIContainer,
+  TotalSharesKPIContainer,
+  TotalUsersKPIContainer,
+} from "../../containers/kpi";
 
 class MainView extends Component {
   constructor(props) {
     super(props);
-    
+
     this.state = {};
   }
 
@@ -30,21 +34,14 @@ class MainView extends Component {
     await this.props.fetchKeyStats();
 
     const { keyStats } = this.props;
-    const { userStats, shareStats, groupStats, meetingStats } = keyStats;
-
-    let lastUpdatedAt = getCurrentTime();
+    const { userStats, groupStats, meetingStats } = keyStats;
 
     this.setState({
-      userTotal: userStats.userCount,
       usersLastYear: userStats.usersLastYear,
       userGender: userStats.userGenderStats,
-      groupTotal: groupStats.groupTotal,
       groupsLastMonth: groupStats.groupsLastMonth,
       groupsLastYear: groupStats.groupsLastYear,
-      meetingTotal: meetingStats.meetingTotal,
       meetingsLastYear: meetingStats.meetingsLastYear,
-      shareTotal: shareStats,
-      lastUpdate: lastUpdatedAt,
     });
 
     let count = 0;
@@ -52,16 +49,6 @@ class MainView extends Component {
   }
 
   render() {
-    const KPICards = {
-      userTotal: { text: "Total Users", icon: "pe-7s-user text-warning" },
-      groupTotal: { text: "Total Groups", icon: "pe-7s-users text-info" },
-      meetingTotal: {
-        text: "Total Meetings",
-        icon: "pe-7s-graph1 text-danger",
-      },
-      shareTotal: { text: "Total Shares", icon: "pe-7s-wallet text-success" },
-    };
-
     const LineChartContainers = {
       usersLastYear: {
         title: "Total Users",
@@ -89,17 +76,18 @@ class MainView extends Component {
           <div className="content">
             <Grid fluid>
               <Row>
-                {Object.keys(KPICards).map((kpi, index) => (
-                  <Col lg={3} sm={6}>
-                    <KPICard
-                      bigIcon={<i className={KPICards[kpi].icon} />}
-                      statsText={KPICards[kpi].text}
-                      statsValue={this.state[kpi]}
-                      statsIcon={<i className="fa fa-refresh" />}
-                      statsIconText={`Last Update: ${this.state.lastUpdate}`}
-                    />
-                  </Col>
-                ))}
+                <Col lg={3} sm={6}>
+                  <TotalUsersKPIContainer />
+                </Col>
+                <Col lg={3} sm={6}>
+                  <TotalGroupsKPIContainer />
+                </Col>
+                <Col lg={3} sm={6}>
+                  <TotalMeetingsKPIContainer />
+                </Col>
+                <Col lg={3} sm={6}>
+                  <TotalSharesKPIContainer />
+                </Col>
               </Row>
 
               <Row>

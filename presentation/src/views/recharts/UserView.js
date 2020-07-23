@@ -3,12 +3,12 @@ import { Col, Grid, Row } from "react-bootstrap";
 import React, { Component } from "react";
 
 import BarChartContainer from "../../components/recharts/BarChartContainer";
-import { fetchUserStats } from "../../redux/actions/kpi/UserActions";
+import { fetchUserStats } from "../../redux/actions/UserActions";
 import { fetchGeneralCountryStats } from "../../redux/actions/country/GeneralCountryStatsAction";
 import { fetchNGOStats } from "../../redux/actions/ngo/NGOStatsAction";
 import { getCurrentTime } from "../../util/Date";
 import Header from "../../components/navigation/Header";
-import { KPICard } from "../../components/kpi/KPICard";
+import KPICard from "../../components/kpi/KPICard";
 import Sidebar from "../../components/navigation/Sidebar";
 import SizeChart from "../../components/recharts/SizeChart";
 import LineChartContainer from "../../components/recharts/LineChartContainer";
@@ -176,7 +176,7 @@ class UserView extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    userStats: state.KPI.userStats,
+    userStats: state.userStats.userStats,
     usersCountry: state.country.usersCountry,
     usersNGO: state.NGO.usersNGO,
   };

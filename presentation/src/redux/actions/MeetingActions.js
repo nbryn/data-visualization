@@ -1,5 +1,5 @@
-import { MEETING_STATS } from "../ActionTypes.ts";
-import { fetchFromServer } from "../Fetch.ts";
+import { MEETINGS_TOTAL, MEETING_STATS } from "../reducers/MeetingReducer";
+import { fetchFromServer } from "./Fetch.ts";
 
 export const fetchMeetingStats = () => async (dispatch) => {
   const data = `query{
@@ -36,3 +36,18 @@ export const fetchMeetingStats = () => async (dispatch) => {
     payload: response,
   });
 };
+
+export const fetchTotalMeetings = () => async (dispatch) => {
+    const data = `query{
+      meetingStats{
+        meetingTotal
+      }
+    }`;
+  
+    const response = await fetchFromServer("meetingStats", data);
+  
+    dispatch({
+      type: MEETINGS_TOTAL,
+      payload: response.meetingTotal,
+    });
+  };

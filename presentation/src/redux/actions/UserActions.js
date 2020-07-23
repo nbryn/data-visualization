@@ -1,10 +1,11 @@
 import {
+  USERS_TOTAL,
   USERS_LAST_MONTH,
   USERS_LAST_YEAR,
   USERS_STATS,
-} from "../ActionTypes.ts";
-import { fetchFromServer } from "../Fetch.ts";
-import { convertNumberToMonth } from "../../../util/Date";
+} from "../reducers/UserReducer";
+import { fetchFromServer } from "./Fetch.ts";
+import { convertNumberToMonth } from "../../util/Date";
 
 export const fetchUserStats = () => async (dispatch) => {
   const data = `query {
@@ -35,6 +36,22 @@ export const fetchUserStats = () => async (dispatch) => {
   dispatch({
     type: USERS_STATS,
     payload: response,
+  });
+};
+
+export const fetchTotalUsers = () => async (dispatch) => {
+  const data = `query {
+    userStats {
+      userCount
+    }
+  }`;
+  const response = await fetchFromServer("userStats", data);
+
+  console.log(response);
+
+  dispatch({
+    type: USERS_TOTAL,
+    payload: response.userCount,
   });
 };
 

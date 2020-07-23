@@ -1,4 +1,4 @@
-import { GENERAL_COUNTRY_STATS } from "../ActionTypes.ts";
+import { GENERAL_COUNTRY_STATS } from "../../reducers/CountryReducer";
 import { fetchFromServer } from "../Fetch.ts";
 
 export const fetchGeneralCountryStats = () => async (dispatch) => {

@@ -1,5 +1,5 @@
 import { fetchFromServer } from "../Fetch.ts";
-import { KEY_STATS } from "../ActionTypes.ts";
+import { KEY_STATS } from "../../reducers/KPIReducer";
 
 export const fetchKeyStats = () => async (dispatch) => {
   let keyStats = {

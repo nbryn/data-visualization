@@ -3,12 +3,12 @@ import { connect } from "react-redux";
 import React, { Component } from "react";
 
 import BarChartContainer from "../../components/recharts/BarChartContainer";
-import { fetchGroupStats } from "../../redux/actions/kpi/GroupActions";
+import { fetchGroupStats } from "../../redux/actions/GroupActions";
 import { fetchNGOStats } from "../../redux/actions/ngo/NGOStatsAction";
 import { fetchGeneralCountryStats } from "../../redux/actions/country/GeneralCountryStatsAction";
 import { getCurrentTime } from "../../util/Date";
 import Header from "../../components/navigation/Header";
-import { KPICard } from "../../components/kpi/KPICard";
+import KPICard from "../../components/kpi/KPICard";
 import Sidebar from "../../components/navigation/Sidebar";
 import SizeChart from "../../components/recharts/SizeChart";
 import LineChartContainer from "../../components/recharts/LineChartContainer";
@@ -178,7 +178,7 @@ class GroupView extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    groupStats: state.KPI.groupStats,
+    groupStats: state.groupStats.groupStats,
     groupsNGO: state.NGO.groupsNGO,
     groupsCountry: state.country.groupsCountry,
   };

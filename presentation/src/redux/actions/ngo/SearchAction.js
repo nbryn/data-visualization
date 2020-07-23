@@ -1,5 +1,5 @@
 import { fetchFromServer } from "../Fetch.ts";
-import { GROUP_DATA } from "../ActionTypes.ts";
+import { GROUP_DATA } from "../../reducers/NGOReducer";
 
 export const fetchGroupData = group => async dispatch => {
   const data = `query{

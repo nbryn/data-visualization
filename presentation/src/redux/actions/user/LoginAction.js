@@ -1,4 +1,4 @@
-import { SET_CURRENT_USER } from "../ActionTypes.ts";
+import { SET_CURRENT_USER } from "../../reducers/LoginReducer";
 import { fetchFromServer } from "../Fetch.ts";
 import { setTokenInLocalStorage } from "../../../security/Token";
 

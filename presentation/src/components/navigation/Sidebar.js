@@ -6,7 +6,7 @@ import Logo from "../../assets/img/dashboard.jpeg";
 class Sidebar extends Component {
   render() {
     const chartjsLinks = {
-      dashboard: "/mainviews",
+      dashboard: "/chartjs-main",
     };
 
     const rechartsLinks = {

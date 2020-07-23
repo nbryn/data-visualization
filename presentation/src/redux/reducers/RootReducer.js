@@ -1,12 +1,20 @@
 import { combineReducers } from "redux";
-import UserReducer from "./UserReducer";
+import LoginReducer from "./UserReducer";
 import KPIReducer from "./KPIReducer";
 import NGOReducer from "./NGOReducer";
-import COUNTRYReducer from "./CountryReducer";
+import CountryReducer from "./CountryReducer";
+import UserReducer from "./UserReducer";
+import GroupReducer from "./GroupReducers";
+import MeetingReducer from "./MeetingReducer";
+import FinanceReducer from "./FinanceReducer";
 
 export default combineReducers({
-  user: UserReducer,
-  country: COUNTRYReducer,
+  user: LoginReducer,
+  country: CountryReducer,
   KPI: KPIReducer,
-  NGO: NGOReducer
+  NGO: NGOReducer,
+  userStats: UserReducer,
+  groupStats: GroupReducer,
+  meetingStats: MeetingReducer,
+  financeStats: FinanceReducer,
 });

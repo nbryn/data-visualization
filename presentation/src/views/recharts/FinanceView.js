@@ -3,10 +3,10 @@ import { connect } from "react-redux";
 import React, { Component } from "react";
 
 import BarChartContainer from "../../components/recharts/BarChartContainer";
-import { fetchFinanceStats } from "../../redux/actions/kpi/FinanceStatsAction";
+import { fetchFinanceStats } from "../../redux/actions/FinanceActions";
 import { getCurrentTime } from "../../util/Date";
 import Header from "../../components/navigation/Header";
-import { KPICard } from "../../components/kpi/KPICard";
+import KPICard from "../../components/kpi/KPICard";
 import Sidebar from "../../components/navigation/Sidebar";
 import LineChartContainer from "../../components/recharts/LineChartContainer";
 
@@ -168,7 +168,7 @@ class FinanceView extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    financeStats: state.KPI.financeStats,
+    financeStats: state.financeStats.financeStats,
   };
 };
 

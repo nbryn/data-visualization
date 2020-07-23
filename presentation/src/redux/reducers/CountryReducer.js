@@ -1,4 +1,4 @@
-import { GENERAL_COUNTRY_STATS  } from "../actions/ActionTypes.ts";
+export const GENERAL_COUNTRY_STATS = "GENERAL_COUNTRY_STATS";
 
 export default function(state = {}, action) {
   switch (action.type) {

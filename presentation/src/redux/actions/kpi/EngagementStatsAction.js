@@ -1,4 +1,4 @@
-import { ENGAGEMENT_STATS } from "../ActionTypes.ts";
+import { ENGAGEMENT_STATS } from "../../reducers/KPIReducer";
 import { fetchFromServer } from "../Fetch.ts";
 
 export const fetchEngagementStats = () => async dispatch => {

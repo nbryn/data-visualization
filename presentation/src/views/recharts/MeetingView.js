@@ -4,10 +4,10 @@ import { Grid, Row, Col } from "react-bootstrap";
 
 import BarChartContainer from "../../components/recharts/BarChartContainer";
 import { fetchGeneralCountryStats } from "../../redux/actions/country/GeneralCountryStatsAction";
-import { fetchMeetingStats } from "../../redux/actions/kpi/MeetingStatsAction";
+import { fetchMeetingStats } from "../../redux/actions/MeetingActions";
 import { getCurrentTime } from "../../util/Date";
 import Header from "../../components/navigation/Header";
-import { KPICard } from "../../components/kpi/KPICard";
+import KPICard from "../../components/kpi/KPICard";
 import Sidebar from "../../components/navigation/Sidebar";
 import LineChartContainer from "../../components/recharts/LineChartContainer";
 
@@ -177,7 +177,7 @@ class MeetingView extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    meetingStats: state.KPI.meetingStats,
+    meetingStats: state.meetingStats.meetingStats,
     meetingsCountry: state.country.meetingsCountry,
   };
 };

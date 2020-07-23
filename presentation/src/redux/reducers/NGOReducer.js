@@ -1,4 +1,6 @@
-import { NGO_GROUPS, GROUP_DATA, GROUPS_PER_NGO } from "../actions/ActionTypes.ts";
+export const NGO_GROUPS = "NGO_GROUPS";
+export const GROUPS_PER_NGO = "GROUPS_PER_NGO";
+export const GROUP_DATA = "GROUP_DATA"
 
 export default function(state = {}, action) {
   switch (action.type) {

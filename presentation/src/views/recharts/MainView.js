@@ -32,8 +32,6 @@ class MainView extends Component {
     const { keyStats } = this.props;
     const { userStats, shareStats, groupStats, meetingStats } = keyStats;
 
-    console.log(this.props.keyStats);
-
     let lastUpdatedAt = getCurrentTime();
 
     this.setState({

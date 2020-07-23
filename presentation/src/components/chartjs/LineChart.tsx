@@ -1,14 +1,16 @@
-import React, { useState, useEffect } from "react";
 import { Line } from "react-chartjs-2";
-import TextField from "../form/TextField";
-import { MenuItem } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { Dataset, Chart } from "./types";
+import { MenuItem } from "@material-ui/core";
+import React, {useEffect, useState,  } from "react";
+
+import { Chart, Dataset, } from "./types";
+import { Interval } from "../../containers/chartjs/interval";
+import TextField from "../form/TextField";
 
 interface Props extends Dataset {
   labels: string[];
-  currentInterval: string;
-  updateInterval: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  currentInterval: Interval;
+  updateInterval: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -50,6 +52,8 @@ const LineChart: React.FC<Props> = (props: Props) => {
     ],
   });
 
+  const { WEEK, MONTH, YEAR } = Interval;
+
   useEffect(() => {
     const datasets: Dataset[] = chart.datasets;
     datasets![0].data = props.data;
@@ -73,26 +77,27 @@ const LineChart: React.FC<Props> = (props: Props) => {
           label="Interval"
           size="small"
           select
+          value="Year"
           onChange={props.updateInterval}
         >
           <MenuItem
             key="Week"
             value="Week"
-            disabled={props.currentInterval === "Week" ? true : false}
+            disabled={props.currentInterval === WEEK ? true : false}
           >
             Last Week
           </MenuItem>
           <MenuItem
             key="Month"
             value="Month"
-            disabled={props.currentInterval === "Month" ? true : false}
+            disabled={props.currentInterval === MONTH ? true : false}
           >
             Last Month
           </MenuItem>
           <MenuItem
             key="Year"
             value="Year"
-            disabled={props.currentInterval === "Year" ? true : false}
+            disabled={props.currentInterval === YEAR ? true : false}
           >
             Last Year
           </MenuItem>

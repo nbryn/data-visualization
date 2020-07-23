@@ -1,12 +1,9 @@
-const { GraphQLJSON } = require("graphql-type-json");
-
 const actionRunner = require("../../util/ActionRunner");
 const { fetchDailyData } = require("../../../data/common/fetchDailyData");
 const { fetchMonthlyData } = require("../../../data/common/fetchMonthlyData");
 const {
   fetchGenderStats,
   fetchUserCount,
-  validateLogin,
 } = require("../../../data/mappers/UserMapper");
 const {
   fetchUsersWithEmail,

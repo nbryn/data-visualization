@@ -11,7 +11,7 @@ const UserSchema = require("./logic/api/user/UserSchema");
 const NGOSchema = require("./logic/api/ngo/NGOSchema");
 const CountrySchema = require("./logic/api/country/CountrySchema");
 
-const defaultResolvers = require("./logic/api/DefaultResolvers.ts");
+const defaultResolvers = require("./logic/api/DefaultResolvers.js");
 const financeResolvers = require("./logic/api/finance/FinanceResolvers");
 const groupResolvers = require("./logic/api/group/GroupResolvers");
 const meetingResolvers = require("./logic/api/meeting/MeetingResolvers");

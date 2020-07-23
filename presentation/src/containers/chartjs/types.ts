@@ -1,10 +1,8 @@
 export type Chart = {
   chartData: ChartData;
   labels: string[];
-  // intervalStart: string;
-  // intervalEnd: string;
   loading: boolean;
-  handleChangeInterval: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleChangeInterval: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 export type ChartData = {

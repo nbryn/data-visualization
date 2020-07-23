@@ -1,7 +1,7 @@
 import { Card, CardContent } from "@material-ui/core";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { makeStyles } from "@material-ui/core/styles";
-import React, { useEffect, useState } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { ChartData } from "./types";
@@ -9,12 +9,15 @@ import {
   fetchUsersLastMonth,
   fetchUsersLastYear,
 } from "../../redux/actions/kpi/UserActions";
+import {Interval, resolveInterval} from "./interval";
 import LineChart from "../../components/chartjs/LineChart";
 import { RootState } from "../../redux/store";
 
-const UserLineChartContainer: React.FC = () => {
+const UserLineChartContainer: React.FC = (): ReactElement => {
+  const {WEEK, MONTH, YEAR} = Interval;
+
   const [loading, setLoading] = useState(true);
-  const [period, setPeriod] = useState("Year");
+  const [period, setPeriod] = useState<Interval>(YEAR);
 
   const [labels, setLabels] = useState<string[]>([]);
   const [chartData, setChartData] = useState<ChartData>({
@@ -39,21 +42,21 @@ const UserLineChartContainer: React.FC = () => {
   const handleChangeInterval = (
     event: React.ChangeEvent<HTMLInputElement>
   ): void => {
-    const interval: string = event.target.value;
+    const interval: Interval = resolveInterval(event.target.value);
     setLoading(true);
 
-    if (interval === "Week") {
-      updateData("Week", usersLastWeek);
-    } else if (interval === "Month") {
-      updateData("Month", usersLastMonth);
+    if (interval === WEEK) {
+      updateData(WEEK, usersLastWeek);
+    } else if (interval === MONTH) {
+      updateData(MONTH, usersLastMonth);
     } else {
-      updateData("Year", usersLastYear);
+      updateData(YEAR, usersLastYear);
     }
     setLoading(false);
   };
 
-  const updateData = (period: string, chartData: any): void => {
-    setPeriod(period);
+  const updateData = (interval: Interval, chartData: any): void => {
+    setPeriod(interval);
     setLabels(chartData.labels);
     setChartData({ counter: chartData.counter, data: chartData.data });
   };
@@ -64,7 +67,7 @@ const UserLineChartContainer: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    updateData("Year", usersLastYear);
+    updateData(YEAR, usersLastYear);
 
     setLoading(false);
   }, [usersLastYear]);

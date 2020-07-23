@@ -4,16 +4,15 @@ import { setTokenInLocalStorage } from "../../../security/Token";
 
 export const login = (username, password, history) => async (dispatch) => {
   const data = `mutation signin {
-    data:
      signin(input: {
        username: "${username}"
        password: "${password}"
      })  
      }`;
 
-  const response = await fetchFromServer("post", data);
-
-  const error = response.data.data.data.error;
+  const response = await fetchFromServer("signin", data);
+  
+  const error = response.error;
 
   if (error) {
     return "Wrong Email/Username";
@@ -22,7 +21,7 @@ export const login = (username, password, history) => async (dispatch) => {
 
     dispatch({
       type: SET_CURRENT_USER,
-      payload: response.data.data,
+      payload: response,
     });
 
     history.push("/dashboard");

@@ -30,6 +30,23 @@ const DefaultSchema = gql`
     count: Float
   }
 
+  type User {
+    firstName: String
+    lastName: String
+    phoneNumber: String
+    email: String
+    gender: String
+  }
+
+  input SigninInput {
+    username: String!
+    password: String!
+  }
+
+  type Mutation {
+    signin(input: SigninInput!): JSON
+  }
+
   type Query {
     _empty: String
   }

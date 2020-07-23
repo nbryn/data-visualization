@@ -76,6 +76,13 @@ const LineChart: React.FC<Props> = (props: Props) => {
           onChange={props.updateInterval}
         >
           <MenuItem
+            key="Week"
+            value="Week"
+            disabled={props.currentInterval === "Week" ? true : false}
+          >
+            Last Week
+          </MenuItem>
+          <MenuItem
             key="Month"
             value="Month"
             disabled={props.currentInterval === "Month" ? true : false}

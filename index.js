@@ -3,7 +3,7 @@ const { merge } = require("lodash");
 const { makeExecutableSchema } = require("graphql-tools");
 const express = require("express");
 
-const DefaultSchema = require("./logic/api/DefaultSchema");
+const DefaultSchema = require("./logic/api/DefaultSchema.ts");
 const FinanceSchema = require("./logic/api/finance/FinanceSchema");
 const GroupSchema = require("./logic/api/group/GroupSchema");
 const MeetingSchema = require("./logic/api/meeting/MeetingSchema");
@@ -11,6 +11,7 @@ const UserSchema = require("./logic/api/user/UserSchema");
 const NGOSchema = require("./logic/api/ngo/NGOSchema");
 const CountrySchema = require("./logic/api/country/CountrySchema");
 
+const defaultResolvers = require("./logic/api/DefaultResolvers.ts");
 const financeResolvers = require("./logic/api/finance/FinanceResolvers");
 const groupResolvers = require("./logic/api/group/GroupResolvers");
 const meetingResolvers = require("./logic/api/meeting/MeetingResolvers");
@@ -23,6 +24,7 @@ const app = express();
 app.use(express.static("presentation/build"));
 
 const resolvers = merge(
+  defaultResolvers,
   financeResolvers,
   groupResolvers,
   meetingResolvers,

@@ -11,6 +11,11 @@ import Sidebar from "../../components/navigation/Sidebar";
 import LineChartContainer from "../../components/recharts/LineChartContainer";
 
 class FinanceView extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {};
+  }
   componentDidMount() {
     this.fetchData();
 

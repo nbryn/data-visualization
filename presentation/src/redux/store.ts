@@ -4,6 +4,7 @@ import rootReducer from "./reducers/RootReducer";
 
 const initialState = {
   KPI: {
+    usersLastWeek: [],
     usersLastMonth: [],
     usersLastYear: [],
   },

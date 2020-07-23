@@ -38,6 +38,7 @@ export default function (state = {}, action) {
     case USERS_LAST_MONTH:
       return Object.assign({}, state, {
         usersLastMonth: action.payload,
+        usersLastWeek: action.payload.usersLastWeek,
       });
     case USERS_LAST_YEAR:
       return Object.assign({}, state, {

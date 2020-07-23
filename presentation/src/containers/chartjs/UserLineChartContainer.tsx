@@ -2,13 +2,17 @@ import { Card, CardContent } from "@material-ui/core";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { makeStyles } from "@material-ui/core/styles";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { ChartData } from "./types";
+import {
+  fetchUsersLastMonth,
+  fetchUsersLastYear,
+} from "../../redux/actions/kpi/UserActions";
 import LineChart from "../../components/chartjs/LineChart";
 import { RootState } from "../../redux/store";
 
-const UsersTotalContainer: React.FC = () => {
+const UserLineChartContainer: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [period, setPeriod] = useState("Year");
 
@@ -18,6 +22,10 @@ const UsersTotalContainer: React.FC = () => {
     data: [],
   });
 
+  const usersLastWeek = useSelector<RootState, any>(
+    (state) => state.KPI.usersLastWeek
+  );
+
   const usersLastMonth = useSelector<RootState, any>(
     (state) => state.KPI.usersLastMonth
   );
@@ -26,34 +34,40 @@ const UsersTotalContainer: React.FC = () => {
     (state) => state.KPI.usersLastYear
   );
 
+  const dispatch = useDispatch();
+
   const handleChangeInterval = (
-    e: React.ChangeEvent<HTMLInputElement>
+    event: React.ChangeEvent<HTMLInputElement>
   ): void => {
-    // @ts-ignore
-    const interval: string = e.target.value;
+    const interval: string = event.target.value;
     setLoading(true);
-    if (interval === "Month") {
-      setPeriod("Month");
+
+    if (interval === "Week") {
+      updateData("Week", usersLastWeek);
+    } else if (interval === "Month") {
+      updateData("Month", usersLastMonth);
     } else {
-      setPeriod("Year");
+      updateData("Year", usersLastYear);
     }
+    setLoading(false);
+  };
+
+  const updateData = (period: string, chartData: any): void => {
+    setPeriod(period);
+    setLabels(chartData.labels);
+    setChartData({ counter: chartData.counter, data: chartData.data });
   };
 
   useEffect(() => {
-    setLabels(period === "Year" ? usersLastYear.labels : usersLastMonth.labels);
-    setChartData(
-      period === "Year"
-        ? {
-            counter: usersLastYear.counter,
-            data: usersLastYear.chartData,
-          }
-        : {
-            counter: usersLastMonth.counter,
-            data: usersLastMonth.chartData,
-          }
-    );
+    dispatch(fetchUsersLastMonth());
+    dispatch(fetchUsersLastYear());
+  }, []);
+
+  useEffect(() => {
+    updateData("Year", usersLastYear);
+
     setLoading(false);
-  }, [period, usersLastYear, usersLastMonth]);
+  }, [usersLastYear]);
 
   return (
     <Card>
@@ -84,4 +98,4 @@ const UsersTotalContainer: React.FC = () => {
   );
 };
 
-export default UsersTotalContainer;
+export default UserLineChartContainer;

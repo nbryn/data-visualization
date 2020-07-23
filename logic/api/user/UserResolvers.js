@@ -16,15 +16,6 @@ const {
 const { calculateActiveUsers } = require("./UserService");
 
 const userResolvers = {
-  JSON: GraphQLJSON,
-
-  Mutation: {
-    signin: async (parent, args, context, info) => {
-      const result = await validateLogin(args);
-
-      return result;
-    },
-  },
   Query: {
     userStats: (root, context) => ({ root, context }),
     userInfo: (root, context) => ({ root, context }),

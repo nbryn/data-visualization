@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const setTokenInLocalStorage = response => {
-  const token = response.data.data.data.token;
+  const token = response.token;
   localStorage.setItem("Token", token);
 };
 

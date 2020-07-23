@@ -55,16 +55,36 @@ export const fetchUsersLastMonth = () => async (dispatch) => {
 
   const usersLastMonth = {
     labels: [],
-    chartData: [],
+    data: [],
     counter: 0,
+    usersLastWeek: {
+      labels: [],
+      data: [],
+      counter: 0,
+    },
   };
+
+  let counter = 0;
+  let usersLastWeek = 0;
 
   usersLastMonth.labels = response.usersLastMonth.map(
     (element) => element.day.day + "/" + element.day.month
   );
-  usersLastMonth.chartData = response.usersLastMonth.map(
-    (element) => (usersLastMonth.counter += element.count)
+  usersLastMonth.data = response.usersLastMonth.map((element) => {
+    counter++;
+    if (counter >= response.usersLastMonth.length - 7) {
+      usersLastWeek += element.count;
+    }
+    return (usersLastMonth.counter += element.count);
+  });
+
+  usersLastMonth.usersLastWeek.labels = usersLastMonth.labels.slice(
+    usersLastMonth.labels.length - 7
   );
+  usersLastMonth.usersLastWeek.data = usersLastMonth.data.slice(
+    usersLastMonth.data.length - 7
+  );
+  usersLastMonth.usersLastWeek.counter = usersLastWeek;
 
   dispatch({
     type: USERS_LAST_MONTH,
@@ -87,17 +107,17 @@ export const fetchUsersLastYear = () => async (dispatch) => {
 
   const usersLastYear = {
     labels: [],
-    chartData: [],
+    data: [],
     counter: 0,
   };
 
   usersLastYear.labels = response.usersLastYear.map((element) => {
     return (
-      convertNumberToMonth(element.month) + element.year.toString().substring(2)
+      convertNumberToMonth(element.month) + "'" + element.year.toString().substring(2)
     );
   });
 
-  usersLastYear.chartData = response.usersLastYear.map(
+  usersLastYear.data = response.usersLastYear.map(
     (element) => (usersLastYear.counter += element.count)
   );
 

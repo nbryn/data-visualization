@@ -12,6 +12,12 @@ import SizeChart from "../../components/recharts/SizeChart";
 import LineChartContainer from "../../components/recharts/LineChartContainer";
 
 class MainView extends Component {
+  constructor(props) {
+    super(props);
+    
+    this.state = {};
+  }
+
   componentDidMount() {
     this.fetchData();
 
@@ -25,6 +31,8 @@ class MainView extends Component {
 
     const { keyStats } = this.props;
     const { userStats, shareStats, groupStats, meetingStats } = keyStats;
+
+    console.log(this.props.keyStats);
 
     let lastUpdatedAt = getCurrentTime();
 

@@ -1,32 +1,12 @@
 import { Col, Row } from "react-bootstrap";
 import React, { Component } from "react";
-import { connect } from "react-redux";
 
-import {
-  fetchUsersLastMonth,
-  fetchUsersLastYear,
-} from "../../redux/actions/kpi/UserActions";
 import Header from "../../components/navigation/Header";
 import Sidebar from "../../components/navigation/Sidebar";
-import UsersTotalContainer from "../../containers/chartjs/UsersTotalContainer";
+import UserLineChartContainer from "../../containers/chartjs/UserLineChartContainer";
 
-type Props = {
-  usersLastMonth: Function;
-  usersLastYear: Function;
-};
+class MainView extends Component {
 
-class MainView extends Component<Props> {
-  constructor(props: Props) {
-    super(props);
-  }
-  componentDidMount() {
-    this.fetchData();
-  }
-
-  async fetchData() {
-    await this.props.usersLastMonth();
-    await this.props.usersLastYear();
-  }
   render() {
     return (
       <div className="wrapper">
@@ -37,7 +17,7 @@ class MainView extends Component<Props> {
             <div className="container">
               <Row>
                 <Col lg={6} sm={6}>
-                  <UsersTotalContainer />
+                  <UserLineChartContainer />
                 </Col>
               </Row>
             </div>
@@ -48,9 +28,5 @@ class MainView extends Component<Props> {
   }
 }
 
-const mapDispatchToProps = (dispatch: any) => ({
-  usersLastYear: () => dispatch(fetchUsersLastYear()),
-  usersLastMonth: () => dispatch(fetchUsersLastMonth()),
-});
 
-export default connect(null, mapDispatchToProps)(MainView);
+export default MainView;

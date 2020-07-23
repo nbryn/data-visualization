@@ -12,6 +12,11 @@ import SizeChart from "../../components/recharts/SizeChart";
 import TotalGraph from "../../components/recharts/LineChartContainer";
 
 class EngagementView extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {};
+  }
   componentDidMount() {
     this.fetchData();
 

@@ -1,20 +1,6 @@
 const { gql } = require("apollo-server");
 
 const UserSchema = gql`
-  input SigninInput {
-    username: String!
-    password: String!
-  }
-
-  type User {
-    firstName: String
-    lastName: String
-    phoneNumber: String
-    signupDate: String
-    email: String
-    gender: String
-  }
-
   type UserInfo {
     usersWithPhone: [User]
     usersWithEmail: [User]
@@ -32,10 +18,6 @@ const UserSchema = gql`
     me: JSON
     userStats: UserStats
     userInfo: UserInfo
-  }
-
-  type Mutation {
-    signin(input: SigninInput!): JSON
   }
 `;
 

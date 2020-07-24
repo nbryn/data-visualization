@@ -1,6 +1,7 @@
 import {
   CHARTJS_USERS_LAST_MONTH,
   CHARTJS_USERS_LAST_YEAR,
+  USER_GENDER_STATS,
   USERS_TOTAL,
   USERS_LAST_MONTH,
   USERS_LAST_YEAR,
@@ -168,4 +169,29 @@ export const fetchUsersLastYear = (chartjs) => async (dispatch) => {
       payload: newState,
     });
   }
+};
+
+export const fetchUserGenderStats = () => async (dispatch) => {
+  const data = `query {
+    userStats{
+      userGenderStats{
+        value
+        count
+      }
+    }
+  }`;
+
+  const response = await fetchFromServer("userStats", data);
+
+  const newState = response.userGenderStats.map(element => {
+    return {
+      name: element.value,
+      value: element.count,
+    }
+  })
+
+  dispatch({
+    type: USER_GENDER_STATS,
+    payload: newState,
+  });
 };

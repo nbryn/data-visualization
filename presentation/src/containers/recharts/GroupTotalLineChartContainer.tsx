@@ -1,19 +1,19 @@
 import React, { ReactElement, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { fetchMeetingsLastYear } from "../../../redux/actions/MeetingActions";
-import LineChart from "../../../components/recharts/LineChart";
-import { RootState } from "../../../redux/store";
+import { fetchGroupsLastYear } from "../../redux/actions/GroupActions";
+import LineChart from "../../components/recharts/LineChart";
+import { RootState } from "../../redux/store";
 
-export const MeetingTotalLineChartContainer: React.FC = (): ReactElement => {
+export const GroupTotalLineChartContainer: React.FC = (): ReactElement => {
   const data: any = useSelector<RootState, any>(
-    (state) => state.meetingStats.meetingsLastYear
+    (state) => state.groupStats.groupsLastYear
   );
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchMeetingsLastYear());
+    dispatch(fetchGroupsLastYear());
   }, []);
 
   const yLabelConfig = {
@@ -30,7 +30,7 @@ export const MeetingTotalLineChartContainer: React.FC = (): ReactElement => {
         data={data}
         xLabel={xLabelConfig}
         yLabel={yLabelConfig}
-        stroke="#2196f3"
+        stroke="#228b22"
       />
     </div>
   );

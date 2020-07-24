@@ -17,7 +17,7 @@ export default function (state = {}, action: any) {
     case GROUPS_LAST_MONTH:
       return Object.assign({}, state, {
         groupsLastMonth: action.payload,
-        groupsLastWeek: action.payload.groupsLastWeek,
+        //groupsLastWeek: action.payload.groupsLastWeek,
       });
     case GROUPS_LAST_YEAR:
       return Object.assign({}, state, {

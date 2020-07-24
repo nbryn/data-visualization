@@ -1,4 +1,5 @@
 // ----- Actions ------- //
+export const USER_GENDER_STATS = "USER_GENDER_STATS";
 export const USERS_TOTAL = "USERS_TOTAL";
 export const USERS_STATS = "USERS_STATS";
 export const USERS_LAST_MONTH = "USERS_LAST_MONTH";
@@ -9,6 +10,10 @@ export const CHARTJS_USERS_LAST_YEAR = "CHART_JS_USERS_LAST_YEAR";
 
 export default function (state = {}, action: any) {
   switch (action.type) {
+    case USER_GENDER_STATS:
+      return Object.assign({}, state, {
+        genderStats: action.payload,
+      });
     case USERS_TOTAL:
       return Object.assign({}, state, {
         usersTotal: action.payload,

@@ -9,6 +9,7 @@ const initialState = {
     usersLastYear: [],
   },
   UserStats: {
+    genderStats: [],
     userStats: [],
     usersTotal: 0,
     usersLastWeek: [],
@@ -50,6 +51,7 @@ let store;
 
 
 export interface UserState {
+  genderStats: Array<any>;
   usersTotal: number;
   usersLastWeek: Array<any>;
   usersLastMonth: Array<any>;

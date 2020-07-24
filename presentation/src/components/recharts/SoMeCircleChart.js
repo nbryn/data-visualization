@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import CircleChart from "./CircleChart";
+import CircleChart from "./PieChart";
 
 class SoMeCircleChart extends Component {
   constructor(props) {

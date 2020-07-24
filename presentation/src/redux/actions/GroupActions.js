@@ -1,7 +1,11 @@
 import { convertNumberToMonth } from "../../util/Date";
 import { fetchFromServer } from "./Fetch";
-import { GROUP_STATS, GROUPS_TOTAL, GROUPS_LAST_YEAR } from "../reducers/GroupReducers";
-
+import {
+  GROUP_STATS,
+  GROUPS_TOTAL,
+  GROUPS_LAST_MONTH,
+  GROUPS_LAST_YEAR,
+} from "../reducers/GroupReducers";
 
 export const fetchGroupStats = () => async (dispatch) => {
   const data = `query{
@@ -47,6 +51,35 @@ export const fetchTotalGroups = () => async (dispatch) => {
   dispatch({
     type: GROUPS_TOTAL,
     payload: response.groupTotal,
+  });
+};
+
+export const fetchGroupsLastMonth = () => async (dispatch) => {
+  const data = `query{
+    groupStats{  
+      groupsLastMonth{
+          count
+          day{
+            year
+            month
+            day
+          }
+        }
+      }
+  }`;
+
+  const response = await fetchFromServer("groupStats", data);
+
+  const newState = response.groupsLastMonth.map((element) => {
+    return {
+      name: element.day.day + "/" + element.day.month,
+      value: element.count,
+    };
+  });
+
+  dispatch({
+    type: GROUPS_LAST_MONTH,
+    payload: newState,
   });
 };
 

@@ -6,7 +6,7 @@ import { getCurrentTime } from "../../util/Date";
 import KPICard from "../../components/kpi/KPICard";
 import { RootState } from "../../redux/store";
 
-export const TotalGroupsKPIContainer: React.FC = (): ReactElement => {
+export const GroupTotalKPIContainer: React.FC = (): ReactElement => {
   const [lastUpdate, setLastUpdate] = useState<string>("");
   const totalGroups: number = useSelector<RootState, number>(
     (state) => state.groupStats.groupsTotal

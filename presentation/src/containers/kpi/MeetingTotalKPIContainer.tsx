@@ -1,29 +1,29 @@
 import React, { ReactElement, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { fetchTotalUsers } from "../../redux/actions/UserActions";
+import { fetchTotalMeetings } from "../../redux/actions/MeetingActions";
 import { getCurrentTime } from "../../util/Date";
 import KPICard from "../../components/kpi/KPICard";
 import { RootState } from "../../redux/store";
 
-export const TotalUsersKPIContainer: React.FC = (): ReactElement => {
+export const MeetingTotalKPIContainer: React.FC = (): ReactElement => {
   const [lastUpdate, setLastUpdate] = useState<string>("");
-  const totalUsers: number = useSelector<RootState, number>(
-    (state) => state.userStats.usersTotal
+  const totalMeetings: number = useSelector<RootState, number>(
+    (state) => state.meetingStats.meetingsTotal
   );
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchTotalUsers());
+    dispatch(fetchTotalMeetings());
     setLastUpdate(getCurrentTime());
   }, []);
 
   return (
     <KPICard
-      bigIcon="pe-7s-user text-warning"
-      statsText="Total Users"
-      statsValue={totalUsers}
+      bigIcon="pe-7s-graph1 text-danger"
+      statsText="Total Meetings"
+      statsValue={totalMeetings}
       statsIcon="fa fa-refresh"
       statsIconText={`Last Update: ${lastUpdate}`}
     />

@@ -6,7 +6,7 @@ import { getCurrentTime } from "../../util/Date";
 import KPICard from "../../components/kpi/KPICard";
 import { RootState } from "../../redux/store";
 
-export const TotalSharesKPIContainer: React.FC = (): ReactElement => {
+export const ShareTotalKPIContainer: React.FC = (): ReactElement => {
   const [lastUpdate, setLastUpdate] = useState<string>("");
   const totalShares: number = useSelector<RootState, number>(
     (state) => state.financeStats.sharesTotal

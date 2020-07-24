@@ -30,11 +30,11 @@ const UserLineChartContainer: React.FC = (): ReactElement => {
   );
 
   const usersLastMonth = useSelector<RootState, any>(
-    (state) => state.userStats.usersLastMonth
+    (state) => state.userStats.chartjsUsersLastMonth
   );
 
   const usersLastYear = useSelector<RootState, any>(
-    (state) => state.userStats.usersLastYear
+    (state) => state.userStats.chartjsUsersLastYear
   );
 
   const dispatch = useDispatch();
@@ -62,8 +62,8 @@ const UserLineChartContainer: React.FC = (): ReactElement => {
   };
 
   useEffect(() => {
-    dispatch(fetchUsersLastMonth());
-    dispatch(fetchUsersLastYear());
+    dispatch(fetchUsersLastMonth(true));
+    dispatch(fetchUsersLastYear(true));
   }, []);
 
   useEffect(() => {

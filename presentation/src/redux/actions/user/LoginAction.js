@@ -11,6 +11,8 @@ export const login = (username, password, history) => async (dispatch) => {
      }`;
 
   const response = await fetchFromServer("signin", data);
+
+  console.log(response);
   
   const error = response.error;
 

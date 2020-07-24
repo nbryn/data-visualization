@@ -64,7 +64,7 @@ async function getModel(model) {
     case "Group":
       if (!groupModel) groupModel = connection.model("Group", groupSchema);
       return groupModel;
-      
+
     case "User":
       if (!userModel) userModel = connection.model("User", userSchema);
       return userModel;

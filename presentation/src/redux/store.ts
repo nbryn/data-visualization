@@ -14,6 +14,8 @@ const initialState = {
     usersLastWeek: [],
     usersLastMonth: [],
     usersLastYear: [],
+    chartjsUsersLastMonth: [],
+    chartjsUsersLastYear: [],
   },
   GroupStats: {
     groupStats: [],
@@ -46,12 +48,15 @@ const middleWare = [thunk];
 
 let store;
 
+
 export interface UserState {
   usersTotal: number;
   usersLastWeek: Array<any>;
   usersLastMonth: Array<any>;
   usersLastYear: Array<any>;
   userStats: any;
+  chartjsUsersLastMonth: Array<any>;
+  chartjsUsersLastYear: Array<any>;
 }
 
 export interface GroupState {

@@ -1,4 +1,6 @@
 import {
+  CHARTJS_USERS_LAST_MONTH,
+  CHARTJS_USERS_LAST_YEAR,
   USERS_TOTAL,
   USERS_LAST_MONTH,
   USERS_LAST_YEAR,
@@ -47,15 +49,13 @@ export const fetchTotalUsers = () => async (dispatch) => {
   }`;
   const response = await fetchFromServer("userStats", data);
 
-  console.log(response);
-
   dispatch({
     type: USERS_TOTAL,
     payload: response.userCount,
   });
 };
 
-export const fetchUsersLastMonth = () => async (dispatch) => {
+export const fetchUsersLastMonth = (chartjs) => async (dispatch) => {
   const data = `query {
     userStats {
       usersLastMonth {
@@ -70,43 +70,50 @@ export const fetchUsersLastMonth = () => async (dispatch) => {
   }`;
   const response = await fetchFromServer("userStats", data);
 
-  const usersLastMonth = {
-    labels: [],
-    data: [],
-    counter: 0,
-    usersLastWeek: {
+  if (chartjs) {
+    const usersLastMonth = {
       labels: [],
       data: [],
       counter: 0,
-    },
-  };
+      usersLastWeek: {
+        labels: [],
+        data: [],
+        counter: 0,
+      },
+    };
 
-  usersLastMonth.labels = response.usersLastMonth.map(
-    (element) => element.day.day + "/" + element.day.month
-  );
-  usersLastMonth.data = response.usersLastMonth.map(
-    (element) => (usersLastMonth.counter += element.count)
-  );
+    usersLastMonth.labels = response.usersLastMonth.map(
+      (element) => element.day.day + "/" + element.day.month
+    );
+    usersLastMonth.data = response.usersLastMonth.map(
+      (element) => (usersLastMonth.counter += element.count)
+    );
 
-  usersLastMonth.usersLastWeek.labels = usersLastMonth.labels.slice(
-    usersLastMonth.labels.length - 7
-  );
+    usersLastMonth.usersLastWeek.labels = usersLastMonth.labels.slice(
+      usersLastMonth.labels.length - 7
+    );
 
-  const lastWeek = response.usersLastMonth.slice(
-    response.usersLastMonth.length - 7
-  );
+    const lastWeek = response.usersLastMonth.slice(
+      response.usersLastMonth.length - 7
+    );
 
-  usersLastMonth.usersLastWeek.data = lastWeek.map(
-    (element) => (usersLastMonth.usersLastWeek.counter += element.count)
-  );
+    usersLastMonth.usersLastWeek.data = lastWeek.map(
+      (element) => (usersLastMonth.usersLastWeek.counter += element.count)
+    );
 
-  dispatch({
-    type: USERS_LAST_MONTH,
-    payload: usersLastMonth,
-  });
+    dispatch({
+      type: CHARTJS_USERS_LAST_MONTH,
+      payload: usersLastMonth,
+    });
+  } else {
+    dispatch({
+      type: USERS_LAST_MONTH,
+      payload: response,
+    });
+  }
 };
 
-export const fetchUsersLastYear = () => async (dispatch) => {
+export const fetchUsersLastYear = (chartjs) => async (dispatch) => {
   const data = `query {
     userStats {
       usersLastYear {
@@ -119,26 +126,46 @@ export const fetchUsersLastYear = () => async (dispatch) => {
 
   const response = await fetchFromServer("userStats", data);
 
-  const usersLastYear = {
-    labels: [],
-    data: [],
-    counter: 0,
-  };
+  if (chartjs) {
+    const usersLastYear = {
+      labels: [],
+      data: [],
+      counter: 0,
+    };
 
-  usersLastYear.labels = response.usersLastYear.map((element) => {
-    return (
-      convertNumberToMonth(element.month) +
-      "'" +
-      element.year.toString().substring(2)
+    usersLastYear.labels = response.usersLastYear.map((element) => {
+      return (
+        convertNumberToMonth(element.month) +
+        "'" +
+        element.year.toString().substring(2)
+      );
+    });
+
+    usersLastYear.data = response.usersLastYear.map(
+      (element) => (usersLastYear.counter += element.count)
     );
-  });
 
-  usersLastYear.data = response.usersLastYear.map(
-    (element) => (usersLastYear.counter += element.count)
-  );
+    dispatch({
+      type: CHARTJS_USERS_LAST_YEAR,
+      payload: usersLastYear,
+    });
+  } else {
+    let total = 0;
+    let month, year;
+    const newState = response.usersLastYear.map((element) => {
+      total += element.count;
+      year = element.year.toString().substring(2);
+      month = convertNumberToMonth(element.month);
 
-  dispatch({
-    type: USERS_LAST_YEAR,
-    payload: usersLastYear,
-  });
+      return {
+        name: month + " '" + year,
+        value: total,
+      };
+    });
+
+    dispatch({
+      type: USERS_LAST_YEAR,
+      payload: newState,
+    });
+  }
 };

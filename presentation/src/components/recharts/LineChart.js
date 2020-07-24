@@ -21,7 +21,7 @@ class LineChart extends Component {
               <p>{title}</p>
             </div>
           </Col>
-          {data.length === 0 ? (
+          {!data ? (
             <div className="spinner">
               <CircularProgress />
             </div>

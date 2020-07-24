@@ -5,15 +5,19 @@ import React, { Component } from "react";
 import BarChartContainer from "../../components/recharts/BarChartContainer";
 import { fetchKeyStats } from "../../redux/actions/kpi/KeyStatsAction";
 import Header from "../../components/navigation/Header";
-import LineChartContainer from "../../components/recharts/LineChartContainer";
 import Sidebar from "../../components/navigation/Sidebar";
 import SizeChart from "../../components/recharts/SizeChart";
 import {
-  TotalMeetingsKPIContainer,
-  TotalGroupsKPIContainer,
-  TotalSharesKPIContainer,
-  TotalUsersKPIContainer,
+  MeetingTotalKPIContainer,
+  GroupTotalKPIContainer,
+  ShareTotalKPIContainer,
+  UserTotalKPIContainer,
 } from "../../containers/kpi";
+import {
+  MeetingTotalLineChartContainer,
+  GroupTotalLineChartContainer,
+  UserTotalLineChartContainer,
+} from "../../containers/recharts";
 
 class MainView extends Component {
   constructor(props) {
@@ -34,14 +38,12 @@ class MainView extends Component {
     await this.props.fetchKeyStats();
 
     const { keyStats } = this.props;
-    const { userStats, groupStats, meetingStats } = keyStats;
+    const { userStats, groupStats } = keyStats;
 
     this.setState({
       usersLastYear: userStats.usersLastYear,
       userGender: userStats.userGenderStats,
       groupsLastMonth: groupStats.groupsLastMonth,
-      groupsLastYear: groupStats.groupsLastYear,
-      meetingsLastYear: meetingStats.meetingsLastYear,
     });
 
     let count = 0;
@@ -49,24 +51,6 @@ class MainView extends Component {
   }
 
   render() {
-    const LineChartContainers = {
-      usersLastYear: {
-        title: "Total Users",
-        yLabel: "Users",
-        stroke: "#ff0000",
-      },
-      groupsLastYear: {
-        title: "Total Groups",
-        yLabel: "Groups",
-        stroke: "#228b22",
-      },
-      meetingsLastYear: {
-        title: "Total Meetings",
-        yLabel: "Meetings",
-        stroke: "#2196f3",
-      },
-    };
-
     return (
       <div className="wrapper">
         <Sidebar />
@@ -77,31 +61,29 @@ class MainView extends Component {
             <Grid fluid>
               <Row>
                 <Col lg={3} sm={6}>
-                  <TotalUsersKPIContainer />
+                  <UserTotalKPIContainer />
                 </Col>
                 <Col lg={3} sm={6}>
-                  <TotalGroupsKPIContainer />
+                  <GroupTotalKPIContainer />
                 </Col>
                 <Col lg={3} sm={6}>
-                  <TotalMeetingsKPIContainer />
+                  <MeetingTotalKPIContainer />
                 </Col>
                 <Col lg={3} sm={6}>
-                  <TotalSharesKPIContainer />
+                  <ShareTotalKPIContainer />
                 </Col>
               </Row>
 
               <Row>
-                {Object.keys(LineChartContainers).map((element, index) => (
-                  <Col lg={4} sm={6}>
-                    <LineChartContainer
-                      title={LineChartContainers[element].title}
-                      xLabel="Months"
-                      yLabel={LineChartContainers[element].yLabel}
-                      stroke={LineChartContainers[element].stroke}
-                      data={this.state[element]}
-                    />
-                  </Col>
-                ))}
+                <Col lg={4} sm={6}>
+                  <UserTotalLineChartContainer />
+                </Col>
+                <Col lg={4} sm={6}>
+                  <GroupTotalLineChartContainer />
+                </Col>
+                <Col lg={4} sm={6}>
+                  <MeetingTotalLineChartContainer />
+                </Col>
               </Row>
               <Row>
                 <Col lg={4} sm={6}>

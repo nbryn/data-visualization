@@ -1,8 +1,9 @@
-// ----- Actions ------- //
-export const MEETINGS_TOTAL = 'MEETINGS_TOTAL';
-export const MEETING_STATS = 'MEETINGS_STATS';
-export const MEETINGS_LAST_MONTH = 'MEETINGS_LAST_MONTH';
-export const MEETINGS_LAST_YEAR = 'MEETINGS_LAST_YEAR';
+import {
+  MEETINGS_LAST_MONTH,
+  MEETINGS_LAST_YEAR,
+  MEETING_STATS,
+  MEETINGS_TOTAL
+} from './MeetingTypes';
 
 export default function (state = {}, action: any) {
   switch (action.type) {

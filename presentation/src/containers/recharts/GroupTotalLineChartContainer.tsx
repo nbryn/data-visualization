@@ -5,32 +5,50 @@ import { fetchGroupsLastYear } from "../../redux/actions/GroupActions";
 import LineChart from "../../components/recharts/LineChart";
 import { RootState } from "../../redux/store";
 
-export const GroupTotalLineChartContainer: React.FC = (): ReactElement => {
+type Props = {
+  title: string;
+  fetchData: Function;
+  statsType: string;
+  dataType: string;
+  xLabel: string;
+  yLabel: string;
+  strokeColor: string;
+};
+
+export const GroupTotalLineChartContainer: React.FC<Props> = ({
+  title,
+  fetchData,
+  statsType,
+  dataType,
+  xLabel,
+  yLabel,
+  strokeColor,
+}: Props): ReactElement => {
   const data: any = useSelector<RootState, any>(
-    (state) => state.groupStats.groupsLastYear
+    (state) => state[statsType][dataType]
   );
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchGroupsLastYear());
+    dispatch(fetchData());
   }, []);
 
   const yLabelConfig = {
-    value: "Groups",
+    value: yLabel,
     angle: -90,
     position: "insideLeft",
   };
-  const xLabelConfig = { value: "Months", position: "center", dy: 10 };
+  const xLabelConfig = { value: xLabel, position: "center", dy: 10 };
 
   return (
     <div className="card-graph card-stats">
       <LineChart
-        title="Total Groups"
+        title={title}
         data={data}
         xLabel={xLabelConfig}
         yLabel={yLabelConfig}
-        stroke="#228b22"
+        stroke={strokeColor}
       />
     </div>
   );

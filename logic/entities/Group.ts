@@ -1,18 +1,18 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const GroupState = {
-  CREATING: "CREATING",
-  ACTIVE: "ACTIVE",
-  CLOSING: "CLOSING",
-  CLOSED: "CLOSED",
-  NOT_ACTIVE: "NOT_ACTIVE",
+  CREATING: 'CREATING',
+  ACTIVE: 'ACTIVE',
+  CLOSING: 'CLOSING',
+  CLOSED: 'CLOSED',
+  NOT_ACTIVE: 'NOT_ACTIVE'
 };
 
 const GroupStatesArray = [
   GroupState.CREATING,
   GroupState.ACTIVE,
-  GroupState.NOT_ACTIVE,
+  GroupState.NOT_ACTIVE
 ];
 
 const GroupSchema = new Schema({
@@ -27,9 +27,9 @@ const GroupSchema = new Schema({
   state: {
     type: String,
     enum: GroupStatesArray,
-    default: GroupState.CREATING,
+    default: GroupState.CREATING
   },
-  meetings: [{ type: mongoose.Schema.Types.ObjectId, ref: "GroupMeeting" }],
+  meetings: [{ type: mongoose.Schema.Types.ObjectId, ref: 'GroupMeeting' }]
 });
 
 module.exports = GroupSchema;

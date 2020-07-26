@@ -1,16 +1,16 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const UserStates = {
-  CREATING: "CREATING",
-  ACTIVE: "ACTIVE",
-  NOT_ACTIVE: "NOT_ACTIVE",
+  CREATING: 'CREATING',
+  ACTIVE: 'ACTIVE',
+  NOT_ACTIVE: 'NOT_ACTIVE'
 };
 
 const UserGenders = {
-  NOT_SET: "NOT_SET",
-  MALE: "MALE",
-  FEMALE: "FEMALE",
+  NOT_SET: 'NOT_SET',
+  MALE: 'MALE',
+  FEMALE: 'FEMALE'
 };
 
 const userSchema = new Schema({
@@ -21,7 +21,7 @@ const userSchema = new Schema({
   image: String,
   gender: {
     type: String,
-    default: UserGenders.NOT_SET,
+    default: UserGenders.NOT_SET
   },
   password: String,
   phoneCode: String,
@@ -30,10 +30,10 @@ const userSchema = new Schema({
   signupDate: Date,
   state: {
     type: String,
-    default: UserStates.CREATING,
+    default: UserStates.CREATING
   },
   username: String,
-  verifiedTime: Date,
+  verifiedTime: Date
 });
 
 module.exports = userSchema;

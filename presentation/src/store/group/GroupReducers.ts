@@ -1,8 +1,9 @@
-// ----- Actions ------- //
-export const GROUPS_TOTAL = 'GROUPS_TOTAL';
-export const GROUP_STATS = 'GROUPS_STATS';
-export const GROUPS_LAST_MONTH = 'GROUPS_LAST_MONTH';
-export const GROUPS_LAST_YEAR = 'GROUPS_LAST_YEAR';
+import {
+  GROUPS_LAST_MONTH,
+  GROUPS_LAST_YEAR,
+  GROUP_STATS,
+  GROUPS_TOTAL
+} from './GroupTypes';
 
 export default function (state = {}, action: any) {
   switch (action.type) {

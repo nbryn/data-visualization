@@ -12,6 +12,7 @@
     "server": "nodemon index.js",
     "client": "npm start --prefix presentation",
     "dev": "concurrently \"npm run server\" \"npm run client\" ",
+    "prettier": "prettier --config .prettierrc 'logic/**/*.ts' --write",
     "heroku-postbuild": "cd presentation && npm install && npm run build"
   },
   "repository": {
@@ -43,6 +44,7 @@
     "typescript": "^3.9.7"
   },
   "devDependencies": {
-    "concurrently": "^5.0.0"
+    "concurrently": "^5.0.0",
+    "prettier": "^2.0.5"
   }
 }

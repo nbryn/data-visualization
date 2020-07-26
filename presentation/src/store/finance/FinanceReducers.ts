@@ -1,5 +1,4 @@
-export const FINANCE_STATS = 'FINANCE_STATS';
-export const SHARES_TOTAL = 'SHARES_TOTAL';
+import { FINANCE_STATS, SHARES_TOTAL } from './FinanceActions';
 
 export default function (state = {}, action: any) {
   switch (action.type) {

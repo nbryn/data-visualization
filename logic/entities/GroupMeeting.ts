@@ -2,21 +2,21 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const GroupMeetingState = {
-  CREATING: "CREATING",
-  ACTIVE: "ACTIVE",
-  ENDING: "ENDING",
-  ENDED: "ENDED",
+  CREATING: 'CREATING',
+  ACTIVE: 'ACTIVE',
+  ENDING: 'ENDING',
+  ENDED: 'ENDED'
 };
 
 const GroupMeetingStatesArray = [
   GroupMeetingState.CREATING,
   GroupMeetingState.ACTIVE,
   GroupMeetingState.ENDING,
-  GroupMeetingState.ENDED,
+  GroupMeetingState.ENDED
 ];
 
 const groupMeetingSchema = new Schema({
-  group: { type: mongoose.Schema.Types.ObjectId, ref: "Group" },
+  group: { type: mongoose.Schema.Types.ObjectId, ref: 'Group' },
   registrationDate: Date,
   cycleNumber: Number,
   meetingDay: Date,
@@ -26,8 +26,8 @@ const groupMeetingSchema = new Schema({
   state: {
     type: String,
     enum: GroupMeetingStatesArray,
-    default: GroupMeetingState.CREATING,
-  },
+    default: GroupMeetingState.CREATING
+  }
 });
 
 module.exports = groupMeetingSchema;

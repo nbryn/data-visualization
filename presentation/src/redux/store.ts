@@ -1,12 +1,12 @@
-import { createStore, applyMiddleware, compose } from "redux";
-import thunk from "redux-thunk";
-import rootReducer from "./reducers/RootReducer";
+import { createStore, applyMiddleware, compose } from 'redux';
+import thunk from 'redux-thunk';
+import rootReducer from './reducers/RootReducer';
 
 const initialState = {
   KPI: {
     usersLastWeek: [],
     usersLastMonth: [],
-    usersLastYear: [],
+    usersLastYear: []
   },
   UserStats: {
     genderStats: [],
@@ -16,21 +16,21 @@ const initialState = {
     usersLastMonth: [],
     usersLastYear: [],
     chartjsUsersLastMonth: [],
-    chartjsUsersLastYear: [],
+    chartjsUsersLastYear: []
   },
   GroupStats: {
     groupStats: [],
     groupsTotal: 0,
     groupsLastWeek: [],
     groupsLastMonth: [],
-    groupsLastYear: [],
+    groupsLastYear: []
   },
   MeetingStats: {
     meetingStats: [],
     meetingsTotal: 0,
     meetingsLastWeek: [],
     meetingsLastMonth: [],
-    meetingsLastYear: [],
+    meetingsLastYear: []
   },
   FinanceStats: {
     financeStats: [],
@@ -42,15 +42,15 @@ const initialState = {
     sharesTotal: 0,
     shareStats: [],
     etbStats: [],
-    boxBalanceStats: [],
-  },
+    boxBalanceStats: []
+  }
 };
 const middleWare = [thunk];
 
 let store;
 
-
 export interface UserState {
+  [key: string]: any;
   genderStats: Array<any>;
   usersTotal: number;
   usersLastWeek: Array<any>;
@@ -62,6 +62,7 @@ export interface UserState {
 }
 
 export interface GroupState {
+  [key: string]: any;
   groupsTotal: number;
   groupsLastWeek: Array<any>;
   groupsLastMonth: Array<any>;
@@ -70,6 +71,7 @@ export interface GroupState {
 }
 
 export interface MeetingState {
+  [key: string]: any;
   meetingsTotal: number;
   meetingsLastWeek: Array<any>;
   meetingsLastMonth: Array<any>;
@@ -78,6 +80,7 @@ export interface MeetingState {
 }
 
 export interface FinanceState {
+  [key: string]: any;
   currencyTotal: number;
   currencyStats: Array<any>;
   loanTotal: number;
@@ -99,6 +102,7 @@ export interface KPIState {
 }
 
 export interface RootState {
+  [key: string]: any;
   KPI: KPIState;
   userStats: UserState;
   groupStats: GroupState;
@@ -113,7 +117,7 @@ const ReactReduxDevTools =
     window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__()) ||
   compose;
 
-if (window.navigator.userAgent.includes("Chrome")) {
+if (window.navigator.userAgent.includes('Chrome')) {
   store = createStore(
     rootReducer,
     initialState,

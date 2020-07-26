@@ -1,20 +1,20 @@
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosResponse } from 'axios';
 
 export async function fetchFromServer<T>(
   action: string,
   data: string
 ): Promise<T> {
-  const url = "/graphql";
+  const url = '/graphql';
 
   let response = null;
 
   try {
     response = await axios({
       url: url,
-      method: "post",
+      method: 'post',
       data: {
-        query: data,
-      },
+        query: data
+      }
     });
   } catch (err) {
     console.log(err);

@@ -7,6 +7,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
+    "prettier": "prettier --config .prettierrc 'src/**/*.ts' --write",
     "compile-sass": "node-sass src/assets/sass/dashboard.scss src/assets/css/dashboard.css",
     "minify-sass": "node-sass src/assets/sass/dashboard.scss src/assets/css/dashboard.min.css --output-style compressed"
   },
@@ -44,6 +45,7 @@
   ],
   "devDependencies": {
     "enzyme": "^3.11.0",
-    "enzyme-adapter-react-16": "^1.15.2"
+    "enzyme-adapter-react-16": "^1.15.2",
+    "prettier": "^2.0.5"
   }
 }

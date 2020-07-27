@@ -29,9 +29,7 @@ export const BarChartContainer: React.FC<Props> = ({
   const data: any = useSelector<RootState, any>(
     (state) => state[statsType][dataType]
   );
-
-  console.log(data);
-
+  
   const dispatch = useDispatch();
 
   useEffect(() => {

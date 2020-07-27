@@ -7,6 +7,7 @@ import {
   GROUP_STATS,
   GROUP_SIZE_STATS,
   GROUPS_TOTAL,
+  GROUPS_TODAY,
   GROUPS_LAST_MONTH,
   GROUPS_LAST_YEAR,
   GroupAction
@@ -16,6 +17,13 @@ import {
 export function groupsTotal(data: number): GroupAction {
   return {
     type: GROUPS_TOTAL,
+    payload: data
+  };
+}
+
+export function groupsToday(data: any): GroupAction {
+  return {
+    type: GROUPS_TODAY,
     payload: data
   };
 }

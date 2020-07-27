@@ -1,6 +1,9 @@
 import {
   USER_GENDER_STATS,
   USERS_TOTAL,
+  USERS_TODAY,
+  USERS_LAST_MONTH,
+  USERS_LAST_YEAR,
   USER_STATS,
   USERS_LAST_MONTH_BAR_CHART,
   USERS_LAST_YEAR_BAR_CHART,
@@ -19,6 +22,19 @@ export default function (state = {}, action: any) {
     case USERS_TOTAL:
       return Object.assign({}, state, {
         usersTotal: action.payload
+      });
+      case USERS_LAST_MONTH:
+        return Object.assign({}, state, {
+          usersLastMonth: action.payload
+        });
+        case USERS_LAST_YEAR:
+          return Object.assign({}, state, {
+            usersLastYear: action.payload
+          });
+      case USERS_TODAY:
+      return Object.assign({}, state, {
+        todayCount: action.payload.todayCount,
+        todayDate: action.payload.todayDate
       });
     case USER_STATS:
       return Object.assign({}, state, {

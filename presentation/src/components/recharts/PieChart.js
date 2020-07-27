@@ -1,14 +1,19 @@
-import React, { Component } from "react";
-import { Cell, PieChart as PieChartt, Pie, ResponsiveContainer } from "recharts";
-import { Col } from "react-bootstrap";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import React, { Component } from 'react';
+import {
+  Cell,
+  PieChart as PieChartt,
+  Pie,
+  ResponsiveContainer
+} from 'recharts';
+import { Col } from 'react-bootstrap';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 class PieChart extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      colors: "",
+      colors: ''
     };
 
     this.renderLabel = this.renderLabel.bind(this);
@@ -20,7 +25,7 @@ class PieChart extends Component {
 
   componentDidMount() {
     this.setState({
-      colors: this.props.colors,
+      colors: this.props.colors
     });
   }
   render() {
@@ -35,7 +40,7 @@ class PieChart extends Component {
           </Col>
           {!data ? (
             <div className="spinner">
-              <CircularProgress />{" "}
+              <CircularProgress />
             </div>
           ) : (
             <PieChartt width={350} height={300}>

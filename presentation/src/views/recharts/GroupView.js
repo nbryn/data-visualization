@@ -26,11 +26,13 @@ import {
   groupsLastMonthBarChart,
   groupsLastYearBarChart,
   groupsTotal,
+  groupsToday,
   groupSizeStats
 } from '../../store/group/GroupActions';
 
 import * as Thunks from '../../thunks/Thunks';
 import KPIContainer from '../../containers/KPIContainer';
+import KPITodayContainer from '../../containers/KPITodayContainer';
 
 class GroupView extends Component {
   render() {
@@ -50,6 +52,17 @@ class GroupView extends Component {
                     }
                     statsType="groupStats"
                     total="groupsTotal"
+                    icon="pe-7s-graph1 text-danger"
+                  />
+                </Col>
+                <Col lg={3} sm={6}>
+                  <KPITodayContainer
+                    fetchData={() =>
+                      Thunks.setToday(fetchGroupsLastMonth, groupsToday)
+                    }
+                    statsType="groupStats"
+                    countData="todayCount"
+                    dateData='todayDate'
                     icon="pe-7s-graph1 text-danger"
                   />
                 </Col>

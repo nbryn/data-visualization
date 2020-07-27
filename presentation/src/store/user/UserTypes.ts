@@ -1,5 +1,8 @@
 export const USER_GENDER_STATS = 'USER_GENDER_STATS';
 export const USERS_TOTAL = 'USERS_TOTAL';
+export const USERS_TODAY = 'USERS_TODAY';
+export const USERS_LAST_MONTH = 'USERS_LAST_MONTH';
+export const USERS_LAST_YEAR = 'USERS_LAST_YEAR';
 export const USER_STATS = 'USER_STATS';
 export const USERS_LAST_MONTH_BAR_CHART = 'USERS_LAST_MONTH_BAR_CHART';
 export const USERS_LAST_MONTH_LINE_CHART = 'USERS_LAST_MONTH_LINE_CHART';
@@ -18,6 +21,10 @@ export interface UserState {
   [key: string]: any;
   genderStats: Array<any>;
   usersTotal: number;
+  todayCount: number;
+  todayDate: string;
+  usersLastMonth: number;
+  usersLastYear: number;
   usersLastWeek: Array<any>;
   usersLastMonthBarChart: Array<any>;
   usersLastYearBarChart: Array<any>;
@@ -32,6 +39,10 @@ export const initialUserState = {
   genderStats: [],
   userStats: [],
   usersTotal: 0,
+  groupsTotal: 0,
+  todayCount: 0,
+  usersLastMonth: 0,
+  usersLastYear: 0,
   usersLastWeek: [],
   usersLastMonthBarChart: [],
   usersLastYearBarChart: [],

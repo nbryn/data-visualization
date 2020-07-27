@@ -1,6 +1,6 @@
 import { fetchFromServer } from '../../redux/actions/Fetch';
 
-export const fetchTotalUsers = async (): Promise<any> => {
+export const fetchUsersLastMonth = async (): Promise<any> => {
   const data = `query {
     userStats {
       usersLastMonth {

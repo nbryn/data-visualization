@@ -6,6 +6,7 @@ import {
   GROUP_STATS,
   GROUP_SIZE_STATS,
   GROUPS_TOTAL,
+  GROUPS_TODAY,
   GROUPS_LAST_MONTH,
   GROUPS_LAST_YEAR
 } from './GroupTypes';
@@ -15,6 +16,11 @@ export default function (state = {}, action: any) {
     case GROUPS_TOTAL:
       return Object.assign({}, state, {
         groupsTotal: action.payload
+      });
+    case GROUPS_TODAY:
+      return Object.assign({}, state, {
+        todayCount: action.payload.todayCount,
+        todayDate: action.payload.todayDate
       });
     case GROUP_STATS:
       return Object.assign({}, state, {
@@ -29,7 +35,7 @@ export default function (state = {}, action: any) {
       return Object.assign({}, state, {
         groupsLastYearBarChart: action.payload
       });
-      case GROUPS_LAST_MONTH_LINE_CHART:
+    case GROUPS_LAST_MONTH_LINE_CHART:
       return Object.assign({}, state, {
         groupsLastMonthLineChart: action.payload
         //groupsLastWeek: action.payload.groupsLastWeek,
@@ -38,18 +44,18 @@ export default function (state = {}, action: any) {
       return Object.assign({}, state, {
         groupsLastYearLineChart: action.payload
       });
-      case GROUPS_LAST_MONTH:
+    case GROUPS_LAST_MONTH:
       return Object.assign({}, state, {
         groupsLastMonth: action.payload
       });
-      case GROUPS_LAST_YEAR:
+    case GROUPS_LAST_YEAR:
       return Object.assign({}, state, {
         groupsLastYear: action.payload
       });
-      case GROUP_SIZE_STATS:
-        return Object.assign({}, state, {
-          groupSizeStats: action.payload
-        });
+    case GROUP_SIZE_STATS:
+      return Object.assign({}, state, {
+        groupSizeStats: action.payload
+      });
 
     default:
       return state;

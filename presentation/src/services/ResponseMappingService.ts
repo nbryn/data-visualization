@@ -8,8 +8,6 @@ export const mapGeneralStat = (data: any): any => {
         };
     });
 
-    console.log(result);
-
     return result;
 };
 
@@ -36,7 +34,6 @@ export const mapLastYearBarChartData = (data: any): any => {
         };
     });
 
-    console.log(lastYear);
     return lastYear;
 };
 

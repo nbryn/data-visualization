@@ -15,6 +15,25 @@ export const setGeneralStat = (
     dispatch(action(result));
 };
 
+export const setToday = (
+    request: Function,
+    action: Function
+): ThunkAction<void, RootState, null, Action<string>> => async (dispatch) => {
+    const data: any = await request();
+
+    const temp: any = ResponseMappingService.mapLastMonthBarChartData(data);
+
+    const todayCount: number = temp[temp.length - 1].value;
+    const todayDate: string = temp[temp.length - 1].name;
+
+    const result = {
+        todayCount,
+        todayDate,
+    }
+
+    dispatch(action(result));
+};
+
 export const setTotal = (
     request: Function,
     action: Function

@@ -1,4 +1,5 @@
 export const GROUPS_TOTAL = 'GROUPS_TOTAL';
+export const GROUPS_TODAY = 'GROUPS_TODAY';
 export const GROUPS_LAST_MONTH = 'GROUPS_LAST_MONTH';
 export const GROUPS_LAST_YEAR = 'GROUPS_LAST_YEAR';
 export const GROUP_STATS = 'GROUPS_STATS';
@@ -16,6 +17,8 @@ export interface GroupAction {
 export interface GroupState {
   [key: string]: any;
   groupsTotal: number;
+  todayCount: number;
+  todayDate: string;
   groupsLastMonth: number;
   groupsLastYear: number;
   groupsLastWeek: Array<any>;
@@ -31,6 +34,8 @@ export const initialGroupState = {
   groupStats: [],
   groupSizeStats: [],
   groupsTotal: 0,
+  todayCount: 0,
+  todayDate: '',
   groupsLastWeek: [],
   groupsLastMonth: 0,
   groupsLastYear: 0,

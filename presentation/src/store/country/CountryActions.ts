@@ -1,4 +1,4 @@
-import { GENERAL_COUNTRY_STATS, GROUPS_PER_COUNTRY, CountryAction } from './CountryTypes';
+import { GENERAL_COUNTRY_STATS, GROUPS_PER_COUNTRY, USERS_PER_COUNTRY, CountryAction } from './CountryTypes';
 
 export function countryStats(data: any): CountryAction {
   return {
@@ -11,6 +11,14 @@ export function countryStats(data: any): CountryAction {
 export function groupsPerCountry(data: any): CountryAction {
   return {
     type: GROUPS_PER_COUNTRY,
+    payload: data
+  };
+}
+
+
+export function usersPerCountry(data: any): CountryAction {
+  return {
+    type: USERS_PER_COUNTRY,
     payload: data
   };
 }

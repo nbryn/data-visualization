@@ -1,4 +1,4 @@
-import { GROUP_DATA, GROUPS_PER_NGO, NGO_GROUPS, NGOAction } from './NGOTypes';
+import { GROUP_DATA, GROUPS_PER_NGO, USERS_PER_NGO, NGO_GROUPS, NGOAction } from './NGOTypes';
 
 export function groupData(data: any): NGOAction {
   return {
@@ -10,6 +10,13 @@ export function groupData(data: any): NGOAction {
 export function groupsPerNGO(data: any): NGOAction {
   return {
     type: GROUPS_PER_NGO,
+    payload: data
+  };
+}
+
+export function usersPerNGO(data: any): NGOAction {
+  return {
+    type: USERS_PER_NGO,
     payload: data
   };
 }

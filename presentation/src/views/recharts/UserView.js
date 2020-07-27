@@ -1,89 +1,43 @@
-import { connect } from "react-redux";
-import { Col, Grid, Row } from "react-bootstrap";
-import React, { Component } from "react";
+import { Col, Grid, Row } from 'react-bootstrap';
+import React, { Component } from 'react';
 
-import BarChartContainer from "../../components/recharts/BarChartContainer";
-import { fetchUserStats } from "../../redux/actions/UserActions";
-import { fetchGeneralCountryStats } from "../../redux/actions/country/GeneralCountryStatsAction";
-import { fetchNGOStats } from "../../redux/actions/ngo/NGOStatsAction";
-import { getCurrentTime } from "../../util/Date";
-import Header from "../../components/navigation/Header";
-import KPICard from "../../components/kpi/KPICard";
-import Sidebar from "../../components/navigation/Sidebar";
-import SizeChart from "../../components/recharts/SizeChart";
-import LineChartContainer from "../../components/recharts/LineChartContainer";
+import Header from '../../components/navigation/Header';
+import Sidebar from '../../components/navigation/Sidebar';
+
+import { fetchUsersPerNGO } from '../../services/requests/NGOUsersRequest';
+import { fetchUsersPerCountry } from '../../services/requests/CountryUsersRequest';
+import { fetchTotalUsers } from '../../services/requests/UsersTotalRequest';
+import { fetchUsersLastMonth } from '../../services/requests/UsersLastMonthRequest';
+import { fetchUsersLastYear } from '../../services/requests/UsersLastYearRequest';
+
+import KPITodayContainer from '../../containers/KPITodayContainer';
+
+import {
+  BarChartContainer,
+  LineChartContainer,
+  PieChartContainer
+} from '../../containers';
+
+import {
+  usersLastYearBarChart,
+  usersLastYearLineChart,
+  usersTotal,
+  usersToday,
+  usersLastMonth,
+  usersLastYear,
+  usersLastMonthBarChart
+} from '../../store/user/UserActions';
+
+import { usersPerCountry } from '../../store/country/CountryActions';
+import { usersPerNGO } from '../../store/ngo/NGOActions';
+
+import KPIContainer from '../../containers/KPIContainer';
+
+import * as UserThunks from '../../thunks/UserThunks';
+import * as Thunks from '../../thunks/Thunks';
 
 class UserView extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {};
-  }
-  componentDidMount() {
-    this.fetchData();
-
-    setInterval(async () => {
-      this.fetchData();
-    }, 1000000);
-  }
-
-  async fetchData() {
-    await this.props.fetchUserStats();
-    await this.props.fetchNGOStats();
-    await this.props.fetchGeneralCountryStats();
-
-    const { usersCountry, usersNGO, userStats } = this.props;
-
-    const {
-      usersLastMonth,
-      usersLastYear,
-      userGenderStats,
-      userCount,
-    } = userStats;
-
-    let lastUpdatedAt = getCurrentTime();
-
-    let userMonthCount = 0;
-    let userYearCount = 0;
-
-    userStats.usersLastMonth.forEach(
-      (element) => (userMonthCount += element.count)
-    );
-    userStats.usersLastYear.forEach(
-      (element) => (userYearCount += element.count)
-    );
-
-    this.setState({
-      userTotal: userCount,
-      usersToday: usersLastMonth[usersLastMonth.length - 1].count,
-      usersTodayText:
-        usersLastMonth[usersLastMonth.length - 1].day.day +
-        "/" +
-        usersLastMonth[usersLastMonth.length - 1].day.month,
-      userMonth: userMonthCount,
-      userYear: userYearCount,
-      usersLastMonth: usersLastMonth,
-      usersLastYear: usersLastYear,
-      userGender: userGenderStats,
-      usersCountry: usersCountry,
-      usersNGO: usersNGO,
-      lastUpdate: lastUpdatedAt,
-    });
-  }
-
   render() {
-    const KPICards = {
-      userTotal: { text: "Total Users", icon: "pe-7s-user text-warning" },
-      usersToday: {
-        text: `Users ${this.state.usersTodayText}`,
-        icon: "pe-7s-users text-info",
-      },
-      userMonth: {
-        text: "Last Month",
-        icon: "pe-7s-graph1 text-danger",
-      },
-      userYear: { text: "Last Year", icon: "pe-7s-wallet text-success" },
-    };
     return (
       <div className="wrapper">
         <Sidebar />
@@ -92,46 +46,96 @@ class UserView extends Component {
           <div className="content">
             <Grid fluid>
               <Row>
-                {Object.keys(KPICards).map((element, index) => (
-                  <Col lg={3} sm={6} key={index}>
-                    <KPICard
-                      bigIcon={<i className={KPICards[element].icon} />}
-                      statsText={KPICards[element].text}
-                      statsValue={this.state[element]}
-                      statsIcon={<i className="fa fa-refresh" />}
-                      statsIconText={`Last Update: ${this.state.lastUpdate}`}
-                    />
-                  </Col>
-                ))}
+                <Col lg={3} sm={6}>
+                  <KPIContainer
+                    title="Total Users"
+                    fetchData={() =>
+                      Thunks.setTotal(fetchTotalUsers, usersTotal)
+                    }
+                    statsType="userStats"
+                    total="usersTotal"
+                    icon="pe-7s-user text-warning"
+                  />
+                </Col>
+                <Col lg={3} sm={6}>
+                  <KPITodayContainer
+                    fetchData={() =>
+                      Thunks.setToday(fetchUsersLastMonth, usersToday)
+                    }
+                    statsType="userStats"
+                    countData="todayCount"
+                    dateData="todayDate"
+                    icon="pe-7s-users text-info"
+                  />
+                </Col>
+                <Col lg={3} sm={6}>
+                  <KPIContainer
+                    title="Last Year"
+                    fetchData={() =>
+                      Thunks.setPeriod(fetchUsersLastYear, usersLastYear)
+                    }
+                    statsType="userStats"
+                    total="usersLastYear"
+                    icon="pe-7s-wallet text-success"
+                  />
+                </Col>
+                <Col lg={3} sm={6}>
+                  <KPIContainer
+                    title="Last Month"
+                    fetchData={() =>
+                      Thunks.setPeriod(fetchUsersLastMonth, usersLastMonth)
+                    }
+                    statsType="userStats"
+                    total="usersLastMonth"
+                    icon="pe-7s-users text-info"
+                  />
+                </Col>
               </Row>
-
               <Row>
                 <Col lg={4} sm={6}>
                   <LineChartContainer
                     title="Total Users"
-                    stroke="#ff0000"
-                    data={this.state.usersLastYear}
+                    fetchData={() =>
+                      Thunks.setLastYearLineChart(
+                        fetchUsersLastYear,
+                        usersLastYearLineChart
+                      )
+                    }
+                    statsType="userStats"
+                    dataType="usersLastYearLineChart"
+                    xLabel="Months"
+                    yLabel="Users"
+                    color="#ff0000"
                   />
                 </Col>
                 <Col lg={4} sm={6}>
                   <BarChartContainer
-                    type="Top"
                     title="Users Per Country"
-                    color="#1828E8"
+                    fetchData={() =>
+                      Thunks.setGeneralStat(
+                        fetchUsersPerCountry,
+                        usersPerCountry
+                      )
+                    }
+                    statsType="countryStats"
+                    dataType="countryUsers"
                     xLabel="Country"
                     yLabel="Users"
-                    data={this.state.usersCountry}
+                    color="#1828E8"
                     css="card-graph card-stats"
                   />
                 </Col>
                 <Col lg={4} sm={6}>
                   <BarChartContainer
-                    type="Top"
                     title="Users Per NGO"
-                    color="#2196f3"
+                    fetchData={() =>
+                      Thunks.setGeneralStat(fetchUsersPerNGO, usersPerNGO)
+                    }
+                    statsType="ngoStats"
+                    dataType="usersPerNGO"
                     xLabel="NGO"
                     yLabel="Users"
-                    data={this.state.usersNGO}
+                    color="#2196f3"
                     css="card-graph card-stats"
                   />
                 </Col>
@@ -139,30 +143,44 @@ class UserView extends Component {
               <Row>
                 <Col lg={4} sm={6}>
                   <BarChartContainer
-                    type="Month"
                     title="Users Per Day"
+                    fetchData={() =>
+                      Thunks.setLastMonthBarChart(
+                        fetchUsersLastMonth,
+                        usersLastMonthBarChart
+                      )
+                    }
+                    statsType="userStats"
+                    dataType="usersLastMonthBarChart"
                     xLabel="Day"
                     yLabel="Users"
                     color="#228b22"
-                    data={this.state.usersLastMonth}
                   />
                 </Col>
                 <Col lg={4} sm={6}>
-                  <SizeChart
+                  <PieChartContainer
                     title="Gender Distribution"
-                    colors={["#1828E8", "#228b22"]}
-                    data={this.state.userGender}
+                    fetchData={UserThunks.setGenderStats}
+                    statsType="userStats"
+                    dataType="genderStats"
+                    colors={['#1828E8', '#228b22']}
                   />
                 </Col>
 
                 <Col lg={4} sm={6}>
                   <BarChartContainer
-                    type="Year"
                     title="Users Per Month"
+                    fetchData={() =>
+                      Thunks.setLastYearBarChart(
+                        fetchUsersLastYear,
+                        usersLastYearBarChart
+                      )
+                    }
+                    statsType="userStats"
+                    dataType="usersLastYearBarChart"
                     xLabel="Month"
                     yLabel="Users"
                     color="#ff0000"
-                    data={this.state.usersLastYear}
                   />
                 </Col>
               </Row>
@@ -174,16 +192,4 @@ class UserView extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    userStats: state.userStats.userStats,
-    usersCountry: state.country.usersCountry,
-    usersNGO: state.NGO.usersNGO,
-  };
-};
-
-export default connect(mapStateToProps, {
-  fetchUserStats,
-  fetchGeneralCountryStats,
-  fetchNGOStats,
-})(UserView);
+export default UserView;

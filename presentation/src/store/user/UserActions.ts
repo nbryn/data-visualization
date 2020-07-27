@@ -2,8 +2,10 @@ import {
   USER_GENDER_STATS,
   USERS_TOTAL,
   USER_STATS,
-  USERS_LAST_MONTH,
-  USERS_LAST_YEAR,
+  USERS_LAST_MONTH_BAR_CHART,
+  USERS_LAST_YEAR_BAR_CHART,
+  USERS_LAST_MONTH_LINE_CHART,
+  USERS_LAST_YEAR_LINE_CHART,
   CHARTJS_USERS_LAST_MONTH,
   CHARTJS_USERS_LAST_YEAR,
   UserAction
@@ -30,16 +32,30 @@ export function userStats(data: any): UserAction {
   };
 }
 
-export function usersLastMonth(data: any): UserAction {
+export function usersLastMonthBarChart(data: any): UserAction {
   return {
-    type: USERS_LAST_MONTH,
+    type: USERS_LAST_MONTH_BAR_CHART,
     payload: data
   };
 }
 
-export function usersLastYear(data: any): UserAction {
+export function usersLastYearBarChart(data: any): UserAction {
   return {
-    type: USERS_LAST_YEAR,
+    type: USERS_LAST_YEAR_BAR_CHART,
+    payload: data
+  };
+}
+
+export function usersLastMonthLineChart(data: any): UserAction {
+  return {
+    type: USERS_LAST_MONTH_LINE_CHART,
+    payload: data
+  };
+}
+
+export function usersLastYearLineChart(data: any): UserAction {
+  return {
+    type: USERS_LAST_YEAR_LINE_CHART,
     payload: data
   };
 }

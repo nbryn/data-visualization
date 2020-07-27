@@ -2,10 +2,12 @@ import {
   USER_GENDER_STATS,
   USERS_TOTAL,
   USER_STATS,
-  USERS_LAST_MONTH,
-  USERS_LAST_YEAR,
+  USERS_LAST_MONTH_BAR_CHART,
+  USERS_LAST_YEAR_BAR_CHART,
+  USERS_LAST_MONTH_LINE_CHART,
+  USERS_LAST_YEAR_LINE_CHART,
   CHARTJS_USERS_LAST_MONTH,
-  CHARTJS_USERS_LAST_YEAR
+  CHARTJS_USERS_LAST_YEAR,
 } from './UserTypes';
 
 export default function (state = {}, action: any) {
@@ -22,13 +24,21 @@ export default function (state = {}, action: any) {
       return Object.assign({}, state, {
         userStats: action.payload
       });
-    case USERS_LAST_MONTH:
+    case USERS_LAST_MONTH_BAR_CHART:
       return Object.assign({}, state, {
-        usersLastMonth: action.payload
+        usersLastMonthBarChart: action.payload
       });
-    case USERS_LAST_YEAR:
+      case USERS_LAST_MONTH_LINE_CHART:
       return Object.assign({}, state, {
-        usersLastYear: action.payload
+        usersLastMonthLineChart: action.payload
+      });
+    case USERS_LAST_YEAR_BAR_CHART:
+      return Object.assign({}, state, {
+        usersLastYearBarChart: action.payload
+      });
+      case USERS_LAST_YEAR_LINE_CHART:
+      return Object.assign({}, state, {
+        usersLastYearLineChart: action.payload
       });
     case CHARTJS_USERS_LAST_MONTH:
       return Object.assign({}, state, {

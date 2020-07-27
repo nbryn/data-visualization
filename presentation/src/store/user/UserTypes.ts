@@ -1,8 +1,10 @@
 export const USER_GENDER_STATS = 'USER_GENDER_STATS';
 export const USERS_TOTAL = 'USERS_TOTAL';
 export const USER_STATS = 'USER_STATS';
-export const USERS_LAST_MONTH = 'USERS_LAST_MONTH';
-export const USERS_LAST_YEAR = 'USERS_LAST_YEAR';
+export const USERS_LAST_MONTH_BAR_CHART = 'USERS_LAST_MONTH_BAR_CHART';
+export const USERS_LAST_MONTH_LINE_CHART = 'USERS_LAST_MONTH_LINE_CHART';
+export const USERS_LAST_YEAR_BAR_CHART = 'USERS_LAST_YEAR_BAR_CHART';
+export const USERS_LAST_YEAR_LINE_CHART = 'USERS_LAST_YEAR_LINE_CHART';
 
 export const CHARTJS_USERS_LAST_MONTH = 'CHARTJS_USERS_LAST_MONTH';
 export const CHARTJS_USERS_LAST_YEAR = 'CHART_JS_USERS_LAST_YEAR';
@@ -17,8 +19,10 @@ export interface UserState {
   genderStats: Array<any>;
   usersTotal: number;
   usersLastWeek: Array<any>;
-  usersLastMonth: Array<any>;
-  usersLastYear: Array<any>;
+  usersLastMonthBarChart: Array<any>;
+  usersLastYearBarChart: Array<any>;
+  usersLastMonthLineChart: Array<any>;
+  usersLastYearLineChart: Array<any>;
   userStats: any;
   chartjsUsersLastMonth: Array<any>;
   chartjsUsersLastYear: Array<any>;
@@ -29,8 +33,10 @@ export const initialUserState = {
   userStats: [],
   usersTotal: 0,
   usersLastWeek: [],
-  usersLastMonth: [],
-  usersLastYear: [],
+  usersLastMonthBarChart: [],
+  usersLastYearBarChart: [],
+  usersLastMonthLineChart: [],
+  usersLastYearLineChart: [],
   chartjsUsersLastMonth: [],
   chartjsUsersLastYear: []
 };

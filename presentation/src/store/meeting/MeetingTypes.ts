@@ -17,7 +17,7 @@ export interface MeetingState {
   meetingStats: any;
 }
 
-export const inititalMeetingState = {
+export const initialMeetingState = {
   meetingStats: [],
   meetingsTotal: 0,
   meetingsLastWeek: [],

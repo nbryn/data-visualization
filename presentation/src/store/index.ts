@@ -1,24 +1,26 @@
 import { applyMiddleware, compose, combineReducers, createStore } from 'redux';
 import thunk from 'redux-thunk';
 
+import CountryReducers from './country/CountryReducers';
+import { CountryState, initialCountryState } from './country/CountryTypes';
 import FinanceReducers from './finance/FinanceReducers';
 import { FinanceState, initialFinanceState } from './finance/FinanceTypes';
+import GroupReducers from './group/GroupReducers';
 import { GroupState, initialGroupState } from './group/GroupTypes';
+import MeetingReducers from './meeting/MeetingReducers';
+import { MeetingState, initialMeetingState } from './meeting/MeetingTypes';
+import NGOReducers from './ngo/NGOReducers';
+import { NGOState, initialNGOState } from './ngo/NGOTypes';
+import UserReducers from './user/UserReducers';
 import { UserState, initialUserState } from './user/UserTypes';
 
-import GroupReducers from './group/GroupReducers';
-import UserReducers from './user/UserReducers';
-
 const initialState = {
-  KPI: {
-    usersLastWeek: [],
-    usersLastMonth: [],
-    usersLastYear: []
-  },
-  UserStats: initialUserState,
-  GroupStats: initialGroupState,
-  MeetingStats: {},
-  FinanceStats: initialFinanceState
+  countryStats: initialCountryState,
+  financeStats: initialFinanceState,
+  meetingStats: initialMeetingState,
+  ngoStats: initialNGOState,
+  groupStats: initialGroupState,
+  userStats: initialUserState
 };
 
 export interface KPIState {
@@ -31,22 +33,21 @@ export interface KPIState {
 
 export interface RootState {
   [key: string]: any;
-  KPI: KPIState;
-  userStats: UserState;
+  countryStats: CountryState;
+  financeStats: FinanceState;
   groupStats: GroupState;
   meetingStats: MeetingState;
-  financeStats: FinanceState;
+  ngoStats: NGOState;
+  userStats: UserState;
 }
 
 const rootReducer = combineReducers({
-  user: LoginReducer,
-  country: CountryReducer,
-  KPI: KPIReducer,
-  NGO: NGOReducer,
-  userStats: UserReducers,
+  countryStats: CountryReducers,
+  financeStats: FinanceReducers,
   groupStats: GroupReducers,
-  meetingStats: MeetingReducer,
-  financeStats: FinanceReducers
+  meetingStats: MeetingReducers,
+  ngoStats: NGOReducers,
+  userStats: UserReducers
 });
 
 const middleWare = [thunk];

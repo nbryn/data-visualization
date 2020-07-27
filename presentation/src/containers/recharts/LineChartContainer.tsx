@@ -1,9 +1,8 @@
-import React, { ReactElement, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { ReactElement, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { fetchGroupsLastYear } from "../../redux/actions/GroupActions";
-import LineChart from "../../components/recharts/LineChart";
-import { RootState } from "../../redux/store";
+import LineChart from '../../components/recharts/LineChart';
+import { RootState } from '../../redux/store';
 
 type Props = {
   title: string;
@@ -12,22 +11,22 @@ type Props = {
   dataType: string;
   xLabel: string;
   yLabel: string;
-  strokeColor: string;
+  color: string;
 };
 
-export const GroupTotalLineChartContainer: React.FC<Props> = ({
+export const LineChartContainer: React.FC<Props> = ({
   title,
   fetchData,
   statsType,
   dataType,
   xLabel,
   yLabel,
-  strokeColor,
+  color
 }: Props): ReactElement => {
   const data: any = useSelector<RootState, any>(
     (state) => state[statsType][dataType]
   );
-
+  
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -37,9 +36,9 @@ export const GroupTotalLineChartContainer: React.FC<Props> = ({
   const yLabelConfig = {
     value: yLabel,
     angle: -90,
-    position: "insideLeft",
+    position: 'insideLeft'
   };
-  const xLabelConfig = { value: xLabel, position: "center", dy: 10 };
+  const xLabelConfig = { value: xLabel, position: 'center', dy: 10 };
 
   return (
     <div className="card-graph card-stats">
@@ -48,7 +47,7 @@ export const GroupTotalLineChartContainer: React.FC<Props> = ({
         data={data}
         xLabel={xLabelConfig}
         yLabel={yLabelConfig}
-        stroke={strokeColor}
+        stroke={color}
       />
     </div>
   );

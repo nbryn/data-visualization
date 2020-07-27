@@ -21,11 +21,13 @@ const KPIContainer: React.FC<Props> = ({
   icon,
 }: Props): ReactElement => {
   const [lastUpdate, setLastUpdate] = useState<string>("");
-  const data: number = useSelector<RootState, number>(
+  let data: any = useSelector<RootState, number>(
     (state) => state[statsType][total]
   );
 
   const dispatch = useDispatch();
+
+  if (data['shareTotal']) data = data['shareTotal'];
 
   useEffect(() => {
     dispatch(fetchData());

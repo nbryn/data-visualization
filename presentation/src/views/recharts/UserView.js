@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import Header from '../../components/navigation/Header';
 import Sidebar from '../../components/navigation/Sidebar';
 
+import { fetchUserGenderStats } from '../../services/requests/UserGenderStatsRequest';
 import { fetchUsersPerNGO } from '../../services/requests/NGOUsersRequest';
 import { fetchUsersPerCountry } from '../../services/requests/CountryUsersRequest';
 import { fetchTotalUsers } from '../../services/requests/UsersTotalRequest';
@@ -25,7 +26,8 @@ import {
   usersToday,
   usersLastMonth,
   usersLastYear,
-  usersLastMonthBarChart
+  usersLastMonthBarChart,
+  userGenderStats
 } from '../../store/user/UserActions';
 
 import { usersPerCountry } from '../../store/country/CountryActions';
@@ -33,7 +35,6 @@ import { usersPerNGO } from '../../store/ngo/NGOActions';
 
 import KPIContainer from '../../containers/KPIContainer';
 
-import * as UserThunks from '../../thunks/UserThunks';
 import * as Thunks from '../../thunks/Thunks';
 
 class UserView extends Component {
@@ -50,7 +51,7 @@ class UserView extends Component {
                   <KPIContainer
                     title="Total Users"
                     fetchData={() =>
-                      Thunks.setTotal(fetchTotalUsers, usersTotal)
+                      Thunks.updateDataForTotal(fetchTotalUsers, usersTotal)
                     }
                     statsType="userStats"
                     total="usersTotal"
@@ -60,7 +61,7 @@ class UserView extends Component {
                 <Col lg={3} sm={6}>
                   <KPITodayContainer
                     fetchData={() =>
-                      Thunks.setToday(fetchUsersLastMonth, usersToday)
+                      Thunks.updateDataForToday(fetchUsersLastMonth, usersToday)
                     }
                     statsType="userStats"
                     countData="todayCount"
@@ -72,7 +73,7 @@ class UserView extends Component {
                   <KPIContainer
                     title="Last Year"
                     fetchData={() =>
-                      Thunks.setPeriod(fetchUsersLastYear, usersLastYear)
+                      Thunks.updateDataForPeriod(fetchUsersLastYear, usersLastYear)
                     }
                     statsType="userStats"
                     total="usersLastYear"
@@ -83,7 +84,10 @@ class UserView extends Component {
                   <KPIContainer
                     title="Last Month"
                     fetchData={() =>
-                      Thunks.setPeriod(fetchUsersLastMonth, usersLastMonth)
+                      Thunks.updateDataForPeriod(
+                        fetchUsersLastMonth,
+                        usersLastMonth
+                      )
                     }
                     statsType="userStats"
                     total="usersLastMonth"
@@ -96,7 +100,7 @@ class UserView extends Component {
                   <LineChartContainer
                     title="Total Users"
                     fetchData={() =>
-                      Thunks.setLastYearLineChart(
+                      Thunks.updateDataForLastYearLineChart(
                         fetchUsersLastYear,
                         usersLastYearLineChart
                       )
@@ -112,7 +116,7 @@ class UserView extends Component {
                   <BarChartContainer
                     title="Users Per Country"
                     fetchData={() =>
-                      Thunks.setGeneralStat(
+                      Thunks.updateDataForGeneralChart(
                         fetchUsersPerCountry,
                         usersPerCountry
                       )
@@ -129,7 +133,10 @@ class UserView extends Component {
                   <BarChartContainer
                     title="Users Per NGO"
                     fetchData={() =>
-                      Thunks.setGeneralStat(fetchUsersPerNGO, usersPerNGO)
+                      Thunks.updateDataForGeneralChart(
+                        fetchUsersPerNGO,
+                        usersPerNGO
+                      )
                     }
                     statsType="ngoStats"
                     dataType="usersPerNGO"
@@ -145,7 +152,7 @@ class UserView extends Component {
                   <BarChartContainer
                     title="Users Per Day"
                     fetchData={() =>
-                      Thunks.setLastMonthBarChart(
+                      Thunks.updateDataForLastMonthBarChart(
                         fetchUsersLastMonth,
                         usersLastMonthBarChart
                       )
@@ -160,7 +167,12 @@ class UserView extends Component {
                 <Col lg={4} sm={6}>
                   <PieChartContainer
                     title="Gender Distribution"
-                    fetchData={UserThunks.setGenderStats}
+                    fetchData={() =>
+                      Thunks.updateDataForGeneralChart(
+                        fetchUserGenderStats,
+                        userGenderStats
+                      )
+                    }
                     statsType="userStats"
                     dataType="genderStats"
                     colors={['#1828E8', '#228b22']}
@@ -171,7 +183,7 @@ class UserView extends Component {
                   <BarChartContainer
                     title="Users Per Month"
                     fetchData={() =>
-                      Thunks.setLastYearBarChart(
+                      Thunks.updateDataForLastYearBarChart(
                         fetchUsersLastYear,
                         usersLastYearBarChart
                       )

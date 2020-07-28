@@ -1,45 +1,9 @@
-const { gql } = require("apollo-server");
+const { gql } = require('apollo-server');
 
 const FinanceSchema = gql`
-  type Currency {
+  type Data {
     name: String
     count: Float
-  }
-
-  type CurrencyStats {
-    numberOfCurrencies: Float
-    currency: [Currency]
-  }
-
-  type LoanStats {
-    name: String
-    count: Float
-  }
-
-  type GroupShares {
-    name: String
-    count: Float
-  }
-
-  type MostShares {
-    name: String
-    count: Float
-  }
-
-  type ShareStats {
-    shareTotal: Float
-    mostShares: MostShares
-    groupShares: [GroupShares]
-  }
-
-  type GroupLoan {
-    name: String
-    count: Float
-  }
-
-  type EtbStats {
-    etbOnLoan: Float
-    groupLoan: [GroupLoan]
   }
 
   type BoxBalanceStats {
@@ -48,13 +12,16 @@ const FinanceSchema = gql`
   }
 
   type FinanceStats {
-    currencyTotal: Float
-    currencyStats: CurrencyStats
+    numberOfCurrencies: Float
+    currencyStats: [Data]
     loanTotal: Float
     loansLastMonth: [NumberDay]
     loansLastYear: [NumberMonth]
-    shareStats: ShareStats
-    etbStats: EtbStats
+    shareTotal: Float
+    mostShares: Data
+    shareStats: [Data]
+    etbOnLoan: Float
+    groupEtbLoan: [Data]
     boxBalanceStats: BoxBalanceStats
   }
 

@@ -1,6 +1,6 @@
 import { convertNumberToMonth } from '../util/Date';
 
-export const mapGeneralStat = (data: any): any => {
+export const mapTopBarChartData = (data: any): any => {
     const result = data.map((element: any) => {
         return {
             name: element.name,

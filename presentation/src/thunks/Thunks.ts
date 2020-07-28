@@ -1,27 +1,27 @@
 import { Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 
-import * as ResponseMappingService from '../services/ResponseMappingService';
+import * as DataMappingService from '../services/DataMappingService';
 import { RootState } from '../store/index';
 
-export const setGeneralStat = (
+export const updateDataForGeneralChart = (
     request: Function,
     action: Function
 ): ThunkAction<void, RootState, null, Action<string>> => async (dispatch) => {
     const data: any = await request();
 
-    const result: any = ResponseMappingService.mapGeneralStat(data);
+    const result: any = DataMappingService.mapTopBarChartData(data);
 
     dispatch(action(result));
 };
 
-export const setToday = (
+export const updateDataForToday = (
     request: Function,
     action: Function
 ): ThunkAction<void, RootState, null, Action<string>> => async (dispatch) => {
     const data: any = await request();
 
-    const temp: any = ResponseMappingService.mapLastMonthBarChartData(data);
+    const temp: any = DataMappingService.mapLastMonthBarChartData(data);
 
     const todayCount: number = temp[temp.length - 1].value;
     const todayDate: string = temp[temp.length - 1].name;
@@ -34,7 +34,7 @@ export const setToday = (
     dispatch(action(result));
 };
 
-export const setTotal = (
+export const updateDataForTotal = (
     request: Function,
     action: Function
 ): ThunkAction<void, RootState, null, Action<string>> => async (dispatch) => {
@@ -43,46 +43,46 @@ export const setTotal = (
     dispatch(action(total));
 };
 
-export const setPeriod = (
+export const updateDataForPeriod = (
     request: Function,
     action: Function
 ): ThunkAction<void, RootState, null, Action<string>> => async (dispatch) => {
     const data: any = await request();
 
-    const total: number = ResponseMappingService.getTotalNumberInPeriod(data);
+    const total: number = DataMappingService.getTotalNumberInPeriod(data);
 
     dispatch(action(total));
 };
 
-export const setLastMonthBarChart = (
+export const updateDataForLastMonthBarChart = (
     request: Function,
     action: Function,
 ): ThunkAction<void, RootState, null, Action<string>> => async (dispatch) => {
     const tempData: any = await request();
 
-    const result: any = ResponseMappingService.mapLastMonthBarChartData(tempData);
+    const result: any = DataMappingService.mapLastMonthBarChartData(tempData);
 
     dispatch(action(result));
 };
 
-export const setLastYearBarChart = (
+export const updateDataForLastYearBarChart = (
     request: Function,
     action: Function,
 ): ThunkAction<void, RootState, null, Action<string>> => async (dispatch) => {
     const tempData: any = await request();
 
-    const result: any = ResponseMappingService.mapLastYearBarChartData(tempData)
+    const result: any = DataMappingService.mapLastYearBarChartData(tempData)
 
     dispatch(action(result));
 };
 
-export const setLastYearLineChart = (
+export const updateDataForLastYearLineChart = (
     request: Function,
     action: Function,
 ): ThunkAction<void, RootState, null, Action<string>> => async (dispatch) => {
     const tempData: any = await request();
 
-    const result: any = ResponseMappingService.mapLastYearLineChartData(tempData)
+    const result: any = DataMappingService.mapLastYearLineChartData(tempData)
 
     dispatch(action(result));
 };

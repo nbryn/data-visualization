@@ -48,7 +48,7 @@ class GroupView extends Component {
                   <KPIContainer
                     title="Total Groups"
                     fetchData={() =>
-                      Thunks.setTotal(fetchTotalGroups, groupsTotal)
+                      Thunks.updateDataForTotal(fetchTotalGroups, groupsTotal)
                     }
                     statsType="groupStats"
                     total="groupsTotal"
@@ -58,7 +58,7 @@ class GroupView extends Component {
                 <Col lg={3} sm={6}>
                   <KPITodayContainer
                     fetchData={() =>
-                      Thunks.setToday(fetchGroupsLastMonth, groupsToday)
+                      Thunks.updateDataForToday(fetchGroupsLastMonth, groupsToday)
                     }
                     statsType="groupStats"
                     countData="todayCount"
@@ -70,7 +70,7 @@ class GroupView extends Component {
                   <KPIContainer
                     title="Last Year"
                     fetchData={() =>
-                      Thunks.setPeriod(fetchGroupsLastYear, groupsLastYear)
+                      Thunks.updateDataForPeriod(fetchGroupsLastYear, groupsLastYear)
                     }
                     statsType="groupStats"
                     total="groupsLastYear"
@@ -81,7 +81,7 @@ class GroupView extends Component {
                   <KPIContainer
                     title="Last Month"
                     fetchData={() =>
-                      Thunks.setPeriod(fetchGroupsLastMonth, groupsLastMonth)
+                      Thunks.updateDataForPeriod(fetchGroupsLastMonth, groupsLastMonth)
                     }
                     statsType="groupStats"
                     total="groupsLastMonth"
@@ -95,7 +95,7 @@ class GroupView extends Component {
                   <LineChartContainer
                     title="Total Groups"
                     fetchData={() =>
-                      Thunks.setLastYearLineChart(
+                      Thunks.updateDataForLastYearLineChart(
                         fetchGroupsLastYear,
                         groupsLastYearLineChart
                       )
@@ -111,7 +111,7 @@ class GroupView extends Component {
                   <BarChartContainer
                     title="Groups Per Country"
                     fetchData={() => 
-                      Thunks.setGeneralStat(
+                      Thunks.updateDataForGeneralChart(
                         fetchGroupsPerCountry,
                         groupsPerCountry
                       )
@@ -128,7 +128,7 @@ class GroupView extends Component {
                   <BarChartContainer
                     title="Groups Per NGO"
                     fetchData={() => 
-                      Thunks.setGeneralStat(fetchGroupsPerNGO, groupsPerNGO)
+                      Thunks.updateDataForGeneralChart(fetchGroupsPerNGO, groupsPerNGO)
                     }
                     statsType="ngoStats"
                     dataType="groupsPerNGO"
@@ -144,7 +144,7 @@ class GroupView extends Component {
                   <BarChartContainer
                     title="Groups Last Month"
                     fetchData={() => 
-                      Thunks.setLastMonthBarChart(
+                      Thunks.updateDataForLastMonthBarChart(
                         fetchGroupsLastMonth,
                         groupsLastMonthBarChart
                       )
@@ -160,7 +160,7 @@ class GroupView extends Component {
                   <PieChartContainer
                     title="Group Size"
                     fetchData={() => 
-                      Thunks.setGeneralStat(
+                      Thunks.updateDataForGeneralChart(
                         fetchGroupSizeStats,
                         groupSizeStats
                       )
@@ -181,7 +181,7 @@ class GroupView extends Component {
                   <BarChartContainer
                     title="Groups Last Year"
                     fetchData={() =>
-                      Thunks.setLastYearBarChart(
+                      Thunks.updateDataForLastYearBarChart(
                         fetchGroupsLastYear,
                         groupsLastYearBarChart
                       )

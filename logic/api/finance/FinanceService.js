@@ -96,8 +96,8 @@ async function calculateEtbLoanStats() {
     });
 
   const etbStats = {
-    ETBLoanTotal: totalETB,
-    ETBLoanGroup: etbGroups,
+    etbOnLoan: totalETB,
+    groupEtbLoan: etbGroups,
   };
 
   return etbStats;

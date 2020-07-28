@@ -54,7 +54,7 @@ class MainView extends Component {
                   <KPIContainer
                     title="Total Users"
                     fetchData={() =>
-                      Thunks.setTotal(fetchTotalUsers, usersTotal)
+                      Thunks.updateDataForTotal(fetchTotalUsers, usersTotal)
                     }
                     statsType="userStats"
                     total="usersTotal"
@@ -65,7 +65,7 @@ class MainView extends Component {
                   <KPIContainer
                     title="Total Groups"
                     fetchData={() =>
-                      Thunks.setTotal(fetchTotalGroups, groupsTotal)
+                      Thunks.updateDataForTotal(fetchTotalGroups, groupsTotal)
                     }
                     statsType="groupStats"
                     total="groupsTotal"
@@ -76,7 +76,7 @@ class MainView extends Component {
                   <KPIContainer
                     title="Total Meetings"
                     fetchData={() =>
-                      Thunks.setTotal(fetchTotalMeetings, meetingsTotal)
+                      Thunks.updateDataForTotal(fetchTotalMeetings, meetingsTotal)
                     }
                     statsType="meetingStats"
                     total="meetingsTotal"
@@ -87,7 +87,7 @@ class MainView extends Component {
                   <KPIContainer
                     title="Total Shares"
                     fetchData={() =>
-                      Thunks.setTotal(fetchTotalShares, sharesTotal)
+                      Thunks.updateDataForTotal(fetchTotalShares, sharesTotal)
                     }
                     statsType="financeStats"
                     total="sharesTotal"
@@ -101,7 +101,7 @@ class MainView extends Component {
                   <LineChartContainer
                     title="Total Users"
                     fetchData={() =>
-                      Thunks.setLastYearLineChart(
+                      Thunks.updateDataForLastYearLineChart(
                         fetchUsersLastYear,
                         usersLastYearLineChart
                       )
@@ -117,7 +117,7 @@ class MainView extends Component {
                   <LineChartContainer
                     title="Total Groups"
                     fetchData={() =>
-                      Thunks.setLastYearLineChart(
+                      Thunks.updateDataForLastYearLineChart(
                         fetchGroupsLastYear,
                         groupsLastYearLineChart
                       )
@@ -133,7 +133,7 @@ class MainView extends Component {
                   <LineChartContainer
                     title="Total Meetings"
                     fetchData={() =>
-                      Thunks.setLastYearLineChart(
+                      Thunks.updateDataForLastYearLineChart(
                         fetchMeetingsLastYear,
                         meetingsLastYear
                       )
@@ -152,7 +152,7 @@ class MainView extends Component {
                   <BarChartContainer
                     title="Groups Last Month"
                     fetchData={() =>
-                      Thunks.setLastMonthBarChart(
+                      Thunks.updateDataForLastMonthBarChart(
                         fetchGroupsLastMonth,
                         groupsLastMonthBarChart
                       )
@@ -177,7 +177,7 @@ class MainView extends Component {
                   <BarChartContainer
                     title="Users Last Year"
                     fetchData={() =>
-                      Thunks.setLastYearBarChart(
+                      Thunks.updateDataForLastYearBarChart(
                         fetchUsersLastYear,
                         usersLastYearBarChart
                       )

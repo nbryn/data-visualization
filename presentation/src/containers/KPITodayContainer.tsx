@@ -3,11 +3,11 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { getCurrentTime } from '../util/Date';
 import KPICard from '../components/kpi/KPICard';
-import { RootState } from '../redux/store';
+import { RootState } from '../store/index';
 
 type Props = {
   title: string;
-  fetchData: Function;
+  fetchData?: Function;
   statsType: string;
   countData: string;
   dateData: string;
@@ -33,14 +33,14 @@ const KPITodayContainer: React.FC<Props> = ({
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchData());
+    if (fetchData) dispatch(fetchData());
     setLastUpdate(getCurrentTime());
   }, []);
 
   return (
     <KPICard
       bigIcon={icon}
-      statsText={date}
+      statsText={`Today: ${date}`}
       statsValue={count}
       statsIcon="fa fa-refresh"
       statsIconText={`Last Update: ${lastUpdate}`}

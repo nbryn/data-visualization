@@ -67,13 +67,22 @@ const financeResolvers = {
         return shareTotal;
       });
     },
-    mostShares: async ({ root, context }) => {
+    mostSharesData: async ({ root, context }) => {
       return actionRunner(async () => {
         const shareStats = await calculateShareStats();
 
         const { mostShares } = shareStats;
 
         return mostShares;
+      });
+    },
+    mostShares: async ({ root, context }) => {
+      return actionRunner(async () => {
+        const shareStats = await calculateShareStats();
+
+        const { mostShares } = shareStats;
+
+        return mostShares.count;
       });
     },
     shareStats: async ({ root, context }) => {

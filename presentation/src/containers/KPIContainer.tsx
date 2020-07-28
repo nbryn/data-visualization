@@ -3,11 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { getCurrentTime } from "../util/Date";
 import KPICard from "../components/kpi/KPICard";
-import { RootState } from "../redux/store";
+import { RootState } from "../store/index";
 
 type Props = {
   title: string;
-  fetchData: Function;
+  fetchData?: Function;
   statsType: string;
   total: string;
   icon: string;
@@ -27,10 +27,8 @@ const KPIContainer: React.FC<Props> = ({
 
   const dispatch = useDispatch();
 
-  if (data['shareTotal']) data = data['shareTotal'];
-
   useEffect(() => {
-    dispatch(fetchData());
+    if (fetchData) dispatch(fetchData());
     setLastUpdate(getCurrentTime());
   }, []);
 

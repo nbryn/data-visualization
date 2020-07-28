@@ -1,76 +1,25 @@
-import { Col, Grid, Row } from "react-bootstrap";
-import { connect } from "react-redux";
-import React, { Component } from "react";
+import { connect } from 'react-redux';
+import { Col, Grid, Row } from 'react-bootstrap';
+import React, { Component } from 'react';
 
-import BarChartContainer from "../../components/recharts/BarChartContainer";
-import { fetchFinanceStats } from "../../redux/actions/FinanceActions";
-import { getCurrentTime } from "../../util/Date";
-import Header from "../../components/navigation/Header";
-import KPICard from "../../components/kpi/KPICard";
-import Sidebar from "../../components/navigation/Sidebar";
-import LineChartContainer from "../../components/recharts/LineChartContainer";
+import Header from '../../components/navigation/Header';
+import Sidebar from '../../components/navigation/Sidebar';
+
+import * as Thunks from '../../thunks/Thunks';
+
+import { BarChartContainer, LineChartContainer } from '../../containers';
+
+import KPIContainer from '../../containers/KPIContainer';
 
 class FinanceView extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {};
   }
+
   componentDidMount() {
-    this.fetchData();
-
-    setInterval(async () => {
-      this.fetchData();
-    }, 10000000);
+    this.props.fetchData();
   }
-
-  async fetchData() {
-    await this.props.fetchFinanceStats();
-
-    const { financeStats } = this.props;
-    const { shareStats, currencyStats, etbStats } = financeStats;
-
-    let lastUpdatedAt = getCurrentTime();
-
-    // TODO: Move to backend?
-    const loansPerGroup = etbStats.groupLoan.map((element) => {
-      return {
-        name: element.name.substring(0, 5),
-        count: element.count,
-      };
-    });
-
-    loansPerGroup.sort((ele1, ele2) => ele2.count - ele1.count);
-
-    this.setState({
-      shareTotal: shareStats.shareTotal,
-      mostShares: shareStats.mostShares.count,
-      sharesPerGroup: shareStats.groupShares,
-      currencyTotal: currencyStats.numberOfCurrencies,
-      currencyStats: currencyStats.currency,
-      loanTotal: financeStats.loanTotal,
-      loansLastMonth: financeStats.loansLastMonth,
-      loansLastYear: financeStats.loansLastYear,
-      etbOnLoan: etbStats.etbOnLoan,
-      onLoanPerGroup: loansPerGroup.splice(0, 10),
-      lastUpdate: lastUpdatedAt,
-    });
-  }
-
   render() {
-    const KPICards = {
-      shareTotal: { text: "Total Shares", icon: "pe-7s-graph1 text-danger" },
-      loanTotal: { text: "Total Loans", icon: "pe-7s-users text-info" },
-      etbOnLoan: {
-        text: "ETB On Loan",
-        icon: "pe-7s-wallet text-success",
-      },
-      mostShares: {
-        text: "Most Shares In Group",
-        icon: "pe-7s-wallet text-success",
-      },
-    };
-
     return (
       <div className="wrapper">
         <Sidebar />
@@ -80,80 +29,104 @@ class FinanceView extends Component {
           <div className="content">
             <Grid fluid>
               <Row>
-                {Object.keys(KPICards).map((kpi, index) => (
-                  <Col lg={3} sm={6}>
-                    <KPICard
-                      bigIcon={<i className={KPICards[kpi].icon} />}
-                      statsText={KPICards[kpi].text}
-                      statsValue={this.state[kpi]}
-                      statsIcon={<i className="fa fa-refresh" />}
-                      statsIconText={`Last Update: ${this.state.lastUpdate}`}
-                    />
-                  </Col>
-                ))}
+                <Col lg={3} sm={6}>
+                  <KPIContainer
+                    title="Total Loans"
+                    statsType="finance"
+                    total="loansTotal"
+                    icon="pe-7s-users text-info"
+                  />
+                </Col>
+                <Col lg={3} sm={6}>
+                  <KPIContainer
+                    title="Total Shares"
+                    statsType="finance"
+                    total="sharesTotal"
+                    icon="pe-7s-graph1 text-danger"
+                  />
+                </Col>
+                <Col lg={3} sm={6}>
+                  <KPIContainer
+                    title="ETB On Loan"
+                    statsType="finance"
+                    total="etbOnLoan"
+                    icon="pe-7s-wallet text-success"
+                  />
+                </Col>
+                <Col lg={3} sm={6}>
+                  <KPIContainer
+                    title="Most Shares"
+                    statsType="finance"
+                    total="mostShares"
+                    icon="pe-7s-wallet text-success"
+                  />
+                </Col>
               </Row>
+
               <Row>
                 <Col lg={4} sm={6}>
                   <LineChartContainer
                     title="Total Loans"
+                    statsType="finance"
+                    dataType="loansLastYearLineChartData"
                     xLabel="Months"
                     yLabel="Loans"
-                    stroke="#228b22"
-                    data={this.state.loansLastYear}
+                    color="#228b22"
                   />
                 </Col>
                 <Col lg={4} sm={6}>
                   <BarChartContainer
-                    type="Top"
                     title="Most Shares"
-                    color="#1828E8"
+                    statsType="finance"
+                    dataType="sharesPerGroup"
                     xLabel="Group Name"
                     yLabel="Shares"
-                    data={this.state.sharesPerGroup}
+                    color="#1828E8"
                     css="card-graph card-stats"
                   />
                 </Col>
                 <Col lg={4} sm={6}>
                   <BarChartContainer
-                    type="Top"
                     title="ETB On Loan"
-                    color="#2196f3"
+                    statsType="finance"
+                    dataType="groupEtbLoan"
                     xLabel="Group Name"
                     yLabel="Amount"
-                    data={this.state.onLoanPerGroup}
+                    color="#2196f3"
                     css="card-graph card-stats"
                   />
                 </Col>
               </Row>
+
               <Row>
                 <Col lg={4} sm={6}>
                   <BarChartContainer
-                    type="Year"
                     title="Loans Per Month"
-                    color="#8918E8"
+                    statsType="finance"
+                    dataType="loansLastMonthData"
                     xLabel="Month"
                     yLabel="Loans"
-                    data={this.state.loansLastYear}
+                    color="#8918E8"
                   />
                 </Col>
                 <Col lg={4} sm={6}>
                   <BarChartContainer
-                    type="Month"
                     title="Loans Per Day"
-                    color="#ff0000"
+                    statsType="finance"
+                    dataType="loansLastMonthData"
                     xLabel="Day"
                     yLabel="Loans"
-                    data={this.state.loansLastMonth}
+                    color="#ff0000"
                   />
                 </Col>
                 <Col lg={4} sm={6}>
                   <BarChartContainer
-                    type="Top"
                     title="Currencies"
+                    statsType="finance"
+                    dataType="currencyStats"
                     color="#2196f3"
                     xLabel="Currency"
                     yLabel="Amount"
-                    data={this.state.currencyStats}
                     css="card-circle card-stats"
                   />
                 </Col>
@@ -166,10 +139,8 @@ class FinanceView extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    financeStats: state.financeStats.financeStats,
-  };
-};
+const mapDispatchToProps = (dispatch) => ({
+  fetchData: () => dispatch(Thunks.fetchFinanceViewData())
+});
 
-export default connect(mapStateToProps, { fetchFinanceStats })(FinanceView);
+export default connect(null, mapDispatchToProps)(FinanceView);

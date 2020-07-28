@@ -1,21 +1,99 @@
 import { Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 
-import { fetchUserGenderStats } from '../services/requests/UserGenderStatsRequest';
+import * as DataMappingService from '../services/DataMappingService';
+
+import {
+  fetchUserData,
+  fetchUsersLastYear,
+  fetchUsersLastMonth,
+  fetchUsersPerCountry,
+  fetchUsersPerNGO
+} from '../services/requests';
 import { RootState } from '../store/index';
-import { userGenderStats } from '../store/user/UserActions';
 
-export const setGenderStats = (): ThunkAction<void, RootState, null, Action<string>> => async (dispatch) => {
-    const tempData: any = await fetchUserGenderStats();
+import {
+  UserState,
+  updateUserData,
+  updateChartjsLastYearUserData,
+  updateChartjsLastMonthUserData
+} from '../store/User';
 
-    const genderStats = tempData.map((element: any) => {
-        return {
-            name: element.value,
-            value: element.count,
-        }
-    })
+export const fetchUserViewData = (): ThunkAction<
+  void,
+  RootState,
+  null,
+  Action<string>
+> => async (dispatch) => {
+  // @ts-ignore
+  const result: UserState = {};
 
-    dispatch(userGenderStats(genderStats));
+  const userData: any = await fetchUserData();
+  const userCountryData: any = await fetchUsersPerCountry();
+  const userNGOData: any = await fetchUsersPerNGO();
+
+  const {
+    userCount,
+    usersLastMonth,
+    usersLastYear,
+    userGenderStats
+  } = userData;
+
+  const { todayDate, todayCount } = DataMappingService.mapDataForToday(
+    usersLastMonth
+  );
+
+  result.total = userCount;
+  result.todayCount = todayCount;
+  result.todayDate = todayDate;
+  result.lastMonthCount = DataMappingService.getTotalNumberInPeriod(
+    usersLastMonth
+  );
+  result.lastYearCount = DataMappingService.getTotalNumberInPeriod(
+    usersLastYear
+  );
+
+  result.lastYearLineChartData = DataMappingService.mapLastYearLineChartData(
+    usersLastYear
+  );
+  result.lastYearBarChartData = DataMappingService.mapLastYearBarChartData(
+    usersLastYear
+  );
+  result.lastMonthBarChartData = DataMappingService.mapLastMonthBarChartData(
+    usersLastMonth
+  );
+
+  result.perCountryData = DataMappingService.mapGeneralChartData(
+    userCountryData
+  );
+  result.perNGOData = DataMappingService.mapGeneralChartData(userNGOData);
+  result.genderStats = DataMappingService.mapGeneralChartData(userGenderStats);
+
+  dispatch(updateUserData(result));
 };
 
+export const fetchUsersLastMonthChartjs = (): ThunkAction<
+  void,
+  RootState,
+  null,
+  Action<string>
+> => async (dispatch) => {
+  const data = await fetchUsersLastMonth();
 
+  const usersLastMonth = DataMappingService.mapChartjsLastMonthData(data);
+
+  dispatch(updateChartjsLastMonthUserData(usersLastMonth));
+};
+
+export const fetchUsersLastYearChartjs = (): ThunkAction<
+  void,
+  RootState,
+  null,
+  Action<string>
+> => async (dispatch) => {
+  const data = await fetchUsersLastYear();
+
+  const usersLastYear = DataMappingService.mapChartjsLastYearData(data);
+
+  dispatch(updateChartjsLastYearUserData(usersLastYear));
+};

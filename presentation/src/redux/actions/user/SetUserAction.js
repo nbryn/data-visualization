@@ -1,5 +1,5 @@
 import { SET_CURRENT_USER } from "../../reducers/LoginReducer";
-import { fetchFromServer } from "../Fetch.ts";
+import { fetchFromServer } from "../../../services/requests/Fetch.ts";
 import { setTokenInHeader } from "../../../security/Token";
 
 export const setCurrentUser = () => async dispatch => {

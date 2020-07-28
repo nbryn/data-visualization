@@ -3,51 +3,45 @@ import thunk from 'redux-thunk';
 
 import CountryReducers from './country/CountryReducers';
 import { CountryState, initialCountryState } from './country/CountryTypes';
-import FinanceReducers from './finance/FinanceReducers';
-import { FinanceState, initialFinanceState } from './finance/FinanceTypes';
-import GroupReducers from './group/GroupReducers';
-import { GroupState, initialGroupState } from './group/GroupTypes';
-import MeetingReducers from './meeting/MeetingReducers';
-import { MeetingState, initialMeetingState } from './meeting/MeetingTypes';
+
 import NGOReducers from './ngo/NGOReducers';
 import { NGOState, initialNGOState } from './ngo/NGOTypes';
-import UserReducers from './user/UserReducers';
-import { UserState, initialUserState } from './user/UserTypes';
 
-const initialState = {
-  countryStats: initialCountryState,
-  financeStats: initialFinanceState,
-  meetingStats: initialMeetingState,
-  ngoStats: initialNGOState,
-  groupStats: initialGroupState,
-  userStats: initialUserState
-};
-
-export interface KPIState {
-  [key: string]: any;
-  keyStats: any;
-  financeStats: any;
-  groupStats: any;
-  meetingStats: any;
-}
+import GroupReducers, { GroupState, initialGroupState } from './Group';
+import FinanceReducers, { FinanceState, initialFinanceState } from './Finance';
+import MeetingReducers, { MeetingState, initialMeetingState } from './Meeting';
+import MainReducers, { MainState, initialMainState } from './Main';
+import UserReducers, { UserState, initialUserState } from './User';
 
 export interface RootState {
   [key: string]: any;
   countryStats: CountryState;
-  financeStats: FinanceState;
-  groupStats: GroupState;
-  meetingStats: MeetingState;
+  finance: FinanceState;
+  groups: GroupState;
+  meetings: MeetingState;
   ngoStats: NGOState;
-  userStats: UserState;
+  users: UserState;
+  main: MainState;
 }
+
+const initialState: RootState = {
+  countryStats: initialCountryState,
+  finance: initialFinanceState,
+  meetings: initialMeetingState,
+  ngoStats: initialNGOState,
+  groups: initialGroupState,
+  users: initialUserState,
+  main: initialMainState
+};
 
 const rootReducer = combineReducers({
   countryStats: CountryReducers,
-  financeStats: FinanceReducers,
-  groupStats: GroupReducers,
-  meetingStats: MeetingReducers,
+  finance: FinanceReducers,
+  groups: GroupReducers,
+  meetings: MeetingReducers,
   ngoStats: NGOReducers,
-  userStats: UserReducers
+  users: UserReducers,
+  main: MainReducers
 });
 
 const middleWare = [thunk];

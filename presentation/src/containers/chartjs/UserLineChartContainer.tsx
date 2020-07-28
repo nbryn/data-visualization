@@ -1,17 +1,16 @@
-import { Card, CardContent } from "@material-ui/core";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import { makeStyles } from "@material-ui/core/styles";
-import React, { ReactElement, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { Card, CardContent } from '@material-ui/core';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { makeStyles } from '@material-ui/core/styles';
+import React, { ReactElement, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { ChartData } from "./types";
-import {
-  fetchUsersLastMonth,
-  fetchUsersLastYear,
-} from "../../redux/actions/UserActions";
-import { Interval, resolveInterval } from "./interval";
-import LineChart from "../../components/chartjs/LineChart";
-import { RootState } from "../../redux/store";
+import * as UserThunks from '../../thunks/UserThunks';
+
+import { ChartData } from './types';
+
+import { Interval, resolveInterval } from './interval';
+import LineChart from '../../components/chartjs/LineChart';
+import { RootState } from '../../store/index';
 
 const UserLineChartContainer: React.FC = (): ReactElement => {
   const { WEEK, MONTH, YEAR } = Interval;
@@ -22,20 +21,22 @@ const UserLineChartContainer: React.FC = (): ReactElement => {
   const [labels, setLabels] = useState<string[]>([]);
   const [chartData, setChartData] = useState<ChartData>({
     counter: 0,
-    data: [],
+    data: []
   });
 
   const usersLastWeek = useSelector<RootState, any>(
-    (state) => state.userStats.usersLastWeek
+    (state) => state.users.chartjsLastWeek
   );
 
   const usersLastMonth = useSelector<RootState, any>(
-    (state) => state.userStats.chartjsUsersLastMonth
+    (state) => state.users.chartjsLastMonth
   );
 
   const usersLastYear = useSelector<RootState, any>(
-    (state) => state.userStats.chartjsUsersLastYear
+    (state) => state.users.chartjsLastYear
   );
+
+  console.log(usersLastWeek);
 
   const dispatch = useDispatch();
 
@@ -62,8 +63,8 @@ const UserLineChartContainer: React.FC = (): ReactElement => {
   };
 
   useEffect(() => {
-    dispatch(fetchUsersLastMonth(true));
-    dispatch(fetchUsersLastYear(true));
+    dispatch(UserThunks.fetchUsersLastMonthChartjs());
+    dispatch(UserThunks.fetchUsersLastYearChartjs());
   }, []);
 
   useEffect(() => {

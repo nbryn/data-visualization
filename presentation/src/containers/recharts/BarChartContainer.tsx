@@ -1,13 +1,11 @@
-import React, { ReactElement, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { ReactElement } from 'react';
+import { useSelector } from 'react-redux';
 
 import BarChart from '../../components/recharts/BarChart';
-import { fetchGroupsLastMonth } from '../../redux/actions/GroupActions';
-import { RootState } from '../../redux/store';
+import { RootState } from '../../store/index';
 
 type Props = {
   title: string;
-  fetchData: Function;
   statsType: string;
   dataType: string;
   xLabel: string;
@@ -18,7 +16,6 @@ type Props = {
 
 export const BarChartContainer: React.FC<Props> = ({
   title,
-  fetchData,
   statsType,
   dataType,
   xLabel,
@@ -29,12 +26,6 @@ export const BarChartContainer: React.FC<Props> = ({
   const data: any = useSelector<RootState, any>(
     (state) => state[statsType][dataType]
   );
-  
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fetchData());
-  }, []);
 
   const yLabelConfig = {
     value: yLabel,
@@ -44,7 +35,7 @@ export const BarChartContainer: React.FC<Props> = ({
   const xLabelConfig = { value: xLabel, position: 'center', dy: 10 };
 
   return (
-    <div className={css || "card-circle card-stats"}>
+    <div className={css || 'card-circle card-stats'}>
       <BarChart
         title={title}
         data={data}

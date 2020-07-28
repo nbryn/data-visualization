@@ -1,3 +1,4 @@
+import { connect } from 'react-redux';
 import { Col, Grid, Row } from 'react-bootstrap';
 import React, { Component } from 'react';
 
@@ -10,36 +11,16 @@ import {
   PieChartContainer
 } from '../../containers';
 
-import { fetchTotalShares } from '../../services/requests/SharesTotalRequest';
-import { fetchTotalUsers } from '../../services/requests/UsersTotalRequest';
-import { fetchUsersLastYear } from '../../services/requests/UsersLastYearRequest';
-import { fetchGroupsLastMonth } from '../../services/requests/GroupsLastMonthRequest';
-import { fetchTotalGroups } from '../../services/requests/GroupsTotalRequest';
-
-import { fetchGroupsLastYear } from '../../services/requests/GroupsLastYearRequest';
-import {
-  groupsLastMonthBarChart,
-  groupsLastYearLineChart,
-  groupsTotal
-} from '../../store/group/GroupActions';
-import { fetchMeetingsLastYear } from '../../services/requests/MeetingsLastYearRequest';
-import { fetchTotalMeetings } from '../../services/requests/MeetingsTotalRequest';
-import {
-  meetingsLastYear,
-  meetingsTotal
-} from '../../store/meeting/MeetingActions';
-
-import { sharesTotal } from '../../store/finance/FinanceActions';
-import {
-  usersLastYearBarChart,
-  usersLastYearLineChart,
-  usersTotal
-} from '../../store/user/UserActions';
-
-import * as UserThunks from '../../thunks/UserThunks';
 import * as Thunks from '../../thunks/Thunks';
 
 class MainView extends Component {
+  constructor(props) {
+    super(props);
+  }
+  componentDidMount() {
+    this.props.fetchData();
+  }
+
   render() {
     return (
       <div className="wrapper">
@@ -53,10 +34,7 @@ class MainView extends Component {
                 <Col lg={3} sm={6}>
                   <KPIContainer
                     title="Total Users"
-                    fetchData={() =>
-                      Thunks.updateDataForTotal(fetchTotalUsers, usersTotal)
-                    }
-                    statsType="userStats"
+                    statsType="main"
                     total="usersTotal"
                     icon="pe-7s-user text-warning"
                   />
@@ -64,10 +42,7 @@ class MainView extends Component {
                 <Col lg={3} sm={6}>
                   <KPIContainer
                     title="Total Groups"
-                    fetchData={() =>
-                      Thunks.updateDataForTotal(fetchTotalGroups, groupsTotal)
-                    }
-                    statsType="groupStats"
+                    statsType="main"
                     total="groupsTotal"
                     icon="pe-7s-users text-info"
                   />
@@ -75,10 +50,7 @@ class MainView extends Component {
                 <Col lg={3} sm={6}>
                   <KPIContainer
                     title="Total Meetings"
-                    fetchData={() =>
-                      Thunks.updateDataForTotal(fetchTotalMeetings, meetingsTotal)
-                    }
-                    statsType="meetingStats"
+                    statsType="main"
                     total="meetingsTotal"
                     icon="pe-7s-graph1 text-danger"
                   />
@@ -86,10 +58,7 @@ class MainView extends Component {
                 <Col lg={3} sm={6}>
                   <KPIContainer
                     title="Total Shares"
-                    fetchData={() =>
-                      Thunks.updateDataForTotal(fetchTotalShares, sharesTotal)
-                    }
-                    statsType="financeStats"
+                    statsType="main"
                     total="sharesTotal"
                     icon="pe-7s-graph1 text-danger"
                   />
@@ -100,14 +69,8 @@ class MainView extends Component {
                 <Col lg={4} sm={6}>
                   <LineChartContainer
                     title="Total Users"
-                    fetchData={() =>
-                      Thunks.updateDataForLastYearLineChart(
-                        fetchUsersLastYear,
-                        usersLastYearLineChart
-                      )
-                    }
-                    statsType="userStats"
-                    dataType="usersLastYearLineChart"
+                    statsType="main"
+                    dataType="usersLastYearLineChartData"
                     xLabel="Months"
                     yLabel="Users"
                     color="#ff0000"
@@ -116,14 +79,8 @@ class MainView extends Component {
                 <Col lg={4} sm={6}>
                   <LineChartContainer
                     title="Total Groups"
-                    fetchData={() =>
-                      Thunks.updateDataForLastYearLineChart(
-                        fetchGroupsLastYear,
-                        groupsLastYearLineChart
-                      )
-                    }
-                    statsType="groupStats"
-                    dataType="groupsLastYearLineChart"
+                    statsType="main"
+                    dataType="groupsLastYearData"
                     xLabel="Months"
                     yLabel="Groups"
                     color="#228b22"
@@ -132,14 +89,8 @@ class MainView extends Component {
                 <Col lg={4} sm={6}>
                   <LineChartContainer
                     title="Total Meetings"
-                    fetchData={() =>
-                      Thunks.updateDataForLastYearLineChart(
-                        fetchMeetingsLastYear,
-                        meetingsLastYear
-                      )
-                    }
-                    statsType="meetingStats"
-                    dataType="meetingsLastYear"
+                    statsType="main"
+                    dataType="meetingsLastYearData"
                     xLabel="Months"
                     yLabel="Meetings"
                     color="#2196f3"
@@ -151,14 +102,8 @@ class MainView extends Component {
                 <Col lg={4} sm={6}>
                   <BarChartContainer
                     title="Groups Last Month"
-                    fetchData={() =>
-                      Thunks.updateDataForLastMonthBarChart(
-                        fetchGroupsLastMonth,
-                        groupsLastMonthBarChart
-                      )
-                    }
-                    statsType="groupStats"
-                    dataType="groupsLastMonthBarChart"
+                    statsType="main"
+                    dataType="groupsLastMonthData"
                     xLabel="day"
                     yLabel="groups"
                     color="#228b22"
@@ -167,23 +112,16 @@ class MainView extends Component {
                 <Col lg={4} sm={6}>
                   <PieChartContainer
                     title="Gender Distribution"
-                    fetchData={UserThunks.setGenderStats}
-                    statsType="userStats"
-                    dataType="genderStats"
+                    statsType="main"
+                    dataType="userGenderStats"
                     colors={['#1828E8', '#228b22']}
                   />
                 </Col>
                 <Col lg={4} sm={6}>
                   <BarChartContainer
                     title="Users Last Year"
-                    fetchData={() =>
-                      Thunks.updateDataForLastYearBarChart(
-                        fetchUsersLastYear,
-                        usersLastYearBarChart
-                      )
-                    }
-                    statsType="userStats"
-                    dataType="usersLastYearBarChart"
+                    statsType="main"
+                    dataType="usersLastYearBarChartData"
                     xLabel="Months"
                     yLabel="Users"
                     color="#ff0000"
@@ -198,4 +136,8 @@ class MainView extends Component {
   }
 }
 
-export default MainView;
+const mapDispatchToProps = (dispatch) => ({
+  fetchData: () => dispatch(Thunks.fetchMainViewData())
+});
+
+export default connect(null, mapDispatchToProps)(MainView);

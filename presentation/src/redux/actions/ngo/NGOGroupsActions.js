@@ -1,5 +1,5 @@
 import { NGO_GROUPS } from "../../reducers/NGOReducer";
-import { fetchFromServer } from "../Fetch.ts";
+import { fetchFromServer } from "../../../services/requests/Fetch.ts";
 
 export const fetchGroupsByNGO = ngo => async dispatch => {
   const data = `query{

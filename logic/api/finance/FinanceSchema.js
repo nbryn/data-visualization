@@ -18,7 +18,8 @@ const FinanceSchema = gql`
     loansLastMonth: [NumberDay]
     loansLastYear: [NumberMonth]
     shareTotal: Float
-    mostShares: Data
+    mostSharesData: Data
+    mostShares: Float
     shareStats: [Data]
     etbOnLoan: Float
     groupEtbLoan: [Data]

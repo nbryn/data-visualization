@@ -1,12 +1,11 @@
-import React, { ReactElement, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { ReactElement } from 'react';
+import { useSelector } from 'react-redux';
 
 import PieChart from '../../components/recharts/PieChart';
-import { RootState } from '../../redux/store';
+import { RootState } from '../../store/index';
 
 type Props = {
   title: string;
-  fetchData: Function;
   statsType: string;
   dataType: string;
   colors: string[];
@@ -14,7 +13,6 @@ type Props = {
 
 export const PieChartContainer: React.FC<Props> = ({
   title,
-  fetchData,
   statsType,
   dataType,
   colors
@@ -22,12 +20,6 @@ export const PieChartContainer: React.FC<Props> = ({
   const data: any = useSelector<RootState, any>(
     (state) => state[statsType][dataType]
   );
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fetchData());
-  }, []);
 
   return (
     <div className="card-circle card-stats">

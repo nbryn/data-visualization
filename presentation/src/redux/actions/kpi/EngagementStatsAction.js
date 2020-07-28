@@ -1,5 +1,5 @@
 import { ENGAGEMENT_STATS } from "../../reducers/KPIReducer";
-import { fetchFromServer } from "../Fetch.ts";
+import { fetchFromServer } from "../../../services/requests/Fetch.ts";
 
 export const fetchEngagementStats = () => async dispatch => {
   let engagementStats = {

@@ -1,4 +1,4 @@
-import { fetchFromServer } from "../Fetch.ts";
+import { fetchFromServer } from "../../../services/requests/Fetch.ts";
 import { GROUP_DATA } from "../../reducers/NGOReducer";
 
 export const fetchGroupData = group => async dispatch => {

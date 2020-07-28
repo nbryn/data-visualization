@@ -1,15 +1,9 @@
 import { Col, Grid, Row } from 'react-bootstrap';
+import { connect } from 'react-redux';
 import React, { Component } from 'react';
 
 import Header from '../../components/navigation/Header';
 import Sidebar from '../../components/navigation/Sidebar';
-
-import { fetchUserGenderStats } from '../../services/requests/UserGenderStatsRequest';
-import { fetchUsersPerNGO } from '../../services/requests/NGOUsersRequest';
-import { fetchUsersPerCountry } from '../../services/requests/CountryUsersRequest';
-import { fetchTotalUsers } from '../../services/requests/UsersTotalRequest';
-import { fetchUsersLastMonth } from '../../services/requests/UsersLastMonthRequest';
-import { fetchUsersLastYear } from '../../services/requests/UsersLastYearRequest';
 
 import KPITodayContainer from '../../containers/KPITodayContainer';
 
@@ -19,25 +13,18 @@ import {
   PieChartContainer
 } from '../../containers';
 
-import {
-  usersLastYearBarChart,
-  usersLastYearLineChart,
-  usersTotal,
-  usersToday,
-  usersLastMonth,
-  usersLastYear,
-  usersLastMonthBarChart,
-  userGenderStats
-} from '../../store/user/UserActions';
-
-import { usersPerCountry } from '../../store/country/CountryActions';
-import { usersPerNGO } from '../../store/ngo/NGOActions';
-
 import KPIContainer from '../../containers/KPIContainer';
 
-import * as Thunks from '../../thunks/Thunks';
+import * as UserThunks from '../../thunks/UserThunks';
 
 class UserView extends Component {
+  constructor(props) {
+    super(props);
+  }
+  componentDidMount() {
+    this.props.fetchData();
+  }
+
   render() {
     return (
       <div className="wrapper">
@@ -50,20 +37,14 @@ class UserView extends Component {
                 <Col lg={3} sm={6}>
                   <KPIContainer
                     title="Total Users"
-                    fetchData={() =>
-                      Thunks.updateDataForTotal(fetchTotalUsers, usersTotal)
-                    }
-                    statsType="userStats"
-                    total="usersTotal"
+                    statsType="users"
+                    total="total"
                     icon="pe-7s-user text-warning"
                   />
                 </Col>
                 <Col lg={3} sm={6}>
                   <KPITodayContainer
-                    fetchData={() =>
-                      Thunks.updateDataForToday(fetchUsersLastMonth, usersToday)
-                    }
-                    statsType="userStats"
+                    statsType="users"
                     countData="todayCount"
                     dateData="todayDate"
                     icon="pe-7s-users text-info"
@@ -72,25 +53,16 @@ class UserView extends Component {
                 <Col lg={3} sm={6}>
                   <KPIContainer
                     title="Last Year"
-                    fetchData={() =>
-                      Thunks.updateDataForPeriod(fetchUsersLastYear, usersLastYear)
-                    }
-                    statsType="userStats"
-                    total="usersLastYear"
+                    statsType="users"
+                    total="lastYearCount"
                     icon="pe-7s-wallet text-success"
                   />
                 </Col>
                 <Col lg={3} sm={6}>
                   <KPIContainer
                     title="Last Month"
-                    fetchData={() =>
-                      Thunks.updateDataForPeriod(
-                        fetchUsersLastMonth,
-                        usersLastMonth
-                      )
-                    }
-                    statsType="userStats"
-                    total="usersLastMonth"
+                    statsType="users"
+                    total="lastMonthCount"
                     icon="pe-7s-users text-info"
                   />
                 </Col>
@@ -99,14 +71,8 @@ class UserView extends Component {
                 <Col lg={4} sm={6}>
                   <LineChartContainer
                     title="Total Users"
-                    fetchData={() =>
-                      Thunks.updateDataForLastYearLineChart(
-                        fetchUsersLastYear,
-                        usersLastYearLineChart
-                      )
-                    }
-                    statsType="userStats"
-                    dataType="usersLastYearLineChart"
+                    statsType="users"
+                    dataType="lastYearLineChartData"
                     xLabel="Months"
                     yLabel="Users"
                     color="#ff0000"
@@ -115,14 +81,8 @@ class UserView extends Component {
                 <Col lg={4} sm={6}>
                   <BarChartContainer
                     title="Users Per Country"
-                    fetchData={() =>
-                      Thunks.updateDataForGeneralChart(
-                        fetchUsersPerCountry,
-                        usersPerCountry
-                      )
-                    }
-                    statsType="countryStats"
-                    dataType="countryUsers"
+                    statsType="users"
+                    dataType="perCountryData"
                     xLabel="Country"
                     yLabel="Users"
                     color="#1828E8"
@@ -132,14 +92,8 @@ class UserView extends Component {
                 <Col lg={4} sm={6}>
                   <BarChartContainer
                     title="Users Per NGO"
-                    fetchData={() =>
-                      Thunks.updateDataForGeneralChart(
-                        fetchUsersPerNGO,
-                        usersPerNGO
-                      )
-                    }
-                    statsType="ngoStats"
-                    dataType="usersPerNGO"
+                    statsType="users"
+                    dataType="perNGOData"
                     xLabel="NGO"
                     yLabel="Users"
                     color="#2196f3"
@@ -151,14 +105,8 @@ class UserView extends Component {
                 <Col lg={4} sm={6}>
                   <BarChartContainer
                     title="Users Per Day"
-                    fetchData={() =>
-                      Thunks.updateDataForLastMonthBarChart(
-                        fetchUsersLastMonth,
-                        usersLastMonthBarChart
-                      )
-                    }
-                    statsType="userStats"
-                    dataType="usersLastMonthBarChart"
+                    statsType="users"
+                    dataType="lastMonthBarChartData"
                     xLabel="Day"
                     yLabel="Users"
                     color="#228b22"
@@ -167,13 +115,7 @@ class UserView extends Component {
                 <Col lg={4} sm={6}>
                   <PieChartContainer
                     title="Gender Distribution"
-                    fetchData={() =>
-                      Thunks.updateDataForGeneralChart(
-                        fetchUserGenderStats,
-                        userGenderStats
-                      )
-                    }
-                    statsType="userStats"
+                    statsType="users"
                     dataType="genderStats"
                     colors={['#1828E8', '#228b22']}
                   />
@@ -182,14 +124,8 @@ class UserView extends Component {
                 <Col lg={4} sm={6}>
                   <BarChartContainer
                     title="Users Per Month"
-                    fetchData={() =>
-                      Thunks.updateDataForLastYearBarChart(
-                        fetchUsersLastYear,
-                        usersLastYearBarChart
-                      )
-                    }
-                    statsType="userStats"
-                    dataType="usersLastYearBarChart"
+                    statsType="users"
+                    dataType="lastYearBarChartData"
                     xLabel="Month"
                     yLabel="Users"
                     color="#ff0000"
@@ -204,4 +140,8 @@ class UserView extends Component {
   }
 }
 
-export default UserView;
+const mapDispatchToProps = (dispatch) => ({
+  fetchData: () => dispatch(UserThunks.fetchUserViewData())
+});
+
+export default connect(null, mapDispatchToProps)(UserView);

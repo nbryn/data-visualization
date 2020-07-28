@@ -1,4 +1,9 @@
-import { GENERAL_COUNTRY_STATS, GROUPS_PER_COUNTRY, USERS_PER_COUNTRY } from './CountryTypes';
+import {
+  GENERAL_COUNTRY_STATS,
+  GROUPS_PER_COUNTRY,
+  USERS_PER_COUNTRY,
+  MEETINGS_PER_COUNTRY
+} from './CountryTypes';
 
 export default function (state = {}, action: any) {
   switch (action.type) {
@@ -8,13 +13,17 @@ export default function (state = {}, action: any) {
         usersCountry: action.payload.usersCountry,
         meetingsCountry: action.payload.meetingsCountry
       });
-      case GROUPS_PER_COUNTRY:
+    case GROUPS_PER_COUNTRY:
       return Object.assign({}, state, {
-        countryGroups: action.payload,
+        countryGroups: action.payload
       });
-      case USERS_PER_COUNTRY:
+    case USERS_PER_COUNTRY:
       return Object.assign({}, state, {
-        countryUsers: action.payload,
+        countryUsers: action.payload
+      });
+    case MEETINGS_PER_COUNTRY:
+      return Object.assign({}, state, {
+        countryMeetings: action.payload
       });
 
     default:

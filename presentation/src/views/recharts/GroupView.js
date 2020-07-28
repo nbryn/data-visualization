@@ -1,3 +1,4 @@
+import { connect } from 'react-redux';
 import { Col, Grid, Row } from 'react-bootstrap';
 import React, { Component } from 'react';
 
@@ -10,31 +11,18 @@ import {
   PieChartContainer
 } from '../../containers';
 
-import { groupsPerCountry } from '../../store/country/CountryActions';
-import { fetchGroupsPerCountry } from '../../services/requests/CountryGroupsRequest';
-import { groupsPerNGO } from '../../store/ngo/NGOActions';
-import { fetchGroupsPerNGO } from '../../services/requests/NGOGroupsRequest';
-import { fetchGroupsLastMonth } from '../../services/requests/GroupsLastMonthRequest';
-import { fetchGroupsLastYear } from '../../services/requests/GroupsLastYearRequest';
-
-import { fetchGroupSizeStats } from '../../services/requests/GroupSizeRequest';
-import { fetchTotalGroups } from '../../services/requests/GroupsTotalRequest';
-import {
-  groupsLastMonth,
-  groupsLastYear,
-  groupsLastYearLineChart,
-  groupsLastMonthBarChart,
-  groupsLastYearBarChart,
-  groupsTotal,
-  groupsToday,
-  groupSizeStats
-} from '../../store/group/GroupActions';
-
 import * as Thunks from '../../thunks/Thunks';
 import KPIContainer from '../../containers/KPIContainer';
 import KPITodayContainer from '../../containers/KPITodayContainer';
 
 class GroupView extends Component {
+  constructor(props) {
+    super(props);
+  }
+  componentDidMount() {
+    this.props.fetchData();
+  }
+
   render() {
     return (
       <div className="wrapper">
@@ -47,44 +35,32 @@ class GroupView extends Component {
                 <Col lg={3} sm={6}>
                   <KPIContainer
                     title="Total Groups"
-                    fetchData={() =>
-                      Thunks.updateDataForTotal(fetchTotalGroups, groupsTotal)
-                    }
-                    statsType="groupStats"
-                    total="groupsTotal"
+                    statsType="groups"
+                    total="total"
                     icon="pe-7s-graph1 text-danger"
                   />
                 </Col>
                 <Col lg={3} sm={6}>
                   <KPITodayContainer
-                    fetchData={() =>
-                      Thunks.updateDataForToday(fetchGroupsLastMonth, groupsToday)
-                    }
-                    statsType="groupStats"
+                    statsType="groups"
                     countData="todayCount"
-                    dateData='todayDate'
+                    dateData="todayDate"
                     icon="pe-7s-graph1 text-danger"
                   />
                 </Col>
                 <Col lg={3} sm={6}>
                   <KPIContainer
                     title="Last Year"
-                    fetchData={() =>
-                      Thunks.updateDataForPeriod(fetchGroupsLastYear, groupsLastYear)
-                    }
-                    statsType="groupStats"
-                    total="groupsLastYear"
+                    statsType="groups"
+                    total="lastYearCount"
                     icon="pe-7s-graph1 text-danger"
                   />
                 </Col>
                 <Col lg={3} sm={6}>
                   <KPIContainer
                     title="Last Month"
-                    fetchData={() =>
-                      Thunks.updateDataForPeriod(fetchGroupsLastMonth, groupsLastMonth)
-                    }
-                    statsType="groupStats"
-                    total="groupsLastMonth"
+                    statsType="groups"
+                    total="lastMonthCount"
                     icon="pe-7s-users text-info"
                   />
                 </Col>
@@ -94,14 +70,8 @@ class GroupView extends Component {
                 <Col lg={4} sm={6}>
                   <LineChartContainer
                     title="Total Groups"
-                    fetchData={() =>
-                      Thunks.updateDataForLastYearLineChart(
-                        fetchGroupsLastYear,
-                        groupsLastYearLineChart
-                      )
-                    }
-                    statsType="groupStats"
-                    dataType="groupsLastYearLineChart"
+                    statsType="groups"
+                    dataType="lastYearLineChartData"
                     xLabel="Months"
                     yLabel="Groups"
                     color="#228b22"
@@ -110,14 +80,8 @@ class GroupView extends Component {
                 <Col lg={4} sm={6}>
                   <BarChartContainer
                     title="Groups Per Country"
-                    fetchData={() => 
-                      Thunks.updateDataForGeneralChart(
-                        fetchGroupsPerCountry,
-                        groupsPerCountry
-                      )
-                    }
-                    statsType="countryStats"
-                    dataType="countryGroups"
+                    statsType="groups"
+                    dataType="perCountryData"
                     xLabel="Country"
                     yLabel="Groups"
                     color="#1828E8"
@@ -127,11 +91,8 @@ class GroupView extends Component {
                 <Col lg={4} sm={6}>
                   <BarChartContainer
                     title="Groups Per NGO"
-                    fetchData={() => 
-                      Thunks.updateDataForGeneralChart(fetchGroupsPerNGO, groupsPerNGO)
-                    }
-                    statsType="ngoStats"
-                    dataType="groupsPerNGO"
+                    statsType="groups"
+                    dataType="perNGOData"
                     xLabel="NGO"
                     yLabel="Groups"
                     color="#ff0000"
@@ -143,14 +104,8 @@ class GroupView extends Component {
                 <Col lg={4} sm={6}>
                   <BarChartContainer
                     title="Groups Last Month"
-                    fetchData={() => 
-                      Thunks.updateDataForLastMonthBarChart(
-                        fetchGroupsLastMonth,
-                        groupsLastMonthBarChart
-                      )
-                    }
-                    statsType="groupStats"
-                    dataType="groupsLastMonthBarChart"
+                    statsType="groups"
+                    dataType="lastMonthBarChartData"
                     xLabel="day"
                     yLabel="groups"
                     color="#228b22"
@@ -159,13 +114,7 @@ class GroupView extends Component {
                 <Col lg={4} sm={6}>
                   <PieChartContainer
                     title="Group Size"
-                    fetchData={() => 
-                      Thunks.updateDataForGeneralChart(
-                        fetchGroupSizeStats,
-                        groupSizeStats
-                      )
-                    }
-                    statsType="groupStats"
+                    statsType="groups"
                     dataType="groupSizeStats"
                     colors={[
                       '#a4de6c',
@@ -180,14 +129,8 @@ class GroupView extends Component {
                 <Col lg={4} sm={6}>
                   <BarChartContainer
                     title="Groups Last Year"
-                    fetchData={() =>
-                      Thunks.updateDataForLastYearBarChart(
-                        fetchGroupsLastYear,
-                        groupsLastYearBarChart
-                      )
-                    }
-                    statsType="groupStats"
-                    dataType="groupsLastYearBarChart"
+                    statsType="groups"
+                    dataType="lastYearBarChartData"
                     xLabel="Month"
                     yLabel="groups"
                     color="#2196f3"
@@ -202,4 +145,8 @@ class GroupView extends Component {
   }
 }
 
-export default GroupView;
+const mapDispatchToProps = (dispatch) => ({
+  fetchData: () => dispatch(Thunks.fetchGroupViewData())
+});
+
+export default connect(null, mapDispatchToProps)(GroupView);

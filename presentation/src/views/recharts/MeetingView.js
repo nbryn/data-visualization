@@ -1,86 +1,26 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { Grid, Row, Col } from "react-bootstrap";
+import { connect } from 'react-redux';
+import { Col, Grid, Row,  } from 'react-bootstrap';
+import React, { Component } from 'react';
 
-import BarChartContainer from "../../components/recharts/BarChartContainer";
-import { fetchGeneralCountryStats } from "../../redux/actions/country/GeneralCountryStatsAction";
-import { fetchMeetingStats } from "../../redux/actions/MeetingActions";
-import { getCurrentTime } from "../../util/Date";
-import Header from "../../components/navigation/Header";
-import KPICard from "../../components/kpi/KPICard";
-import Sidebar from "../../components/navigation/Sidebar";
-import LineChartContainer from "../../components/recharts/LineChartContainer";
+import Header from '../../components/navigation/Header';
+import Sidebar from '../../components/navigation/Sidebar';
+
+import * as Thunks from '../../thunks/Thunks';
+
+import KPITodayContainer from '../../containers/KPITodayContainer';
+import KPIContainer from '../../containers/KPIContainer';
+
+import { BarChartContainer, LineChartContainer } from '../../containers';
 
 class MeetingView extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {};
   }
   componentDidMount() {
-    this.fetchData();
-
-    setInterval(async () => {
-      this.fetchData();
-    }, 10000000);
-  }
-
-  async fetchData() {
-    await this.props.fetchMeetingStats();
-    await this.props.fetchGeneralCountryStats();
-
-    const { meetingStats, meetingsCountry } = this.props;
-    const {
-      meetingTotal,
-      meetingsLastMonth,
-      meetingsLastYear,
-      meetingsPerGroup,
-      sharesPerMeeting,
-    } = meetingStats;
-
-    const lastMonth = meetingsLastMonth;
-
-    let lastUpdatedAt = getCurrentTime();
-
-    let meetingMonthCount = 0;
-    let meetingYearCount = 0;
-
-    lastMonth.forEach((element) => (meetingMonthCount += element.count));
-    meetingStats.meetingsLastYear.forEach(
-      (element) => (meetingYearCount += element.count)
-    );
-
-    this.setState({
-      meetingTotal: meetingTotal,
-      meetingsToday: lastMonth[lastMonth.length - 1].count,
-      meetingsTodayText:
-        lastMonth[lastMonth.length - 1].day.day +
-        "/" +
-        lastMonth[lastMonth.length - 1].day.month,
-      meetingMonth: meetingMonthCount,
-      meetingYear: meetingYearCount,
-      meetingsLastMonth: lastMonth,
-      meetingsLastYear: meetingsLastYear,
-      meetingsPerGroup: meetingsPerGroup,
-      sharesPerMeeting: sharesPerMeeting,
-      meetingsPerCountry: meetingsCountry,
-      lastUpdate: lastUpdatedAt,
-    });
+    this.props.fetchData();
   }
 
   render() {
-    const KPICards = {
-      meetingTotal: { text: "Total Meetings", icon: "pe-7s-user text-warning" },
-      meetingsToday: {
-        text: `Meetings ${this.state.meetingsTodayText}`,
-        icon: "pe-7s-users text-info",
-      },
-      meetingMonth: {
-        text: "Last Month",
-        icon: "pe-7s-graph1 text-danger",
-      },
-      meetingYear: { text: "Last Year", icon: "pe-7s-wallet text-success" },
-    };
     return (
       <div className="wrapper">
         <Sidebar />
@@ -89,80 +29,105 @@ class MeetingView extends Component {
           <div className="content">
             <Grid fluid>
               <Row>
-                {Object.keys(KPICards).map((element, index) => (
-                  <Col lg={3} sm={6}>
-                    <KPICard
-                      bigIcon={<i className={KPICards[element].icon} />}
-                      statsText={KPICards[element].text}
-                      statsValue={this.state[element]}
-                      statsIcon={<i className="fa fa-refresh" />}
-                      statsIconText={`Last Update: ${this.state.lastUpdate}`}
-                    />
-                  </Col>
-                ))}
+                <Col lg={3} sm={6}>
+                  <KPIContainer
+                    title="Total Meetings"
+                    statsType="meetings"
+                    total="totalData"
+                    icon="pe-7s-user text-warning"
+                  />
+                </Col>
+                <Col lg={3} sm={6}>
+                  <KPITodayContainer
+                    statsType="meetings"
+                    countData="todayCount"
+                    dateData="todayDate"
+                    icon="pe-7s-users text-info"
+                  />
+                </Col>
+                <Col lg={3} sm={6}>
+                  <KPIContainer
+                    title="Last Month"
+                    statsType="meetings"
+                    total="lastMonthCount"
+                    icon="pe-7s-graph1 text-danger"
+                  />
+                </Col>
+                <Col lg={3} sm={6}>
+                  <KPIContainer
+                    title="Last Year"
+                    statsType="meetings"
+                    total="lastYearCount"
+                    icon="pe-7s-wallet text-success"
+                  />
+                </Col>
               </Row>
 
               <Row>
                 <Col lg={4} sm={6}>
                   <LineChartContainer
                     title="Total Meetings"
-                    stroke="#228b22"
-                    data={this.state.meetingsLastYear}
+                    statsType="meetings"
+                    dataType="lastYearData"
+                    xLabel="Months"
+                    yLabel="Meetings"
+                    color="#228b22"
                   />
                 </Col>
                 <Col lg={4} sm={6}>
                   <BarChartContainer
-                    type="Top"
                     title="Meetings Per Group"
+                    statsType="meetings"
+                    dataType="perGroupData"
                     xLabel="Group"
                     yLabel="Meetings"
                     color="#ff0000"
-                    data={this.state.meetingsPerGroup}
                     css="card-graph card-stats"
                   />
                 </Col>
                 <Col lg={4} sm={6}>
                   <BarChartContainer
-                    type="Top"
                     title="Meetings Per Country"
+                    statsType="meetings"
+                    dataType="perCountryData"
                     xLabel="Country"
                     yLabel="Meetings"
                     color="#228b22"
-                    data={this.state.meetingsPerCountry}
                     css="card-graph card-stats"
                   />
                 </Col>
               </Row>
+
               <Row>
                 <Col lg={4} sm={6}>
                   <BarChartContainer
-                    type="Month"
                     title="Meetings Last Month"
+                    statsType="meetings"
+                    dataType="lastMonthBarChartData"
                     xLabel="Day"
                     yLabel="Meetings"
                     color="#1828E8"
-                    data={this.state.meetingsLastMonth}
                   />
                 </Col>
 
                 <Col lg={4} sm={6}>
                   <BarChartContainer
-                    type="Year"
                     title="Meetings Last Year"
+                    statsType="meetings"
+                    dataType="lastYearBarChartData"
                     xLabel="Month"
                     yLabel="Meetings"
                     color="#8918E8"
-                    data={this.state.meetingsLastYear}
                   />
                 </Col>
                 <Col lg={4} sm={6}>
                   <BarChartContainer
-                    type="Top"
                     title="Meetings With Most Shares"
+                    statsType="meetings"
+                    dataType="sharesPerMeetingData"
                     xLabel="Meeting"
                     yLabel="Shares"
                     color="#2196f3"
-                    data={this.state.sharesPerMeeting}
                     css="card-circle card-stats"
                   />
                 </Col>
@@ -175,14 +140,8 @@ class MeetingView extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    meetingStats: state.meetingStats.meetingStats,
-    meetingsCountry: state.country.meetingsCountry,
-  };
-};
+const mapDispatchToProps = (dispatch) => ({
+  fetchData: () => dispatch(Thunks.fetchMeetingViewData())
+});
 
-export default connect(mapStateToProps, {
-  fetchMeetingStats,
-  fetchGeneralCountryStats,
-})(MeetingView);
+export default connect(null, mapDispatchToProps)(MeetingView);

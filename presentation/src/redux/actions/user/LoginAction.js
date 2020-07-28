@@ -1,5 +1,5 @@
 import { SET_CURRENT_USER } from "../../reducers/LoginReducer";
-import { fetchFromServer } from "../Fetch.ts";
+import { fetchFromServer } from "../../../services/requests/Fetch.ts";
 import { setTokenInLocalStorage } from "../../../security/Token";
 
 export const login = (username, password, history) => async (dispatch) => {

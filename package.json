@@ -40,7 +40,6 @@
     "moment": "^2.24.0",
     "mongoose": "^5.7.12",
     "nodemon": "^2.0.1",
-    "react-bootstrap": "^1.2.2",
     "typescript": "^3.9.7"
   },
   "devDependencies": {

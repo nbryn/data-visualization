@@ -1,7 +1,7 @@
 import { fetchFromServer } from '../Fetch';
 
 export const fetchFinanceData = async (): Promise<any> => {
-  const data = `query {
+    const data = `query {
         financeStats {
           numberOfCurrencies
           currencyStats {
@@ -40,7 +40,7 @@ export const fetchFinanceData = async (): Promise<any> => {
         }
       }`;
 
-  const response = await fetchFromServer('financeStats', data);
+    const response = await fetchFromServer('financeStats', data);
 
-  return response;
+    return response;
 };

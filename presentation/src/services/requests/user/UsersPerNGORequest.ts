@@ -1,7 +1,7 @@
 import { fetchFromServer } from '../Fetch';
 
 export const fetchUsersPerNGO = async (): Promise<any> => {
-  const data = `query {
+    const data = `query {
         ngoStats {
           usersNGO {
             name
@@ -10,7 +10,7 @@ export const fetchUsersPerNGO = async (): Promise<any> => {
         }
       }`;
 
-  const response = await fetchFromServer('ngoStats', data, 'usersNGO');
+    const response = await fetchFromServer('ngoStats', data, 'usersNGO');
 
-  return response;
+    return response;
 };

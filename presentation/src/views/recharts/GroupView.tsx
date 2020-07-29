@@ -1,21 +1,26 @@
-import { Col, Grid, Row } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
 
 import {
   BarChartContainer,
-  KPITodayContainer ,
-  KPIContainer ,
+  KPIContainer,
+  KPITodayContainer,
   LineChartContainer,
   PieChartContainer
 } from '../../containers';
-import * as UserThunks from '../../thunks/UserThunks';
 
+import * as Thunks from '../../thunks/GroupThunks';
 import Header from '../../components/navigation/Header';
 import Sidebar from '../../components/navigation/Sidebar';
 
-class UserView extends Component {
-  constructor(props) {
+const { Col, Grid, Row } = require('react-bootstrap');
+
+type Props = {
+  fetchData: Function;
+};
+
+class GroupView extends Component<Props> {
+  constructor(props: Props) {
     super(props);
   }
   componentDidMount() {
@@ -27,73 +32,74 @@ class UserView extends Component {
       <div className="wrapper">
         <Sidebar />
         <div id="main-panel" className="main-panel" ref="mainPanel">
-          <Header title="Users" />
+          <Header title="Groups" />
           <div className="content">
             <Grid fluid>
               <Row>
                 <Col lg={3} sm={6}>
                   <KPIContainer
-                    title="Total Users"
-                    statsType="users"
+                    title="Total Groups"
+                    statsType="groups"
                     total="total"
-                    icon="pe-7s-user text-warning"
+                    icon="pe-7s-graph1 text-danger"
                   />
                 </Col>
                 <Col lg={3} sm={6}>
                   <KPITodayContainer
-                    statsType="users"
+                    statsType="groups"
                     countData="todayCount"
                     dateData="todayDate"
-                    icon="pe-7s-users text-info"
+                    icon="pe-7s-graph1 text-danger"
                   />
                 </Col>
                 <Col lg={3} sm={6}>
                   <KPIContainer
                     title="Last Year"
-                    statsType="users"
+                    statsType="groups"
                     total="lastYearCount"
-                    icon="pe-7s-wallet text-success"
+                    icon="pe-7s-graph1 text-danger"
                   />
                 </Col>
                 <Col lg={3} sm={6}>
                   <KPIContainer
                     title="Last Month"
-                    statsType="users"
+                    statsType="groups"
                     total="lastMonthCount"
                     icon="pe-7s-users text-info"
                   />
                 </Col>
               </Row>
+
               <Row>
                 <Col lg={4} sm={6}>
                   <LineChartContainer
-                    title="Total Users"
-                    statsType="users"
+                    title="Total Groups"
+                    statsType="groups"
                     dataType="lastYearLineChartData"
                     xLabel="Months"
-                    yLabel="Users"
-                    color="#ff0000"
+                    yLabel="Groups"
+                    color="#228b22"
                   />
                 </Col>
                 <Col lg={4} sm={6}>
                   <BarChartContainer
-                    title="Users Per Country"
-                    statsType="users"
+                    title="Groups Per Country"
+                    statsType="groups"
                     dataType="perCountryData"
                     xLabel="Country"
-                    yLabel="Users"
+                    yLabel="Groups"
                     color="#1828E8"
                     css="card-graph card-stats"
                   />
                 </Col>
                 <Col lg={4} sm={6}>
                   <BarChartContainer
-                    title="Users Per NGO"
-                    statsType="users"
+                    title="Groups Per NGO"
+                    statsType="groups"
                     dataType="perNGOData"
                     xLabel="NGO"
-                    yLabel="Users"
-                    color="#2196f3"
+                    yLabel="Groups"
+                    color="#ff0000"
                     css="card-graph card-stats"
                   />
                 </Col>
@@ -101,31 +107,30 @@ class UserView extends Component {
               <Row>
                 <Col lg={4} sm={6}>
                   <BarChartContainer
-                    title="Users Per Day"
-                    statsType="users"
+                    title="Groups Last Month"
+                    statsType="groups"
                     dataType="lastMonthBarChartData"
-                    xLabel="Day"
-                    yLabel="Users"
+                    xLabel="day"
+                    yLabel="groups"
                     color="#228b22"
                   />
                 </Col>
                 <Col lg={4} sm={6}>
                   <PieChartContainer
-                    title="Gender Distribution"
-                    statsType="users"
-                    dataType="genderStats"
-                    colors={['#1828E8', '#228b22']}
+                    title="Group Size"
+                    statsType="groups"
+                    dataType="groupSizeStats"
+                    colors={['#a4de6c', '#67b6ed', '#8884d8', '#ff0000', '#2196f3', '#228b22']}
                   />
                 </Col>
-
                 <Col lg={4} sm={6}>
                   <BarChartContainer
-                    title="Users Per Month"
-                    statsType="users"
+                    title="Groups Last Year"
+                    statsType="groups"
                     dataType="lastYearBarChartData"
                     xLabel="Month"
-                    yLabel="Users"
-                    color="#ff0000"
+                    yLabel="groups"
+                    color="#2196f3"
                   />
                 </Col>
               </Row>
@@ -137,8 +142,8 @@ class UserView extends Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  fetchData: () => dispatch(UserThunks.fetchUserViewData())
+const mapDispatchToProps = (dispatch: any) => ({
+  fetchData: () => dispatch(Thunks.fetchGroupViewData())
 });
 
-export default connect(null, mapDispatchToProps)(UserView);
+export default connect(null, mapDispatchToProps)(GroupView);

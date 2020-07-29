@@ -1,7 +1,7 @@
 import { fetchFromServer } from '../Fetch';
 
 export const fetchMeetingData = async (): Promise<any> => {
-  const data = `query{
+    const data = `query{
       meetingStats{
         meetingTotal
         meetingsLastMonth{
@@ -28,19 +28,19 @@ export const fetchMeetingData = async (): Promise<any> => {
       }
     }`;
 
-  const response = await fetchFromServer('meetingStats', data);
+    const response = await fetchFromServer('meetingStats', data);
 
-  return response;
+    return response;
 };
 
 export interface MeetingState {
-  [key: string]: any;
-  meetingsTotal: number;
-  meetingsLastWeek: Array<any>;
-  meetingsLastMonth: Array<any>;
-  meetingsLastYear: Array<any>;
-  meetingsPerGroup: Array<any>;
-  sharesPerMeeting: Array<any>;
-  meetingPerCountry: Array<any>;
-  meetingStats: any;
+    [key: string]: any;
+    meetingsTotal: number;
+    meetingsLastWeek: Array<any>;
+    meetingsLastMonth: Array<any>;
+    meetingsLastYear: Array<any>;
+    meetingsPerGroup: Array<any>;
+    sharesPerMeeting: Array<any>;
+    meetingPerCountry: Array<any>;
+    meetingStats: any;
 }

@@ -34,5 +34,4 @@ export const fetchGroupSearchData = async (group: string) => {
     const response = await fetchFromServer('groupData', data, 'group');
 
     return response;
-
-}
+};

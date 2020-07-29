@@ -5,8 +5,6 @@ import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 
-
-
 import './assets/sass/dashboard.scss?v=1.3.0';
 import './assets/fonts/pe-icon-7-stroke.css';
 import Store from './store/index';
@@ -27,36 +25,68 @@ import SecureRoute from './components/common/SecureRoute';
 import NotFound from './components/navigation/NotFound';
 
 class App extends Component {
-  render() {
-    return (
-      <Provider store={Store}>
-        <Router>
-          <Switch>
-            <Route exact path="/" component={Signin} />
+    render() {
+        return (
+            <Provider store={Store}>
+                <Router>
+                    <Switch>
+                        <Route exact path="/" component={Signin} />
 
-            <SecureRoute
-              exact
-              path="/chartjs-main"
-              component={ChartsjMainView}
-            />
+                        <SecureRoute
+                            exact
+                            path="/chartjs-main"
+                            component={ChartsjMainView}
+                        />
 
-            <SecureRoute exact path="/dashboard" component={RechartsMainView} />
-            <SecureRoute exact path="/engagement" component={EngagementView} />
-            <SecureRoute exact path="/finance" component={FinanceView} />
-            <SecureRoute exact path="/groups" component={GroupView} />
-            <SecureRoute exact path="/meetings" component={MeetingView} />
-            <SecureRoute exact path="/users" component={UserView} />
+                        <SecureRoute
+                            exact
+                            path="/dashboard"
+                            component={RechartsMainView}
+                        />
+                        <SecureRoute
+                            exact
+                            path="/engagement"
+                            component={EngagementView}
+                        />
+                        <SecureRoute
+                            exact
+                            path="/finance"
+                            component={FinanceView}
+                        />
+                        <SecureRoute
+                            exact
+                            path="/groups"
+                            component={GroupView}
+                        />
+                        <SecureRoute
+                            exact
+                            path="/meetings"
+                            component={MeetingView}
+                        />
+                        <SecureRoute exact path="/users" component={UserView} />
 
-            <SecureRoute exact path="/profile" component={Profile} />
-            <SecureRoute exact path="/ngo-view" component={NGOView} />
-            <SecureRoute exact path="/search" component={GroupSearchView} />
+                        <SecureRoute
+                            exact
+                            path="/profile"
+                            component={Profile}
+                        />
+                        <SecureRoute
+                            exact
+                            path="/ngo-view"
+                            component={NGOView}
+                        />
+                        <SecureRoute
+                            exact
+                            path="/search"
+                            component={GroupSearchView}
+                        />
 
-            <Route path="*" component={NotFound} />
-          </Switch>
-        </Router>
-      </Provider>
-    );
-  }
+                        <Route path="*" component={NotFound} />
+                    </Switch>
+                </Router>
+            </Provider>
+        );
+    }
 }
 
 export default App;

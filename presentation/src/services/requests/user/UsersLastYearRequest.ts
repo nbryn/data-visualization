@@ -1,7 +1,7 @@
 import { fetchFromServer } from '../Fetch';
 
 export const fetchUsersLastYear = async (): Promise<any> => {
-  const data = `query {
+    const data = `query {
     userStats {
       usersLastYear {
           count
@@ -11,7 +11,7 @@ export const fetchUsersLastYear = async (): Promise<any> => {
     }
   }`;
 
-  const response = await fetchFromServer('userStats', data, 'usersLastYear');
+    const response = await fetchFromServer('userStats', data, 'usersLastYear');
 
-  return response;
+    return response;
 };

@@ -1,6 +1,7 @@
 import CircularProgress from "@material-ui/core/CircularProgress";
-import { Col, Row } from "react-bootstrap";
 import React, { ReactElement } from "react";
+
+const { Col, Row } = require("react-bootstrap");
 
 type Props = {
   statsValue: number;

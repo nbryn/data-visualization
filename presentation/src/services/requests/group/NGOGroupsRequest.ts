@@ -34,5 +34,4 @@ export const fetchNGOGroupData = async (ngo: string) => {
     const response = await fetchFromServer('ngoGroupData', data, 'groupData');
 
     return response;
-
-}
+};

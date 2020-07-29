@@ -1,6 +1,9 @@
 import { fetchFromServer } from '../Fetch';
 
-export const fetchLogin = async (username: string, password: string): Promise<any> => {
+export const fetchLogin = async (
+    username: string,
+    password: string
+): Promise<any> => {
     const data = `mutation signin {
     signin(input: {
       username: "${username}"
@@ -8,7 +11,7 @@ export const fetchLogin = async (username: string, password: string): Promise<an
     })  
     }`;
 
-    const response = await fetchFromServer("signin", data);
+    const response = await fetchFromServer('signin', data);
 
     return response;
 };

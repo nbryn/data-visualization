@@ -4,28 +4,28 @@ const UPDATE_ENGAGEMENT_VIEW_DATA = 'UPDATE_ENGAGEMENT_VIEW_DATA';
 
 export interface LoginAction {
     type: any;
-    payload: any
+    payload: any;
 }
 
 export function loginUser(data: LoginAction) {
     return {
         type: LOGIN_USER,
-        payload: data
-    }
+        payload: data,
+    };
 }
 
 export function logoutUser(data: any = null) {
     return {
         type: LOGOUT_USER,
-        payload: data
-    }
+        payload: data,
+    };
 }
 
 export function updateEngagementViewData(data: any) {
     return {
         type: UPDATE_ENGAGEMENT_VIEW_DATA,
-        payload: data
-    }
+        payload: data,
+    };
 }
 
 export default function (state = {}, action: LoginAction) {
@@ -47,7 +47,6 @@ export default function (state = {}, action: LoginAction) {
     }
 }
 
-
 type User = {
     email: string;
     firstName: string;
@@ -64,4 +63,4 @@ export interface GeneralState {
 export const initialGeneralState: GeneralState = {
     currentUser: null,
     engagementData: [],
-}
+};

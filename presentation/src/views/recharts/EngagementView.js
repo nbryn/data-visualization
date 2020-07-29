@@ -7,10 +7,9 @@ import * as Thunks from '../../thunks/Thunks';
 
 import Header from '../../components/navigation/Header';
 import { getCurrentTime } from '../../util/Date';
-import BarContainer from '../../components/recharts/BarChartContainer';
+// import BarContainer from '../../components/recharts/BarChartContainer';
 import Sidebar from '../../components/navigation/Sidebar';
-import SizeChart from '../../components/recharts/SizeChart';
-import TotalGraph from '../../components/recharts/LineChartContainer';
+// import TotalGraph from '../../components/recharts/LineChartContainer';
 
 class EngagementView extends Component {
   constructor(props) {
@@ -79,21 +78,21 @@ class EngagementView extends Component {
               </Row>
 
               <Row>
-                <Col lg={4} sm={6}>
+                {/* <Col lg={4} sm={6}>
                   <TotalGraph title="Engagement" stroke="#228b22" data="" />
                 </Col>
               </Row>
               <Row>
                 <Col lg={4} sm={6}>
                   <BarContainer title="Engagement" color="#228b22" data="" />
-                </Col>
-                <Col lg={4} sm={6}>
+                </Col> */}
+                {/* <Col lg={4} sm={6}>
                   <SizeChart
                     title="Months Since Last Meeting"
                     colors={['#ff0000', '#1828E8', '#228b22', '#2196f3']}
                     data={this.state.groupActivity}
                   />
-                </Col>
+                </Col> */}
               </Row>
             </Grid>
           </div>

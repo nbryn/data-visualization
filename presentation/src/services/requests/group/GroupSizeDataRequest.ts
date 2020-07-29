@@ -1,7 +1,7 @@
 import { fetchFromServer } from '../Fetch';
 
 export const fetchGroupSizeStats = async (): Promise<any> => {
-  const data = `query{
+    const data = `query{
       groupStats{
         groupSize{
           value
@@ -10,7 +10,7 @@ export const fetchGroupSizeStats = async (): Promise<any> => {
       }
     }`;
 
-  const response = await fetchFromServer('groupStats', data, 'groupSize');
+    const response = await fetchFromServer('groupStats', data, 'groupSize');
 
-  return response;
+    return response;
 };

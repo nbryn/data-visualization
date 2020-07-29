@@ -1,7 +1,7 @@
 import { fetchFromServer } from '../Fetch';
 
 export const fetchUsersPerCountry = async (): Promise<any> => {
-  const data = `query {
+    const data = `query {
         generalCountryStats {
           usersCountry {
             name
@@ -10,7 +10,11 @@ export const fetchUsersPerCountry = async (): Promise<any> => {
         }
       }`;
 
-  const response = await fetchFromServer('generalCountryStats', data, 'usersCountry');
+    const response = await fetchFromServer(
+        'generalCountryStats',
+        data,
+        'usersCountry'
+    );
 
-  return response;
+    return response;
 };

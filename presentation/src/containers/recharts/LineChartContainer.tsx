@@ -37,8 +37,8 @@ export const LineChartContainer: React.FC<Props> = ({
       <LineChart
         title={title}
         data={data}
-        xLabel={xLabelConfig}
-        yLabel={yLabelConfig}
+        xLabelConfig={xLabelConfig}
+        yLabelConfig={yLabelConfig}
         stroke={color}
       />
     </div>

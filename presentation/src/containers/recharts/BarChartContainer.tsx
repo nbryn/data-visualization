@@ -39,8 +39,8 @@ export const BarChartContainer: React.FC<Props> = ({
       <BarChart
         title={title}
         data={data}
-        yLabel={yLabelConfig}
-        xLabel={xLabelConfig}
+        yLabelConfig={yLabelConfig}
+        xLabelConfig={xLabelConfig}
         color={color}
       />
     </div>

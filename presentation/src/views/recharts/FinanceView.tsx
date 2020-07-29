@@ -1,5 +1,4 @@
 import { connect } from 'react-redux';
-import { Col, Grid, Row } from 'react-bootstrap';
 import React, { Component } from 'react';
 
 import * as Thunks from '../../thunks/Thunks';
@@ -7,8 +6,14 @@ import { BarChartContainer, KPIContainer, LineChartContainer } from '../../conta
 import Header from '../../components/navigation/Header';
 import Sidebar from '../../components/navigation/Sidebar';
 
-class FinanceView extends Component {
-  constructor(props) {
+const { Col, Grid, Row } = require("react-bootstrap");
+
+type Props = {
+  fetchData: Function;
+}
+
+class FinanceView extends Component<Props> {
+  constructor(props: Props) {
     super(props);
   }
 
@@ -135,7 +140,7 @@ class FinanceView extends Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = (dispatch: any) => ({
   fetchData: () => dispatch(Thunks.fetchFinanceViewData())
 });
 

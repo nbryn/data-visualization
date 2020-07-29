@@ -12,8 +12,7 @@ export const fetchGroupEngagementData = async (): Promise<any> => {
         }
       }`;
 
-    const response = await fetchFromServer('groupEngagement', data,);
+    const response = await fetchFromServer('groupEngagement', data);
 
     return response;
-
-}
+};

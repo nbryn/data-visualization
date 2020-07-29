@@ -2,17 +2,26 @@ export * from './finance/CurrencyStatsRequest';
 export * from './finance/EtbOnLoanRequest';
 export * from './finance/SharesTotalRequest';
 
+export * from './group/NGOGroupsRequest';
+export * from './group/GroupViewDataRequest';
 export * from './group/GroupsLastMonthRequest';
 export * from './group/GroupsLastYearRequest';
-export * from './group/GroupsTotalRequest';
+export * from './group/GroupSearchRequest';
+export * from './group/TotalGroupsRequest';
+export * from './group/GroupsPerCountryRequest';
+export * from './group/GroupsPerNGORequest';
+export * from './group/GroupEngagementRequest';
+
+export * from './general/LoginRequest';
 
 export * from './meeting/MeetingsLastYearRequest';
-export * from './meeting/MeetingsTotalRequest';
+export * from './meeting/TotalMeetingsRequest';
 
+export * from './user/ActiveUsersRequest';
 export * from './user/UsersPerCountryRequest';
 export * from './user/UsersPerNGORequest';
-export * from './user/UserDataRequest';
-export * from './user/UserGenderStatsRequest';
+export * from './user/UserViewDataRequest';
+export * from './user/GenderDataRequest';
 export * from './user/UsersLastMonthRequest';
 export * from './user/UsersLastYearRequest';
-export * from './user/UsersTotalRequest';
+export * from './user/TotalUsersRequest';

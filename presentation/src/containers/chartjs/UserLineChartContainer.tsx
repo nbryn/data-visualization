@@ -12,7 +12,7 @@ import { Interval, resolveInterval } from './interval';
 import LineChart from '../../components/chartjs/LineChart';
 import { RootState } from '../../store/index';
 
-const UserLineChartContainer: React.FC = (): ReactElement => {
+export const UserLineChartContainer: React.FC = (): ReactElement => {
   const { WEEK, MONTH, YEAR } = Interval;
 
   const [loading, setLoading] = useState(true);
@@ -102,4 +102,3 @@ const UserLineChartContainer: React.FC = (): ReactElement => {
   );
 };
 
-export default UserLineChartContainer;

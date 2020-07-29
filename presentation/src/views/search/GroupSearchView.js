@@ -1,18 +1,14 @@
-import { connect } from "react-redux";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import { Button, ControlLabel, FormGroup, FormControl } from "react-bootstrap";
-import { Grid, Row } from "react-bootstrap";
-import React, { Component } from "react";
+import { Button, ControlLabel, FormGroup, FormControl } from 'react-bootstrap';
+import { connect } from 'react-redux';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { Grid, Row } from 'react-bootstrap';
+import React, { Component } from 'react';
 
-import {
-  infoPageColumn1,
-  infoPageColumn2,
-  infoPageColumn3,
-} from "../../util/InfoPageGroupColumns";
-import { fetchGroupData } from "../../redux/actions/ngo/SearchAction";
-import Header from "../../components/navigation/Header";
-import InfoPage from "../../components/common/InfoPage";
-import Sidebar from "../../components/navigation/Sidebar";
+import * as GroupThunks from '../../thunks/GroupThunks';
+import { infoPageColumn1, infoPageColumn2, infoPageColumn3 } from '../../util/InfoPageGroupColumns';
+import Header from '../../components/navigation/Header';
+import InfoPage from '../../components/common/InfoPage';
+import Sidebar from '../../components/navigation/Sidebar';
 
 class SearchView extends Component {
   constructor(props) {
@@ -20,8 +16,8 @@ class SearchView extends Component {
 
     this.state = {
       loading: false,
-      searchString: "",
-      groupData: [],
+      searchString: '',
+      groupData: []
     };
 
     this.onSubmit = this.onSubmit.bind(this);
@@ -33,38 +29,38 @@ class SearchView extends Component {
     const { searchString } = this.state;
 
     this.setState({
-      loading: true,
+      loading: true
     });
 
-    await this.props.fetchGroupData(`"${searchString}"`);
+    await this.props.fetchData(`"${searchString}"`);
 
-    const { group } = this.props.groupData;
+    const { searchData } = this.props;
 
-    const groupData = Object.keys(group).map((data) => {
-      if (data === "owner") {
-        return group[data].firstName + " " + group.owner.lastName;
-      } else if (data === "admin") {
-        return group[data].firstName + " " + group.admin.lastName;
-      } else if (data === "members") {
-        return group[data].map((member) => {
+    const groupData = Object.keys(searchData).map((info) => {
+      if (info === 'owner') {
+        return searchData[info].firstName + ' ' + searchData.owner.lastName;
+      } else if (info === 'admin') {
+        return searchData[info].firstName + ' ' + searchData.admin.lastName;
+      } else if (info === 'members') {
+        return searchData[info].map((member) => {
           return {
-            name: member.firstName + " " + member.lastName,
+            name: member.firstName + ' ' + member.lastName
           };
         });
       } else {
-        return group[data];
+        return searchData[info];
       }
     });
 
     this.setState({
       loading: false,
-      groupData,
+      groupData
     });
   }
 
   onChange(e) {
     this.setState({
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value
     });
   }
   render() {
@@ -72,9 +68,9 @@ class SearchView extends Component {
 
     const columns = [
       {
-        dataField: "name",
-        text: "Members",
-      },
+        dataField: 'name',
+        text: 'Members'
+      }
     ];
     return (
       <div>
@@ -125,8 +121,12 @@ class SearchView extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    groupData: state.NGO.groupData,
+    searchData: state.groups.searchData
   };
 };
 
-export default connect(mapStateToProps, { fetchGroupData })(SearchView);
+const mapDispatchToProps = (dispatch) => ({
+  fetchData: (group) => dispatch(GroupThunks.setGroupSearchData(group))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchView);

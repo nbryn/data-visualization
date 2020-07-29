@@ -10,11 +10,7 @@ export const fetchGroupsPerCountry = async (): Promise<any> => {
         }
       }`;
 
-  const response = await fetchFromServer(
-    'generalCountryStats',
-    data,
-    'groupsCountry'
-  );
+  const response = await fetchFromServer('generalCountryStats', data, 'groupsCountry');
 
   return response;
 };

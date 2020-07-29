@@ -2,16 +2,15 @@ import { connect } from 'react-redux';
 import { Col, Grid, Row } from 'react-bootstrap';
 import React, { Component } from 'react';
 
-import Header from '../../components/navigation/Header';
-import Sidebar from '../../components/navigation/Sidebar';
-import KPIContainer from '../../containers/KPIContainer';
 import {
   BarChartContainer,
+  KPIContainer,
   LineChartContainer,
   PieChartContainer
 } from '../../containers';
-
 import * as Thunks from '../../thunks/Thunks';
+import Header from '../../components/navigation/Header';
+import Sidebar from '../../components/navigation/Sidebar';
 
 class MainView extends Component {
   constructor(props) {

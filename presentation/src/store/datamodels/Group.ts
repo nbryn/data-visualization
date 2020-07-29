@@ -1,29 +1,38 @@
-export const GROUPS_TOTAL = 'GROUPS_TOTAL';
-export const GROUPS_TODAY = 'GROUPS_TODAY';
-export const GROUPS_LAST_MONTH = 'GROUPS_LAST_MONTH';
-export const GROUPS_LAST_YEAR = 'GROUPS_LAST_YEAR';
-export const UPDATE_GROUP_DATA = 'UPDATE_GROUP_DATA';
-export const GROUP_SIZE_STATS = 'GROUP_SIZE_STATS';
-export const GROUPS_LAST_MONTH_BAR_CHART = 'GROUPS_LAST_MONTH_BAR_CHART';
-export const GROUPS_LAST_YEAR_BAR_CHART = 'GROUPS_LAST_YEAR_BAR_CHART';
-export const GROUPS_LAST_MONTH_LINE_CHART = 'GROUPS_LAST_MONTH_LINE_CHART';
-export const GROUPS_LAST_YEAR_LINE_CHART = 'GROUPS_LAST_YEAR_LINE_CHART';
+const UPDATE_GROUP_VIEW_DATA = 'UPDATE_GROUP_VIEW_DATA';
+const UPDATE_NGO_GROUP_DATA = 'UPDATE_NGO_GROUP_DATA';
+const UPDATE_GROUP_SEARCH_DATA = 'UPDATE_GROUP_SEARCH_DATA';
 
 export interface GroupAction {
   type: any;
   payload: GroupState;
 }
 
-export function updateGroupData(data: GroupState): GroupAction {
+export function updateGroupViewData(data: GroupState): GroupAction {
   return {
-    type: UPDATE_GROUP_DATA,
+    type: UPDATE_GROUP_VIEW_DATA,
     payload: data
   };
 }
 
+export function updateGroupSearchData(data: any): any {
+  return {
+    type: UPDATE_GROUP_SEARCH_DATA,
+    payload: data
+  };
+}
+
+export function updateNGOGroupData(data: any): any {
+  return {
+    type: UPDATE_NGO_GROUP_DATA,
+    payload: data
+  };
+}
+
+
+// TODO: Actions and reducers not one-to-one mapping - Spread view data out
 export default function (state = {}, action: GroupAction) {
   switch (action.type) {
-    case UPDATE_GROUP_DATA:
+    case UPDATE_GROUP_VIEW_DATA:
       return Object.assign({}, state, {
         groupSizeStats: action.payload.groupSizeStats,
         total: action.payload.total,
@@ -37,6 +46,14 @@ export default function (state = {}, action: GroupAction) {
         lastYearLineChartData: action.payload.lastYearLineChartData,
         perCountryData: action.payload.perCountryData,
         perNGOData: action.payload.perNGOData
+      });
+    case UPDATE_GROUP_SEARCH_DATA:
+      return Object.assign({}, state, {
+        searchData: action.payload
+      });
+      case UPDATE_NGO_GROUP_DATA:
+      return Object.assign({}, state, {
+        ngoGroupData: action.payload
       });
 
     default:
@@ -58,6 +75,8 @@ export interface GroupState {
   groupSizeStats: Array<any>;
   perCountryData: Array<any>;
   perNGOData: Array<any>;
+  searData: Array<any>;
+  ngoGroupData: Array<any>;
 }
 
 export const initialGroupState: GroupState = {
@@ -72,5 +91,7 @@ export const initialGroupState: GroupState = {
   lastMonthLineChartData: [],
   lastYearLineChartData: [],
   perCountryData: [],
-  perNGOData: []
+  perNGOData: [],
+  searData: [],
+  ngoGroupData: [],
 };

@@ -1,25 +1,15 @@
-export const USER_GENDER_STATS = 'USER_GENDER_STATS';
-export const USERS_TOTAL = 'USERS_TOTAL';
-export const USERS_TODAY = 'USERS_TODAY';
-export const USERS_LAST_MONTH = 'USERS_LAST_MONTH';
-export const USERS_LAST_YEAR = 'USERS_LAST_YEAR';
-export const UPDATE_USER_DATA = 'UPDATE_USER_DATA';
-export const USERS_LAST_MONTH_BAR_CHART = 'USERS_LAST_MONTH_BAR_CHART';
-export const USERS_LAST_MONTH_LINE_CHART = 'USERS_LAST_MONTH_LINE_CHART';
-export const USERS_LAST_YEAR_BAR_CHART = 'USERS_LAST_YEAR_BAR_CHART';
-export const USERS_LAST_YEAR_LINE_CHART = 'USERS_LAST_YEAR_LINE_CHART';
-
-export const CHARTJS_USERS_LAST_MONTH = 'CHARTJS_USERS_LAST_MONTH';
-export const CHARTJS_USERS_LAST_YEAR = 'CHART_JS_USERS_LAST_YEAR';
+const CHARTJS_USERS_LAST_MONTH = 'CHARTJS_USERS_LAST_MONTH';
+const CHARTJS_USERS_LAST_YEAR = 'CHART_JS_USERS_LAST_YEAR';
+const UPDATE_USER_VIEW_DATA = 'UPDATE_USER_VIEW_DATA';
 
 export interface UserAction {
   type: any;
   payload: UserState;
 }
 
-export function updateUserData(data: UserState): UserAction {
+export function updateUserViewData(data: UserState): UserAction {
   return {
-    type: UPDATE_USER_DATA,
+    type: UPDATE_USER_VIEW_DATA,
     payload: data
   };
 }
@@ -40,7 +30,7 @@ export function updateChartjsLastYearUserData(data: any): any {
 
 export default function (state = {}, action: UserAction) {
   switch (action.type) {
-    case UPDATE_USER_DATA:
+    case UPDATE_USER_VIEW_DATA:
       return Object.assign({}, state, {
         genderStats: action.payload.genderStats,
         total: action.payload.total,

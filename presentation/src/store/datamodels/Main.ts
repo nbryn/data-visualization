@@ -1,20 +1,19 @@
-const UPDATE_MAIN_DATA = 'UPDATE_MAIN_DATA';
+const UPDATE_MAIN_VIEW_DATA = 'UPDATE_MAIN_VIEW_DATA';
 
 export interface MainAction {
   type: any;
   payload: MainState;
 }
 
-export function updateMainData(data: MainState): MainAction {
+export function updateMainViewData(data: MainState): MainAction {
   return {
-    type: UPDATE_MAIN_DATA,
+    type: UPDATE_MAIN_VIEW_DATA,
     payload: data
   };
 }
 export default function (state = {}, action: MainAction) {
   switch (action.type) {
-    case UPDATE_MAIN_DATA:
-      console.log(action);
+    case UPDATE_MAIN_VIEW_DATA:
       return Object.assign({}, state, {
         groupSizeStats: action.payload.groupSizeStats,
         usersTotal: action.payload.usersTotal,

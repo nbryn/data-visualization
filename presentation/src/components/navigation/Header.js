@@ -1,7 +1,8 @@
-import React, { Component } from "react";
-import { Navbar, NavItem, Nav } from "react-bootstrap";
+import { connect } from 'react-redux';
+import { Navbar, NavItem, Nav } from 'react-bootstrap';
+import React, { Component } from 'react';
 
-import { signOut } from "../../redux/actions/user/SignoutAction";
+import * as Thunks from '../../thunks/Thunks';
 
 class Header extends Component {
   constructor(props) {
@@ -19,12 +20,12 @@ class Header extends Component {
       });
     }
     e.preventDefault();
-    document.documentElement.classList.toggle("nav-open");
-    var node = document.createElement("div");
-    node.id = "bodyClick";
-    node.onclick = function() {
+    document.documentElement.classList.toggle('nav-open');
+    const node = document.createElement('div');
+    node.id = 'bodyClick';
+    node.onclick = function () {
       this.parentElement.removeChild(this);
-      document.documentElement.classList.toggle("nav-open");
+      document.documentElement.classList.toggle('nav-open');
     };
     document.body.appendChild(node);
   }
@@ -46,7 +47,7 @@ class Header extends Component {
             </Nav>
             <Nav pullRight>
               <NavItem href="#">Account</NavItem>
-              <NavItem href="#/" onClick={signOut}>
+              <NavItem href="#/" onClick={this.props.signout}>
                 Log out
               </NavItem>
             </Nav>
@@ -57,4 +58,8 @@ class Header extends Component {
   }
 }
 
-export default Header;
+const mapDispatchToProps = (dispatch) => ({
+  signout: () => dispatch(Thunks.logout())
+});
+
+export default connect(null, mapDispatchToProps)(Header);

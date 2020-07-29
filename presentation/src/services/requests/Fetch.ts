@@ -1,10 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 
-export async function fetchFromServer<T>(
-  action: string,
-  data: string,
-  dataType?: string
-): Promise<T> {
+export async function fetchFromServer<T>(action: string, data: string, dataType?: string): Promise<T> {
   const url = '/graphql';
 
   let response = null;
@@ -24,18 +20,12 @@ export async function fetchFromServer<T>(
   return responseAssembler(response, action, dataType);
 }
 
-function responseAssembler<T>(
-  result: AxiosResponse | null,
-  action: string,
-  dataType?: string
-): T {
+function responseAssembler<T>(result: AxiosResponse | null, action: string, dataType?: string): T {
   // if (!result || result.status !== 200) {
   //   throwValidationFailed('', 'NO_DATA');
   // }
 
-  const data = dataType
-    ? result!.data.data[action][dataType]
-    : result!.data.data[action];
+  const data = dataType ? result!.data.data[action][dataType] : result!.data.data[action];
   // if (data.result) {
   //   throw new ValidationResult(data.result);
   // }

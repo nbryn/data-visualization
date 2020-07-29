@@ -2,18 +2,18 @@ import { connect } from 'react-redux';
 import { Col, Grid, Row } from 'react-bootstrap';
 import React, { Component } from 'react';
 
-import Header from '../../components/navigation/Header';
-
-import Sidebar from '../../components/navigation/Sidebar';
 import {
   BarChartContainer,
+  KPIContainer,
+  KPITodayContainer,
   LineChartContainer,
   PieChartContainer
 } from '../../containers';
 
-import * as Thunks from '../../thunks/Thunks';
-import KPIContainer from '../../containers/KPIContainer';
-import KPITodayContainer from '../../containers/KPITodayContainer';
+import * as Thunks from '../../thunks/GroupThunks';
+import Header from '../../components/navigation/Header';
+import Sidebar from '../../components/navigation/Sidebar';
+
 
 class GroupView extends Component {
   constructor(props) {

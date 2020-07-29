@@ -87,16 +87,10 @@ export const mapChartjsLastMonthData = (data: any): any => {
     }
   };
 
-  usersLastMonth.labels = data.map(
-    (element: any) => element.day.day + '/' + element.day.month
-  );
-  usersLastMonth.data = data.map(
-    (element: any) => (usersLastMonth.counter += element.count)
-  );
+  usersLastMonth.labels = data.map((element: any) => element.day.day + '/' + element.day.month);
+  usersLastMonth.data = data.map((element: any) => (usersLastMonth.counter += element.count));
 
-  usersLastMonth.lastWeek.labels = usersLastMonth.labels.slice(
-    usersLastMonth.labels.length - 7
-  );
+  usersLastMonth.lastWeek.labels = usersLastMonth.labels.slice(usersLastMonth.labels.length - 7);
 
   const lastWeek = data.slice(data.length - 7);
 
@@ -114,16 +108,10 @@ export const mapChartjsLastYearData = (data: any): any => {
     counter: 0
   };
   usersLastYear.labels = data.map((element: any) => {
-    return (
-      convertNumberToMonth(element.month) +
-      "'" +
-      element.year.toString().substring(2)
-    );
+    return convertNumberToMonth(element.month) + "'" + element.year.toString().substring(2);
   });
 
-  usersLastYear.data = data.map(
-    (element: any) => (usersLastYear.counter += element.count)
-  );
+  usersLastYear.data = data.map((element: any) => (usersLastYear.counter += element.count));
 
   return usersLastYear;
 };

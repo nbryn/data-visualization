@@ -1,16 +1,11 @@
 import { connect } from 'react-redux';
-import { Col, Grid, Row,  } from 'react-bootstrap';
+import { Col, Grid, Row } from 'react-bootstrap';
 import React, { Component } from 'react';
 
+import { BarChartContainer, KPIContainer, KPITodayContainer, LineChartContainer } from '../../containers';
+import * as Thunks from '../../thunks/Thunks';
 import Header from '../../components/navigation/Header';
 import Sidebar from '../../components/navigation/Sidebar';
-
-import * as Thunks from '../../thunks/Thunks';
-
-import KPITodayContainer from '../../containers/KPITodayContainer';
-import KPIContainer from '../../containers/KPIContainer';
-
-import { BarChartContainer, LineChartContainer } from '../../containers';
 
 class MeetingView extends Component {
   constructor(props) {

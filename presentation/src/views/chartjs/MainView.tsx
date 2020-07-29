@@ -3,10 +3,9 @@ import React, { Component } from "react";
 
 import Header from "../../components/navigation/Header";
 import Sidebar from "../../components/navigation/Sidebar";
-import UserLineChartContainer from "../../containers/chartjs/UserLineChartContainer";
+import {UserLineChartContainer} from "../../containers";
 
 class MainView extends Component {
-
   render() {
     return (
       <div className="wrapper">
@@ -27,6 +26,5 @@ class MainView extends Component {
     );
   }
 }
-
 
 export default MainView;

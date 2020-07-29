@@ -1,9 +1,9 @@
 import React, { ReactElement, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { getCurrentTime } from "../util/Date";
-import KPICard from "../components/kpi/KPICard";
-import { RootState } from "../store/index";
+import { getCurrentTime } from "../../util/Date";
+import KPICard from "../../components/kpi/KPICard";
+import { RootState } from "../../store/index";
 
 type Props = {
   title: string;
@@ -13,7 +13,7 @@ type Props = {
   icon: string;
 };
 
-const KPIContainer: React.FC<Props> = ({
+export const KPIContainer: React.FC<Props> = ({
   title,
   fetchData,
   statsType,
@@ -42,5 +42,3 @@ const KPIContainer: React.FC<Props> = ({
     />
   );
 };
-
-export default KPIContainer;

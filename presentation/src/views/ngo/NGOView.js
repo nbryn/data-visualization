@@ -6,6 +6,8 @@ import React, { Component } from "react";
 import paginationFactory from "react-bootstrap-table2-paginator";
 import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit";
 
+import * as GroupThunks from '../../thunks/GroupThunks';
+
 import {
   infoPageColumn1,
   infoPageColumn2,
@@ -14,8 +16,6 @@ import {
 import Header from "../../components/navigation/Header";
 import InfoPage from "../../components/common/InfoPage";
 import Sidebar from "../../components/navigation/Sidebar";
-
-import { fetchGroupsByNGO } from "../../redux/actions/ngo/NGOGroupsActions";
 
 class NGOView extends Component {
   constructor(props) {
@@ -35,12 +35,14 @@ class NGOView extends Component {
   }
 
   async fetchData() {
-    await this.props.fetchGroupsByNGO('"FHIDO"');
+    await this.props.fetchNGOData('"FHIDO"');
 
-    const { groupData } = this.props.groups;
+    console.log(this.props);
+
+    const { groups } = this.props;
 
     let id = 0;
-    const newState = groupData.map((element) => {
+    const newState = groups.map((element) => {
       return {
         id: id++,
         ...element,
@@ -167,8 +169,12 @@ class NGOView extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    groups: state.NGO.groups,
+    groups: state.groups.ngoGroupData,
   };
 };
 
-export default connect(mapStateToProps, { fetchGroupsByNGO })(NGOView);
+const mapDispatchToProps = (dispatch) => ({
+  fetchNGOData: (ngo) => dispatch(GroupThunks.setNGOGroupsData(ngo))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(NGOView);

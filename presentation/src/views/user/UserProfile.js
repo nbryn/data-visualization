@@ -1,22 +1,22 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
-import { connect } from "react-redux";
-import { Grid, Row } from "react-bootstrap";
-import { ControlLabel, ListGroup, ListGroupItem } from "react-bootstrap";
+import { connect } from 'react-redux';
+import { Grid, Row } from 'react-bootstrap';
+import { ControlLabel, ListGroup, ListGroupItem } from 'react-bootstrap';
 
-import Sidebar from "../../components/navigation/Sidebar.js";
-import Header from "../../components/navigation/Header.js";
+import Sidebar from '../../components/navigation/Sidebar.js';
+import Header from '../../components/navigation/Header.js';
 
 class UserProfile extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      email: "",
-      name: "",
-      phoneNumber: "",
-      gender: "",
-      verified: "",
+      email: '',
+      name: '',
+      phoneNumber: '',
+      gender: '',
+      verified: ''
     };
   }
   async componentDidMount() {
@@ -24,14 +24,14 @@ class UserProfile extends Component {
 
     this.setState({
       email: currentUser.email,
-      name: currentUser.firstName + " " + currentUser.lastName,
+      name: currentUser.firstName + ' ' + currentUser.lastName,
       phoneNumber: currentUser.phoneNumber,
       gender: currentUser.gender,
-      verified: currentUser.verified,
+      verified: currentUser.verified
     });
   }
   render() {
-    const properties = ["Email", "Name", "Phone Number", "Gender", "Verified"];
+    const properties = ['Email', 'Name', 'Phone Number', 'Gender'];
     let data = [];
 
     for (let key in this.state) {
@@ -54,9 +54,7 @@ class UserProfile extends Component {
                     <div className="col-md-6">
                       <ListGroup>
                         <ControlLabel>{element}</ControlLabel>
-                        <ListGroupItem>
-                          {data[index++].toString().toUpperCase()}
-                        </ListGroupItem>
+                        <ListGroupItem>{data[index++].toString().toUpperCase()}</ListGroupItem>
                       </ListGroup>
                     </div>
                   </Row>
@@ -72,7 +70,7 @@ class UserProfile extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    currentUser: state.user.currentUser,
+    currentUser: state.general.currentUser
   };
 };
 

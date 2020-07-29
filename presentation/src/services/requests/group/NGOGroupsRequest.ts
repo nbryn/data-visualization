@@ -1,8 +1,7 @@
-import { NGO_GROUPS } from "../../reducers/NGOReducer";
-import { fetchFromServer } from "../../../services/requests/Fetch.ts";
+import { fetchFromServer } from '../Fetch';
 
-export const fetchGroupsByNGO = ngo => async dispatch => {
-  const data = `query{
+export const fetchNGOGroupData = async (ngo: string) => {
+    const data = `query{
         ngoGroupData{
           groupData(ngo: ${ngo}){
             name
@@ -32,10 +31,8 @@ export const fetchGroupsByNGO = ngo => async dispatch => {
       }
       }`;
 
-  const response = await fetchFromServer("post", data);
+    const response = await fetchFromServer('ngoGroupData', data, 'groupData');
 
-  dispatch({
-    type: NGO_GROUPS,
-    payload: response.data.data.ngoGroupData
-  });
-};
+    return response;
+
+}

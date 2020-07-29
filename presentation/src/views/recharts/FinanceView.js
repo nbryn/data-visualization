@@ -2,14 +2,10 @@ import { connect } from 'react-redux';
 import { Col, Grid, Row } from 'react-bootstrap';
 import React, { Component } from 'react';
 
+import * as Thunks from '../../thunks/Thunks';
+import { BarChartContainer, KPIContainer, LineChartContainer } from '../../containers';
 import Header from '../../components/navigation/Header';
 import Sidebar from '../../components/navigation/Sidebar';
-
-import * as Thunks from '../../thunks/Thunks';
-
-import { BarChartContainer, LineChartContainer } from '../../containers';
-
-import KPIContainer from '../../containers/KPIContainer';
 
 class FinanceView extends Component {
   constructor(props) {

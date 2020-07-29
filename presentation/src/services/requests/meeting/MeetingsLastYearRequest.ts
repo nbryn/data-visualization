@@ -11,11 +11,7 @@ export const fetchMeetingsLastYear = async (): Promise<any> => {
       }
     }`;
 
-  const response = await fetchFromServer(
-    'meetingStats',
-    data,
-    'meetingsLastYear'
-  );
+  const response = await fetchFromServer('meetingStats', data, 'meetingsLastYear');
 
   return response;
 };

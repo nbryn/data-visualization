@@ -2,20 +2,17 @@ import { Col, Grid, Row } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
 
-import Header from '../../components/navigation/Header';
-import Sidebar from '../../components/navigation/Sidebar';
-
-import KPITodayContainer from '../../containers/KPITodayContainer';
-
 import {
   BarChartContainer,
+  KPITodayContainer ,
+  KPIContainer ,
   LineChartContainer,
   PieChartContainer
 } from '../../containers';
-
-import KPIContainer from '../../containers/KPIContainer';
-
 import * as UserThunks from '../../thunks/UserThunks';
+
+import Header from '../../components/navigation/Header';
+import Sidebar from '../../components/navigation/Sidebar';
 
 class UserView extends Component {
   constructor(props) {

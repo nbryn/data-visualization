@@ -1,15 +1,16 @@
-import { connect } from "react-redux";
-import React, { Component } from "react";
-import { Grid, Row, Col } from "react-bootstrap";
-import KPICard from "../../components/kpi/KPICard";
+import { connect } from 'react-redux';
+import React, { Component } from 'react';
+import { Grid, Row, Col } from 'react-bootstrap';
+import KPICard from '../../components/kpi/KPICard';
 
-import { fetchEngagementStats } from "../../redux/actions/kpi/EngagementStatsAction";
-import Header from "../../components/navigation/Header";
-import { getCurrentTime } from "../../util/Date";
-import BarContainer from "../../components/recharts/BarChartContainer";
-import Sidebar from "../../components/navigation/Sidebar";
-import SizeChart from "../../components/recharts/SizeChart";
-import TotalGraph from "../../components/recharts/LineChartContainer";
+import * as Thunks from '../../thunks/Thunks';
+
+import Header from '../../components/navigation/Header';
+import { getCurrentTime } from '../../util/Date';
+import BarContainer from '../../components/recharts/BarChartContainer';
+import Sidebar from '../../components/navigation/Sidebar';
+import SizeChart from '../../components/recharts/SizeChart';
+import TotalGraph from '../../components/recharts/LineChartContainer';
 
 class EngagementView extends Component {
   constructor(props) {
@@ -26,7 +27,7 @@ class EngagementView extends Component {
   }
 
   async fetchData() {
-    await this.props.fetchEngagementStats();
+    await Thunks.setEngagementViewData();
 
     const lastUpdatedAt = getCurrentTime();
 
@@ -36,25 +37,25 @@ class EngagementView extends Component {
       groupsActive: engagementStats.groupEngagement.groupsActive,
       groupActivity: engagementStats.groupEngagement.groupMeetingFrequency,
       usersActive: engagementStats.userEngagement,
-      ngosActive: "",
-      meetings: "",
+      ngosActive: '',
+      meetings: '',
 
-      lastUpdate: lastUpdatedAt,
+      lastUpdate: lastUpdatedAt
     });
   }
 
   render() {
     const KPICards = {
-      usersActive: { text: "Active Users", icon: "pe-7s-graph1 text-danger" },
-      groupsActive: { text: "Active Groups", icon: "pe-7s-users text-info" },
+      usersActive: { text: 'Active Users', icon: 'pe-7s-graph1 text-danger' },
+      groupsActive: { text: 'Active Groups', icon: 'pe-7s-users text-info' },
       ngosActive: {
         text: "Active NGO's",
-        icon: "pe-7s-users text-info",
+        icon: 'pe-7s-users text-info'
       },
       meetings: {
-        text: "Meetings in Active Groups",
-        icon: "pe-7s-users text-info",
-      },
+        text: 'Meetings in Active Groups',
+        icon: 'pe-7s-users text-info'
+      }
     };
     return (
       <div className="wrapper">
@@ -89,7 +90,7 @@ class EngagementView extends Component {
                 <Col lg={4} sm={6}>
                   <SizeChart
                     title="Months Since Last Meeting"
-                    colors={["#ff0000", "#1828E8", "#228b22", "#2196f3"]}
+                    colors={['#ff0000', '#1828E8', '#228b22', '#2196f3']}
                     data={this.state.groupActivity}
                   />
                 </Col>
@@ -104,10 +105,8 @@ class EngagementView extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    engagementStats: state.KPI.engagementStats,
+    engagementStats: state.general.engagementData
   };
 };
 
-export default connect(mapStateToProps, { fetchEngagementStats })(
-  EngagementView
-);
+export default connect(mapStateToProps)(EngagementView);

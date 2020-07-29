@@ -1,40 +1,15 @@
-export const MEETINGS_TOTAL = 'MEETINGS_TOTAL';
-export const UPDATE_MEETING_DATA = 'UPDATE_MEETING_DATA';
-export const MEETINGS_LAST_MONTH = 'MEETINGS_LAST_MONTH';
-export const MEETINGS_LAST_YEAR = 'MEETINGS_LAST_YEAR';
-export const MEETINGS_PER_GROUP = 'MEETINGS_PER_GROUP';
+const UPDATE_MEETING_VIEW_DATA = 'UPDATE_MEETING_VIEWA_DATA';
 
-export function updateMeetingsLastMonthData(data: any): MeetingAction {
+export function updateMeetingViewData(data: MeetingState): MeetingAction {
   return {
-    type: MEETINGS_LAST_MONTH,
-    payload: data
-  };
-}
-
-export function updateMeetingsLastYearData(data: any): MeetingAction {
-  return {
-    type: MEETINGS_LAST_YEAR,
-    payload: data
-  };
-}
-
-// export function updateMeetingsTotalData(data: number): MeetingAction {
-//   return {
-//     type: MEETINGS_TOTAL,
-//     payload: data
-//   };
-// }
-
-export function updateMeetingData(data: MeetingState): MeetingAction {
-  return {
-    type: UPDATE_MEETING_DATA,
+    type: UPDATE_MEETING_VIEW_DATA,
     payload: data
   };
 }
 
 export default function (state = {}, action: MeetingAction) {
   switch (action.type) {
-    case UPDATE_MEETING_DATA:
+    case UPDATE_MEETING_VIEW_DATA:
       console.log(action);
       return Object.assign({}, state, {
         totalData: action.payload.totalData,
@@ -51,20 +26,6 @@ export default function (state = {}, action: MeetingAction) {
         lastMonthCount: action.payload.lastMonthCount,
         lastYearCount: action.payload.lastYearCount
       });
-    case UPDATE_MEETING_DATA:
-      return Object.assign({}, state, {
-        meetingStats: action.payload
-      });
-    case MEETINGS_LAST_MONTH:
-      return Object.assign({}, state, {
-        meetingsLastMonth: action.payload,
-        meetingsLastWeek: action.payload.meetingsLastWeek
-      });
-    case MEETINGS_LAST_YEAR:
-      return Object.assign({}, state, {
-        meetingsLastYear: action.payload
-      });
-
     default:
       return state;
   }

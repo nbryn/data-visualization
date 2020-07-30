@@ -47,6 +47,7 @@ export default function (state = {}, action: GroupAction) {
                 perNGOData: action.payload.perNGOData,
             });
         case UPDATE_GROUP_SEARCH_DATA:
+            console.log(action);
             return Object.assign({}, state, {
                 searchData: action.payload,
             });
@@ -74,7 +75,7 @@ export interface GroupState {
     groupSizeStats: Array<any>;
     perCountryData: Array<any>;
     perNGOData: Array<any>;
-    searData: Array<any>;
+    searchData: Array<any>;
     ngoGroupData: Array<any>;
 }
 
@@ -91,6 +92,6 @@ export const initialGroupState: GroupState = {
     lastYearLineChartData: [],
     perCountryData: [],
     perNGOData: [],
-    searData: [],
+    searchData: [],
     ngoGroupData: [],
 };

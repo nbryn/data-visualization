@@ -1,8 +1,5 @@
-import React, { ReactElement } from 'react';
 import { NavLink } from 'react-router-dom';
-import Button from '@material-ui/core/Button';
-
-import { useHistory } from 'react-router-dom';
+import React, { ReactElement } from 'react';
 
 import Logo from '../../assets/img/dashboard.jpeg';
 
@@ -11,7 +8,6 @@ type Links = {
 };
 
 const Sidebar: React.FC = (): ReactElement => {
-    let history = useHistory();
     const chartjsLinks: Links = {
         dashboard: '/chartjs-main',
     };
@@ -31,20 +27,6 @@ const Sidebar: React.FC = (): ReactElement => {
         search: '/search',
     };
 
-    const createLink = () => {
-        history.push('/groups');
-    };
-
-    const drawer = (
-        <>
-            <li>
-                <Button onClick={() => createLink()}>
-                    <i className="pe-7s-graph" />
-                </Button>
-            </li>
-        </>
-    );
-
     return (
         <div
             id="sidebar"
@@ -59,8 +41,6 @@ const Sidebar: React.FC = (): ReactElement => {
             <div className="sidebar-wrapper">
                 <ul className="nav">
                     <li>Chartjs</li>
-
-                    {drawer}
 
                     {Object.keys(chartjsLinks).map((element, index) => (
                         <li key={index}>

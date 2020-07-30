@@ -1,4 +1,4 @@
-import { connect } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import React, { ReactElement, useState } from 'react';
 
@@ -11,6 +11,8 @@ import {
 import Header from '../../components/navigation/Header';
 import InfoPage from '../../components/common/InfoPage';
 import Sidebar from '../../components/navigation/Sidebar';
+
+import { RootState } from '../../store/index';
 
 const {
     Grid,
@@ -31,13 +33,17 @@ type Props = {
     searchData: GroupData;
 };
 
-const SearchView: React.FC<Props> = ({
+const GroupSearchView: React.FC<Props> = ({
     fetchData,
     searchData,
 }: Props): ReactElement => {
     const [loading, setLoading] = useState<boolean>(false);
-    const [data, setData] = useState<any>();
+    const [data, setData] = useState<any>(null);
     const [searchString, setSearchString] = useState<string>('');
+
+    // const searchData: any = useSelector<RootState, any>(
+    //     (state) => state.groups.searchData;
+    //   );
 
     const onSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
@@ -46,10 +52,16 @@ const SearchView: React.FC<Props> = ({
 
         await fetchData(`"${searchString}"`);
 
+        const data = searchData;
+
+        console.log(data);
+
         const groupData = Object.keys(searchData).map((info: string) => {
             if (info === 'owner') {
                 return (
-                    searchData[info].firstName + ' ' + searchData.owner.lastName
+                    searchData[info].firstName +
+                    ' ' +
+                    searchData!.owner.lastName
                 );
             } else if (info === 'admin') {
                 return (
@@ -62,7 +74,7 @@ const SearchView: React.FC<Props> = ({
                     };
                 });
             } else {
-                return searchData[info];
+                return searchData![info];
             }
         });
 
@@ -81,48 +93,47 @@ const SearchView: React.FC<Props> = ({
             text: 'Members',
         },
     ];
-    return (
-        <div>
-            <div className="wrapper">
-                <Sidebar />
 
-                <div id="main-panel" className="main-panel" ref="mainPanel">
-                    <Header title="Group Search" />
-                    <div className="content">
-                        <Grid fluid>
-                            <Row>
-                                <div className="search-field">
-                                    <form onSubmit={onSubmit}>
-                                        <FormGroup controlId="formSearch">
-                                            <ControlLabel>Search</ControlLabel>
-                                            <FormControl
-                                                type="text"
-                                                placeholder="Group Name"
-                                                name="searchString"
-                                                value={searchString}
-                                                onChange={onChange}
-                                            />
-                                        </FormGroup>
-                                        <Button variant="primary" type="submit">
-                                            Go!
-                                        </Button>
-                                    </form>
-                                </div>
-                                {loading && (
-                                    <CircularProgress className="spinner" />
-                                )}
-                                {!data && (
-                                    <InfoPage
-                                        groupData={data}
-                                        columns={columns}
-                                        column1={infoPageColumn1}
-                                        column2={infoPageColumn2}
-                                        column3={infoPageColumn3}
-                                    />
-                                )}
-                            </Row>
-                        </Grid>
-                    </div>
+    return (
+        <div className="wrapper">
+            <Sidebar />
+
+            <div id="main-panel" className="main-panel">
+                <Header title="Group Search" />
+                <div className="content">
+                    <Grid fluid>
+                        <Row>
+                            <div className="search-field">
+                                <form onSubmit={onSubmit}>
+                                    <FormGroup controlId="formSearch">
+                                        <ControlLabel>Search</ControlLabel>
+                                        <FormControl
+                                            type="text"
+                                            placeholder="Group Name"
+                                            name="searchString"
+                                            value={searchString}
+                                            onChange={onChange}
+                                        />
+                                    </FormGroup>
+                                    <Button variant="primary" type="submit">
+                                        Go!
+                                    </Button>
+                                </form>
+                            </div>
+                            {loading && (
+                                <CircularProgress className="spinner" />
+                            )}
+                            {data && (
+                                <InfoPage
+                                    groupData={data}
+                                    columns={columns}
+                                    column1={infoPageColumn1}
+                                    column2={infoPageColumn2}
+                                    column3={infoPageColumn3}
+                                />
+                            )}
+                        </Row>
+                    </Grid>
                 </div>
             </div>
         </div>
@@ -140,4 +151,4 @@ const mapDispatchToProps = (dispatch: any) => ({
         dispatch(GroupThunks.setGroupSearchData(group)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(SearchView);
+export default connect(mapStateToProps, mapDispatchToProps)(GroupSearchView);

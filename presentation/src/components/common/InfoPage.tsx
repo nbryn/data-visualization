@@ -1,4 +1,6 @@
 import React, { ReactElement } from 'react';
+import BootstrapTable from 'react-bootstrap-table-next';
+import paginationFactory from 'react-bootstrap-table2-paginator';
 const {
     Col,
     Panel,
@@ -7,9 +9,6 @@ const {
     ListGroup,
     ListGroupItem,
 } = require('react-bootstrap');
-
-const BootstrapTable = require('react-bootstrap-table-next');
-const paginationFactory = require('react-bootstrap-table2-paginator');
 
 type Props = {
     groupData: any;
@@ -27,6 +26,8 @@ const InfoPage: React.FC<Props> = ({
     column3,
 }: Props): ReactElement => {
     let groupDataIndex: number = 0;
+
+    console.log(groupData);
 
     return (
         <div>
@@ -93,6 +94,7 @@ const InfoPage: React.FC<Props> = ({
                             keyField="id"
                             data={groupData[groupData.length - 1]}
                             columns={columns}
+                            // @ts-ignore
                             pagination={paginationFactory()}
                         />
                     </Row>

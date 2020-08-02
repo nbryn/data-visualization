@@ -47,7 +47,6 @@ export default function (state = {}, action: GroupAction) {
                 perNGOData: action.payload.perNGOData,
             });
         case UPDATE_GROUP_SEARCH_DATA:
-            console.log(action);
             return Object.assign({}, state, {
                 searchData: action.payload,
             });

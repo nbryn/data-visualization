@@ -21,7 +21,6 @@ async function validateLogin(args) {
       lastName,
       phoneNumber,
       gender,
-      verified,
     } = dbResult[0];
 
     if (!password || password !== args.input.password) {
@@ -35,7 +34,6 @@ async function validateLogin(args) {
           email,
           phoneNumber,
           gender,
-          verified,
         },
       };
       return succes;

@@ -17,18 +17,14 @@ import MeetingView from './views/recharts/MeetingView';
 import NotFound from './components/navigation/NotFound';
 import UserView from './views/recharts/UserView';
 import NGOView from './views/ngo/NGOView';
-import Profile from './views/user/UserProfile.js';
+import Profile from './views/user/UserProfile';
 import RechartsMainView from './views/recharts/MainView';
 import SecureRoute from './components/common/SecureRoute';
 import Store from './store/index';
-import Signin from './views/user/Signin.js';
+import Signin from './views/user/Signin';
 
 import Sidebar from './components/navigation/Sidebar';
 
-// const ForwardNavLink = React.forwardRef((props, ref) => (
-//     // @ts-ignore
-//     <GroupSearchView {...props} innerRef={ref} />
-// ));
 
 class App extends Component {
     render() {

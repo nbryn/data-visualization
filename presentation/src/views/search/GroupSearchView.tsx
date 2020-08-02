@@ -1,6 +1,6 @@
-import { connect, useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 
 import * as GroupThunks from '../../thunks/GroupThunks';
 import {
@@ -23,39 +23,18 @@ const {
     FormControl,
 } = require('react-bootstrap');
 
-type GroupData = {
-    [key: string]: any;
-    lastName: string;
-};
-
-type Props = {
-    fetchData: Function;
-    searchData: GroupData;
-};
-
-const GroupSearchView: React.FC<Props> = ({
-    fetchData,
-    searchData,
-}: Props): ReactElement => {
+const GroupSearchView: React.FC = (): ReactElement => {
     const [loading, setLoading] = useState<boolean>(false);
-    const [data, setData] = useState<any>(null);
+    const [data, setData] = useState<any>([]);
     const [searchString, setSearchString] = useState<string>('');
 
-    // const searchData: any = useSelector<RootState, any>(
-    //     (state) => state.groups.searchData;
-    //   );
+    const searchData: any = useSelector<RootState, any>(
+        (state) => state.groups.searchData
+    );
 
-    const onSubmit = async (event: React.FormEvent) => {
-        event.preventDefault();
+    const dispatch = useDispatch();
 
-        setLoading(true);
-
-        await fetchData(`"${searchString}"`);
-
-        const data = searchData;
-
-        console.log(data);
-
+    useEffect(() => {
         const groupData = Object.keys(searchData).map((info: string) => {
             if (info === 'owner') {
                 return (
@@ -78,8 +57,16 @@ const GroupSearchView: React.FC<Props> = ({
             }
         });
 
-        setLoading(false);
         setData(groupData);
+        setLoading(false);
+    }, [searchData, data]);
+
+    const onSubmit = async (event: React.FormEvent) => {
+        event.preventDefault();
+
+        setLoading(true);
+
+        dispatch(GroupThunks.setGroupSearchData(`"${searchString}"`));
     };
 
     const onChange = (event: React.ChangeEvent) => {
@@ -123,7 +110,7 @@ const GroupSearchView: React.FC<Props> = ({
                             {loading && (
                                 <CircularProgress className="spinner" />
                             )}
-                            {data && (
+                            {data.length > 0 && (
                                 <InfoPage
                                     groupData={data}
                                     columns={columns}
@@ -140,15 +127,4 @@ const GroupSearchView: React.FC<Props> = ({
     );
 };
 
-const mapStateToProps = (state: any) => {
-    return {
-        searchData: state.groups.searchData,
-    };
-};
-
-const mapDispatchToProps = (dispatch: any) => ({
-    fetchData: (group: string) =>
-        dispatch(GroupThunks.setGroupSearchData(group)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(GroupSearchView);
+export default GroupSearchView;

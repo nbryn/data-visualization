@@ -33,6 +33,7 @@ import {
 import {
     loginUser,
     logoutUser,
+    loginError,
     updateEngagementViewData,
 } from '../store/datamodels/General';
 import {
@@ -220,7 +221,7 @@ export const login = (
     const error = result.error;
 
     if (error) {
-        return 'Wrong Email/Username';
+        dispatch(loginError('Wrong Email/Username'));
     } else {
         setTokenInLocalStorage(result);
 

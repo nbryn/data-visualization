@@ -1,5 +1,6 @@
 const LOGIN_USER = 'LOGIN_USER';
 const LOGOUT_USER = 'LOGOUT_USER';
+const LOGIN_ERROR = 'LOGIN_ERROR';
 const UPDATE_ENGAGEMENT_VIEW_DATA = 'UPDATE_ENGAGEMENT_VIEW_DATA';
 
 export interface LoginAction {
@@ -21,6 +22,13 @@ export function logoutUser(data: any = null) {
     };
 }
 
+export function loginError(data: any) {
+    return {
+        type: LOGIN_ERROR,
+        payload: data,
+    }
+}
+
 export function updateEngagementViewData(data: any) {
     return {
         type: UPDATE_ENGAGEMENT_VIEW_DATA,
@@ -38,6 +46,10 @@ export default function (state = {}, action: LoginAction) {
             return Object.assign({}, state, {
                 currentUser: action.payload,
             });
+        case LOGIN_ERROR:
+            return Object.assign({}, state, {
+                loginError: action.payload,
+            });
         case UPDATE_ENGAGEMENT_VIEW_DATA:
             return Object.assign({}, state, {
                 engagementData: action.payload,
@@ -47,20 +59,22 @@ export default function (state = {}, action: LoginAction) {
     }
 }
 
-type User = {
+export type User = {
+    [key: string]: string;
     email: string;
     firstName: string;
     phoneNumber: string;
     gender: string;
-    verified: boolean;
 } | null;
 
 export interface GeneralState {
     currentUser: User;
+    loginError: string;
     engagementData: Array<any>;
 }
 
 export const initialGeneralState: GeneralState = {
     currentUser: null,
+    loginError: '',
     engagementData: [],
 };

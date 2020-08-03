@@ -10,18 +10,15 @@ import * as GroupThunks from '../../thunks/GroupThunks';
 import {
     infoPageColumn1,
     infoPageColumn2,
-    infoPageColumn3,
 } from '../../util/InfoPageGroupColumns';
 import Header from '../../components/navigation/Header';
 import InfoPage from '../../components/common/InfoPage';
-import Sidebar from '../../components/navigation/Sidebar';
-
 import { RootState } from '../../store/index';
+import Sidebar from '../../components/navigation/Sidebar';
 
 const { Grid, Row } = require('react-bootstrap');
 
 const NGOView: React.FC = (): ReactElement => {
-    const [allGroupData, setAllGroupData] = useState<any>([]);
     const [selectedGroupData, setSelectedGroupData] = useState<any>([]);
 
     const data: any = useSelector<RootState, any>(
@@ -33,25 +30,6 @@ const NGOView: React.FC = (): ReactElement => {
     useEffect(() => {
         dispatch(GroupThunks.setNGOGroupsData('"FHIDO"'));
     }, []);
-
-    useEffect(() => {
-        let id = 0;
-        const newState = data.map((element: any) => {
-            return {
-                id: id++,
-                ...element,
-                admin: element.admin.firstName + ' ' + element.admin.lastName,
-                owner: element.owner.firstName + ' ' + element.owner.lastName,
-                members: element.members.map((member: any) => {
-                    return {
-                        name: member.firstName + ' ' + member.lastName,
-                    };
-                }),
-            };
-        });
-
-        setAllGroupData(newState);
-    }, [data]);
 
     const { SearchBar } = Search;
 
@@ -105,7 +83,7 @@ const NGOView: React.FC = (): ReactElement => {
                                 <div className="col-md-5">
                                     <ToolkitProvider
                                         keyField="name"
-                                        data={allGroupData}
+                                        data={data}
                                         columns={columns}
                                         // @ts-ignore
                                         striped
@@ -125,7 +103,7 @@ const NGOView: React.FC = (): ReactElement => {
                                                 <BootstrapTable
                                                     {...props.baseProps}
                                                     keyField="id"
-                                                    data={allGroupData}
+                                                    data={data}
                                                     columns={columns}
                                                     selectRow={selectRow}
                                                     // @ts-ignore
@@ -136,14 +114,13 @@ const NGOView: React.FC = (): ReactElement => {
                                     </ToolkitProvider>
                                 </div>
                             </Row>
-                            {allGroupData.length === 0 && <CircularProgress />}
+                            {data.length === 0 && <CircularProgress />}
                             {selectedGroupData.length > 0 && (
                                 <InfoPage
                                     groupData={selectedGroupData}
                                     columns={columnsInfoPageMembers}
                                     column1={infoPageColumn1}
                                     column2={infoPageColumn2}
-                                    column3={infoPageColumn3}
                                 />
                             )}
                         </Grid>

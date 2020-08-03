@@ -1,21 +1,16 @@
 import { fetchFromServer } from '../Fetch';
 
-export const fetchGroupSearchData = async (group: string) => {
+export const fetchDataForGroup = async (group: string) => {
     const data = `query{
       groupData{
         group(group: ${group}){
           name
           regDate   
-          currency
-          cycle
-          type
-          ngo
+          currency    
           lastMeeting           
           boxBalance
           meetingsTotal
           perShare
-          serviceFee
-          loanLimit   
           loans
           shares
           owner{

@@ -26,7 +26,7 @@ export function loginError(data: any) {
     return {
         type: LOGIN_ERROR,
         payload: data,
-    }
+    };
 }
 
 export function updateEngagementViewData(data: any) {

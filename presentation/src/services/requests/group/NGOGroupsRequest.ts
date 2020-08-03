@@ -1,6 +1,6 @@
 import { fetchFromServer } from '../Fetch';
 
-export const fetchNGOGroupData = async (ngo: string) => {
+export const fetchGroupsForNGO = async (ngo: string) => {
     const data = `query{
         ngoGroupData{
           groupData(ngo: ${ngo}){

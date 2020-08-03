@@ -4,11 +4,11 @@ import { ThunkAction } from 'redux-thunk';
 import * as DataMappingService from '../services/DataMappingService';
 
 import {
-    fetchGroupSearchData,
+    fetchDataForGroup,
     fetchGroupsPerCountry,
     fetchGroupsPerNGO,
     fetchGroupData,
-    fetchNGOGroupData,
+    fetchGroupsForNGO,
 } from '../services/requests';
 
 import {
@@ -75,15 +75,19 @@ export const fetchGroupViewData = (): ThunkAction<
 export const setGroupSearchData = (
     group: string
 ): ThunkAction<void, RootState, null, Action<string>> => async (dispatch) => {
-    const result: any = await fetchGroupSearchData(group);
+    const result: any = await fetchDataForGroup(group);
 
-    dispatch(updateGroupSearchData(result));
+    const groupData: any = DataMappingService.mapGroupSearchData(result);
+
+    dispatch(updateGroupSearchData(groupData));
 };
 
 export const setNGOGroupsData = (
     ngo: string
 ): ThunkAction<void, RootState, null, Action<string>> => async (dispatch) => {
-    const result: any = await fetchNGOGroupData(ngo);
+    const result: any = await fetchGroupsForNGO(ngo);
 
-    dispatch(updateNGOGroupData(result));
+    const groupData: any = DataMappingService.mapNGOGroupsData(result);
+
+    dispatch(updateNGOGroupData(groupData));
 };

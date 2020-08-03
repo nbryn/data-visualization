@@ -15,7 +15,6 @@ type Props = {
     columns: any;
     column1: any;
     column2: any;
-    column3: any;
 };
 
 const InfoPage: React.FC<Props> = ({
@@ -23,11 +22,8 @@ const InfoPage: React.FC<Props> = ({
     columns,
     column1,
     column2,
-    column3,
 }: Props): ReactElement => {
     let groupDataIndex: number = 0;
-
-    console.log(groupData);
 
     return (
         <div>
@@ -57,23 +53,6 @@ const InfoPage: React.FC<Props> = ({
                         <Col md={3} lg={3}>
                             <Panel>
                                 {column2.map((prop: any, index: number) => (
-                                    <div key={index} className="group-view-row">
-                                        <ListGroup>
-                                            <ControlLabel>{prop}</ControlLabel>
-                                            <ListGroupItem>
-                                                {groupData[groupDataIndex++]}
-                                            </ListGroupItem>
-                                        </ListGroup>
-                                    </div>
-                                ))}
-                            </Panel>
-                        </Col>
-                    </div>
-
-                    <div className="col-md-2">
-                        <Col md={3} lg={3}>
-                            <Panel>
-                                {column3.map((prop: any, index: number) => (
                                     <div key={index} className="group-view-row">
                                         <ListGroup>
                                             <ControlLabel>{prop}</ControlLabel>

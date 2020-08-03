@@ -1,18 +1,16 @@
 import { useDispatch, useSelector } from 'react-redux';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { ReactElement, useState } from 'react';
 
 import * as GroupThunks from '../../thunks/GroupThunks';
 import {
     infoPageColumn1,
     infoPageColumn2,
-    infoPageColumn3,
 } from '../../util/InfoPageGroupColumns';
 import Header from '../../components/navigation/Header';
 import InfoPage from '../../components/common/InfoPage';
-import Sidebar from '../../components/navigation/Sidebar';
-
 import { RootState } from '../../store/index';
+import Sidebar from '../../components/navigation/Sidebar';
 
 const {
     Grid,
@@ -25,7 +23,6 @@ const {
 
 const GroupSearchView: React.FC = (): ReactElement => {
     const [loading, setLoading] = useState<boolean>(false);
-    const [data, setData] = useState<any>([]);
     const [searchString, setSearchString] = useState<string>('');
 
     const searchData: any = useSelector<RootState, any>(
@@ -34,44 +31,14 @@ const GroupSearchView: React.FC = (): ReactElement => {
 
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        const groupData = Object.keys(searchData).map((info: string) => {
-            if (info === 'owner') {
-                return (
-                    searchData[info].firstName +
-                    ' ' +
-                    searchData!.owner.lastName
-                );
-            } else if (info === 'admin') {
-                return (
-                    searchData[info].firstName + ' ' + searchData.admin.lastName
-                );
-            } else if (info === 'members') {
-                return searchData[info].map((member: any) => {
-                    return {
-                        name: member.firstName + ' ' + member.lastName,
-                    };
-                });
-            } else {
-                return searchData![info];
-            }
-        });
-
-        setData(groupData);
-        setLoading(false);
-    }, [searchData, data]);
-
     const onSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
 
         setLoading(true);
 
-        dispatch(GroupThunks.setGroupSearchData(`"${searchString}"`));
-    };
+        await dispatch(GroupThunks.setGroupSearchData(`"${searchString}"`));
 
-    const onChange = (event: React.ChangeEvent) => {
-        const element = event.currentTarget as HTMLInputElement;
-        setSearchString(element.value);
+        setLoading(false);
     };
 
     const columns = [
@@ -99,7 +66,12 @@ const GroupSearchView: React.FC = (): ReactElement => {
                                             placeholder="Group Name"
                                             name="searchString"
                                             value={searchString}
-                                            onChange={onChange}
+                                            onChange={(
+                                                event: React.ChangeEvent
+                                            ) => {
+                                                const element = event.currentTarget as HTMLInputElement;
+                                                setSearchString(element.value);
+                                            }}
                                         />
                                     </FormGroup>
                                     <Button variant="primary" type="submit">
@@ -110,13 +82,12 @@ const GroupSearchView: React.FC = (): ReactElement => {
                             {loading && (
                                 <CircularProgress className="spinner" />
                             )}
-                            {data.length > 0 && (
+                            {searchData.length > 0 && (
                                 <InfoPage
-                                    groupData={data}
+                                    groupData={searchData}
                                     columns={columns}
                                     column1={infoPageColumn1}
                                     column2={infoPageColumn2}
-                                    column3={infoPageColumn3}
                                 />
                             )}
                         </Row>

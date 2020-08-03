@@ -127,3 +127,42 @@ export const mapChartjsLastYearData = (data: any): any => {
 
     return usersLastYear;
 };
+
+export const mapGroupSearchData = (data: any): any => {
+    const groupData = Object.keys(data).map((info: string) => {
+        if (info === 'owner') {
+            return data[info].firstName + ' ' + data!.owner.lastName;
+        } else if (info === 'admin') {
+            return data[info].firstName + ' ' + data.admin.lastName;
+        } else if (info === 'members') {
+            return data[info].map((member: any) => {
+                return {
+                    name: member.firstName + ' ' + member.lastName,
+                };
+            });
+        } else {
+            return data![info];
+        }
+    });
+
+    return groupData;
+};
+
+export const mapNGOGroupsData = (data: any): any => {
+    let id = 0;
+    const groupsData = data.map((element: any) => {
+        return {
+            id: id++,
+            ...element,
+            admin: element.admin.firstName + ' ' + element.admin.lastName,
+            owner: element.owner.firstName + ' ' + element.owner.lastName,
+            members: element.members.map((member: any) => {
+                return {
+                    name: member.firstName + ' ' + member.lastName,
+                };
+            }),
+        };
+    });
+
+    return groupsData;
+};

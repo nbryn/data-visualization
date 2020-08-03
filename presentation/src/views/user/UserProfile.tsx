@@ -1,6 +1,6 @@
-import React, { Component, ReactElement, useState } from 'react';
+import React, { ReactElement } from 'react';
 
-import { connect, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import Header from '../../components/navigation/Header.js';
 import Sidebar from '../../components/navigation/Sidebar';
@@ -19,7 +19,7 @@ const UserProfile: React.FC = (): ReactElement => {
     const user: User = useSelector<RootState, User>(state => state.general.currentUser);
 
     const properties = ['Email', 'Name', 'Phone Number', 'Gender'];
-    let data: string[] = [];
+    const data: string[] = [];
 
     for (let key in user) {
         data.push(user[key]);

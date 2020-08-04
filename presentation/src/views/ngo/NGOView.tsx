@@ -28,7 +28,7 @@ const NGOView: React.FC = (): ReactElement => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(GroupThunks.setNGOGroupsData('"FHIDO"'));
+        dispatch(GroupThunks.updateNGOGroupsData('"FHIDO"'));
     }, []);
 
     const { SearchBar } = Search;

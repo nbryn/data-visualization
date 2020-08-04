@@ -1,35 +1,31 @@
+import { ChartData } from './General';
+
+// Actions
 const UPDATE_GROUP_VIEW_DATA = 'UPDATE_GROUP_VIEW_DATA';
 const UPDATE_NGO_GROUP_DATA = 'UPDATE_NGO_GROUP_DATA';
 const UPDATE_GROUP_SEARCH_DATA = 'UPDATE_GROUP_SEARCH_DATA';
 
-export interface GroupAction {
-    type: any;
+
+// Action Types
+export interface GroupViewAction {
+    type: typeof UPDATE_GROUP_VIEW_DATA;
     payload: GroupState;
 }
 
-export function updateGroupViewData(data: GroupState): GroupAction {
-    return {
-        type: UPDATE_GROUP_VIEW_DATA,
-        payload: data,
-    };
+export interface GroupSearchAction {
+    type: typeof UPDATE_GROUP_SEARCH_DATA;
+    payload: GroupData
 }
 
-export function updateGroupSearchData(data: any): any {
-    return {
-        type: UPDATE_GROUP_SEARCH_DATA,
-        payload: data,
-    };
+export interface NGOGroupDataAction {
+    type: typeof UPDATE_NGO_GROUP_DATA;
+    payload: ChartData[];
 }
 
-export function updateNGOGroupData(data: any): any {
-    return {
-        type: UPDATE_NGO_GROUP_DATA,
-        payload: data,
-    };
-}
+type GroupActions = GroupViewAction | GroupSearchAction | NGOGroupDataAction;
 
-// TODO: Actions and reducers not one-to-one mapping - Spread view data out
-export default function (state = {}, action: GroupAction) {
+// Reducers
+export default function (state = {}, action: GroupActions) {
     switch (action.type) {
         case UPDATE_GROUP_VIEW_DATA:
             return Object.assign({}, state, {
@@ -39,6 +35,9 @@ export default function (state = {}, action: GroupAction) {
                 todayDate: action.payload.todayDate,
                 lastMonthCount: action.payload.lastMonthCount,
                 lastYearCount: action.payload.lastYearCount,
+            });
+        case UPDATE_GROUP_VIEW_DATA:
+            return Object.assign({}, state, {
                 lastMonthBarChartData: action.payload.lastYearBarChartData,
                 lastYearBarChartData: action.payload.lastYearBarChartData,
                 lastMonthLineChartData: action.payload.lastMonthLineChartData,
@@ -60,6 +59,42 @@ export default function (state = {}, action: GroupAction) {
     }
 }
 
+// Action Creators
+export function setGroupViewData(data: GroupState): GroupViewAction {
+    return {
+        type: UPDATE_GROUP_VIEW_DATA,
+        payload: data,
+    };
+}
+
+export function setGroupSearchData(data: GroupData): GroupSearchAction {
+    return {
+        type: UPDATE_GROUP_SEARCH_DATA,
+        payload: data,
+    };
+}
+
+export function setNGOGroupData(data: ChartData[]): NGOGroupDataAction {
+    return {
+        type: UPDATE_NGO_GROUP_DATA,
+        payload: data,
+    };
+}
+
+
+export type GroupData = {
+    registrationDate: string;
+    currency: string;
+    lastMeeting: string;
+    boxBalance: number;
+    amountPerShare: number;
+    totalMeeting: number;
+    totalLoans: number;
+    owner: string;
+    admin: string;
+} | null;
+
+
 export interface GroupState {
     [key: string]: any;
     total: number;
@@ -67,15 +102,15 @@ export interface GroupState {
     todayDate: string;
     lastMonthCount: number;
     lastYearCount: number;
-    lastMonthBarChartData: Array<any>;
-    lastYearBarChartData: Array<any>;
-    lastMonthLineChartData: Array<any>;
-    lastYearLineChartData: Array<any>;
-    groupSizeStats: Array<any>;
-    perCountryData: Array<any>;
-    perNGOData: Array<any>;
-    searchData: Array<any>;
-    ngoGroupData: Array<any>;
+    lastMonthBarChartData: ChartData[];
+    lastYearBarChartData: ChartData[];
+    lastMonthLineChartData: ChartData[];
+    lastYearLineChartData: ChartData[];
+    groupSizeStats: ChartData[];
+    perCountryData: ChartData[];
+    perNGOData: ChartData[];
+    searchData: GroupData;
+    ngoGroupData: ChartData[];
 }
 
 export const initialGroupState: GroupState = {
@@ -91,6 +126,6 @@ export const initialGroupState: GroupState = {
     lastYearLineChartData: [],
     perCountryData: [],
     perNGOData: [],
-    searchData: [],
+    searchData: null,
     ngoGroupData: [],
 };

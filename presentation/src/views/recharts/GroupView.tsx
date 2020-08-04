@@ -18,7 +18,7 @@ const { Col, Grid, Row } = require('react-bootstrap');
 const GroupView: React.FC = (): ReactElement => {
     const dispatch = useDispatch();
 
-    dispatch(Thunks.fetchGroupViewData());
+    dispatch(Thunks.updateGroupViewData());
 
     return (
         <div className="wrapper">

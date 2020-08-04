@@ -1,11 +1,8 @@
+import { ChartjsData } from '../../store/datamodels/User';
+
 export type Chart = {
-    chartData: ChartData;
-    labels: string[];
+    chartData: ChartjsData;
     loading: boolean;
     handleChangeInterval: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-export type ChartData = {
-    counter: number;
-    data: number[];
-};

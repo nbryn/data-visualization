@@ -36,7 +36,7 @@ const GroupSearchView: React.FC = (): ReactElement => {
 
         setLoading(true);
 
-        await dispatch(GroupThunks.setGroupSearchData(`"${searchString}"`));
+        await dispatch(GroupThunks.updateGroupSearchData(`"${searchString}"`));
 
         setLoading(false);
     };

@@ -16,7 +16,7 @@ const { Col, Grid, Row } = require('react-bootstrap');
 const MeetingView: React.FC = (): ReactElement => {
     const dispatch = useDispatch();
 
-    dispatch(Thunks.fetchMeetingViewData());
+    dispatch(Thunks.updateMeetingViewData());
 
     return (
         <div className="wrapper">

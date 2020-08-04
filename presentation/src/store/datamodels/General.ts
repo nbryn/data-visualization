@@ -1,46 +1,67 @@
+// Actions
 const LOGIN_USER = 'LOGIN_USER';
 const LOGOUT_USER = 'LOGOUT_USER';
 const LOGIN_ERROR = 'LOGIN_ERROR';
 const UPDATE_ENGAGEMENT_VIEW_DATA = 'UPDATE_ENGAGEMENT_VIEW_DATA';
 
+// Actions Types
 export interface LoginAction {
-    type: any;
+    type: typeof LOGIN_USER;
+    payload: User;
+}
+
+export interface LoginError {
+    type: typeof LOGIN_ERROR;
     payload: any;
 }
 
+export interface LogoutAction {
+    type: typeof LOGOUT_USER;
+    payload: null;
+}
+
+export interface UpdateEngagementViewDataAction {
+    type: typeof UPDATE_ENGAGEMENT_VIEW_DATA;
+    payload: any;
+}
+
+type GeneralActions = LoginAction | LoginError | LogoutAction | UpdateEngagementViewDataAction;
+
+// Action Creators
 export function loginUser(data: LoginAction) {
     return {
-        type: LOGIN_USER,
+        type: typeof LOGIN_USER,
         payload: data,
     };
 }
 
 export function logoutUser(data: any = null) {
     return {
-        type: LOGOUT_USER,
+        type: typeof LOGOUT_USER,
         payload: data,
     };
 }
 
 export function loginError(data: any) {
     return {
-        type: LOGIN_ERROR,
+        type: typeof LOGIN_ERROR,
         payload: data,
     };
 }
 
 export function updateEngagementViewData(data: any) {
     return {
-        type: UPDATE_ENGAGEMENT_VIEW_DATA,
+        type: typeof UPDATE_ENGAGEMENT_VIEW_DATA,
         payload: data,
     };
 }
 
-export default function (state = {}, action: LoginAction) {
+// Reducers
+export default function (state = {}, action: GeneralActions) {
     switch (action.type) {
         case LOGIN_USER:
             return Object.assign({}, state, {
-                currentUser: action.payload.user,
+                currentUser: action.payload!.user,
             });
         case LOGOUT_USER:
             return Object.assign({}, state, {
@@ -57,6 +78,16 @@ export default function (state = {}, action: LoginAction) {
         default:
             return state;
     }
+}
+
+export type ServerData = {
+    name: string;
+    count: number;
+}
+
+export type ChartData = {
+    name: string;
+    value: number;
 }
 
 export type User = {

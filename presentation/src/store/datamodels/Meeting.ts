@@ -1,6 +1,16 @@
+import { ChartData } from './General';
+
+// Actions
 const UPDATE_MEETING_VIEW_DATA = 'UPDATE_MEETING_VIEWA_DATA';
 
-export function updateMeetingViewData(data: MeetingState): MeetingAction {
+// Action Types
+export interface MeetingAction {
+    type: typeof UPDATE_MEETING_VIEW_DATA;
+    payload: MeetingState;
+}
+
+// Action Creators
+export function setMeetingViewData(data: MeetingState): MeetingAction {
     return {
         type: UPDATE_MEETING_VIEW_DATA,
         payload: data,
@@ -10,7 +20,6 @@ export function updateMeetingViewData(data: MeetingState): MeetingAction {
 export default function (state = {}, action: MeetingAction) {
     switch (action.type) {
         case UPDATE_MEETING_VIEW_DATA:
-            console.log(action);
             return Object.assign({}, state, {
                 totalData: action.payload.totalData,
                 lastWeekData: action.payload.lastWeekData,
@@ -18,6 +27,10 @@ export default function (state = {}, action: MeetingAction) {
                 lastYearBarChartData: action.payload.lastYearBarChartData,
                 lastYearData: action.payload.lastYearData,
                 lastYearCountData: action.payload.lastYearCount,
+
+            });
+        case UPDATE_MEETING_VIEW_DATA:
+            return Object.assign({}, state, {
                 perGroupData: action.payload.perGroupData,
                 sharesPerMeetingData: action.payload.sharesPerMeetingData,
                 perCountryData: action.payload.perCountryData,
@@ -31,25 +44,20 @@ export default function (state = {}, action: MeetingAction) {
     }
 }
 
-export interface MeetingAction {
-    type: any;
-    payload: MeetingState;
-}
-
 export interface MeetingState {
     [key: string]: any;
-    lastMonthBarChartData: Array<any>;
+    lastMonthBarChartData: ChartData[];
     lastMonthCount: number;
     lastYearCount: number;
-    lastYearData: Array<any>;
-    lastYearBarChartData: Array<any>;
-    lastWeekData?: Array<any>;
-    perCountryData: Array<any>;
-    perGroupData: Array<any>;
-    sharesPerMeetingData: Array<any>;
+    lastYearData: ChartData[];
+    lastYearBarChartData: ChartData[];
+    lastWeekData?: ChartData[];
+    perCountryData: ChartData[];
+    perGroupData: ChartData[];
+    sharesPerMeetingData: ChartData[];
     todayCount: number;
     totalData: number;
-    todayDate: any;
+    todayDate: string;
 }
 
 export const initialMeetingState: MeetingState = {
@@ -64,5 +72,5 @@ export const initialMeetingState: MeetingState = {
     perGroupData: [],
     perCountryData: [],
     todayCount: 0,
-    todayDate: null,
+    todayDate: '',
 };

@@ -17,7 +17,7 @@ const { Col, Grid, Row } = require('react-bootstrap');
 const UserView: React.FC = (): ReactElement => {
     const dispatch = useDispatch();
 
-    dispatch(UserThunks.fetchUserViewData());
+    dispatch(UserThunks.updateUserViewData());
 
     return (
         <div className="wrapper">

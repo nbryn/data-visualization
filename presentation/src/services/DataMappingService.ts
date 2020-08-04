@@ -131,7 +131,7 @@ export const mapChartjsLastYearData = (data: any): any => {
 export const mapGroupSearchData = (data: any): any => {
     const groupData = Object.keys(data).map((info: string) => {
         if (info === 'owner') {
-            return data[info].firstName + ' ' + data!.owner.lastName;
+            return data[info].firstName + ' ' + data.owner.lastName;
         } else if (info === 'admin') {
             return data[info].firstName + ' ' + data.admin.lastName;
         } else if (info === 'members') {
@@ -141,7 +141,7 @@ export const mapGroupSearchData = (data: any): any => {
                 };
             });
         } else {
-            return data![info];
+            return data[info];
         }
     });
 

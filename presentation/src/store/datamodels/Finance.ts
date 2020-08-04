@@ -1,11 +1,13 @@
-export const UPDATE_FINANCE_VIEW_DATA = 'UPDATE_FINANCE_VIEW_DATA';
+import { ChartData } from './General';
+
+const UPDATE_FINANCE_VIEW_DATA = 'UPDATE_FINANCE_VIEW_DATA';
 
 export interface FinanceAction {
-    type: any;
+    type: typeof UPDATE_FINANCE_VIEW_DATA;
     payload: FinanceState;
 }
 
-export function updateFinanceViewData(data: FinanceState): FinanceAction {
+export function setFinanceViewData(data: FinanceState): FinanceAction {
     return {
         type: UPDATE_FINANCE_VIEW_DATA,
         payload: data,
@@ -23,6 +25,10 @@ export default function (state = {}, action: FinanceAction) {
                     action.payload.loansLastYearLineChartData,
                 loansLastYearBarChartData:
                     action.payload.loansLastYearBarChartData,
+
+            });
+        case UPDATE_FINANCE_VIEW_DATA:
+            return Object.assign({}, state, {
                 sharesTotal: action.payload.sharesTotal,
                 sharesPerGroup: action.payload.sharesPerGroup,
                 mostShares: action.payload.mostShares,
@@ -37,18 +43,16 @@ export default function (state = {}, action: FinanceAction) {
 export interface FinanceState {
     [key: string]: any;
     numberOfCurrencies?: number;
-    currencyStats: Array<any>;
+    currencyStats: ChartData[];
     loansTotal: number;
-    loansLastMonthData: Array<any>;
-    loansLastYearLineChartData: Array<any>;
-    loansLastYearBarChartData: Array<any>;
+    loansLastMonthData: ChartData[];
+    loansLastYearLineChartData: ChartData[];
+    loansLastYearBarChartData: ChartData[];
     sharesTotal: number;
-    sharesPerGroup: Array<any>;
-    mostShares: any;
+    sharesPerGroup: ChartData[];
+    mostShares: number;
     etbOnLoan: number;
-    groupEtbLoan: Array<any>;
-    boxBalanceStats?: Array<any>;
-    financeStats?: any;
+    groupEtbLoan: ChartData[];
 }
 
 export const initialFinanceState: FinanceState = {
@@ -61,5 +65,5 @@ export const initialFinanceState: FinanceState = {
     sharesPerGroup: [],
     groupEtbLoan: [],
     etbOnLoan: 0,
-    mostShares: null,
+    mostShares: 0,
 };

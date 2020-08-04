@@ -15,7 +15,7 @@ const { Col, Grid, Row } = require('react-bootstrap');
 const FinanceView: React.FC = (): ReactElement => {
     const dispatch = useDispatch();
 
-    dispatch(Thunks.fetchFinanceViewData());
+    dispatch(Thunks.updateFinanceViewData());
 
     return (
         <div className="wrapper">

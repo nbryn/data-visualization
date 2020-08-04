@@ -4,7 +4,7 @@ import { ThunkAction } from 'redux-thunk';
 import * as DataMappingService from '../services/DataMappingService';
 
 import {
-    fetchUserData,
+    fetchUserViewData,
     fetchUsersLastYear,
     fetchUsersLastMonth,
     fetchUsersPerCountry,
@@ -14,12 +14,12 @@ import { RootState } from '../store/index';
 
 import {
     UserState,
-    updateUserViewData,
-    updateChartjsLastYearUserData,
-    updateChartjsLastMonthUserData,
+    setUserViewData,
+    setChartjsLastYearUserData,
+    setChartjsLastMonthUserData,
 } from '../store/datamodels/User';
 
-export const fetchUserViewData = (): ThunkAction<
+export const updateUserViewData = (): ThunkAction<
     void,
     RootState,
     null,
@@ -28,7 +28,7 @@ export const fetchUserViewData = (): ThunkAction<
     // @ts-ignore
     const result: UserState = {};
 
-    const userData: any = await fetchUserData();
+    const userData: any = await fetchUserViewData();
     const userCountryData: any = await fetchUsersPerCountry();
     const userNGOData: any = await fetchUsersPerNGO();
 
@@ -71,10 +71,10 @@ export const fetchUserViewData = (): ThunkAction<
         userGenderStats
     );
 
-    dispatch(updateUserViewData(result));
+    dispatch(setUserViewData(result));
 };
 
-export const fetchUsersLastMonthChartjs = (): ThunkAction<
+export const updateUsersLastMonthChartjs = (): ThunkAction<
     void,
     RootState,
     null,
@@ -84,10 +84,10 @@ export const fetchUsersLastMonthChartjs = (): ThunkAction<
 
     const usersLastMonth = DataMappingService.mapChartjsLastMonthData(data);
 
-    dispatch(updateChartjsLastMonthUserData(usersLastMonth));
+    dispatch(setChartjsLastMonthUserData(usersLastMonth));
 };
 
-export const fetchUsersLastYearChartjs = (): ThunkAction<
+export const updateUsersLastYearChartjs = (): ThunkAction<
     void,
     RootState,
     null,
@@ -97,5 +97,5 @@ export const fetchUsersLastYearChartjs = (): ThunkAction<
 
     const usersLastYear = DataMappingService.mapChartjsLastYearData(data);
 
-    dispatch(updateChartjsLastYearUserData(usersLastYear));
+    dispatch(setChartjsLastYearUserData(usersLastYear));
 };

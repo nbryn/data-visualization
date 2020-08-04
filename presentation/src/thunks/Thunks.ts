@@ -28,7 +28,7 @@ import {
 
 import {
     FinanceState,
-    updateFinanceViewData,
+    setFinanceViewData,
 } from '../store/datamodels/Finance';
 import {
     loginUser,
@@ -38,11 +38,11 @@ import {
 } from '../store/datamodels/General';
 import {
     MeetingState,
-    updateMeetingViewData,
+    setMeetingViewData,
 } from '../store/datamodels/Meeting';
-import { MainState, updateMainViewData } from '../store/datamodels/Main';
+import { MainState, setMainViewData } from '../store/datamodels/Main';
 
-export const fetchMeetingViewData = (): ThunkAction<
+export const updateMeetingViewData = (): ThunkAction<
     void,
     RootState,
     null,
@@ -97,10 +97,10 @@ export const fetchMeetingViewData = (): ThunkAction<
         sharesPerMeeting
     );
 
-    dispatch(updateMeetingViewData(result));
+    dispatch(setMeetingViewData(result));
 };
 
-export const fetchFinanceViewData = (): ThunkAction<
+export const updateFinanceViewData = (): ThunkAction<
     void,
     RootState,
     null,
@@ -144,10 +144,10 @@ export const fetchFinanceViewData = (): ThunkAction<
     result.sharesPerGroup = DataMappingService.mapGeneralChartData(shareStats);
     result.groupEtbLoan = DataMappingService.mapGeneralChartData(groupEtbLoan);
 
-    dispatch(updateFinanceViewData(result));
+    dispatch(setFinanceViewData(result));
 };
 
-export const fetchMainViewData = (): ThunkAction<
+export const updateMainViewData = (): ThunkAction<
     void,
     RootState,
     null,
@@ -189,7 +189,7 @@ export const fetchMainViewData = (): ThunkAction<
         userGenderStats
     );
 
-    dispatch(updateMainViewData(result));
+    dispatch(setMainViewData(result));
 };
 
 export const setEngagementViewData = (): ThunkAction<

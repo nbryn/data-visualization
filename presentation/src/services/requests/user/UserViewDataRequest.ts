@@ -1,6 +1,6 @@
 import { fetchFromServer } from '../Fetch';
 
-export const fetchUserData = async (): Promise<any> => {
+export const fetchUserViewData = async (): Promise<any> => {
     const data = `query {
       userStats{
         userCount

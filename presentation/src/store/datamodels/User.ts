@@ -1,34 +1,65 @@
+import { ChartData } from './General';
+
+// Actions
 const CHARTJS_USERS_LAST_MONTH = 'CHARTJS_USERS_LAST_MONTH';
 const CHARTJS_USERS_LAST_YEAR = 'CHART_JS_USERS_LAST_YEAR';
 const UPDATE_USER_VIEW_DATA = 'UPDATE_USER_VIEW_DATA';
 
-export interface UserAction {
-    type: any;
+// Action Types
+export interface UserViewAction {
+    type: typeof UPDATE_USER_VIEW_DATA;
     payload: UserState;
 }
 
-export function updateUserViewData(data: UserState): UserAction {
+export type ChartjsData = {
+    labels: string[];
+    data: number[];
+    counter: number;
+}
+
+type ChartjsDataLastMonth = {
+    labels: string[];
+    data: number[];
+    counter: number;
+    lastWeek: ChartjsData;
+}
+
+export interface ChartjsLastMonthAction {
+    type: typeof CHARTJS_USERS_LAST_MONTH | typeof CHARTJS_USERS_LAST_YEAR;
+    payload: ChartjsDataLastMonth;
+}
+
+export interface ChartjsLastYearAction {
+    type: typeof CHARTJS_USERS_LAST_YEAR;
+    payload: ChartjsData;
+}
+
+type UserActions = UserViewAction | ChartjsLastMonthAction | ChartjsLastYearAction;
+
+// Actions Creators
+export function setUserViewData(data: UserState): UserViewAction {
     return {
         type: UPDATE_USER_VIEW_DATA,
         payload: data,
     };
 }
 
-export function updateChartjsLastMonthUserData(data: any): any {
+export function setChartjsLastMonthUserData(data: ChartjsDataLastMonth): ChartjsLastMonthAction {
     return {
         type: CHARTJS_USERS_LAST_MONTH,
         payload: data,
     };
 }
 
-export function updateChartjsLastYearUserData(data: any): any {
+export function setChartjsLastYearUserData(data: ChartjsData): ChartjsLastYearAction {
     return {
         type: CHARTJS_USERS_LAST_YEAR,
         payload: data,
     };
 }
 
-export default function (state = {}, action: UserAction) {
+// Reducers
+export default function (state = {}, action: UserActions) {
     switch (action.type) {
         case UPDATE_USER_VIEW_DATA:
             return Object.assign({}, state, {
@@ -38,6 +69,9 @@ export default function (state = {}, action: UserAction) {
                 todayCount: action.payload.todayCount,
                 lastMonthCount: action.payload.lastMonthCount,
                 lastYearCount: action.payload.lastYearCount,
+            });
+        case UPDATE_USER_VIEW_DATA:
+            return Object.assign({}, state, {
                 lastMonthBarChartData: action.payload.lastMonthBarChartData,
                 lastYearBarChartData: action.payload.lastYearBarChartData,
                 lastMonthLineChartData: action.payload.lastMonthLineChartData,
@@ -61,40 +95,52 @@ export default function (state = {}, action: UserAction) {
 }
 
 export interface UserState {
-    [key: string]: any;
-    genderStats: Array<any>;
+    [key: string]: string | number | ChartData[] | ChartjsData;
+    chartjsLastMonth: ChartjsData;
+    chartjsLastWeek: ChartjsData;
+    chartjsLastYear: ChartjsData;
+    lastMonthBarChartData: ChartData[];
+    lastMonthCount: number;
+    lastMonthLineChartData: ChartData[];
+    lastYearBarChartData: ChartData[];
+    lastYearCount: number;
+    lastYearLineChartData: ChartData[];
+    lastWeek: ChartData[];
+    genderStats: ChartData[];
+    perCountryData: ChartData[];
+    perNGOData: ChartData[];
     total: number;
     todayCount: number;
     todayDate: string;
-    lastMonthCount: number;
-    lastYearCount: number;
-    lastWeek: Array<any>;
-    lastMonthBarChartData: Array<any>;
-    lastYearBarChartData: Array<any>;
-    lastMonthLineChartData: Array<any>;
-    lastYearLineChartData: Array<any>;
-    chartjsLastWeek: Array<any>;
-    chartjsLastMonth: Array<any>;
-    chartjsLastYear: Array<any>;
-    perNGOData: Array<any>;
-    perCountryData: Array<any>;
 }
 
 export const initialUserState: UserState = {
+    chartjsLastMonth: {
+        labels: [],
+        counter: 0,
+        data: []
+    },
+    chartjsLastWeek: {
+        labels: [],
+        counter: 0,
+        data: []
+    },
+    chartjsLastYear: {
+        labels: [],
+        counter: 0,
+        data: []
+    },
+    lastMonthBarChartData: [],
+    lastMonthCount: 0,
+    lastMonthLineChartData: [],
+    lastYearBarChartData: [],
+    lastYearCount: 0,
+    lastYearLineChartData: [],
+    lastWeek: [],
+    perCountryData: [],
+    perNGOData: [],
     genderStats: [],
     total: 0,
     todayDate: '',
     todayCount: 0,
-    lastMonthCount: 0,
-    lastYearCount: 0,
-    lastWeek: [],
-    lastMonthBarChartData: [],
-    lastYearBarChartData: [],
-    lastMonthLineChartData: [],
-    lastYearLineChartData: [],
-    chartjsLastWeek: [],
-    chartjsLastMonth: [],
-    chartjsLastYear: [],
-    perNGOData: [],
-    perCountryData: [],
 };

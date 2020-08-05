@@ -27,10 +27,6 @@ export default function (state = {}, action: MeetingAction) {
                 lastYearBarChartData: action.payload.lastYearBarChartData,
                 lastYearData: action.payload.lastYearData,
                 lastYearCountData: action.payload.lastYearCount,
-
-            });
-        case UPDATE_MEETING_VIEW_DATA:
-            return Object.assign({}, state, {
                 perGroupData: action.payload.perGroupData,
                 sharesPerMeetingData: action.payload.sharesPerMeetingData,
                 perCountryData: action.payload.perCountryData,
@@ -39,6 +35,7 @@ export default function (state = {}, action: MeetingAction) {
                 lastMonthCount: action.payload.lastMonthCount,
                 lastYearCount: action.payload.lastYearCount,
             });
+     
         default:
             return state;
     }

@@ -3,6 +3,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import React, { ReactElement, useState } from 'react';
 
 import * as GroupThunks from '../../thunks/GroupThunks';
+import { GroupDataProp } from '../../store/datamodels/Group';
 import {
     infoPageColumn1,
     infoPageColumn2,
@@ -25,7 +26,7 @@ const GroupSearchView: React.FC = (): ReactElement => {
     const [loading, setLoading] = useState<boolean>(false);
     const [searchString, setSearchString] = useState<string>('');
 
-    const searchData: any = useSelector<RootState, any>(
+    const searchData: any = useSelector<RootState, GroupDataProp>(
         (state) => state.groups.searchData
     );
 

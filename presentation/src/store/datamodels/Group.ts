@@ -35,9 +35,6 @@ export default function (state = {}, action: GroupActions) {
                 todayDate: action.payload.todayDate,
                 lastMonthCount: action.payload.lastMonthCount,
                 lastYearCount: action.payload.lastYearCount,
-            });
-        case UPDATE_GROUP_VIEW_DATA:
-            return Object.assign({}, state, {
                 lastMonthBarChartData: action.payload.lastYearBarChartData,
                 lastYearBarChartData: action.payload.lastYearBarChartData,
                 lastMonthLineChartData: action.payload.lastMonthLineChartData,
@@ -83,6 +80,7 @@ export function setNGOGroupData(data: ChartData[]): NGOGroupDataAction {
 
 
 export type GroupData = {
+    [key: string]: string | number | string[];
     registrationDate: string;
     currency: string;
     lastMeeting: string;
@@ -92,11 +90,13 @@ export type GroupData = {
     totalLoans: number;
     owner: string;
     admin: string;
-} | null;
+    members: string[]
+};
 
+export type GroupDataProp = Array<string | number | string[]>;
 
 export interface GroupState {
-    [key: string]: any;
+    [key: string]: string | number | ChartData[] | GroupData | GroupData[] | Array<string | number | string[]>;
     total: number;
     todayCount: number;
     todayDate: string;
@@ -109,8 +109,8 @@ export interface GroupState {
     groupSizeStats: ChartData[];
     perCountryData: ChartData[];
     perNGOData: ChartData[];
-    searchData: GroupData;
-    ngoGroupData: ChartData[];
+    searchData: Array<string | number | string[]>;
+    ngoGroupData: GroupData[];
 }
 
 export const initialGroupState: GroupState = {
@@ -126,6 +126,6 @@ export const initialGroupState: GroupState = {
     lastYearLineChartData: [],
     perCountryData: [],
     perNGOData: [],
-    searchData: null,
+    searchData: [],
     ngoGroupData: [],
 };

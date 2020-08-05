@@ -2,6 +2,7 @@ import React, { ReactElement } from 'react';
 import { useSelector } from 'react-redux';
 
 import BarChart from '../../components/recharts/BarChart';
+import {ChartData} from '../../store/datamodels/General';
 import { RootState } from '../../store/index';
 
 type Props = {
@@ -23,7 +24,7 @@ export const BarChartContainer: React.FC<Props> = ({
   color,
   css
 }: Props): ReactElement => {
-  const data: any = useSelector<RootState, any>(
+  const data: ChartData[] = useSelector<RootState, ChartData[]>(
     (state) => state[statsType][dataType]
   );
 

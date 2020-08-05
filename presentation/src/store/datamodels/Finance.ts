@@ -25,15 +25,12 @@ export default function (state = {}, action: FinanceAction) {
                     action.payload.loansLastYearLineChartData,
                 loansLastYearBarChartData:
                     action.payload.loansLastYearBarChartData,
-
-            });
-        case UPDATE_FINANCE_VIEW_DATA:
-            return Object.assign({}, state, {
                 sharesTotal: action.payload.sharesTotal,
                 sharesPerGroup: action.payload.sharesPerGroup,
                 mostShares: action.payload.mostShares,
                 etbOnLoan: action.payload.etbOnLoan,
                 groupEtbLoan: action.payload.groupEtbLoan,
+
             });
         default:
             return state;

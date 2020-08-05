@@ -1,6 +1,7 @@
 import React, { ReactElement} from 'react';
 import { useSelector } from 'react-redux';
 
+import {ChartData} from '../../store/datamodels/General';
 import LineChart from '../../components/recharts/LineChart';
 import { RootState } from '../../store/index';
 
@@ -21,7 +22,7 @@ export const LineChartContainer: React.FC<Props> = ({
   yLabel,
   color
 }: Props): ReactElement => {
-  const data: any = useSelector<RootState, any>(
+  const data: ChartData[] = useSelector<RootState, ChartData[]>(
     (state) => state[statsType][dataType]
   );
 

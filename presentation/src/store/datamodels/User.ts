@@ -69,9 +69,6 @@ export default function (state = {}, action: UserActions) {
                 todayCount: action.payload.todayCount,
                 lastMonthCount: action.payload.lastMonthCount,
                 lastYearCount: action.payload.lastYearCount,
-            });
-        case UPDATE_USER_VIEW_DATA:
-            return Object.assign({}, state, {
                 lastMonthBarChartData: action.payload.lastMonthBarChartData,
                 lastYearBarChartData: action.payload.lastYearBarChartData,
                 lastMonthLineChartData: action.payload.lastMonthLineChartData,

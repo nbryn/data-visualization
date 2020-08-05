@@ -7,6 +7,8 @@ import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit';
 
 import * as GroupThunks from '../../thunks/GroupThunks';
 
+import { GroupData } from '../../store/datamodels/Group';
+import { GroupDataProp } from '../../store/datamodels/Group';
 import {
     infoPageColumn1,
     infoPageColumn2,
@@ -19,9 +21,11 @@ import Sidebar from '../../components/navigation/Sidebar';
 const { Grid, Row } = require('react-bootstrap');
 
 const NGOView: React.FC = (): ReactElement => {
-    const [selectedGroupData, setSelectedGroupData] = useState<any>([]);
+    const [selectedGroupData, setSelectedGroupData] = useState<GroupDataProp>(
+        []
+    );
 
-    const data: any = useSelector<RootState, any>(
+    const data: GroupData[] = useSelector<RootState, GroupData[]>(
         (state) => state.groups.ngoGroupData
     );
 
@@ -37,8 +41,8 @@ const NGOView: React.FC = (): ReactElement => {
         mode: 'radio',
         clickToSelect: true,
         style: { backgroundColor: '#c8e6c9' },
-        onSelect: (row: any, isSelect: boolean, rowIndex: number, e: any) => {
-            const data = [];
+        onSelect: (row: GroupData) => {
+            const data: Array<string | number | string[]> = [];
             for (let key in row) {
                 if (key !== 'id') data.push(row[key]);
             }

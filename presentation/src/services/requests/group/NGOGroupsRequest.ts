@@ -7,15 +7,10 @@ export const fetchGroupsForNGO = async (ngo: string) => {
             name
             regDate   
             currency
-            cycle
-            type
-            ngo
             lastMeeting           
             boxBalance
             meetingsTotal
             perShare
-            serviceFee
-            loanLimit   
             loans
             shares
             owner{

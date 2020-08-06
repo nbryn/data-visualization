@@ -14,22 +14,19 @@ import {
     fetchLogin,
     fetchActiveUserData,
     fetchGroupEngagementData,
+    FinanceViewDto,
+    MeetingViewDto,
 } from '../services/requests';
 import * as DataMappingService from '../services/DataMappingService';
 import { fetchFinanceData } from '../services/requests/finance/FinanceViewDataRequest';
-import { fetchMeetingData } from '../services/requests/meeting/MeetingViewDataRequest';
+import { fetchMeetingViewData } from '../services/requests/meeting/MeetingViewDataRequest';
 import { fetchMeetingsPerCountry } from '../services/requests/meeting/MeetingsPerCountryRequest';
-
-import { RootState } from '../store/index';
-import {
-    removeTokenFromLocalStorage,
-    setTokenInLocalStorage,
-} from '../util/Token';
 
 import {
     FinanceState,
     setFinanceViewData,
 } from '../store/datamodels/Finance';
+
 import {
     loginUser,
     logoutUser,
@@ -40,6 +37,14 @@ import {
     MeetingState,
     setMeetingViewData,
 } from '../store/datamodels/Meeting';
+import { RootState } from '../store/index';
+import {
+    removeTokenFromLocalStorage,
+    setTokenInLocalStorage,
+} from '../util/Token';
+import {ServerDto} from '../services/requests/Dto';
+
+
 import { MainState, setMainViewData } from '../store/datamodels/Main';
 
 export const updateMeetingViewData = (): ThunkAction<
@@ -48,11 +53,10 @@ export const updateMeetingViewData = (): ThunkAction<
     null,
     Action<string>
 > => async (dispatch) => {
-    // @ts-ignore
-    const result: MeetingState = {};
+    const result: MeetingState = {} as MeetingState;
 
-    const meetingStatsData: any = await fetchMeetingData();
-    const meetingsCountryData: any = await fetchMeetingsPerCountry();
+    const meetingViewData: MeetingViewDto = await fetchMeetingViewData();
+    const meetingsCountryData: ServerDto[] = await fetchMeetingsPerCountry();
 
     const {
         meetingTotal,
@@ -60,7 +64,7 @@ export const updateMeetingViewData = (): ThunkAction<
         meetingsLastYear,
         meetingsPerGroup,
         sharesPerMeeting,
-    } = meetingStatsData;
+    } = meetingViewData;
 
     const { todayCount, todayDate } = DataMappingService.mapDataForToday(
         meetingsLastMonth
@@ -106,10 +110,9 @@ export const updateFinanceViewData = (): ThunkAction<
     null,
     Action<string>
 > => async (dispatch) => {
-    // @ts-ignore
-    const result: FinanceState = {};
+    const result: FinanceState = {} as FinanceState;
 
-    const financeStatsData: any = await fetchFinanceData();
+    const financeStatsData: FinanceViewDto = await fetchFinanceData();
 
     const {
         shareTotal,
@@ -153,8 +156,8 @@ export const updateMainViewData = (): ThunkAction<
     null,
     Action<string>
 > => async (dispatch) => {
-    // @ts-ignore
-    const result: MainState = {};
+
+    const result: MainState = {} as MainState;
 
     result.usersTotal = await fetchTotalUsers();
     result.groupsTotal = await fetchTotalGroups();

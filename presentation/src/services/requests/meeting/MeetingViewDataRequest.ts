@@ -1,7 +1,8 @@
 import { fetchFromServer } from '../Fetch';
+import { MeetingViewDto } from './MeetingViewDto';
 
-export const fetchMeetingData = async (): Promise<any> => {
-    const data = `query{
+export const fetchMeetingViewData = async (): Promise<MeetingViewDto> => {
+  const data = `query{
       meetingStats{
         meetingTotal
         meetingsLastMonth{
@@ -28,19 +29,8 @@ export const fetchMeetingData = async (): Promise<any> => {
       }
     }`;
 
-    const response = await fetchFromServer('meetingStats', data);
+  const response: MeetingViewDto = await fetchFromServer<MeetingViewDto>('meetingStats', data);
 
-    return response;
+  return response;
 };
 
-export interface MeetingState {
-    [key: string]: any;
-    meetingsTotal: number;
-    meetingsLastWeek: Array<any>;
-    meetingsLastMonth: Array<any>;
-    meetingsLastYear: Array<any>;
-    meetingsPerGroup: Array<any>;
-    sharesPerMeeting: Array<any>;
-    meetingPerCountry: Array<any>;
-    meetingStats: any;
-}

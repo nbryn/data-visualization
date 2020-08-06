@@ -1,6 +1,7 @@
 import { fetchFromServer } from '../Fetch';
+import { FinanceViewDto } from './FinanceViewDto';
 
-export const fetchFinanceData = async (): Promise<any> => {
+export const fetchFinanceData = async (): Promise<FinanceViewDto> => {
     const data = `query {
         financeStats {
           numberOfCurrencies
@@ -40,7 +41,7 @@ export const fetchFinanceData = async (): Promise<any> => {
         }
       }`;
 
-    const response = await fetchFromServer('financeStats', data);
+    const response: FinanceViewDto = await fetchFromServer<FinanceViewDto>('financeStats', data);
 
     return response;
 };

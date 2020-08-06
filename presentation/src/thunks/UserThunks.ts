@@ -9,15 +9,19 @@ import {
     fetchUsersLastMonth,
     fetchUsersPerCountry,
     fetchUsersPerNGO,
+    UserViewDto
 } from '../services/requests';
 import { RootState } from '../store/index';
 
 import {
-    UserState,
+    ChartjsData,
+    ChartjsLastMonthData,
     setUserViewData,
     setChartjsLastYearUserData,
     setChartjsLastMonthUserData,
+    UserState,
 } from '../store/datamodels/User';
+import {LastMonthDto, LastYearDto, ServerDto} from '../services/requests/Dto';
 
 export const updateUserViewData = (): ThunkAction<
     void,
@@ -25,12 +29,11 @@ export const updateUserViewData = (): ThunkAction<
     null,
     Action<string>
 > => async (dispatch) => {
-    // @ts-ignore
-    const result: UserState = {};
+    const result: UserState = {} as UserState;
 
-    const userData: any = await fetchUserViewData();
-    const userCountryData: any = await fetchUsersPerCountry();
-    const userNGOData: any = await fetchUsersPerNGO();
+    const userData: UserViewDto = await fetchUserViewData();
+    const userCountryData: ServerDto[] = await fetchUsersPerCountry();
+    const userNGOData: ServerDto[] = await fetchUsersPerNGO();
 
     const {
         userCount,
@@ -80,9 +83,9 @@ export const updateUsersLastMonthChartjs = (): ThunkAction<
     null,
     Action<string>
 > => async (dispatch) => {
-    const data = await fetchUsersLastMonth();
+    const dto: LastMonthDto[] = await fetchUsersLastMonth();
 
-    const usersLastMonth = DataMappingService.mapChartjsLastMonthData(data);
+    const usersLastMonth: ChartjsLastMonthData = DataMappingService.mapChartjsLastMonthData(dto);
 
     dispatch(setChartjsLastMonthUserData(usersLastMonth));
 };
@@ -93,9 +96,9 @@ export const updateUsersLastYearChartjs = (): ThunkAction<
     null,
     Action<string>
 > => async (dispatch) => {
-    const data = await fetchUsersLastYear();
+    const dto: LastYearDto[] = await fetchUsersLastYear();
 
-    const usersLastYear = DataMappingService.mapChartjsLastYearData(data);
+    const usersLastYear: ChartjsData = DataMappingService.mapChartjsLastYearData(dto);
 
     dispatch(setChartjsLastYearUserData(usersLastYear));
 };

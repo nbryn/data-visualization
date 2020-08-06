@@ -80,9 +80,9 @@ export default function (state = {}, action: GeneralActions) {
     }
 }
 
-export type ServerData = {
-    name: string;
-    count: number;
+export type TodayData = {
+    todayDate: string;
+    todayCount: number;
 }
 
 export type ChartData = {

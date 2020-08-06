@@ -14,12 +14,12 @@ export interface GroupViewAction {
 
 export interface GroupSearchAction {
     type: typeof UPDATE_GROUP_SEARCH_DATA;
-    payload: GroupData
+    payload: GroupDataProp
 }
 
 export interface NGOGroupDataAction {
     type: typeof UPDATE_NGO_GROUP_DATA;
-    payload: ChartData[];
+    payload: GroupData[];
 }
 
 type GroupActions = GroupViewAction | GroupSearchAction | NGOGroupDataAction;
@@ -64,14 +64,14 @@ export function setGroupViewData(data: GroupState): GroupViewAction {
     };
 }
 
-export function setGroupSearchData(data: GroupData): GroupSearchAction {
+export function setGroupSearchData(data: GroupDataProp): GroupSearchAction {
     return {
         type: UPDATE_GROUP_SEARCH_DATA,
         payload: data,
     };
 }
 
-export function setNGOGroupData(data: ChartData[]): NGOGroupDataAction {
+export function setNGOGroupData(data: GroupData[]): NGOGroupDataAction {
     return {
         type: UPDATE_NGO_GROUP_DATA,
         payload: data,
@@ -80,23 +80,26 @@ export function setNGOGroupData(data: ChartData[]): NGOGroupDataAction {
 
 
 export type GroupData = {
-    [key: string]: string | number | string[];
-    registrationDate: string;
+    [key: string]: string | number | string[] | undefined;
+    id?: number;
+    admin: string;
+    amountPerShare: number;
+    boxBalance: number;
     currency: string;
     lastMeeting: string;
-    boxBalance: number;
-    amountPerShare: number;
-    totalMeeting: number;
-    totalLoans: number;
-    owner: string;
-    admin: string;
     members: string[]
+    name: string;
+    owner: string;
+    registrationDate: string;
+    totalMeetings: number;
+    totalLoans: number;
+    totalShares: number;  
 };
 
-export type GroupDataProp = Array<string | number | string[]>;
+export type GroupDataProp = Array<string | number | string[] | undefined>;
 
 export interface GroupState {
-    [key: string]: string | number | ChartData[] | GroupData | GroupData[] | Array<string | number | string[]>;
+    [key: string]: string | number | ChartData[] | GroupData | GroupData[] | GroupDataProp;
     total: number;
     todayCount: number;
     todayDate: string;
@@ -109,7 +112,7 @@ export interface GroupState {
     groupSizeStats: ChartData[];
     perCountryData: ChartData[];
     perNGOData: ChartData[];
-    searchData: Array<string | number | string[]>;
+    searchData: GroupDataProp;
     ngoGroupData: GroupData[];
 }
 

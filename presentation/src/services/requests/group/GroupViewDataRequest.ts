@@ -1,6 +1,7 @@
 import { fetchFromServer } from '../Fetch';
+import {GroupViewDto} from './GroupViewDto';
 
-export const fetchGroupData = async (): Promise<any> => {
+export const fetchGroupViewData = async (): Promise<GroupViewDto> => {
     const data = `query{
       groupStats{
         groupTotal
@@ -24,7 +25,7 @@ export const fetchGroupData = async (): Promise<any> => {
       }
     }`;
 
-    const response = await fetchFromServer('groupStats', data);
+    const response: GroupViewDto = await fetchFromServer<GroupViewDto>('groupStats', data);
 
     return response;
 };

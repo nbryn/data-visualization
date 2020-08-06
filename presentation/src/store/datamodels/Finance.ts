@@ -47,7 +47,7 @@ export interface FinanceState {
     loansLastYearBarChartData: ChartData[];
     sharesTotal: number;
     sharesPerGroup: ChartData[];
-    mostShares: number;
+    mostShares: string;
     etbOnLoan: number;
     groupEtbLoan: ChartData[];
 }
@@ -62,5 +62,5 @@ export const initialFinanceState: FinanceState = {
     sharesPerGroup: [],
     groupEtbLoan: [],
     etbOnLoan: 0,
-    mostShares: 0,
+    mostShares: '',
 };

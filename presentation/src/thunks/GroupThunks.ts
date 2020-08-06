@@ -7,17 +7,22 @@ import {
     fetchDataForGroup,
     fetchGroupsPerCountry,
     fetchGroupsPerNGO,
-    fetchGroupData,
+    fetchGroupViewData,
     fetchGroupsForNGO,
+    GroupDto,
+    GroupViewDto
 } from '../services/requests';
 import {
+    GroupData,
+    GroupDataProp,
     GroupState,
     setGroupViewData,
     setGroupSearchData,
     setNGOGroupData,
 } from '../store/datamodels/Group';
+import {ChartData} from '../store/datamodels/General';
 import { RootState } from '../store/index';
-import {ServerData} from '../store/datamodels/General';
+import {ServerDto} from '../services/requests/Dto';
 
 export const updateGroupViewData = (): ThunkAction<
     void,
@@ -27,9 +32,9 @@ export const updateGroupViewData = (): ThunkAction<
 > => async (dispatch) => {
     const result: GroupState = {} as GroupState;
 
-    const groupData: any = await fetchGroupData();
-    const groupCountryData: ServerData[] = await fetchGroupsPerCountry();
-    const groupNGOData: ServerData[] = await fetchGroupsPerNGO();
+    const groupData: GroupViewDto = await fetchGroupViewData();
+    const groupCountryData: ServerDto[] = await fetchGroupsPerCountry();
+    const groupNGOData: ServerDto[] = await fetchGroupsPerNGO();
 
     const {
         groupTotal,
@@ -74,9 +79,9 @@ export const updateGroupViewData = (): ThunkAction<
 export const updateGroupSearchData = (
     group: string
 ): ThunkAction<void, RootState, null, Action<string>> => async (dispatch) => {
-    const result: any = await fetchDataForGroup(group);
+    const dto: GroupDto = await fetchDataForGroup(group);
 
-    const groupData: any = DataMappingService.mapGroupSearchData(result);
+    const groupData: GroupDataProp = DataMappingService.mapGroupSearchData(dto);
 
     dispatch(setGroupSearchData(groupData));
 };
@@ -84,9 +89,9 @@ export const updateGroupSearchData = (
 export const updateNGOGroupsData = (
     ngo: string
 ): ThunkAction<void, RootState, null, Action<string>> => async (dispatch) => {
-    const result: any = await fetchGroupsForNGO(ngo);
+    const dto: GroupDto[] = await fetchGroupsForNGO(ngo);
 
-    const groupData: any = DataMappingService.mapNGOGroupsData(result);
+    const groupData: GroupData[] = DataMappingService.mapNGOGroupsData(dto);
 
     dispatch(setNGOGroupData(groupData));
 };

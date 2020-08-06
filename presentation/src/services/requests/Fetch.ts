@@ -5,13 +5,11 @@ export async function fetchFromServer<T>(
     data: string,
     dataType?: string
 ): Promise<T> {
-    const url = '/graphql';
-
     let response = null;
 
     try {
         response = await axios({
-            url: url,
+            url: '/graphql',
             method: 'post',
             data: {
                 query: data,
@@ -21,7 +19,7 @@ export async function fetchFromServer<T>(
         console.log(err);
     }
 
-    return responseAssembler(response, action, dataType);
+    return responseAssembler<T>(response, action, dataType);
 }
 
 function responseAssembler<T>(
@@ -29,16 +27,11 @@ function responseAssembler<T>(
     action: string,
     dataType?: string
 ): T {
-    // if (!result || result.status !== 200) {
-    //   throwValidationFailed('', 'NO_DATA');
-    // }
 
     const data = dataType
         ? result!.data.data[action][dataType]
         : result!.data.data[action];
-    // if (data.result) {
-    //   throw new ValidationResult(data.result);
-    // }
+ 
 
     return data;
 }

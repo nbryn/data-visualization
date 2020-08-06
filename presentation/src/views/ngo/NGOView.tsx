@@ -1,4 +1,4 @@
-import BootstrapTable from 'react-bootstrap-table-next';
+import BootstrapTable, { SelectRowProps } from 'react-bootstrap-table-next';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { useDispatch, useSelector } from 'react-redux';
 import React, { ReactElement, useEffect, useState } from 'react';
@@ -37,12 +37,12 @@ const NGOView: React.FC = (): ReactElement => {
 
     const { SearchBar } = Search;
 
-    const selectRow = {
+    const selectRow: SelectRowProps<GroupData> = {
         mode: 'radio',
         clickToSelect: true,
         style: { backgroundColor: '#c8e6c9' },
         onSelect: (row: GroupData) => {
-            const data: Array<string | number | string[]> = [];
+            const data: GroupDataProp = [];
             for (let key in row) {
                 if (key !== 'id') data.push(row[key]);
             }

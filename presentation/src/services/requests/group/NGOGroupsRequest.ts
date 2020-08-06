@@ -1,6 +1,7 @@
 import { fetchFromServer } from '../Fetch';
+import {GroupDto} from './GroupDto';
 
-export const fetchGroupsForNGO = async (ngo: string) => {
+export const fetchGroupsForNGO = async (ngo: string): Promise<GroupDto[]> => {
     const data = `query{
         ngoGroupData{
           groupData(ngo: ${ngo}){
@@ -26,7 +27,7 @@ export const fetchGroupsForNGO = async (ngo: string) => {
       }
       }`;
 
-    const response = await fetchFromServer('ngoGroupData', data, 'groupData');
+    const response: GroupDto[] = await fetchFromServer<GroupDto[]>('ngoGroupData', data, 'groupData');
 
     return response;
 };

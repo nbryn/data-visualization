@@ -76,7 +76,7 @@ const LineChart: React.FC<Props> = (props: Props) => {
           id="interval"
           label="Interval"
           size="small"
-          value="Year"
+          value={props.currentInterval}
           select     
           onChange={props.updateInterval}
         >

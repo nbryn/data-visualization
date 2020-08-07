@@ -1,5 +1,5 @@
-import { useDispatch } from 'react-redux';
 import React, { ReactElement } from 'react';
+import { useDispatch } from 'react-redux';
 
 import {
     BarChartContainer,

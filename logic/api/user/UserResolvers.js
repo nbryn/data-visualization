@@ -42,7 +42,7 @@ const userResolvers = {
     usersLastYear: async (root, context) => {
       return actionRunner(async () => {
         const result = await fetchMonthlyData("User", "signupDate");
-
+        
         return result;
       });
     },

@@ -10,7 +10,7 @@ import TextField from '../form/TextField';
 interface Props extends BarChartDataset {
     labels: string[];
     currentInterval: Interval;
-    updateInterval: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    updateInterval: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -69,7 +69,7 @@ const BarChart: React.FC<Props> = (props: Props) => {
                     id="interval"
                     label="chart.interval"
                     size="small"
-                    value="Year"
+                    value={props.currentInterval}
                     select
                     onChange={props.updateInterval}
                 >

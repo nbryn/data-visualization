@@ -1,6 +1,7 @@
 import { applyMiddleware, compose, combineReducers, createStore } from 'redux';
 import thunk from 'redux-thunk';
 
+import ChartjsReducers, { ChartjsState, initialChartjsState } from './datamodels/Chartjs';
 import FinanceReducers, {
     FinanceState,
     initialFinanceState,
@@ -22,6 +23,7 @@ import UserReducers, { UserState, initialUserState } from './datamodels/User';
 
 export interface RootState {
     [key: string]: any;
+    chartjs: ChartjsState;
     finance: FinanceState;
     groups: GroupState;
     meetings: MeetingState;
@@ -31,6 +33,7 @@ export interface RootState {
 }
 
 const initialState: RootState = {
+    chartjs: initialChartjsState,
     finance: initialFinanceState,
     meetings: initialMeetingState,
     groups: initialGroupState,
@@ -40,6 +43,7 @@ const initialState: RootState = {
 };
 
 const rootReducer = combineReducers({
+    chartjs: ChartjsReducers,
     finance: FinanceReducers,
     groups: GroupReducers,
     meetings: MeetingReducers,

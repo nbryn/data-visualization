@@ -1,8 +1,6 @@
 import { ChartData } from './General';
 
 // Actions
-const CHARTJS_USERS_LAST_MONTH = 'CHARTJS_USERS_LAST_MONTH';
-const CHARTJS_USERS_LAST_YEAR = 'CHART_JS_USERS_LAST_YEAR';
 const UPDATE_USER_VIEW_DATA = 'UPDATE_USER_VIEW_DATA';
 
 // Action Types
@@ -10,34 +8,6 @@ export interface UserViewAction {
     type: typeof UPDATE_USER_VIEW_DATA;
     payload: UserState;
 }
-
-export type ChartjsData = {
-    labels: string[];
-    data: number[];
-    counter: number;
-};
-
-export type ChartjsLastMonthData = {
-    labels: string[];
-    data: number[];
-    counter: number;
-    lastWeek: ChartjsData;
-};
-
-export interface ChartjsLastMonthAction {
-    type: typeof CHARTJS_USERS_LAST_MONTH | typeof CHARTJS_USERS_LAST_YEAR;
-    payload: ChartjsLastMonthData;
-}
-
-export interface ChartjsLastYearAction {
-    type: typeof CHARTJS_USERS_LAST_YEAR;
-    payload: ChartjsData;
-}
-
-type UserActions =
-    | UserViewAction
-    | ChartjsLastMonthAction
-    | ChartjsLastYearAction;
 
 // Actions Creators
 export function setUserViewData(data: UserState): UserViewAction {
@@ -47,26 +17,8 @@ export function setUserViewData(data: UserState): UserViewAction {
     };
 }
 
-export function setChartjsLastMonthUserData(
-    data: ChartjsLastMonthData
-): ChartjsLastMonthAction {
-    return {
-        type: CHARTJS_USERS_LAST_MONTH,
-        payload: data,
-    };
-}
-
-export function setChartjsLastYearUserData(
-    data: ChartjsData
-): ChartjsLastYearAction {
-    return {
-        type: CHARTJS_USERS_LAST_YEAR,
-        payload: data,
-    };
-}
-
 // Reducers
-export default function (state = {}, action: UserActions) {
+export default function (state = {}, action: UserViewAction) {
     switch (action.type) {
         case UPDATE_USER_VIEW_DATA:
             return Object.assign({}, state, {
@@ -83,27 +35,13 @@ export default function (state = {}, action: UserActions) {
                 perNGOData: action.payload.perNGOData,
                 perCountryData: action.payload.perCountryData,
             });
-        case CHARTJS_USERS_LAST_MONTH:
-            return Object.assign({}, state, {
-                chartjsLastWeek: action.payload.lastWeek,
-                chartjsLastMonth: action.payload,
-            });
-        case CHARTJS_USERS_LAST_YEAR:
-            return Object.assign({}, state, {
-                chartjsLastYear: action.payload,
-            });
-
         default:
             return state;
     }
 }
 
 export interface UserState {
-    [key: string]: string | number | ChartData[] | ChartjsData;
-    chartjsLastMonth: ChartjsData;
-    chartjsLastWeek: ChartjsData;
-    chartjsLastYear: ChartjsData;
-    lastMonthBarChartData: ChartData[];
+    [key: string]: string | number | ChartData[];
     lastMonthCount: number;
     lastMonthLineChartData: ChartData[];
     lastYearBarChartData: ChartData[];
@@ -119,21 +57,6 @@ export interface UserState {
 }
 
 export const initialUserState: UserState = {
-    chartjsLastMonth: {
-        labels: [],
-        counter: 0,
-        data: [],
-    },
-    chartjsLastWeek: {
-        labels: [],
-        counter: 0,
-        data: [],
-    },
-    chartjsLastYear: {
-        labels: [],
-        counter: 0,
-        data: [],
-    },
     lastMonthBarChartData: [],
     lastMonthCount: 0,
     lastMonthLineChartData: [],

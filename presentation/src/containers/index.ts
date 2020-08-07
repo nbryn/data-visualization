@@ -1,4 +1,5 @@
-export * from './chartjs/UserLineChartContainer';
+export * from './chartjs/BarChartContainer';
+export * from './chartjs/LineChartContainer';
 
 export * from './kpi/KPIContainer';
 export * from './kpi/KPITodayContainer';

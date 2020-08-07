@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow, ShallowWrapper } from 'enzyme';
-import BarChart from './BarChart';
+import BarChart from '../BarChart';
 import { Bar } from 'react-chartjs-2';
 
 let wrapper: ShallowWrapper;

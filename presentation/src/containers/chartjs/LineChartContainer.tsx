@@ -1,15 +1,24 @@
 import { Card, CardContent } from '@material-ui/core';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import React, { ReactElement, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
-import * as UserThunks from '../../thunks/UserThunks';
-import { ChartjsData } from '../../store/datamodels/User';
+import { ChartjsData } from '../../store/datamodels/Chartjs';
 import { Interval, resolveInterval } from './interval';
 import LineChart from '../../components/chartjs/LineChart';
 import { RootState } from '../../store/index';
 
-export const UserLineChartContainer: React.FC = (): ReactElement => {
+type DataType = string;
+
+type Props = {
+    title: string;
+    dataTypes: DataType[];
+};
+
+export const ChartjsLineChartContainer: React.FC<Props> = ({
+    title,
+    dataTypes,
+}: Props): ReactElement => {
     const { WEEK, MONTH, YEAR } = Interval;
 
     const [loading, setLoading] = useState<boolean>(true);
@@ -22,18 +31,16 @@ export const UserLineChartContainer: React.FC = (): ReactElement => {
     });
 
     const usersLastWeek = useSelector<RootState, ChartjsData>(
-        (state) => state.users.chartjsLastWeek
+        (state) => state.chartjs[dataTypes[0]]
     );
 
     const usersLastMonth = useSelector<RootState, ChartjsData>(
-        (state) => state.users.chartjsLastMonth
+        (state) => state.chartjs[dataTypes[1]]
     );
 
     const usersLastYear = useSelector<RootState, ChartjsData>(
-        (state) => state.users.chartjsLastYear
+        (state) => state.chartjs[dataTypes[2]]
     );
-
-    const dispatch = useDispatch();
 
     const handleChangeInterval = (
         event: React.ChangeEvent<HTMLInputElement>
@@ -48,6 +55,7 @@ export const UserLineChartContainer: React.FC = (): ReactElement => {
         } else {
             updateData(YEAR, usersLastYear);
         }
+
         setLoading(false);
     };
 
@@ -59,11 +67,6 @@ export const UserLineChartContainer: React.FC = (): ReactElement => {
             labels: chartData.labels,
         });
     };
-
-    useEffect(() => {
-        dispatch(UserThunks.updateUsersLastMonthChartjs());
-        dispatch(UserThunks.updateUsersLastYearChartjs());
-    }, []);
 
     useEffect(() => {
         updateData(YEAR, usersLastYear);
@@ -80,7 +83,7 @@ export const UserLineChartContainer: React.FC = (): ReactElement => {
                     <LineChart
                         updateInterval={handleChangeInterval}
                         labels={chartData.labels}
-                        label="Users"
+                        label={title}
                         fill={false}
                         backgroundColor="rgba(83, 51, 237, 1)"
                         borderColor="rgba(83, 51, 237, 1)"

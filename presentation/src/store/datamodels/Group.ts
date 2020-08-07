@@ -5,7 +5,6 @@ const UPDATE_GROUP_VIEW_DATA = 'UPDATE_GROUP_VIEW_DATA';
 const UPDATE_NGO_GROUP_DATA = 'UPDATE_NGO_GROUP_DATA';
 const UPDATE_GROUP_SEARCH_DATA = 'UPDATE_GROUP_SEARCH_DATA';
 
-
 // Action Types
 export interface GroupViewAction {
     type: typeof UPDATE_GROUP_VIEW_DATA;
@@ -14,7 +13,7 @@ export interface GroupViewAction {
 
 export interface GroupSearchAction {
     type: typeof UPDATE_GROUP_SEARCH_DATA;
-    payload: GroupDataProp
+    payload: GroupDataProp;
 }
 
 export interface NGOGroupDataAction {
@@ -78,7 +77,6 @@ export function setNGOGroupData(data: GroupData[]): NGOGroupDataAction {
     };
 }
 
-
 export type GroupData = {
     [key: string]: string | number | string[] | undefined;
     id?: number;
@@ -87,19 +85,25 @@ export type GroupData = {
     boxBalance: number;
     currency: string;
     lastMeeting: string;
-    members: string[]
+    members: string[];
     name: string;
     owner: string;
     registrationDate: string;
     totalMeetings: number;
     totalLoans: number;
-    totalShares: number;  
+    totalShares: number;
 };
 
 export type GroupDataProp = Array<string | number | string[] | undefined>;
 
 export interface GroupState {
-    [key: string]: string | number | ChartData[] | GroupData | GroupData[] | GroupDataProp;
+    [key: string]:
+        | string
+        | number
+        | ChartData[]
+        | GroupData
+        | GroupData[]
+        | GroupDataProp;
     total: number;
     todayCount: number;
     todayDate: string;

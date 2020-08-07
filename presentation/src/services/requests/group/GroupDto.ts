@@ -1,7 +1,7 @@
 export type Name = {
     firstName: string;
     lastName: string;
-}
+};
 
 export type GroupDto = {
     [key: string]: string | number | Name | Name[];
@@ -17,5 +17,4 @@ export type GroupDto = {
     totalMeetings: number;
     totalLoans: number;
     totalShares: number;
- 
-}
+};

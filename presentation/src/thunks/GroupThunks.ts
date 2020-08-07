@@ -10,7 +10,7 @@ import {
     fetchGroupViewData,
     fetchGroupsForNGO,
     GroupDto,
-    GroupViewDto
+    GroupViewDto,
 } from '../services/requests';
 import {
     GroupData,
@@ -20,9 +20,9 @@ import {
     setGroupSearchData,
     setNGOGroupData,
 } from '../store/datamodels/Group';
-import {ChartData} from '../store/datamodels/General';
+import { ChartData } from '../store/datamodels/General';
 import { RootState } from '../store/index';
-import {ServerDto} from '../services/requests/Dto';
+import { ServerDto } from '../services/requests/Dto';
 
 export const updateGroupViewData = (): ThunkAction<
     void,

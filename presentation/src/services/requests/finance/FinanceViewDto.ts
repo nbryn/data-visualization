@@ -1,4 +1,4 @@
-import {LastMonthDto, LastYearDto, ServerDto} from '../Dto';
+import { LastMonthDto, LastYearDto, ServerDto } from '../Dto';
 
 export type FinanceViewDto = {
     numberOfCurrencies?: number;
@@ -12,5 +12,4 @@ export type FinanceViewDto = {
     shareStats: ServerDto[];
     etbOnLoan: number;
     groupEtbLoan: ServerDto[];
-
-}
+};

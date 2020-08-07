@@ -1,13 +1,10 @@
 import { Card, CardContent } from '@material-ui/core';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { makeStyles } from '@material-ui/core/styles';
 import React, { ReactElement, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import * as UserThunks from '../../thunks/UserThunks';
-
 import { ChartjsData } from '../../store/datamodels/User';
-
 import { Interval, resolveInterval } from './interval';
 import LineChart from '../../components/chartjs/LineChart';
 import { RootState } from '../../store/index';
@@ -54,7 +51,7 @@ export const UserLineChartContainer: React.FC = (): ReactElement => {
         setLoading(false);
     };
 
-    const updateData = (interval: Interval, chartData: any): void => {
+    const updateData = (interval: Interval, chartData: ChartjsData): void => {
         setPeriod(interval);
         setChartData({
             counter: chartData.counter,

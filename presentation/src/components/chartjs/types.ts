@@ -1,4 +1,4 @@
-export interface Dataset {
+export interface LineChartDataset {
     label: string;
     fill: boolean;
     pointHoverBorderWidth?: number;
@@ -16,7 +16,23 @@ export interface Dataset {
     counter: number;
 }
 
-export type Chart = {
+export interface BarChartDataset {
+    label: string;
+    backgroundColor: string;
+    borderColor: string;
+    borderWidth: number;
+    hoverBackgroundColor: string;
+    hoverBorderColor: string;
+    data: number[];
+    counter: number;
+}
+
+export interface LineChart {
     labels: string[];
-    datasets: Dataset[];
-};
+    datasets: LineChartDataset[];
+}
+
+export interface BarChart {
+    labels: string[];
+    datasets: BarChartDataset[];
+}

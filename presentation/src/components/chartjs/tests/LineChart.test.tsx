@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow, ShallowWrapper } from 'enzyme';
-import LineChart from './LineChart';
+import LineChart from '../LineChart';
 import { Line } from 'react-chartjs-2';
 
 let wrapper: ShallowWrapper;

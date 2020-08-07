@@ -27,11 +27,9 @@ function responseAssembler<T>(
     action: string,
     dataType?: string
 ): T {
-
     const data = dataType
         ? result!.data.data[action][dataType]
         : result!.data.data[action];
- 
 
     return data;
 }

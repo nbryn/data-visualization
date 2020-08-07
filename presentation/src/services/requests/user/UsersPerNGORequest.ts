@@ -11,7 +11,11 @@ export const fetchUsersPerNGO = async (): Promise<ServerDto[]> => {
         }
       }`;
 
-    const response: ServerDto[] = await fetchFromServer<ServerDto[]>('ngoStats', data, 'usersNGO');
+    const response: ServerDto[] = await fetchFromServer<ServerDto[]>(
+        'ngoStats',
+        data,
+        'usersNGO'
+    );
 
     return response;
 };

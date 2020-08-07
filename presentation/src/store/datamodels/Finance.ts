@@ -30,7 +30,6 @@ export default function (state = {}, action: FinanceAction) {
                 mostShares: action.payload.mostShares,
                 etbOnLoan: action.payload.etbOnLoan,
                 groupEtbLoan: action.payload.groupEtbLoan,
-
             });
         default:
             return state;

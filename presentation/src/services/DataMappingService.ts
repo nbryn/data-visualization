@@ -3,7 +3,12 @@ import { ChartjsData, ChartjsLastMonthData } from '../store/datamodels/User';
 import { convertNumberToMonth } from '../util/Date';
 import { GroupData, GroupDataProp } from '../store/datamodels/Group';
 import { GroupDto, Name } from '../services/requests';
-import { IntervalDto, LastMonthDto, LastYearDto, ServerDto } from '../services/requests/Dto';
+import {
+    IntervalDto,
+    LastMonthDto,
+    LastYearDto,
+    ServerDto,
+} from '../services/requests/Dto';
 
 export const mapDataForToday = (data: LastMonthDto[]): TodayData => {
     const temp: ChartData[] = mapLastMonthBarChartData(data);
@@ -80,12 +85,18 @@ export const getTotalNumberInPeriod = (data: IntervalDto[]): number => {
     return result;
 };
 
-export const mapChartjsLastMonthData = (data: LastMonthDto[]): ChartjsLastMonthData => {
+export const mapChartjsLastMonthData = (
+    data: LastMonthDto[]
+): ChartjsLastMonthData => {
     const usersLastMonth: ChartjsLastMonthData = {
-        labels: [], data: [], counter: 0, lastWeek: {
+        labels: [],
+        data: [],
+        counter: 0,
+        lastWeek: {
             labels: [],
-            data: [], counter: 0
-        }
+            data: [],
+            counter: 0,
+        },
     };
 
     usersLastMonth.labels = data.map(
@@ -102,7 +113,8 @@ export const mapChartjsLastMonthData = (data: LastMonthDto[]): ChartjsLastMonthD
     const lastWeek = data.slice(data.length - 7);
 
     usersLastMonth.lastWeek.data = lastWeek.map(
-        (element: LastMonthDto) => (usersLastMonth.lastWeek.counter += element.count)
+        (element: LastMonthDto) =>
+            (usersLastMonth.lastWeek.counter += element.count)
     );
 
     return usersLastMonth;
@@ -110,7 +122,9 @@ export const mapChartjsLastMonthData = (data: LastMonthDto[]): ChartjsLastMonthD
 
 export const mapChartjsLastYearData = (data: LastYearDto[]): ChartjsData => {
     const usersLastYear: ChartjsData = {
-        labels: [], data: [], counter: 0
+        labels: [],
+        data: [],
+        counter: 0,
     };
 
     usersLastYear.labels = data.map((element: LastYearDto) => {

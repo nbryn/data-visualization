@@ -1,4 +1,4 @@
-import {LastMonthDto, LastYearDto, ServerDto} from '../Dto';
+import { LastMonthDto, LastYearDto, ServerDto } from '../Dto';
 
 export type MeetingViewDto = {
     meetingTotal: number;
@@ -6,4 +6,4 @@ export type MeetingViewDto = {
     meetingsLastYear: LastYearDto[];
     meetingsPerGroup: ServerDto[];
     sharesPerMeeting: ServerDto[];
-}
+};

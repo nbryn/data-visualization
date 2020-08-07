@@ -35,7 +35,7 @@ export default function (state = {}, action: MeetingAction) {
                 lastMonthCount: action.payload.lastMonthCount,
                 lastYearCount: action.payload.lastYearCount,
             });
-     
+
         default:
             return state;
     }

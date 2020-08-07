@@ -15,14 +15,14 @@ export type ChartjsData = {
     labels: string[];
     data: number[];
     counter: number;
-}
+};
 
 export type ChartjsLastMonthData = {
     labels: string[];
     data: number[];
     counter: number;
     lastWeek: ChartjsData;
-}
+};
 
 export interface ChartjsLastMonthAction {
     type: typeof CHARTJS_USERS_LAST_MONTH | typeof CHARTJS_USERS_LAST_YEAR;
@@ -34,7 +34,10 @@ export interface ChartjsLastYearAction {
     payload: ChartjsData;
 }
 
-type UserActions = UserViewAction | ChartjsLastMonthAction | ChartjsLastYearAction;
+type UserActions =
+    | UserViewAction
+    | ChartjsLastMonthAction
+    | ChartjsLastYearAction;
 
 // Actions Creators
 export function setUserViewData(data: UserState): UserViewAction {
@@ -44,14 +47,18 @@ export function setUserViewData(data: UserState): UserViewAction {
     };
 }
 
-export function setChartjsLastMonthUserData(data: ChartjsLastMonthData): ChartjsLastMonthAction {
+export function setChartjsLastMonthUserData(
+    data: ChartjsLastMonthData
+): ChartjsLastMonthAction {
     return {
         type: CHARTJS_USERS_LAST_MONTH,
         payload: data,
     };
 }
 
-export function setChartjsLastYearUserData(data: ChartjsData): ChartjsLastYearAction {
+export function setChartjsLastYearUserData(
+    data: ChartjsData
+): ChartjsLastYearAction {
     return {
         type: CHARTJS_USERS_LAST_YEAR,
         payload: data,
@@ -115,17 +122,17 @@ export const initialUserState: UserState = {
     chartjsLastMonth: {
         labels: [],
         counter: 0,
-        data: []
+        data: [],
     },
     chartjsLastWeek: {
         labels: [],
         counter: 0,
-        data: []
+        data: [],
     },
     chartjsLastYear: {
         labels: [],
         counter: 0,
-        data: []
+        data: [],
     },
     lastMonthBarChartData: [],
     lastMonthCount: 0,

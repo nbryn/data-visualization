@@ -22,10 +22,7 @@ import { fetchFinanceData } from '../services/requests/finance/FinanceViewDataRe
 import { fetchMeetingViewData } from '../services/requests/meeting/MeetingViewDataRequest';
 import { fetchMeetingsPerCountry } from '../services/requests/meeting/MeetingsPerCountryRequest';
 
-import {
-    FinanceState,
-    setFinanceViewData,
-} from '../store/datamodels/Finance';
+import { FinanceState, setFinanceViewData } from '../store/datamodels/Finance';
 
 import {
     loginUser,
@@ -33,17 +30,13 @@ import {
     loginError,
     updateEngagementViewData,
 } from '../store/datamodels/General';
-import {
-    MeetingState,
-    setMeetingViewData,
-} from '../store/datamodels/Meeting';
+import { MeetingState, setMeetingViewData } from '../store/datamodels/Meeting';
 import { RootState } from '../store/index';
 import {
     removeTokenFromLocalStorage,
     setTokenInLocalStorage,
 } from '../util/Token';
-import {ServerDto} from '../services/requests/Dto';
-
+import { ServerDto } from '../services/requests/Dto';
 
 import { MainState, setMainViewData } from '../store/datamodels/Main';
 
@@ -156,7 +149,6 @@ export const updateMainViewData = (): ThunkAction<
     null,
     Action<string>
 > => async (dispatch) => {
-
     const result: MainState = {} as MainState;
 
     result.usersTotal = await fetchTotalUsers();

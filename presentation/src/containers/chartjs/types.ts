@@ -5,4 +5,3 @@ export type Chart = {
     loading: boolean;
     handleChangeInterval: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
-

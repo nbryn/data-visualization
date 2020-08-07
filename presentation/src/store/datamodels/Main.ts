@@ -34,8 +34,7 @@ export default function (state = {}, action: MainAction) {
                 meetingsLastYearData: action.payload.meetingsLastYearData,
                 groupsLastMonthData: action.payload.groupsLastMonthData,
                 groupsLastYearData: action.payload.groupsLastYearData,
-                userGenderStats: action.payload.userGenderStats
-
+                userGenderStats: action.payload.userGenderStats,
             });
         default:
             return state;

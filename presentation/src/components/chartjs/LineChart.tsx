@@ -3,11 +3,11 @@ import { makeStyles } from "@material-ui/core/styles";
 import { MenuItem } from "@material-ui/core";
 import React, {useEffect, useState,  } from "react";
 
-import { Chart, Dataset, } from "./types";
+import { LineChart as Chart, LineChartDataset, } from "./types";
 import { Interval } from "../../containers/chartjs/interval";
 import TextField from "../form/TextField";
 
-interface Props extends Dataset {
+interface Props extends LineChartDataset {
   labels: string[];
   currentInterval: Interval;
   updateInterval: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -55,7 +55,7 @@ const LineChart: React.FC<Props> = (props: Props) => {
   const { WEEK, MONTH, YEAR } = Interval;
 
   useEffect(() => {
-    const datasets: Dataset[] = chart.datasets;
+    const datasets: LineChartDataset[] = chart.datasets;
     datasets![0].data = props.data;
     setChart({
       labels: props.labels,
@@ -76,8 +76,8 @@ const LineChart: React.FC<Props> = (props: Props) => {
           id="interval"
           label="Interval"
           size="small"
-          select
           value="Year"
+          select     
           onChange={props.updateInterval}
         >
           <MenuItem

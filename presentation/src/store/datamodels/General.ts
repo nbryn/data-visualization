@@ -25,7 +25,11 @@ export interface UpdateEngagementViewDataAction {
     payload: any;
 }
 
-type GeneralActions = LoginAction | LoginError | LogoutAction | UpdateEngagementViewDataAction;
+type GeneralActions =
+    | LoginAction
+    | LoginError
+    | LogoutAction
+    | UpdateEngagementViewDataAction;
 
 // Action Creators
 export function loginUser(data: LoginAction) {
@@ -83,12 +87,12 @@ export default function (state = {}, action: GeneralActions) {
 export type TodayData = {
     todayDate: string;
     todayCount: number;
-}
+};
 
 export type ChartData = {
     name: string;
     value: number;
-}
+};
 
 export type User = {
     [key: string]: string;

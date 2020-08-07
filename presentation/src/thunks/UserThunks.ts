@@ -9,7 +9,7 @@ import {
     fetchUsersLastMonth,
     fetchUsersPerCountry,
     fetchUsersPerNGO,
-    UserViewDto
+    UserViewDto,
 } from '../services/requests';
 import { RootState } from '../store/index';
 
@@ -21,7 +21,7 @@ import {
     setChartjsLastMonthUserData,
     UserState,
 } from '../store/datamodels/User';
-import {LastMonthDto, LastYearDto, ServerDto} from '../services/requests/Dto';
+import { LastMonthDto, LastYearDto, ServerDto } from '../services/requests/Dto';
 
 export const updateUserViewData = (): ThunkAction<
     void,
@@ -85,7 +85,9 @@ export const updateUsersLastMonthChartjs = (): ThunkAction<
 > => async (dispatch) => {
     const dto: LastMonthDto[] = await fetchUsersLastMonth();
 
-    const usersLastMonth: ChartjsLastMonthData = DataMappingService.mapChartjsLastMonthData(dto);
+    const usersLastMonth: ChartjsLastMonthData = DataMappingService.mapChartjsLastMonthData(
+        dto
+    );
 
     dispatch(setChartjsLastMonthUserData(usersLastMonth));
 };
@@ -98,7 +100,9 @@ export const updateUsersLastYearChartjs = (): ThunkAction<
 > => async (dispatch) => {
     const dto: LastYearDto[] = await fetchUsersLastYear();
 
-    const usersLastYear: ChartjsData = DataMappingService.mapChartjsLastYearData(dto);
+    const usersLastYear: ChartjsData = DataMappingService.mapChartjsLastYearData(
+        dto
+    );
 
     dispatch(setChartjsLastYearUserData(usersLastYear));
 };

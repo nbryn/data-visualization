@@ -79,7 +79,6 @@ const UserView: React.FC = (): ReactElement => {
                                     xLabel="Country"
                                     yLabel="Users"
                                     color="#1828E8"
-                                    css="card-graph card-stats"
                                 />
                             </Col>
                             <Col lg={4} sm={6}>
@@ -90,7 +89,6 @@ const UserView: React.FC = (): ReactElement => {
                                     xLabel="NGO"
                                     yLabel="Users"
                                     color="#2196f3"
-                                    css="card-graph card-stats"
                                 />
                             </Col>
                         </Row>

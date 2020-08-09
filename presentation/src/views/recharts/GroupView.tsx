@@ -81,7 +81,6 @@ const GroupView: React.FC = (): ReactElement => {
                                     xLabel="Country"
                                     yLabel="Groups"
                                     color="#1828E8"
-                                    css="card-graph card-stats"
                                 />
                             </Col>
                             <Col lg={4} sm={6}>
@@ -92,7 +91,6 @@ const GroupView: React.FC = (): ReactElement => {
                                     xLabel="NGO"
                                     yLabel="Groups"
                                     color="#ff0000"
-                                    css="card-graph card-stats"
                                 />
                             </Col>
                         </Row>

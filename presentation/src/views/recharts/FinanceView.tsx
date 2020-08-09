@@ -79,7 +79,6 @@ const FinanceView: React.FC = (): ReactElement => {
                                     xLabel="Group Name"
                                     yLabel="Shares"
                                     color="#1828E8"
-                                    css="card-graph card-stats"
                                 />
                             </Col>
                             <Col lg={4} sm={6}>
@@ -90,7 +89,6 @@ const FinanceView: React.FC = (): ReactElement => {
                                     xLabel="Group Name"
                                     yLabel="Amount"
                                     color="#2196f3"
-                                    css="card-graph card-stats"
                                 />
                             </Col>
                         </Row>
@@ -124,7 +122,6 @@ const FinanceView: React.FC = (): ReactElement => {
                                     color="#2196f3"
                                     xLabel="Currency"
                                     yLabel="Amount"
-                                    css="card-circle card-stats"
                                 />
                             </Col>
                         </Row>

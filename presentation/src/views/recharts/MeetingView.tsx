@@ -79,7 +79,6 @@ const MeetingView: React.FC = (): ReactElement => {
                                     xLabel="Group"
                                     yLabel="Meetings"
                                     color="#ff0000"
-                                    css="card-graph card-stats"
                                 />
                             </Col>
                             <Col lg={4} sm={6}>
@@ -90,7 +89,6 @@ const MeetingView: React.FC = (): ReactElement => {
                                     xLabel="Country"
                                     yLabel="Meetings"
                                     color="#228b22"
-                                    css="card-graph card-stats"
                                 />
                             </Col>
                         </Row>
@@ -125,7 +123,6 @@ const MeetingView: React.FC = (): ReactElement => {
                                     xLabel="Meeting"
                                     yLabel="Shares"
                                     color="#2196f3"
-                                    css="card-circle card-stats"
                                 />
                             </Col>
                         </Row>

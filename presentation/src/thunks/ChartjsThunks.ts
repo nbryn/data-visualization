@@ -4,6 +4,10 @@ import { ThunkAction } from 'redux-thunk';
 import * as DataMappingService from '../services/DataMappingService';
 
 import {
+    fetchTotalGroups,
+    fetchTotalMeetings,
+    fetchTotalShares,
+    fetchTotalUsers,
     fetchUsersLastYear,
     fetchUsersLastMonth,
 } from '../services/requests';
@@ -25,27 +29,38 @@ export const updateChartjsData = (): ThunkAction<
 > => async (dispatch) => {
     const result: ChartjsState = {} as ChartjsState;
 
+    result.usersTotal = await fetchTotalUsers();
+    result.groupsTotal = await fetchTotalGroups();
+    result.meetingsTotal = await fetchTotalMeetings();
+    result.sharesTotal = await fetchTotalShares();
+
     const usersLastMonth: LastMonthDto[] = await fetchUsersLastMonth();
     const usersLastYear: LastYearDto[] = await fetchUsersLastYear();
 
-    const lastMonthAggregate: ChartjsLastMonthData = DataMappingService.mapChartjsLastMonthData(
+    const lastMonthLineChart: ChartjsLastMonthData = DataMappingService.mapChartjsLastMonthData(
         usersLastMonth, true
     );
 
-    result.usersLastMonthLineChart = lastMonthAggregate;
-    result.usersLastWeekLineChart = lastMonthAggregate.lastWeek;
+    result.usersLastMonthLineChart = lastMonthLineChart;
+    result.usersLastWeekLineChart = lastMonthLineChart.lastWeek;
 
-    const lastMonthNoAggregate: ChartjsLastMonthData = DataMappingService.mapChartjsLastMonthData(
+    const lastMonthBarChart: ChartjsLastMonthData = DataMappingService.mapChartjsLastMonthData(
         usersLastMonth, false
     );
 
-    result.usersLastMonthBarChart = lastMonthNoAggregate;
-    result.usersLastWeekBarChart = lastMonthNoAggregate.lastWeek;
+    result.usersLastMonthBarChart = lastMonthBarChart;
+    result.usersLastWeekBarChart = lastMonthBarChart.lastWeek;
+
+    console.log(usersLastYear);
 
     result.usersLastYearLineChart = DataMappingService.mapChartjsLastYearData(
         usersLastYear, true
     );
+
+    console.log(usersLastYear);
+    
     result.usersLastYearBarChart = DataMappingService.mapChartjsLastYearData(usersLastYear, false);
+
 
     dispatch(setChartjsData(result));
 }

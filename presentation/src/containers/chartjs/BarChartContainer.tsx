@@ -13,9 +13,12 @@ type DataType = string;
 export type Props = {
     title: string;
     dataTypes: DataType[];
-}
+};
 
-export const ChartjsBarChartContainer: React.FC<Props> = ({title, dataTypes}: Props): ReactElement => {
+export const ChartjsBarChartContainer: React.FC<Props> = ({
+    title,
+    dataTypes,
+}: Props): ReactElement => {
     const { WEEK, MONTH, YEAR } = Interval;
 
     const [loading, setLoading] = useState<boolean>(true);
@@ -94,4 +97,3 @@ export const ChartjsBarChartContainer: React.FC<Props> = ({title, dataTypes}: Pr
         </Card>
     );
 };
-

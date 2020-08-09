@@ -13,7 +13,6 @@ import Sidebar from '../../components/navigation/Sidebar';
 
 const { Col, Grid, Row } = require('react-bootstrap');
 
-
 const MainView: React.FC = (): ReactElement => {
     const dispatch = useDispatch();
 
@@ -68,7 +67,7 @@ const MainView: React.FC = (): ReactElement => {
                                     title="Total Users"
                                     statsType="main"
                                     dataType="usersLastYearLineChartData"
-                                    xLabel="Months"
+                                    xLabel="Month"
                                     yLabel="Users"
                                     color="#ff0000"
                                 />
@@ -78,7 +77,7 @@ const MainView: React.FC = (): ReactElement => {
                                     title="Total Groups"
                                     statsType="main"
                                     dataType="groupsLastYearData"
-                                    xLabel="Months"
+                                    xLabel="Month"
                                     yLabel="Groups"
                                     color="#228b22"
                                 />
@@ -88,7 +87,7 @@ const MainView: React.FC = (): ReactElement => {
                                     title="Total Meetings"
                                     statsType="main"
                                     dataType="meetingsLastYearData"
-                                    xLabel="Months"
+                                    xLabel="Month"
                                     yLabel="Meetings"
                                     color="#2196f3"
                                 />
@@ -101,8 +100,8 @@ const MainView: React.FC = (): ReactElement => {
                                     title="Groups Last Month"
                                     statsType="main"
                                     dataType="groupsLastMonthData"
-                                    xLabel="day"
-                                    yLabel="groups"
+                                    xLabel="Day"
+                                    yLabel="Groups"
                                     color="#228b22"
                                 />
                             </Col>
@@ -119,7 +118,7 @@ const MainView: React.FC = (): ReactElement => {
                                     title="Users Last Year"
                                     statsType="main"
                                     dataType="usersLastYearBarChartData"
-                                    xLabel="Months"
+                                    xLabel="Month"
                                     yLabel="Users"
                                     color="#ff0000"
                                 />

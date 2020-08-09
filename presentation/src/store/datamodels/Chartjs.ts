@@ -1,5 +1,3 @@
-import { ChartData } from './General';
-
 // Actions
 const UPDATE_CHARTJS_DATA = 'UPDATE_CHARTJS_DATA';
 
@@ -39,7 +37,11 @@ export default function (state = {}, action: ChartjsAction) {
                 usersLastYearLineChart: action.payload.usersLastYearLineChart,
                 usersLastWeekBarChart: action.payload.usersLastWeekBarChart,
                 usersLastMonthBarChart: action.payload.usersLastMonthBarChart,
-                usersLastYearBarChart: action.payload.usersLastYearBarChart
+                usersLastYearBarChart: action.payload.usersLastYearBarChart,
+                usersTotal: action.payload.usersTotal,
+                groupsTotal: action.payload.groupsTotal,
+                meetingsTotal: action.payload.meetingsTotal,
+                sharesTotal: action.payload.sharesTotal
             });
         default:
             return state;
@@ -47,13 +49,18 @@ export default function (state = {}, action: ChartjsAction) {
 }
 
 export interface ChartjsState {
-    [key: string]: ChartjsData;
+    [key: string]: number | ChartjsData | any;
     usersLastMonthLineChart: ChartjsData;
     usersLastWeekLineChart: ChartjsData;
     usersLastYearLineChart: ChartjsData;
     usersLastMonthBarChart: ChartjsData;
     usersLastWeekBarChart: ChartjsData;
     usersLastYearBarChart: ChartjsData;
+    usersTotal: number;
+    groupsTotal: number;
+    meetingsTotal: number;
+    sharesTotal: number;
+
 }
 
 export const initialChartjsState: ChartjsState = {
@@ -87,4 +94,8 @@ export const initialChartjsState: ChartjsState = {
         counter: 0,
         data: [],
     },
+    usersTotal: 0,
+    groupsTotal: 0,
+    meetingsTotal: 0,
+    sharesTotal: 0
 };

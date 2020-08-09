@@ -7,7 +7,7 @@ export const getCurrentTime = () => {
     let minutes: string = date.getMinutes().toString();
     let hours: string = date.getHours().toString();
     let day: string = date.getDate().toString();
-    let month: string = getMonth(true);
+    let month: string = (date.getMonth() + 1).toString();
 
     if (parseInt(minutes) < 10) {
         minutes = '0' + minutes;
@@ -21,39 +21,13 @@ export const getCurrentTime = () => {
         day = '0' + day;
     }
 
-    let currentTime = day + '/' + month + ' at ' + hours + ':' + minutes;
-
-    return currentTime;
-};
-
-export const getMonth = (number: boolean): string => {
-    const months = [
-        'Januar',
-        'February',
-        'March',
-        'April',
-        'May',
-        'June',
-        'July',
-        'August',
-        'September',
-        'October',
-        'November',
-        'December',
-    ];
-    let date: Date = new Date();
-
-    let month: string = (date.getMonth() + 1).toString();
-
     if (parseInt(month) < 10) {
         month = '0' + month;
     }
 
-    if (number) {
-        return month;
-    } else {
-        return months[parseInt(month) - 1].toString();
-    }
+    let currentTime = day + '/' + month + ' at ' + hours + ':' + minutes;
+
+    return currentTime;
 };
 
 export const convertNumberToMonth = (monthNumber: string): string | undefined => {

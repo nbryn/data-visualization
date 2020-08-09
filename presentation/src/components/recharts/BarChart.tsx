@@ -1,19 +1,30 @@
-import {
-    BarChart as BChart,
-    Bar,
-    CartesianGrid,
-    ResponsiveContainer,
-    XAxis,
-    YAxis,
-} from 'recharts';
+import { BarChart as BChart, Bar, CartesianGrid, XAxis, YAxis } from 'recharts';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { makeStyles } from '@material-ui/core/styles';
 import React, { ReactElement } from 'react';
 
-const { Col } = require('react-bootstrap');
+import { ChartData } from '../../store/datamodels/General';
+
+const useStyles = makeStyles((theme) => ({
+    wrapper: {
+        marginTop: -50,
+        marginBottom: 10,
+    },
+    title: {
+        marginTop: -10,
+        width: 485,
+        left: -200,
+        textAlign: 'center',
+    },
+    spinner: {
+        margin: 125,
+        marginLeft: 200,
+    },
+}));
 
 type Props = {
     title: string;
-    data: any;
+    data: ChartData[];
     xLabelConfig: any;
     yLabelConfig: any;
     color: string;
@@ -26,38 +37,35 @@ const BarChart: React.FC<Props> = ({
     yLabelConfig,
     color,
 }: Props): ReactElement => {
+    const classes = useStyles();
     return (
-        <ResponsiveContainer width={400} height="80%">
-            <div className="content">
-                <Col xs={8}>
-                    <div className="numbers">
-                        <p>{title}</p>
-                    </div>
-                </Col>
-                {!data ? (
-                    <div className="spinner">
-                        <CircularProgress />
-                    </div>
-                ) : (
-                    <BChart
-                        width={400}
-                        height={300}
-                        data={data}
-                        margin={{
-                            top: 5,
-                            right: 30,
-                            left: 20,
-                            bottom: 5,
-                        }}
-                    >
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis label={xLabelConfig} dataKey="name" />
-                        <YAxis label={yLabelConfig} />
-                        <Bar dataKey="value" fill={color} />
-                    </BChart>
-                )}
+        <>
+            <div className={classes.title}>
+                <p>{title}</p>
             </div>
-        </ResponsiveContainer>
+            {data.length === 0 ? (
+                <div className={classes.spinner}>
+                    <CircularProgress />
+                </div>
+            ) : (
+                <BChart
+                    width={450}
+                    height={300}
+                    data={data}
+                    margin={{
+                        top: 5,
+                        right: 30,
+                        left: 20,
+                        bottom: 5,
+                    }}
+                >
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis label={xLabelConfig} dataKey="name" />
+                    <YAxis label={yLabelConfig} />
+                    <Bar dataKey="value" fill={color} />
+                </BChart>
+            )}
+        </>
     );
 };
 

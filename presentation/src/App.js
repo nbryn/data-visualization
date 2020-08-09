@@ -11,12 +11,12 @@ import './assets/fonts/pe-icon-7-stroke.css';
 import ChartsjMainView from './views/chartjs/MainView';
 import EngagementView from './views/recharts/EngagementView';
 import FinanceView from './views/recharts/FinanceView';
-import GroupSearchView from './views/search/GroupSearchView';
+import GroupSearchView from './views/misc/GroupSearchView';
 import GroupView from './views/recharts/GroupView';
 import MeetingView from './views/recharts/MeetingView';
 import NotFound from './components/navigation/NotFound';
 import UserView from './views/recharts/UserView';
-import NGOView from './views/ngo/NGOView';
+import NGOView from './views/misc/NGOView';
 import Profile from './views/user/UserProfile';
 import RechartsMainView from './views/recharts/MainView';
 import SecureRoute from './components/common/SecureRoute';
@@ -36,13 +36,13 @@ class App extends Component {
 
                         <SecureRoute
                             exact
-                            path="/chartjs-main"
+                            path="/dashboard"
                             component={ChartsjMainView}
                         />
 
                         <SecureRoute
                             exact
-                            path="/dashboard"
+                            path="/overview"
                             component={RechartsMainView}
                         />
                         <SecureRoute

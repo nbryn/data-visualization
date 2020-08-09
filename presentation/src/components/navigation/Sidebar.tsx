@@ -9,11 +9,11 @@ type Links = {
 
 const Sidebar: React.FC = (): ReactElement => {
     const chartjsLinks: Links = {
-        dashboard: '/chartjs-main',
+        dashboard: '/dashboard',
     };
 
     const rechartsLinks: Links = {
-        dashboard: '/dashboard',
+        overview: '/overview',
         groups: '/groups',
         users: '/users',
         finance: '/finance',

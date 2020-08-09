@@ -2,18 +2,31 @@ import {
     CartesianGrid,
     Line,
     LineChart as Chart,
-    ResponsiveContainer,
     YAxis,
     XAxis,
 } from 'recharts';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { makeStyles } from '@material-ui/core/styles';
 import React, { ReactElement } from 'react';
 
-const { Col } = require('react-bootstrap');
+import { ChartData } from '../../store/datamodels/General';
+
+const useStyles = makeStyles((theme) => ({
+    title: {
+        marginTop: -10,
+        width: 485,
+        left: -200,
+        textAlign: 'center',
+    },
+    spinner: {
+        margin: 125,
+        marginLeft: 200,
+    },
+}));
 
 type Props = {
     title: string;
-    data: any;
+    data: ChartData[];
     yLabelConfig: any;
     xLabelConfig: any;
     stroke: string;
@@ -26,33 +39,30 @@ const LineChart: React.FC<Props> = ({
     xLabelConfig,
     stroke,
 }: Props): ReactElement => {
+    const classes = useStyles();
     return (
-        <ResponsiveContainer width={400} height="80%">
-            <div className="content">
-                <Col xs={8}>
-                    <div className="numbers">
-                        <p>{title}</p>
-                    </div>
-                </Col>
-                {!data ? (
-                    <div className="spinner">
-                        <CircularProgress />
-                    </div>
-                ) : (
-                    <Chart width={350} height={300} data={data}>
-                        <XAxis label={xLabelConfig} dataKey="name" />
-                        <YAxis label={yLabelConfig} dataKey="value" />
-                        <CartesianGrid stroke="#eee" strokeDasharray="5 5" />
-                        <Line
-                            strokeWidth={3}
-                            type="monotone"
-                            dataKey="value"
-                            stroke={stroke}
-                        />
-                    </Chart>
-                )}
+        <>
+            <div className={classes.title}>
+                <p>{title}</p>
             </div>
-        </ResponsiveContainer>
+            {data.length === 0 ? (
+                <div className={classes.spinner}>
+                    <CircularProgress />
+                </div>
+            ) : (
+                <Chart width={450} height={300} data={data}>
+                    <XAxis label={xLabelConfig} dataKey="name" />
+                    <YAxis label={yLabelConfig} dataKey="value" />
+                    <CartesianGrid stroke="#eee" strokeDasharray="5 5" />
+                    <Line
+                        strokeWidth={3}
+                        type="monotone"
+                        dataKey="value"
+                        stroke={stroke}
+                    />
+                </Chart>
+            )}
+        </>
     );
 };
 

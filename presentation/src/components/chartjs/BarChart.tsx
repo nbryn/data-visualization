@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
     counter: {
         marginTop: -10,
         marginBottom: 55,
-        width: 150,
+        width: '40%',
         float: 'left',
     },
 }));

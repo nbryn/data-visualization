@@ -1,25 +1,24 @@
+import { makeStyles } from '@material-ui/core/styles';
 import { Pie } from 'react-chartjs-2';
 import React from 'react';
 
 import { PieChart as Chart, PieChartDataset } from './types';
 
-const data = {
-    labels: ['Red', 'Blue', 'Yellow'],
-    datasets: [
-        {
-            data: [300, 50, 100],
-            backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
-            hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
-        },
-    ],
-};
-
+const useStyles = makeStyles((theme) => ({
+    title: {
+        marginTop: -10,
+        marginBottom: 55,
+        width: '100%',
+        textAlign: 'center'
+    },
+}));
 interface Props extends PieChartDataset {
     title: string;
     labels: string[];
 }
 
 const PieChart: React.FC<Props> = (props: Props) => {
+    const classes = useStyles();
     const chart: Chart = {
         labels: props.labels,
         datasets: [
@@ -32,7 +31,10 @@ const PieChart: React.FC<Props> = (props: Props) => {
     };
 
     return (
-        <div>
+        <>
+            <div className={classes.title}>
+                <h5>{props.title}</h5>
+            </div>
             <Pie
                 data={chart}
                 options={{
@@ -40,7 +42,7 @@ const PieChart: React.FC<Props> = (props: Props) => {
                     maintainAspectRatio: true,
                 }}
             />
-        </div>
+        </>
     );
 };
 

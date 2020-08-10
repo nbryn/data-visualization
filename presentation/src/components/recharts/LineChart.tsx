@@ -14,8 +14,7 @@ import { ChartData } from '../../store/datamodels/General';
 const useStyles = makeStyles((theme) => ({
     title: {
         marginTop: -10,
-        width: 485,
-        left: -200,
+        width: '100%',
         textAlign: 'center',
     },
     spinner: {

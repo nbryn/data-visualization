@@ -109,7 +109,7 @@ async function fetchGenderStats() {
 
   const genders = genderStats.map((element) => {
     return {
-      value: element._id,
+      name: element._id,
       count: element.count,
     };
   });

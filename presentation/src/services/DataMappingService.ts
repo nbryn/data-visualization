@@ -1,5 +1,5 @@
 import { ChartData, TodayData } from '../store/datamodels/General';
-import { ChartjsData, ChartjsLastMonthData } from '../store/datamodels/Chartjs';
+import { ChartjsData, ChartjsLastMonthData, ChartjsPieData } from '../store/datamodels/Chartjs';
 import { convertNumberToMonth } from '../util/Date';
 import { GroupData, GroupDataProp } from '../store/datamodels/Group';
 import { GroupDto, Name } from '../services/requests';
@@ -84,6 +84,20 @@ export const getTotalNumberInPeriod = (data: IntervalDto[]): number => {
 
     return result;
 };
+
+export const mapChartjsPieChartData = (data: ServerDto[]): ChartjsPieData => {
+    const pieChartData: any = {
+        labels: [],
+        data: [],
+    }
+
+    data.forEach((element: any) => {
+        pieChartData.labels.push(element.name);
+        pieChartData.data.push(element.count);
+    })
+
+    return pieChartData;
+}
 
 export const mapChartjsLastMonthData = (
     data: LastMonthDto[], aggregate: boolean

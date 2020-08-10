@@ -33,6 +33,7 @@ export const PieChartContainer: React.FC<Props> = ({
         (state) => state[statsType][dataType]
     );
 
+
     return (
         <div className={classes.wrapper}>
             <Card>

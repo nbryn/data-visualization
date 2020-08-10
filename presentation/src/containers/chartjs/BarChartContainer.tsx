@@ -8,11 +8,9 @@ import { Interval, resolveInterval } from './interval';
 import BarChart from '../../components/chartjs/BarChart';
 import { RootState } from '../../store/index';
 
-type DataType = string;
-
 export type Props = {
     title: string;
-    dataTypes: DataType[];
+    dataTypes: string[];
 };
 
 export const ChartjsBarChartContainer: React.FC<Props> = ({

@@ -8,11 +8,9 @@ import { Interval, resolveInterval } from './interval';
 import LineChart from '../../components/chartjs/LineChart';
 import { RootState } from '../../store/index';
 
-type DataType = string;
-
 type Props = {
     title: string;
-    dataTypes: DataType[];
+    dataTypes: string[];
 };
 
 export const ChartjsLineChartContainer: React.FC<Props> = ({

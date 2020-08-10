@@ -7,12 +7,6 @@ import { BarChart as Chart, BarChartDataset } from './types';
 import { Interval } from '../../containers/chartjs/interval';
 import TextField from '../form/TextField';
 
-interface Props extends BarChartDataset {
-    labels: string[];
-    currentInterval: Interval;
-    updateInterval: (event: React.ChangeEvent<HTMLInputElement>) => void;
-}
-
 const useStyles = makeStyles((theme) => ({
     dropdown: {
         width: 100,
@@ -26,6 +20,12 @@ const useStyles = makeStyles((theme) => ({
         float: 'left',
     },
 }));
+
+interface Props extends BarChartDataset {
+    labels: string[];
+    currentInterval: Interval;
+    updateInterval: (event: React.ChangeEvent<HTMLInputElement>) => void;
+}
 
 const BarChart: React.FC<Props> = (props: Props) => {
     const classes = useStyles();

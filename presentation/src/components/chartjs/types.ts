@@ -27,6 +27,12 @@ export interface BarChartDataset {
     counter: number;
 }
 
+export interface PieChartDataset {
+    data: number[];
+    backgroundColor: string[];
+    hoverBackgroundColor: string[];
+}
+
 export interface LineChart {
     labels: string[];
     datasets: LineChartDataset[];
@@ -35,4 +41,9 @@ export interface LineChart {
 export interface BarChart {
     labels: string[];
     datasets: BarChartDataset[];
+}
+
+export interface PieChart {
+    labels: string[];
+    datasets: PieChartDataset[];
 }

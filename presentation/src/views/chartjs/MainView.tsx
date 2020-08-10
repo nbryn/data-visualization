@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import {
     ChartjsBarChartContainer,
     ChartjsLineChartContainer,
+    ChartjsPieChartContainer,
     KPIContainer,
 } from '../../containers';
 import * as ChartjsThunks from '../../thunks/ChartjsThunks';
@@ -62,7 +63,7 @@ const MainView: React.FC = (): ReactElement => {
                         </Row>
 
                         <Row>
-                            <Col lg={6} sm={6}>
+                            <Col lg={4} sm={6}>
                                 <ChartjsLineChartContainer
                                     title="Users"
                                     dataTypes={[
@@ -72,7 +73,7 @@ const MainView: React.FC = (): ReactElement => {
                                     ]}
                                 />
                             </Col>
-                            <Col lg={6} sm={6}>
+                            <Col lg={4} sm={6}>
                                 <ChartjsBarChartContainer
                                     title="Users"
                                     dataTypes={[
@@ -82,7 +83,26 @@ const MainView: React.FC = (): ReactElement => {
                                     ]}
                                 />
                             </Col>
-                            <Col lg={6} sm={6}>
+
+                            <Col lg={4} sm={6}>
+                                <ChartjsPieChartContainer
+                                    title="Gender Distribution"
+                                    dataType="genderData"
+                                    backgroundColor={[
+                                        '#FF6384',
+                                        '#36A2EB',
+                                        '#FFCE56',
+                                    ]}
+                                    hoverBackgroundColor={[
+                                        '#FF6384',
+                                        '#36A2EB',
+                                        '#FFCE56',
+                                    ]}
+                                />
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col lg={4} sm={6}>
                                 <MixedChart
                                     labels={[
                                         'January',

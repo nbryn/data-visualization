@@ -1,6 +1,11 @@
 // Actions
 const UPDATE_CHARTJS_DATA = 'UPDATE_CHARTJS_DATA';
 
+export type ChartjsPieData = {
+    labels: string[];
+    data: number[];
+}
+
 export type ChartjsData = {
     labels: string[];
     data: number[];
@@ -39,6 +44,7 @@ export default function (state = {}, action: ChartjsAction) {
                 usersLastMonthBarChart: action.payload.usersLastMonthBarChart,
                 usersLastYearBarChart: action.payload.usersLastYearBarChart,
                 usersTotal: action.payload.usersTotal,
+                genderData: action.payload.genderData,
                 groupsTotal: action.payload.groupsTotal,
                 meetingsTotal: action.payload.meetingsTotal,
                 sharesTotal: action.payload.sharesTotal
@@ -56,6 +62,7 @@ export interface ChartjsState {
     usersLastMonthBarChart: ChartjsData;
     usersLastWeekBarChart: ChartjsData;
     usersLastYearBarChart: ChartjsData;
+    genderData: ChartjsPieData | null;
     usersTotal: number;
     groupsTotal: number;
     meetingsTotal: number;
@@ -92,6 +99,10 @@ export const initialChartjsState: ChartjsState = {
     usersLastYearBarChart: {
         labels: [],
         counter: 0,
+        data: [],
+    },
+    genderData: {
+        labels: [],
         data: [],
     },
     usersTotal: 0,

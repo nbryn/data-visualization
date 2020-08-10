@@ -8,6 +8,7 @@ import {
     fetchTotalMeetings,
     fetchTotalShares,
     fetchTotalUsers,
+    fetchUserGenderData,
     fetchUsersLastYear,
     fetchUsersLastMonth,
 } from '../services/requests';
@@ -18,7 +19,7 @@ import {
     ChartjsState,
     setChartjsData,
 } from '../store/datamodels/Chartjs';
-import { LastMonthDto, LastYearDto } from '../services/requests/Dto';
+import { LastMonthDto, LastYearDto, ServerDto } from '../services/requests/Dto';
 
 
 export const updateChartjsData = (): ThunkAction<
@@ -36,6 +37,7 @@ export const updateChartjsData = (): ThunkAction<
 
     const usersLastMonth: LastMonthDto[] = await fetchUsersLastMonth();
     const usersLastYear: LastYearDto[] = await fetchUsersLastYear();
+    const genderData: ServerDto[] = await fetchUserGenderData();
 
     const lastMonthLineChart: ChartjsLastMonthData = DataMappingService.mapChartjsLastMonthData(
         usersLastMonth, true
@@ -51,16 +53,13 @@ export const updateChartjsData = (): ThunkAction<
     result.usersLastMonthBarChart = lastMonthBarChart;
     result.usersLastWeekBarChart = lastMonthBarChart.lastWeek;
 
-    console.log(usersLastYear);
-
     result.usersLastYearLineChart = DataMappingService.mapChartjsLastYearData(
         usersLastYear, true
     );
 
-    console.log(usersLastYear);
-    
     result.usersLastYearBarChart = DataMappingService.mapChartjsLastYearData(usersLastYear, false);
 
+    result.genderData = DataMappingService.mapChartjsPieChartData(genderData);
 
     dispatch(setChartjsData(result));
 }

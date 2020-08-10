@@ -8,7 +8,7 @@ import {
     fetchTotalGroups,
     fetchTotalMeetings,
     fetchTotalShares,
-    fetchUserGenderStats,
+    fetchUserGenderData,
     fetchTotalUsers,
     fetchUsersLastYear,
     fetchLogin,
@@ -179,7 +179,7 @@ export const updateMainViewData = (): ThunkAction<
         groupsLastMonth
     );
 
-    const userGenderStats = await fetchUserGenderStats();
+    const userGenderStats = await fetchUserGenderData();
     result.userGenderStats = DataMappingService.mapGeneralChartData(
         userGenderStats
     );

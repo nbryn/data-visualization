@@ -1,20 +1,21 @@
 import { fetchFromServer } from '../Fetch';
+import { ServerDto } from '../Dto';
 
-export const fetchUserGenderStats = async (): Promise<any> => {
-    const data = `query {
+export const fetchUserGenderData = async (): Promise<ServerDto[]> => {
+  const data = `query {
       userStats{
         userGenderStats{
-          value
+          name
           count
         }
       }
     }`;
 
-    const response = await fetchFromServer(
-        'userStats',
-        data,
-        'userGenderStats'
-    );
+  const response: ServerDto[] = await fetchFromServer<ServerDto[]>(
+    'userStats',
+    data,
+    'userGenderStats'
+  );
 
-    return response;
+  return response;
 };

@@ -1,5 +1,6 @@
 import { Card, CardContent } from '@material-ui/core';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { makeStyles } from '@material-ui/core/styles';
 import React, { ReactElement, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
@@ -7,6 +8,17 @@ import { ChartjsData } from '../../store/datamodels/Chartjs';
 import { Interval, resolveInterval } from './interval';
 import LineChart from '../../components/chartjs/LineChart';
 import { RootState } from '../../store/index';
+
+const useStyles = makeStyles((theme) => ({
+    wrapper: {
+        marginTop: 5,
+        marginBottom: 10,
+    },
+    spinner: {
+        margin: 125,
+        marginLeft: 200,
+    },
+}));
 
 type Props = {
     title: string;
@@ -17,6 +29,7 @@ export const ChartjsLineChartContainer: React.FC<Props> = ({
     title,
     dataTypes,
 }: Props): ReactElement => {
+    const classes = useStyles();
     const { WEEK, MONTH, YEAR } = Interval;
 
     const [loading, setLoading] = useState<boolean>(true);
@@ -73,11 +86,11 @@ export const ChartjsLineChartContainer: React.FC<Props> = ({
     }, [usersLastYear, YEAR]);
 
     return (
-        <Card>
-            {loading ? (
-                <CircularProgress />
-            ) : (
-                <CardContent>
+        <Card className={classes.wrapper}>
+            <CardContent>
+                {loading ? (
+                    <CircularProgress className={classes.spinner}/>
+                ) : (
                     <LineChart
                         updateInterval={handleChangeInterval}
                         labels={chartData.labels}
@@ -95,8 +108,8 @@ export const ChartjsLineChartContainer: React.FC<Props> = ({
                         counter={chartData.counter}
                         currentInterval={period}
                     />
-                </CardContent>
-            )}
+                )}
+            </CardContent>
         </Card>
     );
 };

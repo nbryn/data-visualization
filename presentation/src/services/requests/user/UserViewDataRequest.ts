@@ -19,7 +19,7 @@ export const fetchUserViewData = async (): Promise<UserViewDto> => {
             count
           }
         userGenderStats{
-          value
+          name
           count
         }
       }

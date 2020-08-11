@@ -45,18 +45,16 @@ export const BarChartContainer: React.FC<Props> = ({
     const xLabelConfig = { value: xLabel, position: 'center', dy: 10 };
 
     return (
-        <div className={classes.wrapper}>
-            <Card>
-                <CardContent>
-                    <BarChart
-                        title={title}
-                        data={data}
-                        yLabelConfig={yLabelConfig}
-                        xLabelConfig={xLabelConfig}
-                        color={color}
-                    />
-                </CardContent>
-            </Card>
-        </div>
+        <Card className={classes.wrapper}>
+            <CardContent>
+                <BarChart
+                    title={title}
+                    data={data}
+                    yLabelConfig={yLabelConfig}
+                    xLabelConfig={xLabelConfig}
+                    color={color}
+                />
+            </CardContent>
+        </Card>
     );
 };

@@ -4,6 +4,7 @@ import { ThunkAction } from 'redux-thunk';
 import * as DataMappingService from '../services/DataMappingService';
 
 import {
+    fetchGroupsLastYear,
     fetchTotalGroups,
     fetchTotalMeetings,
     fetchTotalShares,
@@ -37,6 +38,7 @@ export const updateChartjsData = (): ThunkAction<
 
     const usersLastMonth: LastMonthDto[] = await fetchUsersLastMonth();
     const usersLastYear: LastYearDto[] = await fetchUsersLastYear();
+    const groupsLastYear: LastYearDto[] = await fetchGroupsLastYear();
     const genderData: ServerDto[] = await fetchUserGenderData();
 
     const lastMonthLineChart: ChartjsLastMonthData = DataMappingService.mapChartjsLastMonthData(
@@ -56,6 +58,7 @@ export const updateChartjsData = (): ThunkAction<
     result.usersLastYearLineChart = DataMappingService.mapChartjsLastYearData(
         usersLastYear, true
     );
+    result.groupsLastYearLineChart = DataMappingService.mapChartjsLastYearData(groupsLastYear, true);
 
     result.usersLastYearBarChart = DataMappingService.mapChartjsLastYearData(usersLastYear, false);
 

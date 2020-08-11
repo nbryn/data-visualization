@@ -1,7 +1,9 @@
-import React, { ReactElement } from 'react';
 import { Cell, PieChart as PieChartt, Pie } from 'recharts';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { makeStyles } from '@material-ui/core/styles';
+import React, { ReactElement } from 'react';
+
+import { ChartData } from '../../store/datamodels/General';
 
 const useStyles = makeStyles((theme) => ({
     title: {
@@ -17,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
 
 type Props = {
     title: string;
-    data: any;
+    data: ChartData[];
     colors: string[];
 };
 
@@ -28,22 +30,20 @@ const PieChart: React.FC<Props> = ({
 }: Props): ReactElement => {
     const classes = useStyles();
 
-    const renderLabel = (entry: any) => {
+    const renderLabel = (entry: ChartData): string => {
         return entry.name;
     };
 
     return (
         <>
-            <div className={classes.title}>
-                <p>{title}</p>
-            </div>
+            <p className={classes.title}>{title}</p>
+            
             {data.length === 0 ? (
-                <div className={classes.spinner}>
-                    <CircularProgress />
-                </div>
+                <CircularProgress className={classes.spinner} />
             ) : (
                 <PieChartt width={450} height={300}>
                     <Pie
+                        // @ts-ignore
                         label={renderLabel}
                         dataKey="value"
                         nameKey="name"
@@ -53,7 +53,7 @@ const PieChart: React.FC<Props> = ({
                         outerRadius={100}
                         fill="#82ca9d"
                     >
-                        {data.map((entry: any, index: number) => (
+                        {data.map((entry: ChartData, index: number) => (
                             <Cell key={`cell-${index}`} fill={colors[index]} />
                         ))}
                     </Pie>

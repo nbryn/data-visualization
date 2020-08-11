@@ -4,14 +4,13 @@ import { useDispatch } from 'react-redux';
 import {
     ChartjsBarChartContainer,
     ChartjsLineChartContainer,
+    ChartjsMixedChartContainer,
     ChartjsPieChartContainer,
     KPIContainer,
 } from '../../containers';
 import * as ChartjsThunks from '../../thunks/ChartjsThunks';
 import Header from '../../components/navigation/Header';
 import Sidebar from '../../components/navigation/Sidebar';
-
-import MixedChart from '../../components/chartjs/MixedChart';
 
 const { Col, Grid, Row } = require('react-bootstrap');
 
@@ -88,71 +87,21 @@ const MainView: React.FC = (): ReactElement => {
                                 <ChartjsPieChartContainer
                                     title="Gender Distribution"
                                     dataType="genderData"
-                                    backgroundColor={[
-                                        '#FF6384',
-                                        '#36A2EB',
-                                        '#FFCE56',
-                                    ]}
+                                    backgroundColor={['#e30c32', '#427d23']}
                                     hoverBackgroundColor={[
-                                        '#FF6384',
-                                        '#36A2EB',
-                                        '#FFCE56',
+                                        '#e30c32',
+                                        '#427d23',
                                     ]}
                                 />
                             </Col>
                         </Row>
                         <Row>
                             <Col lg={4} sm={6}>
-                                <MixedChart
-                                    labels={[
-                                        'January',
-                                        'February',
-                                        'March',
-                                        'April',
-                                        'May',
-                                        'June',
-                                        'July',
-                                    ]}
-                                    firstChart={{
-                                        label: 'Meetings',
-                                        type: 'line',
-                                        data: [
-                                            0,
-                                            112,
-                                            500,
-                                            1200,
-                                            2100,
-                                            2400,
-                                            3200,
-                                        ],
-                                        fill: false,
-                                        borderColor: '#008000',
-                                        backgroundColor: '#008000',
-                                        pointBorderColor: '#008000',
-                                        pointBackgroundColor: '#008000',
-                                        pointHoverBackgroundColor: '#008000',
-                                        pointHoverBorderColor: '#008000',
-                                    }}
-                                    secondChart={{
-                                        label: 'ETB',
-                                        type: 'line',
-                                        data: [
-                                            0,
-                                            2500,
-                                            3777,
-                                            5111,
-                                            6212,
-                                            7927,
-                                            12234,
-                                        ],
-                                        fill: false,
-                                        backgroundColor: '#0000ff',
-                                        borderColor: '#ff0000',
-                                        pointBorderColor: '#ff0000',
-                                        pointBackgroundColor: '#ff0000',
-                                        pointHoverBackgroundColor: '#ff0000',
-                                        pointHoverBorderColor: '#ff0000',
-                                    }}
+                                <ChartjsMixedChartContainer
+                                    firstDataType="usersLastYearLineChart"
+                                    firstChartTitle="Users"
+                                    secondDataType="groupsLastYearLineChart"
+                                    secondChartTitle="Groups"
                                 />
                             </Col>
                         </Row>

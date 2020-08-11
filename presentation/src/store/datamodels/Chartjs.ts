@@ -37,6 +37,7 @@ export default function (state = {}, action: ChartjsAction) {
     switch (action.type) {
         case UPDATE_CHARTJS_DATA:
             return Object.assign({}, state, {
+                groupsLastYearLineChart: action.payload.groupsLastYearLineChart,
                 usersLastWeekLineChart: action.payload.usersLastWeekLineChart,
                 usersLastMonthLineChart: action.payload.usersLastMonthLineChart,
                 usersLastYearLineChart: action.payload.usersLastYearLineChart,
@@ -56,6 +57,7 @@ export default function (state = {}, action: ChartjsAction) {
 
 export interface ChartjsState {
     [key: string]: number | ChartjsData | any;
+    groupsLastYearLineChart: ChartjsData;
     usersLastMonthLineChart: ChartjsData;
     usersLastWeekLineChart: ChartjsData;
     usersLastYearLineChart: ChartjsData;
@@ -71,6 +73,11 @@ export interface ChartjsState {
 }
 
 export const initialChartjsState: ChartjsState = {
+    groupsLastYearLineChart: {
+        labels: [],
+        counter: 0,
+        data: [],
+    },
     usersLastMonthLineChart: {
         labels: [],
         counter: 0,

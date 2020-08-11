@@ -1,5 +1,6 @@
 import { Card, CardContent } from '@material-ui/core';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { makeStyles } from '@material-ui/core/styles';
 import React, { ReactElement, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
@@ -7,6 +8,17 @@ import { ChartjsData } from '../../store/datamodels/Chartjs';
 import { Interval, resolveInterval } from './interval';
 import BarChart from '../../components/chartjs/BarChart';
 import { RootState } from '../../store/index';
+
+const useStyles = makeStyles((theme) => ({
+    wrapper: {
+        marginTop: 5,
+        marginBottom: 10,
+    },
+    spinner: {
+        margin: 125,
+        marginLeft: 200,
+    },
+}));
 
 export type Props = {
     title: string;
@@ -17,26 +29,25 @@ export const ChartjsBarChartContainer: React.FC<Props> = ({
     title,
     dataTypes,
 }: Props): ReactElement => {
+    const classes = useStyles();
     const { WEEK, MONTH, YEAR } = Interval;
 
-    const [loading, setLoading] = useState<boolean>(true);
     const [period, setPeriod] = useState<Interval>(YEAR);
-
     const [chartData, setChartData] = useState<ChartjsData>({
         labels: [],
         counter: 0,
         data: [],
     });
 
-    const usersLastWeek = useSelector<RootState, ChartjsData>(
+    const usersLastWeek: ChartjsData = useSelector<RootState, ChartjsData>(
         (state) => state.chartjs[dataTypes[0]]
     );
 
-    const usersLastMonth = useSelector<RootState, ChartjsData>(
+    const usersLastMonth: ChartjsData = useSelector<RootState, ChartjsData>(
         (state) => state.chartjs[dataTypes[1]]
     );
 
-    const usersLastYear = useSelector<RootState, ChartjsData>(
+    const usersLastYear: ChartjsData = useSelector<RootState, ChartjsData>(
         (state) => state.chartjs[dataTypes[2]]
     );
 
@@ -44,8 +55,7 @@ export const ChartjsBarChartContainer: React.FC<Props> = ({
         event: React.ChangeEvent<HTMLInputElement>
     ): void => {
         const interval: Interval = resolveInterval(event.target.value);
-        setLoading(true);
-
+   
         if (interval === WEEK) {
             updateData(WEEK, usersLastWeek);
         } else if (interval === MONTH) {
@@ -53,7 +63,7 @@ export const ChartjsBarChartContainer: React.FC<Props> = ({
         } else {
             updateData(YEAR, usersLastYear);
         }
-        setLoading(false);
+
     };
 
     const updateData = (interval: Interval, chartData: ChartjsData): void => {
@@ -68,15 +78,14 @@ export const ChartjsBarChartContainer: React.FC<Props> = ({
     useEffect(() => {
         updateData(YEAR, usersLastYear);
 
-        setLoading(false);
     }, [usersLastYear, YEAR]);
 
     return (
-        <Card>
-            {loading ? (
-                <CircularProgress />
-            ) : (
-                <CardContent>
+        <Card className={classes.wrapper}>
+            <CardContent>
+                {usersLastYear.data.length === 0 ? (
+                    <CircularProgress className={classes.spinner}/>
+                ) : (
                     <BarChart
                         updateInterval={handleChangeInterval}
                         labels={chartData.labels}
@@ -90,8 +99,8 @@ export const ChartjsBarChartContainer: React.FC<Props> = ({
                         counter={chartData.counter}
                         currentInterval={period}
                     />
-                </CardContent>
-            )}
+                )}
+            </CardContent>
         </Card>
     );
 };

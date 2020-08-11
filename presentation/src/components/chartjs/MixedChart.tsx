@@ -1,5 +1,15 @@
-import React, { ReactElement } from 'react';
 import { Bar } from 'react-chartjs-2';
+import React, { ReactElement } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+    title: {
+        marginTop: -10,
+        marginBottom: 55,
+        width: '100%',
+        textAlign: 'center',
+    },
+}));
 
 type ChartProps = {
     label: string;
@@ -8,12 +18,10 @@ type ChartProps = {
     fill: boolean;
     borderColor: string;
     backgroundColor: string;
-    hoverBackgroundColor?: string;
-    hoverBorderColor?: string;
-    pointBorderColor?: string;
-    pointBackgroundColor?: string;
-    pointHoverBackgroundColor?: string;
-    pointHoverBorderColor?: string;
+    pointBorderColor: string;
+    pointBackgroundColor: string;
+    pointHoverBackgroundColor: string;
+    pointHoverBorderColor: string;
 };
 
 type Props = {
@@ -22,51 +30,47 @@ type Props = {
     secondChart: ChartProps;
 };
 
-const MixedChart: React.FC<Props> = (props: Props): ReactElement => {
+const MixedChart: React.FC<Props> = ({
+    firstChart,
+    secondChart,
+    labels,
+}: Props): ReactElement => {
+    const classes = useStyles();
     const data = {
         datasets: [
             {
-                label: props.firstChart.label,
-                type: props.firstChart.type,
-                data: props.firstChart.data,
-                fill: props.firstChart.fill,
-                borderColor: props.firstChart.borderColor,
-                backgroundColor: props.firstChart.backgroundColor,
-                hoverBackgroundColor:
-                    props.firstChart.hoverBackgroundColor || '',
-                hoverBorderColor: props.firstChart.pointHoverBorderColor || '',
-                pointBorderColor: props.firstChart.pointBackgroundColor || '',
-                pointBackgroundColor:
-                    props.firstChart.pointBackgroundColor || '',
-                pointHoverBackgroundColor:
-                    props.firstChart.pointHoverBackgroundColor,
-                pointHoverBorderColor:
-                    props.firstChart.pointHoverBorderColor || '',
+                label: firstChart.label,
+                type: firstChart.type,
+                data: firstChart.data,
+                fill: firstChart.fill,
+                borderColor: firstChart.borderColor,
+                backgroundColor: firstChart.backgroundColor,
+                pointBorderColor: firstChart.pointBackgroundColor,
+                pointBackgroundColor: firstChart.pointBackgroundColor,
+                pointHoverBackgroundColor: firstChart.pointHoverBackgroundColor,
+                pointHoverBorderColor: firstChart.pointHoverBorderColor,
                 yAxisID: 'y-axis-1',
             },
             {
-                label: props.secondChart.label,
-                type: props.secondChart.type,
-                data: props.secondChart.data,
-                fill: props.secondChart.fill,
-                borderColor: props.secondChart.borderColor,
-                backgroundColor: props.secondChart.backgroundColor,
-                hoverBackgroundColor:
-                    props.secondChart.hoverBackgroundColor || '',
-                hoverBorderColor: props.secondChart.pointHoverBorderColor || '',
-                pointBorderColor: props.secondChart.pointBorderColor || '',
-                pointBackgroundColor:
-                    props.secondChart.pointBackgroundColor || '',
+                label: secondChart.label,
+                type: secondChart.type,
+                data: secondChart.data,
+                fill: secondChart.fill,
+                borderColor: secondChart.borderColor,
+                backgroundColor: secondChart.backgroundColor,
+                pointBorderColor: secondChart.pointBorderColor,
+                pointBackgroundColor: secondChart.pointBackgroundColor,
                 pointHoverBackgroundColor:
-                    props.secondChart.pointHoverBackgroundColor,
-                pointHoverBorderColor: props.secondChart.pointHoverBorderColor,
+                    secondChart.pointHoverBackgroundColor,
+                pointHoverBorderColor: secondChart.pointHoverBorderColor,
                 yAxisID: 'y-axis-2',
             },
         ],
     };
     const options = {
         responsive: true,
-        labels: props.labels,
+        maintainAspectRatio: true,
+        labels: labels,
         tooltips: {
             mode: 'label',
         },
@@ -83,7 +87,7 @@ const MixedChart: React.FC<Props> = (props: Props): ReactElement => {
                         display: false,
                     },
 
-                    labels: props.labels,
+                    labels: labels,
                 },
             ],
             yAxes: [
@@ -115,7 +119,16 @@ const MixedChart: React.FC<Props> = (props: Props): ReactElement => {
         },
     };
 
-    return <Bar data={data} options={options} />;
+    return (
+        <>
+            <div className={classes.title}>
+                <h5>
+                    {firstChart.label} and {secondChart.label}
+                </h5>
+            </div>{' '}
+            <Bar data={data} options={options} />
+        </>
+    );
 };
 
 export default MixedChart;

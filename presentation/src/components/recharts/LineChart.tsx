@@ -41,13 +41,10 @@ const LineChart: React.FC<Props> = ({
     const classes = useStyles();
     return (
         <>
-            <div className={classes.title}>
-                <p>{title}</p>
-            </div>
+            <p className={classes.title}>{title}</p>
+
             {data.length === 0 ? (
-                <div className={classes.spinner}>
-                    <CircularProgress />
-                </div>
+                <CircularProgress className={classes.spinner} />
             ) : (
                 <Chart width={450} height={300} data={data}>
                     <XAxis label={xLabelConfig} dataKey="name" />

@@ -15,15 +15,13 @@ const { Col, Grid, Row } = require('react-bootstrap');
 
 const MainView: React.FC = (): ReactElement => {
     const dispatch = useDispatch();
-
     dispatch(Thunks.updateMainViewData());
 
     return (
         <div className="wrapper">
             <Sidebar />
-
             <div id="main-panel" className="main-panel">
-                <Header title="Dashboard" />
+                <Header title="Overview" />
                 <div className="content">
                     <Grid fluid>
                         <Row>

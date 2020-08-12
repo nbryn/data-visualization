@@ -62,7 +62,7 @@ const MainView: React.FC = (): ReactElement => {
                         </Row>
 
                         <Row>
-                            <Col lg={4} sm={6}>
+                            <Col lg={4} md={8}>
                                 <ChartjsLineChartContainer
                                     title="Users"
                                     color="#553FBF"
@@ -73,7 +73,7 @@ const MainView: React.FC = (): ReactElement => {
                                     ]}
                                 />
                             </Col>
-                            <Col lg={4} sm={6}>
+                            <Col lg={4} md={8}>
                                 <ChartjsBarChartContainer
                                     title="Users"
                                     color="#E6373A"
@@ -84,7 +84,7 @@ const MainView: React.FC = (): ReactElement => {
                                     ]}
                                 />
                             </Col>
-                            <Col lg={4} sm={6}>
+                            <Col lg={4} md={8}>
                                 <ChartjsMixedChartContainer
                                     firstDataType="usersLastYearLineChart"
                                     firstChartTitle="Users"
@@ -95,7 +95,7 @@ const MainView: React.FC = (): ReactElement => {
                         </Row>
 
                         <Row>
-                            <Col lg={4} sm={6}>
+                            <Col lg={4} md={8}>
                                 <ChartjsLineChartContainer
                                     title="Groups"
                                     color="#52A5EE"
@@ -106,7 +106,7 @@ const MainView: React.FC = (): ReactElement => {
                                     ]}
                                 />
                             </Col>
-                            <Col lg={4} sm={6}>
+                            <Col lg={4} m={8}>
                                 <ChartjsBarChartContainer
                                     title="Groups"
                                     color="#22B324"
@@ -118,7 +118,7 @@ const MainView: React.FC = (): ReactElement => {
                                 />
                             </Col>
 
-                            <Col lg={4} sm={6}>
+                            <Col lg={4} m={8}>
                                 <ChartjsPieChartContainer
                                     title="Gender Distribution"
                                     dataType="genderData"

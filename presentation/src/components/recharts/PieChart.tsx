@@ -1,4 +1,9 @@
-import { Cell, PieChart as PieChartt, Pie } from 'recharts';
+import {
+    Cell,
+    PieChart as PieChartt,
+    Pie,
+    ResponsiveContainer,
+} from 'recharts';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { makeStyles } from '@material-ui/core/styles';
 import React, { ReactElement } from 'react';
@@ -37,27 +42,32 @@ const PieChart: React.FC<Props> = ({
     return (
         <>
             <p className={classes.title}>{title}</p>
-            
+
             {data.length === 0 ? (
                 <CircularProgress className={classes.spinner} />
             ) : (
-                <PieChartt width={450} height={300}>
-                    <Pie
-                        // @ts-ignore
-                        label={renderLabel}
-                        dataKey="value"
-                        nameKey="name"
-                        data={data}
-                        cx="50%"
-                        cy="50%"
-                        outerRadius={100}
-                        fill="#82ca9d"
-                    >
-                        {data.map((entry: ChartData, index: number) => (
-                            <Cell key={`cell-${index}`} fill={colors[index]} />
-                        ))}
-                    </Pie>
-                </PieChartt>
+                <ResponsiveContainer width="99%" aspect={1.6}>
+                    <PieChartt width={450} height={300}>
+                        <Pie
+                            // @ts-ignore
+                            label={renderLabel}
+                            dataKey="value"
+                            nameKey="name"
+                            data={data}
+                            cx="50%"
+                            cy="50%"
+                            outerRadius={100}
+                            fill="#82ca9d"
+                        >
+                            {data.map((entry: ChartData, index: number) => (
+                                <Cell
+                                    key={`cell-${index}`}
+                                    fill={colors[index]}
+                                />
+                            ))}
+                        </Pie>
+                    </PieChartt>
+                </ResponsiveContainer>
             )}
         </>
     );

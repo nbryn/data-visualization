@@ -2,6 +2,7 @@ import {
     CartesianGrid,
     Line,
     LineChart as Chart,
+    ResponsiveContainer,
     YAxis,
     XAxis,
 } from 'recharts';
@@ -46,17 +47,19 @@ const LineChart: React.FC<Props> = ({
             {data.length === 0 ? (
                 <CircularProgress className={classes.spinner} />
             ) : (
-                <Chart width={450} height={300} data={data}>
-                    <XAxis label={xLabelConfig} dataKey="name" />
-                    <YAxis label={yLabelConfig} dataKey="value" />
-                    <CartesianGrid stroke="#eee" strokeDasharray="5 5" />
-                    <Line
-                        strokeWidth={3}
-                        type="monotone"
-                        dataKey="value"
-                        stroke={stroke}
-                    />
-                </Chart>
+                <ResponsiveContainer width='99%' aspect={1.6}>
+                    <Chart width={450} height={300} data={data}>
+                        <XAxis label={xLabelConfig} dataKey="name" />
+                        <YAxis label={yLabelConfig} dataKey="value" />
+                        <CartesianGrid stroke="#eee" strokeDasharray="5 5" />
+                        <Line
+                            strokeWidth={3}
+                            type="monotone"
+                            dataKey="value"
+                            stroke={stroke}
+                        />
+                    </Chart>
+                </ResponsiveContainer>
             )}
         </>
     );

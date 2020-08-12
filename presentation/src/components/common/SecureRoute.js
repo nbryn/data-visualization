@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
 import { Route, Redirect } from "react-router-dom";
 
 class SecureRoute extends Component {
@@ -14,10 +13,4 @@ class SecureRoute extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    user: state.user,
-  };
-};
-
-export default connect(mapStateToProps)(SecureRoute);
+export default SecureRoute;

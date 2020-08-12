@@ -12,7 +12,7 @@ import { RootState } from '../../store/index';
 const useStyles = makeStyles((theme) => ({
     wrapper: {
         marginTop: 5,
-        marginBottom: 10,
+        marginBottom: 15,
     },
     spinner: {
         margin: 125,
@@ -23,11 +23,13 @@ const useStyles = makeStyles((theme) => ({
 type Props = {
     title: string;
     dataTypes: string[];
+    color: string;
 };
 
 export const ChartjsLineChartContainer: React.FC<Props> = ({
     title,
     dataTypes,
+    color
 }: Props): ReactElement => {
     const classes = useStyles();
     const { WEEK, MONTH, YEAR } = Interval;
@@ -96,12 +98,12 @@ export const ChartjsLineChartContainer: React.FC<Props> = ({
                         labels={chartData.labels}
                         label={title}
                         fill={false}
-                        backgroundColor="rgba(83, 51, 237, 1)"
-                        borderColor="rgba(83, 51, 237, 1)"
-                        pointBorderColor="rgba(83, 51, 237, 1)"
-                        pointBackgroundColor="rgba(83, 51, 237, 1)"
-                        pointHoverBackgroundColor="rgba(83, 51, 237, 1)"
-                        pointHoverBorderColor="rgba(83, 51, 237, 1)"
+                        backgroundColor={color}
+                        borderColor={color}
+                        pointBorderColor={color}
+                        pointBackgroundColor={color}
+                        pointHoverBackgroundColor={color}
+                        pointHoverBorderColor={color}
                         pointBorderWidth={3}
                         pointHoverRadius={2}
                         data={chartData.data}

@@ -11,7 +11,7 @@ import { RootState } from '../../store/index';
 const useStyles = makeStyles((theme) => ({
     wrapper: {
         marginTop: 5,
-        marginBottom: 10,
+        marginBottom: 15,
     },
     spinner: {
         margin: 125,

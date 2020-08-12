@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     },
     counter: {
         marginTop: -10,
-        marginBottom: 55,
+        marginBottom: 45,
         width: '40%',
         float: 'left',
     },

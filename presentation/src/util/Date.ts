@@ -1,6 +1,6 @@
 type Month = {
     [key: string]: string;
-}
+};
 
 export const getCurrentTime = () => {
     let date: Date = new Date();
@@ -30,7 +30,9 @@ export const getCurrentTime = () => {
     return currentTime;
 };
 
-export const convertNumberToMonth = (monthNumber: string): string | undefined => {
+export const convertNumberToMonth = (
+    monthNumber: string
+): string | undefined => {
     let result: string = '';
     const number = monthNumber.toString();
 

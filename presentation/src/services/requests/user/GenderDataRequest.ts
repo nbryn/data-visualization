@@ -2,7 +2,7 @@ import { fetchFromServer } from '../Fetch';
 import { ServerDto } from '../Dto';
 
 export const fetchUserGenderData = async (): Promise<ServerDto[]> => {
-  const data = `query {
+    const data = `query {
       userStats{
         userGenderStats{
           name
@@ -11,11 +11,11 @@ export const fetchUserGenderData = async (): Promise<ServerDto[]> => {
       }
     }`;
 
-  const response: ServerDto[] = await fetchFromServer<ServerDto[]>(
-    'userStats',
-    data,
-    'userGenderStats'
-  );
+    const response: ServerDto[] = await fetchFromServer<ServerDto[]>(
+        'userStats',
+        data,
+        'userGenderStats'
+    );
 
-  return response;
+    return response;
 };

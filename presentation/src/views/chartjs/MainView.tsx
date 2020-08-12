@@ -65,6 +65,7 @@ const MainView: React.FC = (): ReactElement => {
                             <Col lg={4} sm={6}>
                                 <ChartjsLineChartContainer
                                     title="Users"
+                                    color="#553FBF"
                                     dataTypes={[
                                         'usersLastWeekLineChart',
                                         'usersLastMonthLineChart',
@@ -75,10 +76,44 @@ const MainView: React.FC = (): ReactElement => {
                             <Col lg={4} sm={6}>
                                 <ChartjsBarChartContainer
                                     title="Users"
+                                    color="#E6373A"
                                     dataTypes={[
                                         'usersLastWeekBarChart',
                                         'usersLastMonthBarChart',
                                         'usersLastYearBarChart',
+                                    ]}
+                                />
+                            </Col>
+                            <Col lg={4} sm={6}>
+                                <ChartjsMixedChartContainer
+                                    firstDataType="usersLastYearLineChart"
+                                    firstChartTitle="Users"
+                                    secondDataType="groupsLastYearLineChart"
+                                    secondChartTitle="Groups"
+                                />
+                            </Col>
+                        </Row>
+
+                        <Row>
+                            <Col lg={4} sm={6}>
+                                <ChartjsLineChartContainer
+                                    title="Groups"
+                                    color="#52A5EE"
+                                    dataTypes={[
+                                        'groupsLastWeekLineChart',
+                                        'groupsLastMonthLineChart',
+                                        'groupsLastYearLineChart',
+                                    ]}
+                                />
+                            </Col>
+                            <Col lg={4} sm={6}>
+                                <ChartjsBarChartContainer
+                                    title="Groups"
+                                    color="#22B324"
+                                    dataTypes={[
+                                        'groupsLastWeekBarChart',
+                                        'groupsLastMonthBarChart',
+                                        'groupsLastYearBarChart',
                                     ]}
                                 />
                             </Col>
@@ -92,16 +127,6 @@ const MainView: React.FC = (): ReactElement => {
                                         '#e30c32',
                                         '#427d23',
                                     ]}
-                                />
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col lg={4} sm={6}>
-                                <ChartjsMixedChartContainer
-                                    firstDataType="usersLastYearLineChart"
-                                    firstChartTitle="Users"
-                                    secondDataType="groupsLastYearLineChart"
-                                    secondChartTitle="Groups"
                                 />
                             </Col>
                         </Row>

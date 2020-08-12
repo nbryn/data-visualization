@@ -1,5 +1,9 @@
 import { ChartData, TodayData } from '../store/datamodels/General';
-import { ChartjsData, ChartjsLastMonthData, ChartjsPieData } from '../store/datamodels/Chartjs';
+import {
+    ChartjsData,
+    ChartjsLastMonthData,
+    ChartjsPieData,
+} from '../store/datamodels/Chartjs';
 import { convertNumberToMonth } from '../util/Date';
 import { GroupData, GroupDataProp } from '../store/datamodels/Group';
 import { GroupDto, Name } from '../services/requests';
@@ -89,18 +93,19 @@ export const mapChartjsPieChartData = (data: ServerDto[]): ChartjsPieData => {
     const pieChartData: any = {
         labels: [],
         data: [],
-    }
+    };
 
     data.forEach((element: any) => {
         pieChartData.labels.push(element.name);
         pieChartData.data.push(element.count);
-    })
+    });
 
     return pieChartData;
-}
+};
 
 export const mapChartjsLastMonthData = (
-    data: LastMonthDto[], aggregate: boolean
+    data: LastMonthDto[],
+    aggregate: boolean
 ): ChartjsLastMonthData => {
     const lastMonth: ChartjsLastMonthData = {
         labels: [],
@@ -116,13 +121,11 @@ export const mapChartjsLastMonthData = (
     lastMonth.labels = data.map(
         (element: LastMonthDto) => element.day.day + '/' + element.day.month
     );
-    lastMonth.data = data.map(
-        (element: LastMonthDto) => {
-            const counter = lastMonth.counter += element.count;         
-            if (aggregate) return counter;
-            else return element.count;
-        }
-    );
+    lastMonth.data = data.map((element: LastMonthDto) => {
+        const counter = (lastMonth.counter += element.count);
+        if (aggregate) return counter;
+        else return element.count;
+    });
 
     lastMonth.lastWeek.labels = lastMonth.labels.slice(
         lastMonth.labels.length - 7
@@ -130,18 +133,19 @@ export const mapChartjsLastMonthData = (
 
     const lastWeek: LastMonthDto[] = data.slice(data.length - 7);
 
-    lastMonth.lastWeek.data = lastWeek.map(
-        (element: LastMonthDto) => {
-            const counter = lastMonth.lastWeek.counter += element.count;   
-            if (aggregate) return counter;
-            else return element.count;
-        }
-    );
+    lastMonth.lastWeek.data = lastWeek.map((element: LastMonthDto) => {
+        const counter = (lastMonth.lastWeek.counter += element.count);
+        if (aggregate) return counter;
+        else return element.count;
+    });
 
     return lastMonth;
 };
 
-export const mapChartjsLastYearData = (data: LastYearDto[], aggregate: boolean): ChartjsData => {
+export const mapChartjsLastYearData = (
+    data: LastYearDto[],
+    aggregate: boolean
+): ChartjsData => {
     const lastYear: ChartjsData = {
         labels: [],
         data: [],
@@ -156,14 +160,11 @@ export const mapChartjsLastYearData = (data: LastYearDto[], aggregate: boolean):
         );
     });
 
-    lastYear.data = data.map(
-        (element: LastYearDto) => {
-            const counter = lastYear.counter += element.count;         
-            if (aggregate) return counter;
-            else return element.count;
-        }
-    );
-
+    lastYear.data = data.map((element: LastYearDto) => {
+        const counter = (lastYear.counter += element.count);
+        if (aggregate) return counter;
+        else return element.count;
+    });
 
     return lastYear;
 };

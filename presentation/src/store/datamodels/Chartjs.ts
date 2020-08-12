@@ -4,7 +4,7 @@ const UPDATE_CHARTJS_DATA = 'UPDATE_CHARTJS_DATA';
 export type ChartjsPieData = {
     labels: string[];
     data: number[];
-}
+};
 
 export type ChartjsData = {
     labels: string[];
@@ -37,6 +37,12 @@ export default function (state = {}, action: ChartjsAction) {
     switch (action.type) {
         case UPDATE_CHARTJS_DATA:
             return Object.assign({}, state, {
+                groupsLastWeekBarChart: action.payload.groupsLastWeekBarChart,
+                groupsLastMonthBarChart: action.payload.groupsLastMonthBarChart,
+                groupsLastYearBarChart: action.payload.groupsLastYearBarChart,
+                groupsLastWeekLineChart: action.payload.groupsLastWeekLineChart,
+                groupsLastMonthLineChart:
+                    action.payload.groupsLastMonthLineChart,
                 groupsLastYearLineChart: action.payload.groupsLastYearLineChart,
                 usersLastWeekLineChart: action.payload.usersLastWeekLineChart,
                 usersLastMonthLineChart: action.payload.usersLastMonthLineChart,
@@ -48,7 +54,7 @@ export default function (state = {}, action: ChartjsAction) {
                 genderData: action.payload.genderData,
                 groupsTotal: action.payload.groupsTotal,
                 meetingsTotal: action.payload.meetingsTotal,
-                sharesTotal: action.payload.sharesTotal
+                sharesTotal: action.payload.sharesTotal,
             });
         default:
             return state;
@@ -57,6 +63,11 @@ export default function (state = {}, action: ChartjsAction) {
 
 export interface ChartjsState {
     [key: string]: number | ChartjsData | any;
+    groupsLastWeekBarChart: ChartjsData;
+    groupsLastMonthBarChart: ChartjsData;
+    groupsLastYearBarChart: ChartjsData;
+    groupsLastWeekLineChart: ChartjsData;
+    groupsLastMonthLineChart: ChartjsData;
     groupsLastYearLineChart: ChartjsData;
     usersLastMonthLineChart: ChartjsData;
     usersLastWeekLineChart: ChartjsData;
@@ -69,10 +80,34 @@ export interface ChartjsState {
     groupsTotal: number;
     meetingsTotal: number;
     sharesTotal: number;
-
 }
 
 export const initialChartjsState: ChartjsState = {
+    groupsLastWeekBarChart: {
+        labels: [],
+        counter: 0,
+        data: [],
+    },
+    groupsLastMonthBarChart: {
+        labels: [],
+        counter: 0,
+        data: [],
+    },
+    groupsLastYearBarChart: {
+        labels: [],
+        counter: 0,
+        data: [],
+    },
+    groupsLastWeekLineChart: {
+        labels: [],
+        counter: 0,
+        data: [],
+    },
+    groupsLastMonthLineChart: {
+        labels: [],
+        counter: 0,
+        data: [],
+    },
     groupsLastYearLineChart: {
         labels: [],
         counter: 0,
@@ -115,5 +150,5 @@ export const initialChartjsState: ChartjsState = {
     usersTotal: 0,
     groupsTotal: 0,
     meetingsTotal: 0,
-    sharesTotal: 0
+    sharesTotal: 0,
 };

@@ -7,10 +7,7 @@ import {
     fetchUsersPerNGO,
     UserViewDto,
 } from '../services/requests';
-import {
-    setUserViewData,
-    UserState,
-} from '../store/datamodels/User';
+import { setUserViewData, UserState } from '../store/datamodels/User';
 import * as DataMappingService from '../services/DataMappingService';
 import { RootState } from '../store/index';
 import { ServerDto } from '../services/requests/Dto';

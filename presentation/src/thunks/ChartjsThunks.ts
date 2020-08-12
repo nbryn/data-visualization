@@ -4,6 +4,7 @@ import { ThunkAction } from 'redux-thunk';
 import * as DataMappingService from '../services/DataMappingService';
 
 import {
+    fetchGroupsLastMonth,
     fetchGroupsLastYear,
     fetchTotalGroups,
     fetchTotalMeetings,
@@ -22,7 +23,6 @@ import {
 } from '../store/datamodels/Chartjs';
 import { LastMonthDto, LastYearDto, ServerDto } from '../services/requests/Dto';
 
-
 export const updateChartjsData = (): ThunkAction<
     void,
     RootState,
@@ -38,32 +38,60 @@ export const updateChartjsData = (): ThunkAction<
 
     const usersLastMonth: LastMonthDto[] = await fetchUsersLastMonth();
     const usersLastYear: LastYearDto[] = await fetchUsersLastYear();
-    const groupsLastYear: LastYearDto[] = await fetchGroupsLastYear();
     const genderData: ServerDto[] = await fetchUserGenderData();
 
-    const lastMonthLineChart: ChartjsLastMonthData = DataMappingService.mapChartjsLastMonthData(
-        usersLastMonth, true
+    const groupsLastMonth: LastMonthDto[] = await fetchGroupsLastMonth();
+    const groupsLastYear: LastYearDto[] = await fetchGroupsLastYear();
+
+    const usersLastMonthLineChart: ChartjsLastMonthData = DataMappingService.mapChartjsLastMonthData(
+        usersLastMonth,
+        true
+    );
+    const usersLastMonthBarChart: ChartjsLastMonthData = DataMappingService.mapChartjsLastMonthData(
+        usersLastMonth,
+        false
     );
 
-    result.usersLastMonthLineChart = lastMonthLineChart;
-    result.usersLastWeekLineChart = lastMonthLineChart.lastWeek;
+    result.usersLastMonthLineChart = usersLastMonthLineChart;
+    result.usersLastWeekLineChart = usersLastMonthLineChart.lastWeek;
 
-    const lastMonthBarChart: ChartjsLastMonthData = DataMappingService.mapChartjsLastMonthData(
-        usersLastMonth, false
+    result.usersLastMonthBarChart = usersLastMonthBarChart;
+    result.usersLastWeekBarChart = usersLastMonthBarChart.lastWeek;
+    result.usersLastYearBarChart = DataMappingService.mapChartjsLastYearData(
+        usersLastYear,
+        false
     );
-
-    result.usersLastMonthBarChart = lastMonthBarChart;
-    result.usersLastWeekBarChart = lastMonthBarChart.lastWeek;
 
     result.usersLastYearLineChart = DataMappingService.mapChartjsLastYearData(
-        usersLastYear, true
+        usersLastYear,
+        true
     );
-    result.groupsLastYearLineChart = DataMappingService.mapChartjsLastYearData(groupsLastYear, true);
-
-    result.usersLastYearBarChart = DataMappingService.mapChartjsLastYearData(usersLastYear, false);
 
     result.genderData = DataMappingService.mapChartjsPieChartData(genderData);
 
-    dispatch(setChartjsData(result));
-}
+    const groupsLastMonthLineChart: ChartjsLastMonthData = DataMappingService.mapChartjsLastMonthData(
+        groupsLastMonth,
+        true
+    );
+    const groupsLastMonthBarChart: ChartjsLastMonthData = DataMappingService.mapChartjsLastMonthData(
+        groupsLastMonth,
+        false
+    );
 
+    result.groupsLastMonthLineChart = groupsLastMonthLineChart;
+    result.groupsLastWeekLineChart = groupsLastMonthLineChart.lastWeek;
+
+    result.groupsLastMonthBarChart = groupsLastMonthBarChart;
+    result.groupsLastWeekBarChart = groupsLastMonthBarChart.lastWeek;
+    result.groupsLastYearBarChart = DataMappingService.mapChartjsLastYearData(
+        groupsLastYear,
+        false
+    );
+
+    result.groupsLastYearLineChart = DataMappingService.mapChartjsLastYearData(
+        groupsLastYear,
+        true
+    );
+
+    dispatch(setChartjsData(result));
+};

@@ -12,7 +12,7 @@ import { RootState } from '../../store/index';
 const useStyles = makeStyles((theme) => ({
     wrapper: {
         marginTop: 5,
-        marginBottom: 10,
+        marginBottom: 15,
     },
     spinner: {
         margin: 125,
@@ -22,11 +22,13 @@ const useStyles = makeStyles((theme) => ({
 
 export type Props = {
     title: string;
+    color: string;
     dataTypes: string[];
 };
 
 export const ChartjsBarChartContainer: React.FC<Props> = ({
     title,
+    color,
     dataTypes,
 }: Props): ReactElement => {
     const classes = useStyles();
@@ -55,7 +57,7 @@ export const ChartjsBarChartContainer: React.FC<Props> = ({
         event: React.ChangeEvent<HTMLInputElement>
     ): void => {
         const interval: Interval = resolveInterval(event.target.value);
-   
+
         if (interval === WEEK) {
             updateData(WEEK, usersLastWeek);
         } else if (interval === MONTH) {
@@ -63,7 +65,6 @@ export const ChartjsBarChartContainer: React.FC<Props> = ({
         } else {
             updateData(YEAR, usersLastYear);
         }
-
     };
 
     const updateData = (interval: Interval, chartData: ChartjsData): void => {
@@ -77,24 +78,23 @@ export const ChartjsBarChartContainer: React.FC<Props> = ({
 
     useEffect(() => {
         updateData(YEAR, usersLastYear);
-
     }, [usersLastYear, YEAR]);
 
     return (
         <Card className={classes.wrapper}>
             <CardContent>
                 {usersLastYear.data.length === 0 ? (
-                    <CircularProgress className={classes.spinner}/>
+                    <CircularProgress className={classes.spinner} />
                 ) : (
                     <BarChart
                         updateInterval={handleChangeInterval}
                         labels={chartData.labels}
                         label={title}
-                        backgroundColor="rgba(207,0,15,1)"
-                        borderColor="rgba(207,0,15,1)"
+                        backgroundColor={color}
+                        borderColor={color}
                         borderWidth={3}
-                        hoverBackgroundColor="rgba(207,0,15,1)"
-                        hoverBorderColor="rgba(207,0,15,1)"
+                        hoverBackgroundColor={color}
+                        hoverBorderColor={color}
                         data={chartData.data}
                         counter={chartData.counter}
                         currentInterval={period}

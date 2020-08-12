@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
     title: {
         marginTop: -10,
-        marginBottom: 55,
+        marginBottom: 58,
         width: '100%',
         textAlign: 'center',
     },

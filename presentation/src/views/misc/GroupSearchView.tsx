@@ -4,10 +4,7 @@ import React, { ReactElement, useState } from 'react';
 
 import * as GroupThunks from '../../thunks/GroupThunks';
 import { GroupDataProp } from '../../store/datamodels/Group';
-import {
-    infoPageColumn1,
-    infoPageColumn2,
-} from '../../util/InfoPageGroupColumns';
+import { infoPageColumn } from '../../util/InfoPageGroupColumns';
 import Header from '../../components/navigation/Header';
 import InfoPage from '../../components/common/InfoPage';
 import { RootState } from '../../store/index';
@@ -80,6 +77,8 @@ const GroupSearchView: React.FC = (): ReactElement => {
                                     </Button>
                                 </form>
                             </div>
+                        </Row>
+                        <Row>
                             {loading && (
                                 <CircularProgress className="spinner" />
                             )}
@@ -87,8 +86,7 @@ const GroupSearchView: React.FC = (): ReactElement => {
                                 <InfoPage
                                     groupData={searchData}
                                     columns={columns}
-                                    column1={infoPageColumn1}
-                                    column2={infoPageColumn2}
+                                    column1={infoPageColumn}
                                 />
                             )}
                         </Row>

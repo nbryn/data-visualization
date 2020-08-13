@@ -5,9 +5,6 @@ import paginationFactory from 'react-bootstrap-table2-paginator';
 
 const {
     Col,
-    Grid,
-    Panel,
-    Row,
     ControlLabel,
     ListGroup,
     ListGroupItem,
@@ -15,93 +12,65 @@ const {
 
 const useStyles = makeStyles((theme) => ({
     header: {
-        paddingLeft: 275,
+        width: '50%',
+        textAlign: 'center',
     },
     line: {
         border: 'solid 1px',
         marginLeft: 0,
     },
-    col: {
-        width: '70%',
-        left: 0,
-    },
-    row: {
-        float: 'left',
-        left: -10,
+    box: {
+        height: 400,
+        display: 'flex',
+        flexWrap: 'wrap',
+        flexDirection: 'column',
     },
 }));
 
 type Props = {
     groupData: any;
     columns: any;
-    column1: any;
-    column2: any;
+    column1: string[];
+   
 };
 
 const InfoPage: React.FC<Props> = ({
     groupData,
     columns,
     column1,
-    column2,
 }: Props): ReactElement => {
     const classes = useStyles();
     let groupDataIndex: number = 0;
 
     return (
-        <Grid fluid>
-            <Row>
-                <hr className={classes.line} />
-                <h3 className={classes.header}></h3>
-                <br />
-                <div className={classes.col}>
-                    <div className="col-md-2">
-                        <Col lg={3} sm={6}>
-                            <Panel>
-                                {column1.map((prop: any, index: number) => (
-                                    <div key={index} className={classes.row}>
-                                        <ListGroup>
-                                            <ControlLabel>{prop}</ControlLabel>
-                                            <ListGroupItem>
-                                                {groupData[groupDataIndex++]}
-                                            </ListGroupItem>
-                                        </ListGroup>
-                                    </div>
-                                ))}
-                            </Panel>
-                        </Col>
-                    </div>
+        <>
+            <hr className={classes.line} />
+            <h3 className={classes.header}>Group Info</h3>
+            <br />
 
-                    <div className="col-md-2">
-                        <Col lg={3} sm={6}>
-                            <Panel>
-                                {column2.map((prop: any, index: number) => (
-                                    <div key={index} className={classes.row}>
-                                        <ListGroup>
-                                            <ControlLabel>{prop}</ControlLabel>
-                                            <ListGroupItem>
-                                                {groupData[groupDataIndex++]}
-                                            </ListGroupItem>
-                                        </ListGroup>
-                                    </div>
-                                ))}
-                            </Panel>
-                        </Col>
+            <Col lg={4} md={6} className={classes.box}>
+                {column1.map((prop: any, index: number) => (
+                    <div key={index}>
+                        <ListGroup>
+                            <ControlLabel>{prop}</ControlLabel>
+                            <ListGroupItem>
+                                {groupData[groupDataIndex++]}
+                            </ListGroupItem>
+                        </ListGroup>
                     </div>
-                </div>
+                ))}
+            </Col>
 
-                <Col lg={3} sm={6}>
-                    <Row>
-                        <BootstrapTable
-                            keyField="id"
-                            data={groupData[groupData.length - 1]}
-                            columns={columns}
-                            // @ts-ignore
-                            pagination={paginationFactory()}
-                        />
-                    </Row>
-                </Col>
-            </Row>
-        </Grid>
+            <Col lg={2} md={6} sm={10}>
+                <BootstrapTable
+                    keyField="id"
+                    data={groupData[groupData.length - 1]}
+                    columns={columns}
+                    // @ts-ignore
+                    pagination={paginationFactory()}
+                />
+            </Col>
+        </>
     );
 };
 

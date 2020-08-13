@@ -5,7 +5,6 @@ export const fetchDataForGroup = async (group: string): Promise<GroupDto> => {
     const data = `query{
       groupData{
         group(group: ${group}){
-          name
           regDate   
           currency    
           lastMeeting           

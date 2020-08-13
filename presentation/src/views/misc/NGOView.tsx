@@ -6,19 +6,15 @@ import paginationFactory from 'react-bootstrap-table2-paginator';
 import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit';
 
 import * as GroupThunks from '../../thunks/GroupThunks';
-
 import { GroupData } from '../../store/datamodels/Group';
 import { GroupDataProp } from '../../store/datamodels/Group';
-import {
-    infoPageColumn1,
-    infoPageColumn2,
-} from '../../util/InfoPageGroupColumns';
+import { infoPageColumn } from '../../util/InfoPageGroupColumns';
 import Header from '../../components/navigation/Header';
 import InfoPage from '../../components/common/InfoPage';
 import { RootState } from '../../store/index';
 import Sidebar from '../../components/navigation/Sidebar';
 
-const { Grid, Row } = require('react-bootstrap');
+const { Col, Grid, Row } = require('react-bootstrap');
 
 const NGOView: React.FC = (): ReactElement => {
     const [selectedGroupData, setSelectedGroupData] = useState<GroupDataProp>(
@@ -96,37 +92,48 @@ const NGOView: React.FC = (): ReactElement => {
                                         search
                                     >
                                         {(props: any) => (
-                                            <div>
+                                            <>
                                                 <h4>
                                                     <b>Groups</b>
                                                 </h4>
-                                                <SearchBar
-                                                    {...props.searchProps}
-                                                    placeholder="Search"
-                                                />
-                                                <BootstrapTable
-                                                    {...props.baseProps}
-                                                    keyField="id"
-                                                    data={data}
-                                                    columns={columns}
-                                                    selectRow={selectRow}
-                                                    // @ts-ignore
-                                                    pagination={paginationFactory()}
-                                                />
-                                            </div>
+                                                <Row>
+                                                    <Col lg={10} md={8} sm={6}>
+                                                        <SearchBar
+                                                            {...props.searchProps}
+                                                            placeholder="Search"
+                                                        />
+                                                    </Col>
+                                                </Row>
+                                                <Row>
+                                                    <Col lg={10} md={8} sm={6}>
+                                                        <BootstrapTable
+                                                            {...props.baseProps}
+                                                            keyField="id"
+                                                            data={data}
+                                                            columns={columns}
+                                                            selectRow={
+                                                                selectRow
+                                                            }
+                                                            // @ts-ignore
+                                                            pagination={paginationFactory()}
+                                                        />
+                                                    </Col>
+                                                </Row>
+                                            </>
                                         )}
                                     </ToolkitProvider>
                                 </div>
                             </Row>
-                            {data.length === 0 && <CircularProgress />}
-                            {selectedGroupData.length > 0 && (
-                                <InfoPage
-                                    groupData={selectedGroupData}
-                                    columns={columnsInfoPageMembers}
-                                    column1={infoPageColumn1}
-                                    column2={infoPageColumn2}
-                                />
-                            )}
+                            <Row>
+                                {data.length === 0 && <CircularProgress />}
+                                {selectedGroupData.length > 0 && (
+                                    <InfoPage
+                                        groupData={selectedGroupData}
+                                        columns={columnsInfoPageMembers}
+                                        column1={infoPageColumn}
+                                    />
+                                )}
+                            </Row>
                         </Grid>
                     </div>
                 </div>

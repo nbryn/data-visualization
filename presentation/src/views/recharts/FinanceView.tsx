@@ -1,5 +1,4 @@
 import { useDispatch } from 'react-redux';
-import { makeStyles } from '@material-ui/core/styles';
 import React, { ReactElement } from 'react';
 
 import * as Thunks from '../../thunks/Thunks';
@@ -13,15 +12,7 @@ import Sidebar from '../../components/navigation/Sidebar';
 
 const { Col, Grid, Row } = require('react-bootstrap');
 
-const useStyles = makeStyles((theme) => ({
-    wrapper: {
-        width: '85%',
-        marginRight: 25,
-    },
-}));
-
 const FinanceView: React.FC = (): ReactElement => {
-    const classes = useStyles();
     const dispatch = useDispatch();
 
     dispatch(Thunks.updateFinanceViewData());

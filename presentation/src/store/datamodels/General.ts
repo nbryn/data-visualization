@@ -25,11 +25,7 @@ export interface UpdateEngagementViewDataAction {
     payload: any;
 }
 
-type GeneralActions =
-    | LoginAction
-    | LoginError
-    | LogoutAction
-    | UpdateEngagementViewDataAction;
+type GeneralActions = LoginAction | LoginError | LogoutAction | UpdateEngagementViewDataAction;
 
 // Action Creators
 export function loginUser(data: LoginAction) {

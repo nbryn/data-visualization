@@ -9,11 +9,7 @@ const GroupState = {
     NOT_ACTIVE: 'NOT_ACTIVE',
 };
 
-const GroupStatesArray = [
-    GroupState.CREATING,
-    GroupState.ACTIVE,
-    GroupState.NOT_ACTIVE,
-];
+const GroupStatesArray = [GroupState.CREATING, GroupState.ACTIVE, GroupState.NOT_ACTIVE];
 
 const GroupSchema = new Schema({
     name: String,

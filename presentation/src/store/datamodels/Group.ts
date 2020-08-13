@@ -97,13 +97,7 @@ export type GroupData = {
 export type GroupDataProp = Array<string | number | string[] | undefined>;
 
 export interface GroupState {
-    [key: string]:
-        | string
-        | number
-        | ChartData[]
-        | GroupData
-        | GroupData[]
-        | GroupDataProp;
+    [key: string]: string | number | ChartData[] | GroupData | GroupData[] | GroupDataProp;
     total: number;
     todayCount: number;
     todayDate: string;

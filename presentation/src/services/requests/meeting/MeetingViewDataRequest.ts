@@ -29,10 +29,7 @@ export const fetchMeetingViewData = async (): Promise<MeetingViewDto> => {
       }
     }`;
 
-    const response: MeetingViewDto = await fetchFromServer<MeetingViewDto>(
-        'meetingStats',
-        data
-    );
+    const response: MeetingViewDto = await fetchFromServer<MeetingViewDto>('meetingStats', data);
 
     return response;
 };

@@ -1,18 +1,9 @@
 import { ChartData, TodayData } from '../store/datamodels/General';
-import {
-    ChartjsData,
-    ChartjsLastMonthData,
-    ChartjsPieData,
-} from '../store/datamodels/Chartjs';
+import { ChartjsData, ChartjsLastMonthData, ChartjsPieData } from '../store/datamodels/Chartjs';
 import { convertNumberToMonth } from '../util/Date';
 import { GroupData, GroupDataProp } from '../store/datamodels/Group';
 import { GroupDto, Name } from '../services/requests';
-import {
-    IntervalDto,
-    LastMonthDto,
-    LastYearDto,
-    ServerDto,
-} from '../services/requests/Dto';
+import { IntervalDto, LastMonthDto, LastYearDto, ServerDto } from '../services/requests/Dto';
 
 export const mapDataForToday = (data: LastMonthDto[]): TodayData => {
     const temp: ChartData[] = mapLastMonthBarChartData(data);
@@ -103,10 +94,7 @@ export const mapChartjsPieChartData = (data: ServerDto[]): ChartjsPieData => {
     return pieChartData;
 };
 
-export const mapChartjsLastMonthData = (
-    data: LastMonthDto[],
-    aggregate: boolean
-): ChartjsLastMonthData => {
+export const mapChartjsLastMonthData = (data: LastMonthDto[], aggregate: boolean): ChartjsLastMonthData => {
     const lastMonth: ChartjsLastMonthData = {
         labels: [],
         data: [],
@@ -118,18 +106,14 @@ export const mapChartjsLastMonthData = (
         },
     };
 
-    lastMonth.labels = data.map(
-        (element: LastMonthDto) => element.day.day + '/' + element.day.month
-    );
+    lastMonth.labels = data.map((element: LastMonthDto) => element.day.day + '/' + element.day.month);
     lastMonth.data = data.map((element: LastMonthDto) => {
         const counter = (lastMonth.counter += element.count);
         if (aggregate) return counter;
         else return element.count;
     });
 
-    lastMonth.lastWeek.labels = lastMonth.labels.slice(
-        lastMonth.labels.length - 7
-    );
+    lastMonth.lastWeek.labels = lastMonth.labels.slice(lastMonth.labels.length - 7);
 
     const lastWeek: LastMonthDto[] = data.slice(data.length - 7);
 
@@ -142,10 +126,7 @@ export const mapChartjsLastMonthData = (
     return lastMonth;
 };
 
-export const mapChartjsLastYearData = (
-    data: LastYearDto[],
-    aggregate: boolean
-): ChartjsData => {
+export const mapChartjsLastYearData = (data: LastYearDto[], aggregate: boolean): ChartjsData => {
     const lastYear: ChartjsData = {
         labels: [],
         data: [],
@@ -153,11 +134,7 @@ export const mapChartjsLastYearData = (
     };
 
     lastYear.labels = data.map((element: LastYearDto) => {
-        return (
-            convertNumberToMonth(element.month) +
-            "'" +
-            element.year.toString().substring(2)
-        );
+        return convertNumberToMonth(element.month) + "'" + element.year.toString().substring(2);
     });
 
     lastYear.data = data.map((element: LastYearDto) => {

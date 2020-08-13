@@ -25,10 +25,7 @@ export const fetchUserViewData = async (): Promise<UserViewDto> => {
       }
     }`;
 
-    const response: UserViewDto = await fetchFromServer<UserViewDto>(
-        'userStats',
-        data
-    );
+    const response: UserViewDto = await fetchFromServer<UserViewDto>('userStats', data);
 
     return response;
 };

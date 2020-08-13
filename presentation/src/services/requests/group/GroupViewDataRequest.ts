@@ -25,10 +25,7 @@ export const fetchGroupViewData = async (): Promise<GroupViewDto> => {
       }
     }`;
 
-    const response: GroupViewDto = await fetchFromServer<GroupViewDto>(
-        'groupStats',
-        data
-    );
+    const response: GroupViewDto = await fetchFromServer<GroupViewDto>('groupStats', data);
 
     return response;
 };

@@ -6,10 +6,7 @@ const GroupMemberState = {
     NOT_ACTIVE: 'NOT_ACTIVE',
 };
 
-const GroupMemberStatesArray = [
-    GroupMemberState.ACTIVE,
-    GroupMemberState.NOT_ACTIVE,
-];
+const GroupMemberStatesArray = [GroupMemberState.ACTIVE, GroupMemberState.NOT_ACTIVE];
 
 const GroupMemberRole = {
     OWNER: 'OWNER',

@@ -10,11 +10,7 @@ export const fetchGroupEtbLoan = async (): Promise<any> => {
         }  
   }`;
 
-    const response = await fetchFromServer(
-        'financeStats',
-        data,
-        'groupEtbLoan'
-    );
+    const response = await fetchFromServer('financeStats', data, 'groupEtbLoan');
 
     return response;
 };

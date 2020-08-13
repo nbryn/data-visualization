@@ -11,11 +11,7 @@ export const fetchUsersPerCountry = async (): Promise<ServerDto[]> => {
         }
       }`;
 
-    const response: ServerDto[] = await fetchFromServer<ServerDto[]>(
-        'generalCountryStats',
-        data,
-        'usersCountry'
-    );
+    const response: ServerDto[] = await fetchFromServer<ServerDto[]>('generalCountryStats', data, 'usersCountry');
 
     return response;
 };

@@ -10,11 +10,7 @@ export const fetchMeetingsPerCountry = async (): Promise<any> => {
         }
       }`;
 
-    const response = await fetchFromServer(
-        'generalCountryStats',
-        data,
-        'meetingsCountry'
-    );
+    const response = await fetchFromServer('generalCountryStats', data, 'meetingsCountry');
 
     return response;
 };

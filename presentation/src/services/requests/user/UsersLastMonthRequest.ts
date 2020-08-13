@@ -14,11 +14,7 @@ export const fetchUsersLastMonth = async (): Promise<LastMonthDto[]> => {
       }
     }
   }`;
-    const response: LastMonthDto[] = await fetchFromServer<LastMonthDto[]>(
-        'userStats',
-        data,
-        'usersLastMonth'
-    );
+    const response: LastMonthDto[] = await fetchFromServer<LastMonthDto[]>('userStats', data, 'usersLastMonth');
 
     return response;
 };

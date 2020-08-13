@@ -10,11 +10,7 @@ export const fetchCurrencyStats = async (): Promise<any> => {
         }  
   }`;
 
-    const response = await fetchFromServer(
-        'financeStats',
-        data,
-        'currencyStats'
-    );
+    const response = await fetchFromServer('financeStats', data, 'currencyStats');
 
     return response;
 };

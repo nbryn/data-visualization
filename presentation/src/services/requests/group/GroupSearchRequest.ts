@@ -26,11 +26,7 @@ export const fetchDataForGroup = async (group: string): Promise<GroupDto> => {
       }
     }`;
 
-    const response: GroupDto = await fetchFromServer<GroupDto>(
-        'groupData',
-        data,
-        'group'
-    );
+    const response: GroupDto = await fetchFromServer<GroupDto>('groupData', data, 'group');
 
     return response;
 };

@@ -21,10 +21,8 @@ export default function (state = {}, action: FinanceAction) {
                 currencyStats: action.payload.currencyStats,
                 loansTotal: action.payload.loansTotal,
                 loansLastMonthData: action.payload.loansLastMonthData,
-                loansLastYearLineChartData:
-                    action.payload.loansLastYearLineChartData,
-                loansLastYearBarChartData:
-                    action.payload.loansLastYearBarChartData,
+                loansLastYearLineChartData: action.payload.loansLastYearLineChartData,
+                loansLastYearBarChartData: action.payload.loansLastYearBarChartData,
                 sharesTotal: action.payload.sharesTotal,
                 sharesPerGroup: action.payload.sharesPerGroup,
                 mostShares: action.payload.mostShares,

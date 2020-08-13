@@ -30,9 +30,7 @@ export const getCurrentTime = () => {
     return currentTime;
 };
 
-export const convertNumberToMonth = (
-    monthNumber: string
-): string | undefined => {
+export const convertNumberToMonth = (monthNumber: string): string | undefined => {
     let result: string = '';
     const number = monthNumber.toString();
 

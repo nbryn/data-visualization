@@ -11,11 +11,7 @@ export const fetchLoansLastYear = async (): Promise<any> => {
         }  
   }`;
 
-    const response = await fetchFromServer(
-        'financeStats',
-        data,
-        'loansLastYear'
-    );
+    const response = await fetchFromServer('financeStats', data, 'loansLastYear');
 
     return response;
 };

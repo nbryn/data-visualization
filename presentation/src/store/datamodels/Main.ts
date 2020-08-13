@@ -27,10 +27,8 @@ export default function (state = {}, action: MainAction) {
                 meetingsTotal: action.payload.meetingsTotal,
                 sharesTotal: action.payload.sharesTotal,
                 usersLastBarChartData: action.payload.usersLastYearBarChartData,
-                usersLastYearLineChartData:
-                    action.payload.usersLastYearLineChartData,
-                usersLastYearBarChartData:
-                    action.payload.usersLastYearBarChartData,
+                usersLastYearLineChartData: action.payload.usersLastYearLineChartData,
+                usersLastYearBarChartData: action.payload.usersLastYearBarChartData,
                 meetingsLastYearData: action.payload.meetingsLastYearData,
                 groupsLastMonthData: action.payload.groupsLastMonthData,
                 groupsLastYearData: action.payload.groupsLastYearData,

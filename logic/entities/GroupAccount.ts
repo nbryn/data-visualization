@@ -6,10 +6,7 @@ const GroupAccountState = {
     NOT_ACTIVE: 'NOT_ACTIVE',
 };
 
-const GroupAccountStatesArray = [
-    GroupAccountState.ACTIVE,
-    GroupAccountState.NOT_ACTIVE,
-];
+const GroupAccountStatesArray = [GroupAccountState.ACTIVE, GroupAccountState.NOT_ACTIVE];
 
 const groupAccountSchema = new Schema({
     name: String,

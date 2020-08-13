@@ -14,11 +14,7 @@ export const fetchGroupsLastMonth = async (): Promise<any> => {
         }
     }`;
 
-    const response = await fetchFromServer(
-        'groupStats',
-        data,
-        'groupsLastMonth'
-    );
+    const response = await fetchFromServer('groupStats', data, 'groupsLastMonth');
 
     return response;
 };

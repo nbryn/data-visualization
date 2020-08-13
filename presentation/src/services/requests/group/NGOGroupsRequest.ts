@@ -27,11 +27,7 @@ export const fetchGroupsForNGO = async (ngo: string): Promise<GroupDto[]> => {
       }
       }`;
 
-    const response: GroupDto[] = await fetchFromServer<GroupDto[]>(
-        'ngoGroupData',
-        data,
-        'groupData'
-    );
+    const response: GroupDto[] = await fetchFromServer<GroupDto[]>('ngoGroupData', data, 'groupData');
 
     return response;
 };

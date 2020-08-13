@@ -1,26 +1,11 @@
 import { applyMiddleware, compose, combineReducers, createStore } from 'redux';
 import thunk from 'redux-thunk';
 
-import ChartjsReducers, {
-    ChartjsState,
-    initialChartjsState,
-} from './datamodels/Chartjs';
-import FinanceReducers, {
-    FinanceState,
-    initialFinanceState,
-} from './datamodels/Finance';
-import GeneralReducers, {
-    GeneralState,
-    initialGeneralState,
-} from './datamodels/General';
-import GroupReducers, {
-    GroupState,
-    initialGroupState,
-} from './datamodels/Group';
-import MeetingReducers, {
-    MeetingState,
-    initialMeetingState,
-} from './datamodels/Meeting';
+import ChartjsReducers, { ChartjsState, initialChartjsState } from './datamodels/Chartjs';
+import FinanceReducers, { FinanceState, initialFinanceState } from './datamodels/Finance';
+import GeneralReducers, { GeneralState, initialGeneralState } from './datamodels/General';
+import GroupReducers, { GroupState, initialGroupState } from './datamodels/Group';
+import MeetingReducers, { MeetingState, initialMeetingState } from './datamodels/Meeting';
 import MainReducers, { MainState, initialMainState } from './datamodels/Main';
 import UserReducers, { UserState, initialUserState } from './datamodels/User';
 
@@ -67,17 +52,9 @@ const ReactReduxDevTools =
     compose;
 
 if (window.navigator.userAgent.includes('Chrome')) {
-    store = createStore(
-        rootReducer,
-        initialState,
-        compose(applyMiddleware(...middleWare), ReactReduxDevTools)
-    );
+    store = createStore(rootReducer, initialState, compose(applyMiddleware(...middleWare), ReactReduxDevTools));
 } else {
-    store = createStore(
-        rootReducer,
-        initialState,
-        compose(applyMiddleware(...middleWare))
-    );
+    store = createStore(rootReducer, initialState, compose(applyMiddleware(...middleWare)));
 }
 
 export default store;

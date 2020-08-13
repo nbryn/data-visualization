@@ -11,11 +11,7 @@ export const fetchUserGenderData = async (): Promise<ServerDto[]> => {
       }
     }`;
 
-    const response: ServerDto[] = await fetchFromServer<ServerDto[]>(
-        'userStats',
-        data,
-        'userGenderStats'
-    );
+    const response: ServerDto[] = await fetchFromServer<ServerDto[]>('userStats', data, 'userGenderStats');
 
     return response;
 };

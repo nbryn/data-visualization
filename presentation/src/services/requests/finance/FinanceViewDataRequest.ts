@@ -41,10 +41,7 @@ export const fetchFinanceData = async (): Promise<FinanceViewDto> => {
         }
       }`;
 
-    const response: FinanceViewDto = await fetchFromServer<FinanceViewDto>(
-        'financeStats',
-        data
-    );
+    const response: FinanceViewDto = await fetchFromServer<FinanceViewDto>('financeStats', data);
 
     return response;
 };

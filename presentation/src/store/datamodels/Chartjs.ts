@@ -41,8 +41,7 @@ export default function (state = {}, action: ChartjsAction) {
                 groupsLastMonthBarChart: action.payload.groupsLastMonthBarChart,
                 groupsLastYearBarChart: action.payload.groupsLastYearBarChart,
                 groupsLastWeekLineChart: action.payload.groupsLastWeekLineChart,
-                groupsLastMonthLineChart:
-                    action.payload.groupsLastMonthLineChart,
+                groupsLastMonthLineChart: action.payload.groupsLastMonthLineChart,
                 groupsLastYearLineChart: action.payload.groupsLastYearLineChart,
                 usersLastWeekLineChart: action.payload.usersLastWeekLineChart,
                 usersLastMonthLineChart: action.payload.usersLastMonthLineChart,

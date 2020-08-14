@@ -38,6 +38,10 @@ const DefaultSchema = gql`
         gender: String
     }
 
+    type Error {
+        error: String
+    }
+
     input SigninInput {
         username: String!
         password: String!

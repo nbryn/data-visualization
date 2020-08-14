@@ -64,10 +64,20 @@ const GroupSchema = gql`
         groupData(ngo: String!): [Group]
     }
 
+    union GroupSearchType = Group | Error
+
+    input GroupSearchInput {
+        group: String!
+    }
+
+    type GroupSearch {
+        groupData: GroupSearchType
+    }
+    
     extend type Query {
         groupStats: GroupStats
         groupEngagement: GroupEngagement
-        groupData: GroupData
+        groupSearch(input: GroupSearchInput!): GroupSearch
         ngoGroupData: NGOGroupData
         groupActivity: GroupActivity
     }

@@ -54,7 +54,10 @@ export const updateGroupViewData = (): ThunkAction<void, RootState, null, Action
 export const updateGroupSearchData = (group: string): ThunkAction<void, RootState, null, Action<string>> => async (dispatch) => {
     const dto: GroupDto = await fetchDataForGroup(group);
 
+    console.log(dto);
+
     const groupData: GroupDataProp = DataMappingService.mapGroupSearchData(dto);
+
 
     dispatch(setGroupSearchData(groupData));
 };

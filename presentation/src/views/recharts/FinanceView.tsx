@@ -1,16 +1,12 @@
-import { useDispatch } from 'react-redux';
-import React, { ReactElement } from 'react';
+import {useDispatch} from 'react-redux';
+import React, {ReactElement} from 'react';
 
 import * as Thunks from '../../thunks/Thunks';
-import {
-    BarChartContainer,
-    KPIContainer,
-    LineChartContainer,
-} from '../../containers';
+import {BarChartContainer, KPIContainer, LineChartContainer} from '../../containers';
 import Header from '../../components/navigation/Header';
 import Sidebar from '../../components/navigation/Sidebar';
 
-const { Col, Grid, Row } = require('react-bootstrap');
+const {Col, Grid, Row} = require('react-bootstrap');
 
 const FinanceView: React.FC = (): ReactElement => {
     const dispatch = useDispatch();

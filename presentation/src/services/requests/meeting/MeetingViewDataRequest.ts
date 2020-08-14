@@ -1,5 +1,5 @@
-import { fetchFromServer } from '../Fetch';
-import { MeetingViewDto } from './MeetingViewDto';
+import {fetchFromServer} from '../Fetch';
+import {MeetingViewDto} from './MeetingViewDto';
 
 export const fetchMeetingViewData = async (): Promise<MeetingViewDto> => {
     const data = `query{

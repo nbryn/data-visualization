@@ -1,11 +1,11 @@
-import { Card, CardContent } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import React, { ReactElement } from 'react';
-import { useSelector } from 'react-redux';
+import {Card, CardContent} from '@material-ui/core';
+import {makeStyles} from '@material-ui/core/styles';
+import React, {ReactElement} from 'react';
+import {useSelector} from 'react-redux';
 
-import { ChartData } from '../../store/datamodels/General';
+import {ChartData} from '../../store/datamodels/General';
 import LineChart from '../../components/recharts/LineChart';
-import { RootState } from '../../store/index';
+import {RootState} from '../../store/index';
 
 const useStyles = makeStyles((theme) => ({
     wrapper: {
@@ -23,38 +23,23 @@ type Props = {
     color: string;
 };
 
-export const LineChartContainer: React.FC<Props> = ({
-    title,
-    statsType,
-    dataType,
-    xLabel,
-    yLabel,
-    color,
-}: Props): ReactElement => {
+export const LineChartContainer: React.FC<Props> = ({title, statsType, dataType, xLabel, yLabel, color}: Props): ReactElement => {
     const classes = useStyles();
-    
-    const data: ChartData[] = useSelector<RootState, ChartData[]>(
-        (state) => state[statsType][dataType]
-    );
+
+    const data: ChartData[] = useSelector<RootState, ChartData[]>((state) => state[statsType][dataType]);
 
     const yLabelConfig = {
         value: yLabel,
         angle: -90,
         position: 'insideLeft',
     };
-    const xLabelConfig = { value: xLabel, position: 'center', dy: 10 };
+    const xLabelConfig = {value: xLabel, position: 'center', dy: 10};
 
     return (
         <div className={classes.wrapper}>
             <Card>
                 <CardContent>
-                    <LineChart
-                        title={title}
-                        data={data}
-                        xLabelConfig={xLabelConfig}
-                        yLabelConfig={yLabelConfig}
-                        stroke={color}
-                    />
+                    <LineChart title={title} data={data} xLabelConfig={xLabelConfig} yLabelConfig={yLabelConfig} stroke={color} />
                 </CardContent>
             </Card>
         </div>

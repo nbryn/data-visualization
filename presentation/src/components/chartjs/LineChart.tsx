@@ -1,10 +1,10 @@
-import { Line } from 'react-chartjs-2';
-import { makeStyles } from '@material-ui/core/styles';
-import { MenuItem } from '@material-ui/core';
-import React, { useEffect, useState } from 'react';
+import {Line} from 'react-chartjs-2';
+import {makeStyles} from '@material-ui/core/styles';
+import {MenuItem} from '@material-ui/core';
+import React, {useEffect, useState} from 'react';
 
-import { LineChart as Chart, LineChartDataset } from './types';
-import { Interval } from '../../containers/chartjs/interval';
+import {LineChart as Chart, LineChartDataset} from './types';
+import {Interval} from '../../containers/chartjs/interval';
 import TextField from '../form/TextField';
 
 interface Props extends LineChartDataset {
@@ -52,7 +52,7 @@ const LineChart: React.FC<Props> = (props: Props) => {
         ],
     });
 
-    const { WEEK, MONTH, YEAR } = Interval;
+    const {WEEK, MONTH, YEAR} = Interval;
 
     useEffect(() => {
         const datasets: LineChartDataset[] = chart.datasets;
@@ -80,27 +80,13 @@ const LineChart: React.FC<Props> = (props: Props) => {
                     select
                     onChange={props.updateInterval}
                 >
-                    <MenuItem
-                        key="Week"
-                        value="Week"
-                        disabled={props.currentInterval === WEEK ? true : false}
-                    >
+                    <MenuItem key="Week" value="Week" disabled={props.currentInterval === WEEK ? true : false}>
                         Last Week
                     </MenuItem>
-                    <MenuItem
-                        key="Month"
-                        value="Month"
-                        disabled={
-                            props.currentInterval === MONTH ? true : false
-                        }
-                    >
+                    <MenuItem key="Month" value="Month" disabled={props.currentInterval === MONTH ? true : false}>
                         Last Month
                     </MenuItem>
-                    <MenuItem
-                        key="Year"
-                        value="Year"
-                        disabled={props.currentInterval === YEAR ? true : false}
-                    >
+                    <MenuItem key="Year" value="Year" disabled={props.currentInterval === YEAR ? true : false}>
                         Last Year
                     </MenuItem>
                 </TextField>

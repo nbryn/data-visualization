@@ -1,6 +1,6 @@
 const { GraphQLJSON } = require("graphql-type-json");
 
-const actionRunner = require("../util/ActionRunner");
+const actionRunner = require("../util/ActionRunner.js");
 const { validateLogin } = require("../../data/mappers/UserMapper");
 
 const userResolvers = {

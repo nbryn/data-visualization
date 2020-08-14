@@ -1,19 +1,13 @@
-import { useDispatch } from 'react-redux';
-import React, { ReactElement } from 'react';
+import {useDispatch} from 'react-redux';
+import React, {ReactElement} from 'react';
 
-import {
-    BarChartContainer,
-    KPIContainer,
-    KPITodayContainer,
-    LineChartContainer,
-    PieChartContainer,
-} from '../../containers';
+import {BarChartContainer, KPIContainer, KPITodayContainer, LineChartContainer, PieChartContainer} from '../../containers';
 
 import * as Thunks from '../../thunks/GroupThunks';
 import Header from '../../components/navigation/Header';
 import Sidebar from '../../components/navigation/Sidebar';
 
-const { Col, Grid, Row } = require('react-bootstrap');
+const {Col, Grid, Row} = require('react-bootstrap');
 
 const GroupView: React.FC = (): ReactElement => {
     const dispatch = useDispatch();
@@ -110,14 +104,7 @@ const GroupView: React.FC = (): ReactElement => {
                                     title="Group Size"
                                     statsType="groups"
                                     dataType="groupSizeStats"
-                                    colors={[
-                                        '#a4de6c',
-                                        '#67b6ed',
-                                        '#8884d8',
-                                        '#ff0000',
-                                        '#2196f3',
-                                        '#228b22',
-                                    ]}
+                                    colors={['#a4de6c', '#67b6ed', '#8884d8', '#ff0000', '#2196f3', '#228b22']}
                                 />
                             </Col>
                             <Col lg={4} sm={6}>

@@ -1,16 +1,9 @@
-import {
-    BarChart as BChart,
-    Bar,
-    CartesianGrid,
-    ResponsiveContainer,
-    XAxis,
-    YAxis,
-} from 'recharts';
+import {BarChart as BChart, Bar, CartesianGrid, ResponsiveContainer, XAxis, YAxis} from 'recharts';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { makeStyles } from '@material-ui/core/styles';
-import React, { ReactElement } from 'react';
+import {makeStyles} from '@material-ui/core/styles';
+import React, {ReactElement} from 'react';
 
-import { ChartData } from '../../store/datamodels/General';
+import {ChartData} from '../../store/datamodels/General';
 
 const useStyles = makeStyles((theme) => ({
     wrapper: {
@@ -36,13 +29,7 @@ type Props = {
     color: string;
 };
 
-const BarChart: React.FC<Props> = ({
-    title,
-    data,
-    xLabelConfig,
-    yLabelConfig,
-    color,
-}: Props): ReactElement => {
+const BarChart: React.FC<Props> = ({title, data, xLabelConfig, yLabelConfig, color}: Props): ReactElement => {
     const classes = useStyles();
     return (
         <>

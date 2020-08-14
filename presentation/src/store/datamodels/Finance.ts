@@ -1,4 +1,4 @@
-import { ChartData } from './General';
+import {ChartData} from './General';
 
 const UPDATE_FINANCE_VIEW_DATA = 'UPDATE_FINANCE_VIEW_DATA';
 

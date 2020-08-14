@@ -1,13 +1,13 @@
-import { Card, CardContent } from '@material-ui/core';
+import {Card, CardContent} from '@material-ui/core';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { makeStyles } from '@material-ui/core/styles';
-import React, { ReactElement, useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import {makeStyles} from '@material-ui/core/styles';
+import React, {ReactElement, useEffect, useState} from 'react';
+import {useSelector} from 'react-redux';
 
-import { ChartjsData } from '../../store/datamodels/Chartjs';
-import { Interval, resolveInterval } from './interval';
+import {ChartjsData} from '../../store/datamodels/Chartjs';
+import {Interval, resolveInterval} from './interval';
 import BarChart from '../../components/chartjs/BarChart';
-import { RootState } from '../../store/index';
+import {RootState} from '../../store/index';
 
 const useStyles = makeStyles((theme) => ({
     wrapper: {
@@ -26,13 +26,9 @@ export type Props = {
     dataTypes: string[];
 };
 
-export const ChartjsBarChartContainer: React.FC<Props> = ({
-    title,
-    color,
-    dataTypes,
-}: Props): ReactElement => {
+export const ChartjsBarChartContainer: React.FC<Props> = ({title, color, dataTypes}: Props): ReactElement => {
     const classes = useStyles();
-    const { WEEK, MONTH, YEAR } = Interval;
+    const {WEEK, MONTH, YEAR} = Interval;
 
     const [period, setPeriod] = useState<Interval>(YEAR);
     const [chartData, setChartData] = useState<ChartjsData>({
@@ -41,21 +37,13 @@ export const ChartjsBarChartContainer: React.FC<Props> = ({
         data: [],
     });
 
-    const usersLastWeek: ChartjsData = useSelector<RootState, ChartjsData>(
-        (state) => state.chartjs[dataTypes[0]]
-    );
+    const usersLastWeek: ChartjsData = useSelector<RootState, ChartjsData>((state) => state.chartjs[dataTypes[0]]);
 
-    const usersLastMonth: ChartjsData = useSelector<RootState, ChartjsData>(
-        (state) => state.chartjs[dataTypes[1]]
-    );
+    const usersLastMonth: ChartjsData = useSelector<RootState, ChartjsData>((state) => state.chartjs[dataTypes[1]]);
 
-    const usersLastYear: ChartjsData = useSelector<RootState, ChartjsData>(
-        (state) => state.chartjs[dataTypes[2]]
-    );
+    const usersLastYear: ChartjsData = useSelector<RootState, ChartjsData>((state) => state.chartjs[dataTypes[2]]);
 
-    const handleChangeInterval = (
-        event: React.ChangeEvent<HTMLInputElement>
-    ): void => {
+    const handleChangeInterval = (event: React.ChangeEvent<HTMLInputElement>): void => {
         const interval: Interval = resolveInterval(event.target.value);
 
         if (interval === WEEK) {

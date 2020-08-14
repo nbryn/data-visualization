@@ -1,9 +1,9 @@
-import React, { ReactElement, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, {ReactElement, useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 
-import { getCurrentTime } from '../../util/Date';
+import {getCurrentTime} from '../../util/Date';
 import KPICard from '../../components/kpi/KPICard';
-import { RootState } from '../../store/index';
+import {RootState} from '../../store/index';
 
 type Props = {
     title: string;
@@ -13,17 +13,9 @@ type Props = {
     icon: string;
 };
 
-export const KPIContainer: React.FC<Props> = ({
-    title,
-    fetchData,
-    statsType,
-    total,
-    icon,
-}: Props): ReactElement => {
+export const KPIContainer: React.FC<Props> = ({title, fetchData, statsType, total, icon}: Props): ReactElement => {
     const [lastUpdate, setLastUpdate] = useState<string>('');
-    let data: any = useSelector<RootState, number>(
-        (state) => state[statsType][total]
-    );
+    let data: any = useSelector<RootState, number>((state) => state[statsType][total]);
 
     const dispatch = useDispatch();
 

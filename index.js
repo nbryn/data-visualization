@@ -4,14 +4,14 @@ const { makeExecutableSchema } = require("graphql-tools");
 const express = require("express");
 
 const DefaultSchema = require("./logic/api/DefaultSchema.ts");
-const FinanceSchema = require("./logic/api/finance/FinanceSchema");
-const GroupSchema = require("./logic/api/group/GroupSchema");
-const MeetingSchema = require("./logic/api/meeting/MeetingSchema");
-const UserSchema = require("./logic/api/user/UserSchema");
-const NGOSchema = require("./logic/api/ngo/NGOSchema");
-const CountrySchema = require("./logic/api/country/CountrySchema");
+const FinanceSchema = require("./logic/api/finance/FinanceSchema.ts");
+const GroupSchema = require("./logic/api/group/GroupSchema.ts");
+const MeetingSchema = require("./logic/api/meeting/MeetingSchema.ts");
+const UserSchema = require("./logic/api/user/UserSchema.ts");
+const NGOSchema = require("./logic/api/ngo/NGOSchema.ts");
+const CountrySchema = require("./logic/api/country/CountrySchema.ts");
 
-const defaultResolvers = require("./logic/api/DefaultResolvers.js");
+const defaultResolvers = require("./logic/api/DefaultResolvers");
 const financeResolvers = require("./logic/api/finance/FinanceResolvers");
 const groupResolvers = require("./logic/api/group/GroupResolvers");
 const meetingResolvers = require("./logic/api/meeting/MeetingResolvers");

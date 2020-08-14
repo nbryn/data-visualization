@@ -1,6 +1,6 @@
-import React, { ReactElement } from 'react';
-import { Link } from 'react-router-dom';
-import { makeStyles } from '@material-ui/core/styles';
+import React, {ReactElement} from 'react';
+import {Link} from 'react-router-dom';
+import {makeStyles} from '@material-ui/core/styles';
 
 import PageNotFound from '../../assets/img/PageNotFound.png';
 

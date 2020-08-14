@@ -1,5 +1,5 @@
-import React, { ReactElement } from 'react';
-import { useDispatch } from 'react-redux';
+import React, {ReactElement} from 'react';
+import {useDispatch} from 'react-redux';
 
 import {
     ChartjsBarChartContainer,
@@ -12,7 +12,7 @@ import * as ChartjsThunks from '../../thunks/ChartjsThunks';
 import Header from '../../components/navigation/Header';
 import Sidebar from '../../components/navigation/Sidebar';
 
-const { Col, Grid, Row } = require('react-bootstrap');
+const {Col, Grid, Row} = require('react-bootstrap');
 
 const MainView: React.FC = (): ReactElement => {
     const dispatch = useDispatch();
@@ -66,22 +66,14 @@ const MainView: React.FC = (): ReactElement => {
                                 <ChartjsLineChartContainer
                                     title="Users"
                                     color="#553FBF"
-                                    dataTypes={[
-                                        'usersLastWeekLineChart',
-                                        'usersLastMonthLineChart',
-                                        'usersLastYearLineChart',
-                                    ]}
+                                    dataTypes={['usersLastWeekLineChart', 'usersLastMonthLineChart', 'usersLastYearLineChart']}
                                 />
                             </Col>
                             <Col lg={4} md={8}>
                                 <ChartjsBarChartContainer
                                     title="Users"
                                     color="#E6373A"
-                                    dataTypes={[
-                                        'usersLastWeekBarChart',
-                                        'usersLastMonthBarChart',
-                                        'usersLastYearBarChart',
-                                    ]}
+                                    dataTypes={['usersLastWeekBarChart', 'usersLastMonthBarChart', 'usersLastYearBarChart']}
                                 />
                             </Col>
                             <Col lg={4} md={8}>
@@ -99,22 +91,14 @@ const MainView: React.FC = (): ReactElement => {
                                 <ChartjsLineChartContainer
                                     title="Groups"
                                     color="#52A5EE"
-                                    dataTypes={[
-                                        'groupsLastWeekLineChart',
-                                        'groupsLastMonthLineChart',
-                                        'groupsLastYearLineChart',
-                                    ]}
+                                    dataTypes={['groupsLastWeekLineChart', 'groupsLastMonthLineChart', 'groupsLastYearLineChart']}
                                 />
                             </Col>
                             <Col lg={4} m={8}>
                                 <ChartjsBarChartContainer
                                     title="Groups"
                                     color="#22B324"
-                                    dataTypes={[
-                                        'groupsLastWeekBarChart',
-                                        'groupsLastMonthBarChart',
-                                        'groupsLastYearBarChart',
-                                    ]}
+                                    dataTypes={['groupsLastWeekBarChart', 'groupsLastMonthBarChart', 'groupsLastYearBarChart']}
                                 />
                             </Col>
 
@@ -123,10 +107,7 @@ const MainView: React.FC = (): ReactElement => {
                                     title="Gender Distribution"
                                     dataType="genderData"
                                     backgroundColor={['#e30c32', '#427d23']}
-                                    hoverBackgroundColor={[
-                                        '#e30c32',
-                                        '#427d23',
-                                    ]}
+                                    hoverBackgroundColor={['#e30c32', '#427d23']}
                                 />
                             </Col>
                         </Row>

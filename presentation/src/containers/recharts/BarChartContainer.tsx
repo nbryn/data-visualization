@@ -1,11 +1,11 @@
-import { Card, CardContent } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import React, { ReactElement } from 'react';
-import { useSelector } from 'react-redux';
+import {Card, CardContent} from '@material-ui/core';
+import {makeStyles} from '@material-ui/core/styles';
+import React, {ReactElement} from 'react';
+import {useSelector} from 'react-redux';
 
 import BarChart from '../../components/recharts/BarChart';
-import { ChartData } from '../../store/datamodels/General';
-import { RootState } from '../../store/index';
+import {ChartData} from '../../store/datamodels/General';
+import {RootState} from '../../store/index';
 
 const useStyles = makeStyles((theme) => ({
     wrapper: {
@@ -23,37 +23,22 @@ type Props = {
     color: string;
 };
 
-export const BarChartContainer: React.FC<Props> = ({
-    title,
-    statsType,
-    dataType,
-    xLabel,
-    yLabel,
-    color,
-}: Props): ReactElement => {
+export const BarChartContainer: React.FC<Props> = ({title, statsType, dataType, xLabel, yLabel, color}: Props): ReactElement => {
     const classes = useStyles();
 
-    const data: ChartData[] = useSelector<RootState, ChartData[]>(
-        (state) => state[statsType][dataType]
-    );
+    const data: ChartData[] = useSelector<RootState, ChartData[]>((state) => state[statsType][dataType]);
 
     const yLabelConfig = {
         value: yLabel,
         angle: -90,
         position: 'insideLeft',
     };
-    const xLabelConfig = { value: xLabel, position: 'center', dy: 10 };
+    const xLabelConfig = {value: xLabel, position: 'center', dy: 10};
 
     return (
         <Card className={classes.wrapper}>
             <CardContent>
-                <BarChart
-                    title={title}
-                    data={data}
-                    yLabelConfig={yLabelConfig}
-                    xLabelConfig={xLabelConfig}
-                    color={color}
-                />
+                <BarChart title={title} data={data} yLabelConfig={yLabelConfig} xLabelConfig={xLabelConfig} color={color} />
             </CardContent>
         </Card>
     );

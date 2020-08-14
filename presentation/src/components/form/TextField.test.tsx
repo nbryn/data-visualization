@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow, ShallowWrapper } from 'enzyme';
+import {shallow, ShallowWrapper} from 'enzyme';
 import MaterialUITextField from '@material-ui/core/TextField';
 import TextField from './TextField';
 
@@ -22,7 +22,7 @@ beforeEach(() => {
             value={value}
             size={size}
             margin={margin}
-            formField={mockFormField({ handleValidation: mockValidate })}
+            formField={mockFormField({handleValidation: mockValidate})}
             onChange={mockOnChange}
         />
     );
@@ -53,14 +53,14 @@ describe('TextField.test.jsx', () => {
     });
     it('it calls validation handler on input', () => {
         wrapper.find(MaterialUITextField).simulate('input', {
-            target: { value: 'Jamii' },
+            target: {value: 'Jamii'},
         });
 
         expect(mockFormField).toHaveBeenCalled();
     });
     it('it calls onChange', () => {
         wrapper.find(MaterialUITextField).simulate('change', {
-            target: { value: 'Jamii' },
+            target: {value: 'Jamii'},
         });
 
         expect(mockOnChange).toHaveBeenCalled();

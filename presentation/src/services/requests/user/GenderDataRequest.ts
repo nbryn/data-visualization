@@ -1,5 +1,5 @@
-import { fetchFromServer } from '../Fetch';
-import { ServerDto } from '../Dto';
+import {fetchFromServer} from '../Fetch';
+import {ServerDto} from '../Dto';
 
 export const fetchUserGenderData = async (): Promise<ServerDto[]> => {
     const data = `query {

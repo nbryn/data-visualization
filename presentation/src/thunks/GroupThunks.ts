@@ -1,5 +1,5 @@
-import { Action } from 'redux';
-import { ThunkAction } from 'redux-thunk';
+import {Action} from 'redux';
+import {ThunkAction} from 'redux-thunk';
 
 import * as DataMappingService from '../services/DataMappingService';
 
@@ -20,9 +20,8 @@ import {
     setGroupSearchData,
     setNGOGroupData,
 } from '../store/datamodels/Group';
-import { ChartData } from '../store/datamodels/General';
-import { RootState } from '../store/index';
-import { ServerDto } from '../services/requests/Dto';
+import {RootState} from '../store/index';
+import {ServerDto} from '../services/requests/Dto';
 
 export const updateGroupViewData = (): ThunkAction<void, RootState, null, Action<string>> => async (dispatch) => {
     const result: GroupState = {} as GroupState;
@@ -31,9 +30,9 @@ export const updateGroupViewData = (): ThunkAction<void, RootState, null, Action
     const groupCountryData: ServerDto[] = await fetchGroupsPerCountry();
     const groupNGOData: ServerDto[] = await fetchGroupsPerNGO();
 
-    const { groupTotal, groupSize, groupsLastMonth, groupsLastYear } = groupData;
+    const {groupTotal, groupSize, groupsLastMonth, groupsLastYear} = groupData;
 
-    const { todayDate, todayCount } = DataMappingService.mapDataForToday(groupsLastMonth);
+    const {todayDate, todayCount} = DataMappingService.mapDataForToday(groupsLastMonth);
 
     result.total = groupTotal;
     result.todayCount = todayCount;

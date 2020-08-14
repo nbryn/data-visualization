@@ -1,4 +1,4 @@
-import { fetchFromServer } from '../Fetch';
+import {fetchFromServer} from '../Fetch';
 
 export const fetchLogin = async (username: string, password: string): Promise<any> => {
     const data = `mutation signin {

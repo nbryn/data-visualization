@@ -1,22 +1,16 @@
-import React, { ReactElement } from 'react';
+import React, {ReactElement} from 'react';
 
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 
 import Header from '../../components/navigation/Header.js';
 import Sidebar from '../../components/navigation/Sidebar';
-import { RootState } from '../../store/index';
-import { User } from '../../store/datamodels/General';
+import {RootState} from '../../store/index';
+import {User} from '../../store/datamodels/General';
 
-const {
-    Grid,
-    Row,
-    ControlLabel,
-    ListGroup,
-    ListGroupItem,
-} = require('react-bootstrap');
+const {Grid, Row, ControlLabel, ListGroup, ListGroupItem} = require('react-bootstrap');
 
 const UserProfile: React.FC = (): ReactElement => {
-    const user: User = useSelector<RootState, User>(state => state.general.currentUser);
+    const user: User = useSelector<RootState, User>((state) => state.general.currentUser);
 
     const properties = ['Email', 'Name', 'Phone Number', 'Gender'];
     const data: string[] = [];
@@ -40,14 +34,8 @@ const UserProfile: React.FC = (): ReactElement => {
                                 <Row>
                                     <div className="col-md-6">
                                         <ListGroup>
-                                            <ControlLabel>
-                                                {element}
-                                            </ControlLabel>
-                                            <ListGroupItem>
-                                                {data[index++]
-                                                    .toString()
-                                                    .toUpperCase()}
-                                            </ListGroupItem>
+                                            <ControlLabel>{element}</ControlLabel>
+                                            <ListGroupItem>{data[index++].toString().toUpperCase()}</ListGroupItem>
                                         </ListGroup>
                                     </div>
                                 </Row>

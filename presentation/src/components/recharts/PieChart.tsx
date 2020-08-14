@@ -1,14 +1,9 @@
-import {
-    Cell,
-    PieChart as PieChartt,
-    Pie,
-    ResponsiveContainer,
-} from 'recharts';
+import {Cell, PieChart as PieChartt, Pie, ResponsiveContainer} from 'recharts';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { makeStyles } from '@material-ui/core/styles';
-import React, { ReactElement } from 'react';
+import {makeStyles} from '@material-ui/core/styles';
+import React, {ReactElement} from 'react';
 
-import { ChartData } from '../../store/datamodels/General';
+import {ChartData} from '../../store/datamodels/General';
 
 const useStyles = makeStyles((theme) => ({
     title: {
@@ -28,11 +23,7 @@ type Props = {
     colors: string[];
 };
 
-const PieChart: React.FC<Props> = ({
-    title,
-    data,
-    colors,
-}: Props): ReactElement => {
+const PieChart: React.FC<Props> = ({title, data, colors}: Props): ReactElement => {
     const classes = useStyles();
 
     const renderLabel = (entry: ChartData): string => {
@@ -60,10 +51,7 @@ const PieChart: React.FC<Props> = ({
                             fill="#82ca9d"
                         >
                             {data.map((entry: ChartData, index: number) => (
-                                <Cell
-                                    key={`cell-${index}`}
-                                    fill={colors[index]}
-                                />
+                                <Cell key={`cell-${index}`} fill={colors[index]} />
                             ))}
                         </Pie>
                     </PieChartt>

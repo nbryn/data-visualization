@@ -1,4 +1,4 @@
-import { ChartjsData } from '../../store/datamodels/Chartjs';
+import {ChartjsData} from '../../store/datamodels/Chartjs';
 
 export type Chart = {
     chartData: ChartjsData;

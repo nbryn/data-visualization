@@ -1,5 +1,5 @@
-import { NavLink } from 'react-router-dom';
-import React, { ReactElement } from 'react';
+import {NavLink} from 'react-router-dom';
+import React, {ReactElement} from 'react';
 
 import Logo from '../../assets/img/dashboard.jpeg';
 
@@ -28,12 +28,7 @@ const Sidebar: React.FC = (): ReactElement => {
     };
 
     return (
-        <div
-            id="sidebar"
-            className="sidebar"
-            data-color="black"
-            data-image="../../assets/img/dashboard.png"
-        >
+        <div id="sidebar" className="sidebar" data-color="black" data-image="../../assets/img/dashboard.png">
             <div className="logo">
                 <img src={Logo} />
             </div>
@@ -44,11 +39,7 @@ const Sidebar: React.FC = (): ReactElement => {
 
                     {Object.keys(chartjsLinks).map((element, index) => (
                         <li key={index}>
-                            <NavLink
-                                to={chartjsLinks[element]}
-                                className="nav-link"
-                                activeClassName="active"
-                            >
+                            <NavLink to={chartjsLinks[element]} className="nav-link" activeClassName="active">
                                 <i className="pe-7s-graph" />
                                 <p>{element}</p>
                             </NavLink>
@@ -58,11 +49,7 @@ const Sidebar: React.FC = (): ReactElement => {
                     <li>Recharts</li>
                     {Object.keys(rechartsLinks).map((element, index) => (
                         <li key={index}>
-                            <NavLink
-                                to={rechartsLinks[element]}
-                                className="nav-link"
-                                activeClassName="active"
-                            >
+                            <NavLink to={rechartsLinks[element]} className="nav-link" activeClassName="active">
                                 <i className="pe-7s-graph" />
                                 <p>{element}</p>
                             </NavLink>
@@ -71,11 +58,7 @@ const Sidebar: React.FC = (): ReactElement => {
                     <li>Misc</li>
                     {Object.keys(miscLinks).map((element, index) => (
                         <li key={index}>
-                            <NavLink
-                                to={miscLinks[element]}
-                                className="nav-link"
-                                activeClassName="active"
-                            >
+                            <NavLink to={miscLinks[element]} className="nav-link" activeClassName="active">
                                 <i className="pe-7s-graph" />
                                 <p>{element}</p>
                             </NavLink>

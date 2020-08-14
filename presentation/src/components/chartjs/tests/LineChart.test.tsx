@@ -1,7 +1,7 @@
 import React from 'react';
-import { shallow, ShallowWrapper } from 'enzyme';
+import {shallow, ShallowWrapper} from 'enzyme';
 import LineChart from '../LineChart';
-import { Line } from 'react-chartjs-2';
+import {Line} from 'react-chartjs-2';
 
 let wrapper: ShallowWrapper;
 
@@ -36,7 +36,6 @@ beforeEach(() => {
             pointBorderWidth={pointBorderWidth}
             pointHoverRadius={pointHoverRadius}
             data={data}
-
         />
     );
 });
@@ -49,29 +48,19 @@ describe('LineChart.test.jsx', () => {
         expect(wrapper.find(Line).props().data.labels).toEqual(labels);
     });
     it('stores the correct label', () => {
-        expect(wrapper.find(Line).props().data.datasets[0].label).toEqual(
-            label
-        );
+        expect(wrapper.find(Line).props().data.datasets[0].label).toEqual(label);
     });
     it('stores the correct backgroundColor', () => {
-        expect(
-            wrapper.find(Line).props().data.datasets[0].backgroundColor
-        ).toEqual(backgroundColor);
+        expect(wrapper.find(Line).props().data.datasets[0].backgroundColor).toEqual(backgroundColor);
     });
     it('stores the correct borderColor', () => {
-        expect(
-            wrapper.find(Line).props().data.datasets[0].pointBackgroundColor
-        ).toEqual(pointBackgroundColor);
+        expect(wrapper.find(Line).props().data.datasets[0].pointBackgroundColor).toEqual(pointBackgroundColor);
     });
     it('stores the correct pointBorderWidth', () => {
-        expect(
-            wrapper.find(Line).props().data.datasets[0].pointBorderWidth
-        ).toEqual(pointBorderWidth);
+        expect(wrapper.find(Line).props().data.datasets[0].pointBorderWidth).toEqual(pointBorderWidth);
     });
     it('stores the correct pointHoverRadius', () => {
-        expect(
-            wrapper.find(Line).props().data.datasets[0].pointHoverRadius
-        ).toEqual(pointHoverRadius);
+        expect(wrapper.find(Line).props().data.datasets[0].pointHoverRadius).toEqual(pointHoverRadius);
     });
     it('stores the correct data', () => {
         expect(wrapper.find(Line).props().data.datasets[0].data).toEqual(data);

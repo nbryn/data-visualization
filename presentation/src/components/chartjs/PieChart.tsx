@@ -1,15 +1,15 @@
-import { makeStyles } from '@material-ui/core/styles';
-import { Pie } from 'react-chartjs-2';
+import {makeStyles} from '@material-ui/core/styles';
+import {Pie} from 'react-chartjs-2';
 import React from 'react';
 
-import { PieChart as Chart, PieChartDataset } from './types';
+import {PieChart as Chart, PieChartDataset} from './types';
 
 const useStyles = makeStyles((theme) => ({
     title: {
         marginTop: -10,
         marginBottom: 58,
         width: '100%',
-        textAlign: 'center'
+        textAlign: 'center',
     },
 }));
 interface Props extends PieChartDataset {

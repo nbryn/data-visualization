@@ -1,4 +1,4 @@
-import { LastMonthDto, LastYearDto, ServerDto } from '../Dto';
+import {LastMonthDto, LastYearDto, ServerDto} from '../Dto';
 
 export type UserViewDto = {
     userCount: number;

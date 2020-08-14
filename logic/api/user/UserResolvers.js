@@ -1,4 +1,4 @@
-const actionRunner = require("../../util/ActionRunner");
+const actionRunner = require("../../util/ActionRunner.js");
 const { fetchDailyData } = require("../../../data/common/fetchDailyData");
 const { fetchMonthlyData } = require("../../../data/common/fetchMonthlyData");
 const {

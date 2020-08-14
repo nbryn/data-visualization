@@ -1,4 +1,4 @@
-import { fetchFromServer } from '../Fetch';
+import {fetchFromServer} from '../Fetch';
 
 export const fetchLoansLastYear = async (): Promise<any> => {
     const data = `query{

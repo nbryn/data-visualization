@@ -1,4 +1,4 @@
-const actionRunner = require("../../util/ActionRunner");
+const actionRunner = require("../../util/ActionRunner.js");
 const {
   calculateNumberOfGroups,
   calculateNumberOfUsers,

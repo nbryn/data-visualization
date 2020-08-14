@@ -1,5 +1,5 @@
-import { fetchFromServer } from '../Fetch';
-import { GroupDto } from './GroupDto';
+import {fetchFromServer} from '../Fetch';
+import {GroupDto} from './GroupDto';
 
 export const fetchDataForGroup = async (group: string): Promise<GroupDto> => {
     const data = `query{

@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from 'axios';
+import axios, {AxiosResponse} from 'axios';
 
 export async function fetchFromServer<T>(action: string, data: string, dataType?: string): Promise<T> {
     let response = null;

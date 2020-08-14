@@ -1,14 +1,13 @@
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { makeStyles } from '@material-ui/core/styles';
-import React, { ReactElement } from 'react';
+import {makeStyles} from '@material-ui/core/styles';
+import React, {ReactElement} from 'react';
 
-const { Col, Row } = require('react-bootstrap');
+const {Col, Row} = require('react-bootstrap');
 
 const useStyles = makeStyles((theme) => ({
     card: {
         borderRadius: 4,
-        boxShadow:
-            '0 1px 2px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(63, 63, 68, 0.1)',
+        boxShadow: '0 1px 2px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(63, 63, 68, 0.1)',
         backgroundColor: '#ffffff',
         marginBottom: 20,
         marginTop: -15,
@@ -58,13 +57,7 @@ type Props = {
     bigIcon: string;
 };
 
-const KPICard: React.FC<Props> = ({
-    statsValue,
-    statsText,
-    statsIcon,
-    statsIconText,
-    bigIcon,
-}: Props): ReactElement => {
+const KPICard: React.FC<Props> = ({statsValue, statsText, statsIcon, statsIconText, bigIcon}: Props): ReactElement => {
     const classes = useStyles();
     return (
         <div className={classes.card}>

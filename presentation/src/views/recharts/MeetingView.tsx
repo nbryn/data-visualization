@@ -1,17 +1,12 @@
-import { useDispatch } from 'react-redux';
-import React, { ReactElement } from 'react';
+import {useDispatch} from 'react-redux';
+import React, {ReactElement} from 'react';
 
-import {
-    BarChartContainer,
-    KPIContainer,
-    KPITodayContainer,
-    LineChartContainer,
-} from '../../containers';
+import {BarChartContainer, KPIContainer, KPITodayContainer, LineChartContainer} from '../../containers';
 import * as Thunks from '../../thunks/Thunks';
 import Header from '../../components/navigation/Header';
 import Sidebar from '../../components/navigation/Sidebar';
 
-const { Col, Grid, Row } = require('react-bootstrap');
+const {Col, Grid, Row} = require('react-bootstrap');
 
 const MeetingView: React.FC = (): ReactElement => {
     const dispatch = useDispatch();

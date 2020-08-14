@@ -1,13 +1,13 @@
-import { applyMiddleware, compose, combineReducers, createStore } from 'redux';
+import {applyMiddleware, compose, combineReducers, createStore} from 'redux';
 import thunk from 'redux-thunk';
 
-import ChartjsReducers, { ChartjsState, initialChartjsState } from './datamodels/Chartjs';
-import FinanceReducers, { FinanceState, initialFinanceState } from './datamodels/Finance';
-import GeneralReducers, { GeneralState, initialGeneralState } from './datamodels/General';
-import GroupReducers, { GroupState, initialGroupState } from './datamodels/Group';
-import MeetingReducers, { MeetingState, initialMeetingState } from './datamodels/Meeting';
-import MainReducers, { MainState, initialMainState } from './datamodels/Main';
-import UserReducers, { UserState, initialUserState } from './datamodels/User';
+import ChartjsReducers, {ChartjsState, initialChartjsState} from './datamodels/Chartjs';
+import FinanceReducers, {FinanceState, initialFinanceState} from './datamodels/Finance';
+import GeneralReducers, {GeneralState, initialGeneralState} from './datamodels/General';
+import GroupReducers, {GroupState, initialGroupState} from './datamodels/Group';
+import MeetingReducers, {MeetingState, initialMeetingState} from './datamodels/Meeting';
+import MainReducers, {MainState, initialMainState} from './datamodels/Main';
+import UserReducers, {UserState, initialUserState} from './datamodels/User';
 
 export interface RootState {
     [key: string]: any;

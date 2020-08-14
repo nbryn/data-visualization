@@ -1,4 +1,4 @@
-async function actionRunner(actionFunction: Function, input: any, validateFunction?: Function) {
+async function actionRunner(actionFunction, input, validateFunction) {
     try {
         if (validateFunction) {
             await validateFunction(input);

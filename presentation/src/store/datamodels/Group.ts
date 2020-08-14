@@ -1,4 +1,4 @@
-import { ChartData } from './General';
+import {ChartData} from './General';
 
 // Actions
 const UPDATE_GROUP_VIEW_DATA = 'UPDATE_GROUP_VIEW_DATA';
@@ -80,13 +80,13 @@ export function setNGOGroupData(data: GroupData[]): NGOGroupDataAction {
 export type GroupData = {
     [key: string]: string | number | string[] | undefined;
     id?: number;
+    name?: string;
     admin: string;
     amountPerShare: number;
     boxBalance: number;
     currency: string;
     lastMeeting: string;
     members: string[];
-    name: string;
     owner: string;
     registrationDate: string;
     totalMeetings: number;

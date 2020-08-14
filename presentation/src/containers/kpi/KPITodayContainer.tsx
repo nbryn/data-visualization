@@ -1,9 +1,9 @@
-import React, { ReactElement, useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import React, {ReactElement, useEffect, useState} from 'react';
+import {useSelector} from 'react-redux';
 
-import { getCurrentTime } from '../../util/Date';
+import {getCurrentTime} from '../../util/Date';
 import KPICard from '../../components/kpi/KPICard';
-import { RootState } from '../../store/index';
+import {RootState} from '../../store/index';
 
 type Props = {
     statsType: string;
@@ -12,20 +12,11 @@ type Props = {
     icon: string;
 };
 
-export const KPITodayContainer: React.FC<Props> = ({
-    statsType,
-    countData,
-    dateData,
-    icon,
-}: Props): ReactElement => {
+export const KPITodayContainer: React.FC<Props> = ({statsType, countData, dateData, icon}: Props): ReactElement => {
     const [lastUpdate, setLastUpdate] = useState<string>('');
-    let count: any = useSelector<RootState, number>(
-        (state) => state[statsType][countData]
-    );
+    let count: any = useSelector<RootState, number>((state) => state[statsType][countData]);
 
-    let date: string = useSelector<RootState, string>(
-        (state) => state[statsType][dateData]
-    );
+    let date: string = useSelector<RootState, string>((state) => state[statsType][dateData]);
 
     useEffect(() => {
         setLastUpdate(getCurrentTime());

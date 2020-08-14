@@ -1,5 +1,5 @@
-import { fetchFromServer } from '../Fetch';
-import { FinanceViewDto } from './FinanceViewDto';
+import {fetchFromServer} from '../Fetch';
+import {FinanceViewDto} from './FinanceViewDto';
 
 export const fetchFinanceData = async (): Promise<FinanceViewDto> => {
     const data = `query {

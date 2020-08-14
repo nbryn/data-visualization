@@ -1,6 +1,6 @@
-import { Bar } from 'react-chartjs-2';
-import React, { ReactElement } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import {Bar} from 'react-chartjs-2';
+import React, {ReactElement} from 'react';
+import {makeStyles} from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
     title: {
@@ -30,11 +30,7 @@ type Props = {
     secondChart: ChartProps;
 };
 
-const MixedChart: React.FC<Props> = ({
-    firstChart,
-    secondChart,
-    labels,
-}: Props): ReactElement => {
+const MixedChart: React.FC<Props> = ({firstChart, secondChart, labels}: Props): ReactElement => {
     const classes = useStyles();
     const data = {
         datasets: [
@@ -60,8 +56,7 @@ const MixedChart: React.FC<Props> = ({
                 backgroundColor: secondChart.backgroundColor,
                 pointBorderColor: secondChart.pointBorderColor,
                 pointBackgroundColor: secondChart.pointBackgroundColor,
-                pointHoverBackgroundColor:
-                    secondChart.pointHoverBackgroundColor,
+                pointHoverBackgroundColor: secondChart.pointHoverBackgroundColor,
                 pointHoverBorderColor: secondChart.pointHoverBorderColor,
                 yAxisID: 'y-axis-2',
             },

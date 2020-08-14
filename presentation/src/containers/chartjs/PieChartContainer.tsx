@@ -1,12 +1,12 @@
-import { Card, CardContent } from '@material-ui/core';
+import {Card, CardContent} from '@material-ui/core';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { makeStyles } from '@material-ui/core/styles';
-import React, { ReactElement } from 'react';
-import { useSelector } from 'react-redux';
+import {makeStyles} from '@material-ui/core/styles';
+import React, {ReactElement} from 'react';
+import {useSelector} from 'react-redux';
 
-import { ChartjsPieData } from '../../store/datamodels/Chartjs';
+import {ChartjsPieData} from '../../store/datamodels/Chartjs';
 import PieChart from '../../components/chartjs/PieChart';
-import { RootState } from '../../store/index';
+import {RootState} from '../../store/index';
 
 const useStyles = makeStyles((theme) => ({
     wrapper: {
@@ -34,10 +34,7 @@ export const ChartjsPieChartContainer: React.FC<Props> = ({
 }: Props): ReactElement => {
     const classes = useStyles();
 
-    const { data, labels }: ChartjsPieData = useSelector<
-        RootState,
-        ChartjsPieData
-    >((state) => state.chartjs[dataType]);
+    const {data, labels}: ChartjsPieData = useSelector<RootState, ChartjsPieData>((state) => state.chartjs[dataType]);
 
     return (
         <Card className={classes.wrapper}>

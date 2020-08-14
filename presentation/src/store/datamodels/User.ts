@@ -1,4 +1,4 @@
-import { ChartData } from './General';
+import {ChartData} from './General';
 
 // Actions
 const UPDATE_USER_VIEW_DATA = 'UPDATE_USER_VIEW_DATA';

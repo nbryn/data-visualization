@@ -1,17 +1,12 @@
-import React, { ReactElement } from 'react';
-import { useDispatch } from 'react-redux';
+import React, {ReactElement} from 'react';
+import {useDispatch} from 'react-redux';
 
-import {
-    BarChartContainer,
-    KPIContainer,
-    LineChartContainer,
-    PieChartContainer,
-} from '../../containers';
+import {BarChartContainer, KPIContainer, LineChartContainer, PieChartContainer} from '../../containers';
 import * as Thunks from '../../thunks/Thunks';
 import Header from '../../components/navigation/Header';
 import Sidebar from '../../components/navigation/Sidebar';
 
-const { Col, Grid, Row } = require('react-bootstrap');
+const {Col, Grid, Row} = require('react-bootstrap');
 
 const MainView: React.FC = (): ReactElement => {
     const dispatch = useDispatch();

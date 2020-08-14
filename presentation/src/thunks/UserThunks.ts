@@ -1,11 +1,11 @@
-import { Action } from 'redux';
-import { ThunkAction } from 'redux-thunk';
+import {Action} from 'redux';
+import {ThunkAction} from 'redux-thunk';
 
-import { fetchUserViewData, fetchUsersPerCountry, fetchUsersPerNGO, UserViewDto } from '../services/requests';
-import { setUserViewData, UserState } from '../store/datamodels/User';
+import {fetchUserViewData, fetchUsersPerCountry, fetchUsersPerNGO, UserViewDto} from '../services/requests';
+import {setUserViewData, UserState} from '../store/datamodels/User';
 import * as DataMappingService from '../services/DataMappingService';
-import { RootState } from '../store/index';
-import { ServerDto } from '../services/requests/Dto';
+import {RootState} from '../store/index';
+import {ServerDto} from '../services/requests/Dto';
 
 export const updateUserViewData = (): ThunkAction<void, RootState, null, Action<string>> => async (dispatch) => {
     const result: UserState = {} as UserState;
@@ -14,9 +14,9 @@ export const updateUserViewData = (): ThunkAction<void, RootState, null, Action<
     const userCountryData: ServerDto[] = await fetchUsersPerCountry();
     const userNGOData: ServerDto[] = await fetchUsersPerNGO();
 
-    const { userCount, usersLastMonth, usersLastYear, userGenderStats } = userData;
+    const {userCount, usersLastMonth, usersLastYear, userGenderStats} = userData;
 
-    const { todayDate, todayCount } = DataMappingService.mapDataForToday(usersLastMonth);
+    const {todayDate, todayCount} = DataMappingService.mapDataForToday(usersLastMonth);
 
     result.total = userCount;
     result.todayCount = todayCount;

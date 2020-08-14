@@ -1,9 +1,9 @@
-import { ChartData, TodayData } from '../store/datamodels/General';
-import { ChartjsData, ChartjsLastMonthData, ChartjsPieData } from '../store/datamodels/Chartjs';
-import { convertNumberToMonth } from '../util/Date';
-import { GroupData, GroupDataProp } from '../store/datamodels/Group';
-import { GroupDto, Name } from '../services/requests';
-import { IntervalDto, LastMonthDto, LastYearDto, ServerDto } from '../services/requests/Dto';
+import {ChartData, TodayData} from '../store/datamodels/General';
+import {ChartjsData, ChartjsLastMonthData, ChartjsPieData} from '../store/datamodels/Chartjs';
+import {convertNumberToMonth} from '../util/Date';
+import {GroupData, GroupDataProp} from '../store/datamodels/Group';
+import {GroupDto, Name} from '../services/requests';
+import {IntervalDto, LastMonthDto, LastYearDto, ServerDto} from '../services/requests/Dto';
 
 export const mapDataForToday = (data: LastMonthDto[]): TodayData => {
     const temp: ChartData[] = mapLastMonthBarChartData(data);

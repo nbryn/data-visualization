@@ -1,8 +1,8 @@
 const actionRunner = require('../../util/ActionRunner.js');
-const {calculateGroupActivitySince, calculateShareoutActivitySince} = require('./GroupActivityService');
-const {calculateMeetingFrequency, generateMeetingOverview, listGroupData, listGroupsByNGO} = require('./GroupService');
-const {fetchAllGroups, fetchGroupSizeData} = require('../../../data/mappers/GroupMapper');
-
+const Error = require('../../util/Error');
+const GroupActivityService = require('./GroupActivityService');
+const GroupService = require('./GroupService');
+const GroupMapper = require('../../../data/mappers/GroupMapper');
 const {fetchDailyData} = require('../../../data/common/fetchDailyData');
 const {fetchMonthlyData} = require('../../../data/common/fetchMonthlyData');
 const {fetchTotal} = require('../../../data/common/fetchTotal');
@@ -11,14 +11,19 @@ const groupResolvers = {
     Query: {
         groupStats: (root, context) => ({root, context}),
         groupEngagement: (root, context) => ({root, context}),
-        groupSearch: (obj, args, root, context) => ({obj, args, root, context}),
         ngoGroupData: (obj, args, root, context) => ({obj, args, root, context}),
         groupActivity: async (root, context) => ({root, context}),
+        groupSearch: async (obj, args, root, context) => {
+            return actionRunner(async () => {
+                const groupData = await GroupService.listGroupData(args.input.group);
+
+                return groupData;
+            });
+        },
     },
-    GroupSearchType: {
+    GroupSearch: {
         __resolveType: (obj) => {
-            console.log(obj);
-            if (obj.error) return 'Error';
+            if (obj instanceof Error) return 'Error';
 
             return 'Group';
         },
@@ -26,7 +31,7 @@ const groupResolvers = {
     GroupActivity: {
         meetingActivity: async (root, context) => {
             return actionRunner(async () => {
-                const last105Days = await calculateGroupActivitySince(105);
+                const last105Days = await GroupActivityService.calculateGroupActivitySince(105);
 
                 return {
                     last105Days: last105Days,
@@ -35,7 +40,7 @@ const groupResolvers = {
         },
         shareoutActivity: async (root, context) => {
             return actionRunner(async () => {
-                const groupTotal = await calculateShareoutActivitySince(105);
+                const groupTotal = await GroupActivityService.calculateShareoutActivitySince(105);
 
                 return groupTotal;
             });
@@ -51,7 +56,7 @@ const groupResolvers = {
         },
         groupSize: async (root, context) => {
             return actionRunner(async () => {
-                const result = await fetchGroupSizeData();
+                const result = await GroupMapper.fetchGroupSizeData();
 
                 const tempResult = result
                     .filter((element) => element._id.groupSize > 6)
@@ -96,7 +101,7 @@ const groupResolvers = {
     GroupEngagement: {
         groupsActive: async (root, context) => {
             return actionRunner(async () => {
-                const allGroups = await fetchAllGroups();
+                const allGroups = await GroupMapper.fetchAllGroups();
                 let activeGroups = 0;
 
                 allGroups.forEach((group) => {
@@ -110,32 +115,23 @@ const groupResolvers = {
         },
         groupMeetingFrequency: async (root, context) => {
             return actionRunner(async () => {
-                const meetingFreq = calculateMeetingFrequency();
+                const meetingFreq = GroupService.calculateMeetingFrequency();
 
                 return meetingFreq;
             });
         },
         groupMeetingStats: async (root, context) => {
             return actionRunner(async () => {
-                meetingStats = await generateMeetingOverview();
+                meetingStats = await GroupService.generateMeetingOverview();
 
                 return meetingStats;
-            });
-        },
-    },
-    GroupSearch: {
-        groupData: async (obj, args, root, context) => {
-            return actionRunner(async () => {
-                const groupData = await listGroupData(args.group);
-
-                return groupData;
             });
         },
     },
     NGOGroupData: {
         groupData: async (obj, args, root, context) => {
             return actionRunner(async () => {
-                const groupData = await listGroupsByNGO(args.ngo);
+                const groupData = await GroupService.listGroupsByNGO(args.ngo);
 
                 return groupData;
             });

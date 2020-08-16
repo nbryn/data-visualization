@@ -6,6 +6,8 @@ async function actionRunner(actionFunction, input, validateFunction) {
         return await actionFunction(input);
     } catch (error) {
         console.log(error);
+        
+        return error;
     }
 }
 

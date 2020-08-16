@@ -1,26 +1,19 @@
-const {fetchGroupBy, fetchGroupsByNGO, fetchGroupMeetingData, fetchAllGroupData} = require('../../../data/mappers/GroupMapper');
-
-const {fetchUserIDByRole, fetchAllMemberIDsFromGroup} = require('../../../data/mappers/GroupMemberMapper');
-
-const {fetchAccountDataByGroup, fetchLoansByGroup} = require('../../../data/mappers/FinanceMapper');
 
 const {fetchByID} = require('../../../data/common/fetchByID');
+const FinanceMapper = require('../../../data/mappers/FinanceMapper');
+const GroupMemberMapper = require('../../../data/mappers/GroupMemberMapper');
+const GroupMapper = require('../../../data/mappers/GroupMapper');
 
-async function listGroupData(group) {
-    const generalData = await fetchGroupBy('name', group);
-
-    if (generalData.length < 1) {
-        const error = {error: 'Group not Found'};
-        return error;
-    }
-
+async function listGroupData(groupName) {
+    const generalData = await GroupMapper.fetchGroupByName(groupName);
+ 
     const allGroupData = await retrieveGroupData(generalData[0]);
 
     return allGroupData;
 }
 
 async function listGroupsByNGO(ngo) {
-    const generalGroupData = await fetchGroupsByNGO(ngo);
+    const generalGroupData = await GroupMapper.fetchGroupsByNGO(ngo);
 
     const allGroupData = await Promise.all(
         generalGroupData.map(async (group) => {
@@ -34,11 +27,10 @@ async function listGroupsByNGO(ngo) {
 }
 
 async function calculateMeetingFrequency() {
-    const meetingData = await fetchGroupMeetingData();
+    const meetingData = await GroupMapper.fetchGroupMeetingData();
 
     //Test groups < 6 members & New groups regDate < 14 days
     let testGroups = 0;
-    let newGroups = 0;
     let meetingsLastMonth, meetingsLast2Months, meetingOver2Months;
 
     meetingData.forEach((element) => {
@@ -87,7 +79,7 @@ async function calculateMeetingFrequency() {
 }
 
 async function generateMeetingOverview() {
-    const result = await fetchAllGroupData();
+    const result = await GroupMapper.fetchAllGroupData();
 
     const groupMeetingData = result.map((element) => {
         const sinceReg = calculateTimeSinceReg(element.registrationDate);
@@ -144,12 +136,12 @@ module.exports = {
 // ---- Helper Functions ---- //
 
 async function retrieveGroupData(group) {
-    const accountData = await fetchAccountDataByGroup(group._id);
-    const loans = await fetchLoansByGroup(group._id);
+    const accountData = await FinanceMapper.fetchAccountDataByGroup(group._id);
+    const loans = await FinanceMapper.fetchLoansByGroup(group._id);
     const lastMeetingData = await fetchByID('GroupMeeting', group.meetings[group.meetings.length - 1]);
-    const memberIDs = await fetchAllMemberIDsFromGroup(group._id);
-    const adminIDs = await fetchUserIDByRole('ADMINISTRATOR', group._id);
-    const ownerIDs = await fetchUserIDByRole('OWNER', group._id);
+    const memberIDs = await GroupMemberMapper.fetchAllMemberIDsFromGroup(group._id);
+    const adminIDs = await GroupMemberMapper.fetchUserIDByRole('ADMINISTRATOR', group._id);
+    const ownerIDs = await GroupMemberMapper.fetchUserIDByRole('OWNER', group._id);
 
     const lastMeeting = extractLastMeetingDate(lastMeetingData);
 

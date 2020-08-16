@@ -39,7 +39,7 @@ const DefaultSchema = gql`
     }
 
     type Error {
-        error: String
+        errorMessage: String
     }
 
     input SigninInput {

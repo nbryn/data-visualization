@@ -1,6 +1,7 @@
 const moment = require("moment");
 const ObjectId = require("mongodb").ObjectId;
 
+const Error = require('../../logic/util/Error');
 const { getModel } = require("../connection");
 
 async function fetchGroupByID(id) {
@@ -51,10 +52,14 @@ async function fetchGroupMembersPerNGO() {
   return groupMembersPerNGO;
 }
 
-async function fetchGroupBy(criteria, identifier) {
+async function fetchGroupByName(groupName) {
   const groupModel = await getModel("Group");
 
-  const result = await groupModel.find({ [criteria]: identifier });
+  const result = await groupModel.find({ name: groupName });
+
+  if (result.length < 1) {
+    throw new Error('Group not found');
+  }
 
   return result;
 }
@@ -180,7 +185,7 @@ async function fetchLoanData() {
 
 module.exports = {
   fetchGroupByID,
-  fetchGroupBy,
+  fetchGroupByName,
   fetchAllGroups,
   fetchGroupStats,
   fetchGroupSizeData,

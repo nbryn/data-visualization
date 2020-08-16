@@ -1,10 +1,11 @@
-import {useDispatch, useSelector} from 'react-redux';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import {ColumnDescription} from 'react-bootstrap-table-next';
 import {makeStyles} from '@material-ui/core/styles';
 import React, {ReactElement, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 
 import * as GroupThunks from '../../thunks/GroupThunks';
+import Error from '../../util/Error';
 import {GroupDataProp} from '../../store/datamodels/Group';
 import {infoPageColumn} from '../../util/InfoPageGroupColumns';
 import Header from '../../components/navigation/Header';
@@ -12,7 +13,7 @@ import InfoPage from '../../components/common/InfoPage';
 import {RootState} from '../../store/index';
 import Sidebar from '../../components/navigation/Sidebar';
 
-const {Col, Grid, Row, Button, ControlLabel, FormGroup, FormControl} = require('react-bootstrap');
+const {Alert, Col, Grid, Row, Button, ControlLabel, FormGroup, FormControl} = require('react-bootstrap');
 
 const useStyles = makeStyles((theme) => ({
     search: {
@@ -24,20 +25,28 @@ const GroupSearchView: React.FC = (): ReactElement => {
     const classes = useStyles();
 
     const [loading, setLoading] = useState<boolean>(false);
+    const [errorMessage, setErrorMessage] = useState<string>('');
     const [searchString, setSearchString] = useState<string>('');
 
     const searchData: GroupDataProp = useSelector<RootState, GroupDataProp>((state) => state.groups.searchData);
 
     const dispatch = useDispatch();
 
-    const onSubmit = async (event: React.FormEvent) => {
-        event.preventDefault();
+    const onSubmit = async (event: React.FormEvent): Promise<void> => {
+        setErrorMessage('');
 
-        setLoading(true);
+        try {
+            event.preventDefault();
 
-        await dispatch(GroupThunks.updateGroupSearchData(`"${searchString}"`));
+            setLoading(true);
 
-        setLoading(false);
+            await dispatch(GroupThunks.updateGroupSearchData(`"${searchString}"`));
+
+            setLoading(false);
+        } catch (error) {
+            const errorMessage = (error as Error).getErrorMessage();
+            setErrorMessage(errorMessage);
+        }
     };
 
     const columns: ColumnDescription[] = [
@@ -57,6 +66,11 @@ const GroupSearchView: React.FC = (): ReactElement => {
                     <Grid fluid>
                         <Row>
                             <Col lg={2} sm={3} className={classes.search}>
+                                {errorMessage && (
+                                    <Alert bsStyle="danger">
+                                        <p style={{textAlign: 'center'}}>{errorMessage} - Please try again</p>
+                                    </Alert>
+                                )}
                                 <form onSubmit={onSubmit}>
                                     <FormGroup controlId="formSearch">
                                         <ControlLabel>Search</ControlLabel>
@@ -78,8 +92,8 @@ const GroupSearchView: React.FC = (): ReactElement => {
                             </Col>
                         </Row>
                         <Row>
-                            {loading && <CircularProgress className="spinner" />}
-                            {searchData.length > 0 && (
+                            {loading && !errorMessage && <CircularProgress className="spinner" />}
+                            {searchData.length > 0 && !errorMessage && (
                                 <InfoPage data={searchData} title="Group Info" columns={columns} column1={infoPageColumn} />
                             )}
                         </Row>

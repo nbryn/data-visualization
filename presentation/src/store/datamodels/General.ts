@@ -1,18 +1,12 @@
 // Actions
 const LOGIN_USER = 'LOGIN_USER';
 const LOGOUT_USER = 'LOGOUT_USER';
-const LOGIN_ERROR = 'LOGIN_ERROR';
 const UPDATE_ENGAGEMENT_VIEW_DATA = 'UPDATE_ENGAGEMENT_VIEW_DATA';
 
 // Actions Types
 export interface LoginAction {
     type: typeof LOGIN_USER;
     payload: User;
-}
-
-export interface LoginError {
-    type: typeof LOGIN_ERROR;
-    payload: any;
 }
 
 export interface LogoutAction {
@@ -25,26 +19,19 @@ export interface UpdateEngagementViewDataAction {
     payload: any;
 }
 
-type GeneralActions = LoginAction | LoginError | LogoutAction | UpdateEngagementViewDataAction;
+type GeneralActions = LoginAction | LogoutAction | UpdateEngagementViewDataAction;
 
 // Action Creators
-export function loginUser(data: LoginAction) {
+export function loginUser(data: User) {
     return {
-        type: typeof LOGIN_USER,
+        type: LOGIN_USER,
         payload: data,
     };
 }
 
 export function logoutUser(data: any = null) {
     return {
-        type: typeof LOGOUT_USER,
-        payload: data,
-    };
-}
-
-export function loginError(data: any) {
-    return {
-        type: typeof LOGIN_ERROR,
+        type: LOGOUT_USER,
         payload: data,
     };
 }
@@ -67,10 +54,6 @@ export default function (state = {}, action: GeneralActions) {
             return Object.assign({}, state, {
                 currentUser: action.payload,
             });
-        case LOGIN_ERROR:
-            return Object.assign({}, state, {
-                loginError: action.payload,
-            });
         case UPDATE_ENGAGEMENT_VIEW_DATA:
             return Object.assign({}, state, {
                 engagementData: action.payload,
@@ -92,6 +75,7 @@ export type ChartData = {
 
 export type User = {
     [key: string]: string;
+    token: string;
     email: string;
     firstName: string;
     phoneNumber: string;
@@ -100,12 +84,10 @@ export type User = {
 
 export interface GeneralState {
     currentUser: User;
-    loginError: string;
     engagementData: Array<any>;
 }
 
 export const initialGeneralState: GeneralState = {
     currentUser: null,
-    loginError: '',
     engagementData: [],
 };

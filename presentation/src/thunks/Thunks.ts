@@ -1,5 +1,5 @@
-import {Action} from 'redux';
-import {ThunkAction} from 'redux-thunk';
+import { Action } from 'redux';
+import { ThunkAction } from 'redux-thunk';
 
 import {
     fetchGroupsLastYear,
@@ -18,19 +18,17 @@ import {
     MeetingViewDto,
 } from '../services/requests';
 import * as DataMappingService from '../services/DataMappingService';
-import {fetchFinanceData} from '../services/requests/finance/FinanceViewDataRequest';
-import {fetchMeetingViewData} from '../services/requests/meeting/MeetingViewDataRequest';
-import {fetchMeetingsPerCountry} from '../services/requests/meeting/MeetingsPerCountryRequest';
+import { fetchFinanceData } from '../services/requests/finance/FinanceViewDataRequest';
+import { fetchMeetingViewData } from '../services/requests/meeting/MeetingViewDataRequest';
+import { fetchMeetingsPerCountry } from '../services/requests/meeting/MeetingsPerCountryRequest';
+import { FinanceState, setFinanceViewData } from '../store/datamodels/Finance';
+import { loginUser, logoutUser, updateEngagementViewData } from '../store/datamodels/General';
+import { MeetingState, setMeetingViewData } from '../store/datamodels/Meeting';
+import { RootState } from '../store/index';
+import { removeTokenFromLocalStorage, setTokenInLocalStorage } from '../util/Token';
+import { ServerDto, UserDto } from '../services/requests/Dto';
 
-import {FinanceState, setFinanceViewData} from '../store/datamodels/Finance';
-
-import {loginUser, logoutUser, loginError, updateEngagementViewData} from '../store/datamodels/General';
-import {MeetingState, setMeetingViewData} from '../store/datamodels/Meeting';
-import {RootState} from '../store/index';
-import {removeTokenFromLocalStorage, setTokenInLocalStorage} from '../util/Token';
-import {ServerDto} from '../services/requests/Dto';
-
-import {MainState, setMainViewData} from '../store/datamodels/Main';
+import { MainState, setMainViewData } from '../store/datamodels/Main';
 
 export const updateMeetingViewData = (): ThunkAction<void, RootState, null, Action<string>> => async (dispatch) => {
     const result: MeetingState = {} as MeetingState;
@@ -38,9 +36,9 @@ export const updateMeetingViewData = (): ThunkAction<void, RootState, null, Acti
     const meetingViewData: MeetingViewDto = await fetchMeetingViewData();
     const meetingsCountryData: ServerDto[] = await fetchMeetingsPerCountry();
 
-    const {meetingTotal, meetingsLastMonth, meetingsLastYear, meetingsPerGroup, sharesPerMeeting} = meetingViewData;
+    const { meetingTotal, meetingsLastMonth, meetingsLastYear, meetingsPerGroup, sharesPerMeeting } = meetingViewData;
 
-    const {todayCount, todayDate} = DataMappingService.mapDataForToday(meetingsLastMonth);
+    const { todayCount, todayDate } = DataMappingService.mapDataForToday(meetingsLastMonth);
 
     result.totalData = meetingTotal;
     result.todayCount = todayCount;
@@ -137,21 +135,11 @@ export const setEngagementViewData = (): ThunkAction<void, RootState, null, Acti
 export const login = (
     username: string,
     password: string,
-    history: any
 ): ThunkAction<void, RootState, null, Action<string>> => async (dispatch) => {
-    const result: any = await fetchLogin(username, password);
+    const result: UserDto = await fetchLogin(username, password);
 
-    const error = result.error;
-
-    if (error) {
-        dispatch(loginError('Wrong Email/Username'));
-    } else {
-        setTokenInLocalStorage(result);
-
-        dispatch(loginUser(result));
-
-        history.push('/dashboard');
-    }
+    setTokenInLocalStorage(result);
+    dispatch(loginUser(result));
 };
 
 export const logout = (): ThunkAction<void, RootState, null, Action<string>> => async (dispatch) => {

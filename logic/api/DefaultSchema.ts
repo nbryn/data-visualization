@@ -31,6 +31,7 @@ const DefaultSchema = gql`
     }
 
     type User {
+        token: String
         firstName: String
         lastName: String
         phoneNumber: String
@@ -47,8 +48,10 @@ const DefaultSchema = gql`
         password: String!
     }
 
+    union Signin = User | Error
+
     type Mutation {
-        signin(input: SigninInput!): JSON
+        signin(input: SigninInput!): Signin
     }
 
     type Query {

@@ -1,20 +1,25 @@
-const { GraphQLJSON } = require("graphql-type-json");
-
-const actionRunner = require("../util/ActionRunner.js");
-const { validateLogin } = require("../../data/mappers/UserMapper");
+const actionRunner = require('../util/ActionRunner.js');
+const Error = require('../util/Error');
+const {validateLogin} = require('../../data/mappers/UserMapper');
 
 const userResolvers = {
-  JSON: GraphQLJSON,
+    Signin: {
+        __resolveType: (obj) => {
+            if (obj instanceof Error) return 'Error';
 
-  Mutation: {
-    signin: async (parent, args) => {
-      return actionRunner(async () => {
-        const result = await validateLogin(args);
-
-        return result;
-      });
+            return 'User';
+        },
     },
-  },
+    Mutation: {
+        signin: async (parent, args) => {
+            return actionRunner(async () => {
+                console.log(args);
+                const result = await validateLogin(args);
+
+                return result;
+            });
+        },
+    },
 };
 
 module.exports = userResolvers;

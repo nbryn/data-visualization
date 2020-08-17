@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
     line: {
         border: 'solid 1px',
         marginLeft: -15,
-        width: '105%'
+        width: '105%',
     },
     box: {
         height: 400,

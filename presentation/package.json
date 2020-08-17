@@ -7,7 +7,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "prettier": "prettier --config .prettierrc 'src/**/*.ts*' --write",
+    "prettier": "prettier --config .prettierrc 'src/**/*.{js,ts,tsx}' --write",
     "compile-sass": "node-sass src/assets/sass/dashboard.scss src/assets/css/dashboard.css",
     "minify-sass": "node-sass src/assets/sass/dashboard.scss src/assets/css/dashboard.min.css --output-style compressed"
   },

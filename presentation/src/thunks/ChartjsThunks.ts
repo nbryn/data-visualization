@@ -1,5 +1,5 @@
-import { Action } from 'redux';
-import { ThunkAction } from 'redux-thunk';
+import {Action} from 'redux';
+import {ThunkAction} from 'redux-thunk';
 
 import {
     fetchGroupsLastMonth,
@@ -13,9 +13,9 @@ import {
     fetchUsersLastMonth,
 } from '../services/requests';
 import * as DataMappingService from '../services/DataMappingService';
-import { ChartjsLastMonthData, ChartjsState, setChartjsData } from '../store/datamodels/Chartjs';
-import { LastMonthDto, LastYearDto, ServerDto } from '../services/requests/Dto';
-import { RootState } from '../store/index';
+import {ChartjsLastMonthData, ChartjsState, setChartjsData} from '../store/datamodels/Chartjs';
+import {LastMonthDto, LastYearDto, ServerDto} from '../services/requests/Dto';
+import {RootState} from '../store/index';
 
 export const updateChartjsData = (): ThunkAction<void, RootState, null, Action<string>> => async (dispatch) => {
     const result: ChartjsState = {} as ChartjsState;

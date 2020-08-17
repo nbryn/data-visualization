@@ -20,4 +20,13 @@ export type LastYearDto = {
     count: number;
 };
 
+export type UserDto = {
+    token: string;
+    firstName: string;
+    lastName: string;
+    phoneNumber: string;
+    email: string;
+    gender: string;
+};
+
 export type IntervalDto = LastMonthDto | LastYearDto;

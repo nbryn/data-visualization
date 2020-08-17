@@ -1,17 +1,62 @@
-import {useDispatch, useSelector} from 'react-redux';
+import {Card, CardContent} from '@material-ui/core';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import {makeStyles} from '@material-ui/core/styles';
 import React, {ReactElement, useEffect, useState} from 'react';
 import {useHistory} from 'react-router-dom';
+import {useDispatch} from 'react-redux';
 
 import * as Thunks from '../../thunks/Thunks';
-import {RootState} from '../../store/index';
+import Error from '../../util/Error';
+import TextField from '../../components/form/TextField';
 
-const {Alert} = require('react-bootstrap');
+const {Alert, Button, Col, Grid, Row} = require('react-bootstrap');
+
+const useStyles = makeStyles((theme) => ({
+    errorMessage: {
+        textAlign: 'center',
+    },
+    card: {
+        marginTop: 70,
+        height: 400,
+        width: 550,
+        float: 'none',
+        verticalAlign: 'middle',
+        display: 'inline-block',
+    },
+    row: {
+        textAlign: 'center',
+        margin: '0 auto',
+    },
+    formElement: {
+        float: 'none',
+        verticalAlign: 'middle',
+        display: 'inline-block',
+    },
+    formButton: {
+        float: 'none',
+        verticalAlign: 'middle',
+        display: 'inline-block',
+        top: 20,
+    },
+    formTitle: {
+        float: 'none',
+        verticalAlign: 'middle',
+        display: 'inline-block',
+        top: -25,
+    },
+    spinner: {
+        justifyContent: 'center',
+    },
+}));
 
 const Signin: React.FC = (): ReactElement => {
+    const classes = useStyles();
+
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
 
-    const errorMessage: string = useSelector<RootState, string>((state) => state.general.loginError);
+    const [loading, setLoading] = useState<boolean>(false);
+    const [errorMessage, setErrorMessage] = useState<string>('');
 
     const dispatch = useDispatch();
     let history = useHistory();
@@ -25,66 +70,86 @@ const Signin: React.FC = (): ReactElement => {
     }, []);
 
     const handleSubmit = async (event: React.FormEvent) => {
-        event.preventDefault();
+        try {
+            event.preventDefault();
+            setLoading(true);
 
-        await dispatch(Thunks.login(email, password, history));
+            await dispatch(Thunks.login(email, password));
+
+            history.push('/dashboard');
+        } catch (error) {
+            const errorMessage: string = (error as Error).getErrorMessage();
+
+            setLoading(false);
+            setErrorMessage(errorMessage);
+        }
     };
     return (
-        <div className="container">
-            <div className="row">
-                <div className="col-sm-9 col-md-7 col-lg-5 mx-auto">
-                    {errorMessage && (
-                        <Alert bsStyle="danger">
-                            <p style={{textAlign: 'center'}}>{errorMessage} - Please try again</p>
-                        </Alert>
-                    )}
-                    <div className="card card-signin my-5">
-                        <div className="card-body">
-                            <h3 className="card-title text-center">Sign In</h3>
-                            <form onSubmit={handleSubmit} autoComplete="off">
-                                <div className="form-label-group">
-                                    <input
-                                        id="inputEmail"
-                                        name="email"
-                                        className="form-control"
-                                        placeholder="Email address"
-                                        value={email}
-                                        required
-                                        onChange={(event: React.ChangeEvent) => {
-                                            const element = event.currentTarget as HTMLInputElement;
-                                            setEmail(element.value);
-                                        }}
-                                    />
-                                    <label htmlFor="inputEmail">Email address</label>
-                                </div>
+        <Grid fluid>
+            <Row className={classes.row}>
+                <Col lg={12}>
+                    <Card className={classes.card}>
+                        <Row className={classes.row}>
+                            <Col sm={6} lg={6} className={classes.formElement}>
+                                {errorMessage && (
+                                    <Alert bsStyle="danger">
+                                        <p className={classes.errorMessage}>{errorMessage} - Please try again</p>
+                                    </Alert>
+                                )}
+                            </Col>
+                        </Row>
+                        <Row className={classes.row}>
+                            <Col sm={6} lg={3} className={classes.formTitle}>
+                                <h3>Sign In</h3>
+                            </Col>
+                        </Row>
 
-                                <div className="form-label-group">
-                                    <input
-                                        type="password"
-                                        id="inputPassword"
-                                        name="password"
-                                        className="form-control"
-                                        placeholder="Password"
-                                        value={password}
-                                        required
-                                        onChange={(event: React.ChangeEvent) => {
-                                            const element = event.currentTarget as HTMLInputElement;
-                                            setPassword(element.value);
-                                        }}
-                                    />
-                                    <label htmlFor="inputPassword">Password</label>
-                                </div>
+                        <form onSubmit={handleSubmit} autoComplete="off">
+                            {loading ? (
+                                <CircularProgress className={classes.spinner} />
+                            ) : (
+                                <>
+                                    <Row className={classes.row}>
+                                        <Col sm={6} lg={6} className={classes.formElement}>
+                                            <TextField
+                                                id="Email"
+                                                label="Email"
+                                                value={email}
+                                                onChange={(event: React.ChangeEvent) => {
+                                                    const element = event.currentTarget as HTMLInputElement;
+                                                    setEmail(element.value);
+                                                }}
+                                            />
+                                        </Col>
+                                    </Row>
+                                    <Row className={classes.row}>
+                                        <Col sm={6} lg={6} className={classes.formElement}>
+                                            <TextField
+                                                id="Password"
+                                                label="Password"
+                                                value={password}
+                                                onChange={(event: React.ChangeEvent) => {
+                                                    const element = event.currentTarget as HTMLInputElement;
+                                                    setPassword(element.value);
+                                                }}
+                                            />
+                                        </Col>
+                                    </Row>
 
-                                <button className="btn btn-lg btn-primary btn-block text-uppercase" type="submit">
-                                    Sign in
-                                </button>
-                                <hr className="my-4" />
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+                                    <Row className={classes.row}>
+                                        <Col sm={6} lg={6} className={classes.formButton}>
+                                            <Button bsStyle="primary" bsSize="large" className="btn-block" type="submit">
+                                                Sign in
+                                            </Button>
+                                        </Col>
+                                    </Row>
+                                </>
+                            )}
+                        </form>
+                    </Card>
+                </Col>
+            </Row>
+        </Grid>
     );
 };
 

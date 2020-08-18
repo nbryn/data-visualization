@@ -1,5 +1,7 @@
 import React from 'react';
 import {shallow, ShallowWrapper} from 'enzyme';
+
+import '../../../setupTests';
 import BarChart from '../BarChart';
 import {Bar} from 'react-chartjs-2';
 

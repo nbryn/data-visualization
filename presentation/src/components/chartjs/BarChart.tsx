@@ -7,7 +7,7 @@ import {BarChart as Chart, BarChartDataset} from './types';
 import {Interval} from '../../containers/chartjs/interval';
 import TextField from '../form/TextField';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme: any) => ({
     dropdown: {
         width: 100,
         float: 'right',

@@ -1,4 +1,4 @@
-import {Card, CardContent} from '@material-ui/core';
+import {Card} from '@material-ui/core';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import {makeStyles} from '@material-ui/core/styles';
 import React, {ReactElement, useEffect, useState} from 'react';
@@ -19,6 +19,7 @@ const useStyles = makeStyles((theme) => ({
         marginTop: 70,
         height: 400,
         width: 550,
+        borderRadius: 15,
         float: 'none',
         verticalAlign: 'middle',
         display: 'inline-block',
@@ -31,6 +32,7 @@ const useStyles = makeStyles((theme) => ({
         float: 'none',
         verticalAlign: 'middle',
         display: 'inline-block',
+        fontSize: 15,
     },
     formButton: {
         float: 'none',
@@ -119,6 +121,8 @@ const Signin: React.FC = (): ReactElement => {
                                                     const element = event.currentTarget as HTMLInputElement;
                                                     setEmail(element.value);
                                                 }}
+                                                inputProps={{style: {fontSize: 18}}}
+                                                inputLabelProps={{style: {fontSize: 14}}}
                                             />
                                         </Col>
                                     </Row>
@@ -132,6 +136,8 @@ const Signin: React.FC = (): ReactElement => {
                                                     const element = event.currentTarget as HTMLInputElement;
                                                     setPassword(element.value);
                                                 }}
+                                                inputProps={{style: {fontSize: 18}}}
+                                                inputLabelProps={{style: {fontSize: 14}}}
                                             />
                                         </Col>
                                     </Row>

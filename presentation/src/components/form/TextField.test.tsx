@@ -1,6 +1,8 @@
 import React from 'react';
 import {shallow, ShallowWrapper} from 'enzyme';
 import MaterialUITextField from '@material-ui/core/TextField';
+
+import '../../setupTests';
 import TextField from './TextField';
 
 let wrapper: ShallowWrapper;

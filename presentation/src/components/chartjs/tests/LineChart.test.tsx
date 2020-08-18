@@ -1,5 +1,7 @@
 import React from 'react';
 import {shallow, ShallowWrapper} from 'enzyme';
+
+import '../../../setupTests';
 import LineChart from '../LineChart';
 import {Line} from 'react-chartjs-2';
 

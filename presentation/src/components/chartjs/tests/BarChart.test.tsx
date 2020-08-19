@@ -1,11 +1,11 @@
-import React from 'react';
+import {Bar} from 'react-chartjs-2';
+import React, {useEffect} from 'react';
 import {shallow, ShallowWrapper} from 'enzyme';
 
 import '../../../setupTests';
 import BarChart from '../BarChart';
-import {Bar} from 'react-chartjs-2';
-
-let wrapper: ShallowWrapper;
+import {Interval} from '../../../containers/chartjs/interval';
+import TextField from '../../form/TextField';
 
 const updateIntervalMock = jest.fn();
 const labels = ['2017', '2018', '2019', '2020'];
@@ -15,11 +15,15 @@ const borderWidth = 3;
 const borderColor = 'rgba(75,192,192,3)';
 const hoverBackgroundColor = 'rgba(75,192,192,3)';
 const hoverBorderColor = 'rgba(75,192,192,4)';
-const data = [2, 3, 4, 5, 6, 7];
+const dataMock = [2, 3, 4, 5, 6, 7];
 const counter = 10;
 
-beforeEach(() => {
-    wrapper = shallow(
+const mockEvent = {
+    currentTarget: {},
+} as React.ChangeEvent<HTMLInputElement>;
+
+const mountWrapper = (interval?: Interval, data?: number[]): ShallowWrapper => {
+    return shallow(
         <BarChart
             updateInterval={updateIntervalMock}
             labels={labels}
@@ -29,35 +33,123 @@ beforeEach(() => {
             borderWidth={borderWidth}
             hoverBackgroundColor={hoverBackgroundColor}
             hoverBorderColor={hoverBorderColor}
-            data={data}
+            data={data || dataMock}
             counter={counter}
+            currentInterval={interval || Interval.WEEK}
         />
     );
+};
+
+afterEach(() => {
+    jest.clearAllMocks();
 });
 
+let wrapper: ShallowWrapper;
+
 describe('BarChart.test.jsx', () => {
-    it('renders one react-chartjs <HorizontalBar /> component', () => {
-        expect(wrapper.find(Bar)).toHaveLength(1);
+    describe('funtions are called correctly', () => {
+        it('calls updateInterval', () => {
+            wrapper = mountWrapper();
+            wrapper.find(TextField).props().onChange!(mockEvent);
+
+            expect(updateIntervalMock).toHaveBeenCalled();
+        });
     });
-    it('stores the correct labels', () => {
-        expect(wrapper.find(Bar).props().data.labels).toEqual(labels);
+    
+    describe('interval setting is working correctly', () => {
+        it('week option is disabled when interval = week', () => {
+            wrapper = mountWrapper();
+
+            const disabled = wrapper.find(TextField).childAt(0).props().disabled;
+
+            expect(disabled).toBe(true);
+        });
+        it('month option is enabled when interval = week', () => {
+            wrapper = mountWrapper();
+
+            const disabled = wrapper.find(TextField).childAt(1).props().disabled;
+
+            expect(disabled).toBe(false);
+        });
+        it('year option is enabled when interval = week', () => {
+            wrapper = mountWrapper();
+
+            const disabled = wrapper.find(TextField).childAt(2).props().disabled;
+
+            expect(disabled).toBe(false);
+        });
+        it('month option is disabled when interval = month', () => {
+            wrapper = mountWrapper(Interval.MONTH);
+
+            const disabled = wrapper.find(TextField).childAt(1).props().disabled;
+
+            expect(disabled).toBe(true);
+        });
+        it('week option is enabled when interval = month', () => {
+            wrapper = mountWrapper(Interval.MONTH);
+
+            const disabled = wrapper.find(TextField).childAt(0).props().disabled;
+
+            expect(disabled).toBe(false);
+        });
+        it('year option is enabled when interval = month', () => {
+            wrapper = mountWrapper(Interval.MONTH);
+
+            const disabled = wrapper.find(TextField).childAt(2).props().disabled;
+
+            expect(disabled).toBe(false);
+        });
     });
-    it('stores the correct label', () => {
-        expect(wrapper.find(Bar).props().data.datasets[0].label).toEqual("NGO's");
+    describe('updates when props change', () => {
+        it('updates when input data changes', () => {
+            wrapper = mountWrapper();
+
+            const newData = [1, 2, 3];
+            wrapper.find(Bar).props().data.datasets[0].data = newData;
+
+            expect(wrapper.find(Bar).props().data.datasets[0].data).toEqual(newData);
+        });
     });
-    it('stores the correct backgroundColor', () => {
-        expect(wrapper.find(Bar).props().data.datasets[0].backgroundColor).toEqual(backgroundColor);
-    });
-    it('stores the correct borderWidth', () => {
-        expect(wrapper.find(Bar).props().data.datasets[0].borderWidth).toEqual(borderWidth);
-    });
-    it('stores the correct hoverBackGroundColor', () => {
-        expect(wrapper.find(Bar).props().data.datasets[0].hoverBackgroundColor).toEqual(hoverBackgroundColor);
-    });
-    it('stores the correct hoverBorderColor', () => {
-        expect(wrapper.find(Bar).props().data.datasets[0].hoverBorderColor).toEqual(hoverBorderColor);
-    });
-    it('stores the correct data', () => {
-        expect(wrapper.find(Bar).props().data.datasets[0].data).toEqual(data);
+    describe('<Bar /> receives the correct values from props', () => {
+        it('renders one react-chartjs <Bar /> component', () => {
+            wrapper = mountWrapper();
+
+            expect(wrapper.find(Bar)).toHaveLength(1);
+        });
+        it('stores the correct labels', () => {
+            wrapper = mountWrapper();
+
+            expect(wrapper.find(Bar).props().data.labels).toEqual(labels);
+        });
+        it('stores the correct label', () => {
+            wrapper = mountWrapper();
+
+            expect(wrapper.find(Bar).props().data.datasets[0].label).toEqual("NGO's");
+        });
+        it('stores the correct backgroundColor', () => {
+            wrapper = mountWrapper();
+
+            expect(wrapper.find(Bar).props().data.datasets[0].backgroundColor).toEqual(backgroundColor);
+        });
+        it('stores the correct borderWidth', () => {
+            wrapper = mountWrapper();
+
+            expect(wrapper.find(Bar).props().data.datasets[0].borderWidth).toEqual(borderWidth);
+        });
+        it('stores the correct hoverBackGroundColor', () => {
+            wrapper = mountWrapper();
+
+            expect(wrapper.find(Bar).props().data.datasets[0].hoverBackgroundColor).toEqual(hoverBackgroundColor);
+        });
+        it('stores the correct hoverBorderColor', () => {
+            wrapper = mountWrapper();
+
+            expect(wrapper.find(Bar).props().data.datasets[0].hoverBorderColor).toEqual(hoverBorderColor);
+        });
+        it('stores the correct data', () => {
+            wrapper = mountWrapper();
+
+            expect(wrapper.find(Bar).props().data.datasets[0].data).toEqual(dataMock);
+        });
     });
 });

@@ -1,5 +1,5 @@
 import {Bar} from 'react-chartjs-2';
-import React, {useEffect} from 'react';
+import React from 'react';
 import {shallow, ShallowWrapper} from 'enzyme';
 
 import '../../../setupTests';
@@ -22,7 +22,7 @@ const mockEvent = {
     currentTarget: {},
 } as React.ChangeEvent<HTMLInputElement>;
 
-const mountWrapper = (interval?: Interval, data?: number[]): ShallowWrapper => {
+const renderBarChart = (interval?: Interval, data?: number[]): ShallowWrapper => {
     return shallow(
         <BarChart
             updateInterval={updateIntervalMock}
@@ -49,7 +49,7 @@ let wrapper: ShallowWrapper;
 describe('BarChart.test.jsx', () => {
     describe('funtions are called correctly', () => {
         it('calls updateInterval', () => {
-            wrapper = mountWrapper();
+            wrapper = renderBarChart();
             wrapper.find(TextField).props().onChange!(mockEvent);
 
             expect(updateIntervalMock).toHaveBeenCalled();
@@ -58,42 +58,42 @@ describe('BarChart.test.jsx', () => {
     
     describe('interval setting is working correctly', () => {
         it('week option is disabled when interval = week', () => {
-            wrapper = mountWrapper();
+            wrapper = renderBarChart();
 
             const disabled = wrapper.find(TextField).childAt(0).props().disabled;
 
             expect(disabled).toBe(true);
         });
         it('month option is enabled when interval = week', () => {
-            wrapper = mountWrapper();
+            wrapper = renderBarChart();
 
             const disabled = wrapper.find(TextField).childAt(1).props().disabled;
 
             expect(disabled).toBe(false);
         });
         it('year option is enabled when interval = week', () => {
-            wrapper = mountWrapper();
+            wrapper = renderBarChart();
 
             const disabled = wrapper.find(TextField).childAt(2).props().disabled;
 
             expect(disabled).toBe(false);
         });
         it('month option is disabled when interval = month', () => {
-            wrapper = mountWrapper(Interval.MONTH);
+            wrapper = renderBarChart(Interval.MONTH);
 
             const disabled = wrapper.find(TextField).childAt(1).props().disabled;
 
             expect(disabled).toBe(true);
         });
         it('week option is enabled when interval = month', () => {
-            wrapper = mountWrapper(Interval.MONTH);
+            wrapper = renderBarChart(Interval.MONTH);
 
             const disabled = wrapper.find(TextField).childAt(0).props().disabled;
 
             expect(disabled).toBe(false);
         });
         it('year option is enabled when interval = month', () => {
-            wrapper = mountWrapper(Interval.MONTH);
+            wrapper = renderBarChart(Interval.MONTH);
 
             const disabled = wrapper.find(TextField).childAt(2).props().disabled;
 
@@ -102,7 +102,7 @@ describe('BarChart.test.jsx', () => {
     });
     describe('updates when props change', () => {
         it('updates when input data changes', () => {
-            wrapper = mountWrapper();
+            wrapper = renderBarChart();
 
             const newData = [1, 2, 3];
             wrapper.find(Bar).props().data.datasets[0].data = newData;
@@ -112,42 +112,42 @@ describe('BarChart.test.jsx', () => {
     });
     describe('<Bar /> receives the correct values from props', () => {
         it('renders one react-chartjs <Bar /> component', () => {
-            wrapper = mountWrapper();
+            wrapper = renderBarChart();
 
             expect(wrapper.find(Bar)).toHaveLength(1);
         });
         it('stores the correct labels', () => {
-            wrapper = mountWrapper();
+            wrapper = renderBarChart();
 
             expect(wrapper.find(Bar).props().data.labels).toEqual(labels);
         });
         it('stores the correct label', () => {
-            wrapper = mountWrapper();
+            wrapper = renderBarChart();
 
             expect(wrapper.find(Bar).props().data.datasets[0].label).toEqual("NGO's");
         });
         it('stores the correct backgroundColor', () => {
-            wrapper = mountWrapper();
+            wrapper = renderBarChart();
 
             expect(wrapper.find(Bar).props().data.datasets[0].backgroundColor).toEqual(backgroundColor);
         });
         it('stores the correct borderWidth', () => {
-            wrapper = mountWrapper();
+            wrapper = renderBarChart();
 
             expect(wrapper.find(Bar).props().data.datasets[0].borderWidth).toEqual(borderWidth);
         });
         it('stores the correct hoverBackGroundColor', () => {
-            wrapper = mountWrapper();
+            wrapper = renderBarChart();
 
             expect(wrapper.find(Bar).props().data.datasets[0].hoverBackgroundColor).toEqual(hoverBackgroundColor);
         });
         it('stores the correct hoverBorderColor', () => {
-            wrapper = mountWrapper();
+            wrapper = renderBarChart();
 
             expect(wrapper.find(Bar).props().data.datasets[0].hoverBorderColor).toEqual(hoverBorderColor);
         });
         it('stores the correct data', () => {
-            wrapper = mountWrapper();
+            wrapper = renderBarChart();
 
             expect(wrapper.find(Bar).props().data.datasets[0].data).toEqual(dataMock);
         });

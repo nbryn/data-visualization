@@ -1,11 +1,13 @@
 import React from 'react';
-import {shallow, ShallowWrapper} from 'enzyme';
+import {render, screen, fireEvent, getByLabelText, within} from '@testing-library/react';
 
 import '../../../setupTests';
+import {Interval} from '../../../containers/chartjs/interval';
 import LineChart from '../LineChart';
-import {Line} from 'react-chartjs-2';
 
-let wrapper: ShallowWrapper;
+jest.mock('react-chartjs-2', () => ({
+    Line: () => null,
+}));
 
 const updateIntervalMock = jest.fn();
 const labels = ['January', 'February'];
@@ -21,9 +23,10 @@ const pointBorderWidth = 1;
 const pointHoverRadius = 2;
 const data = [2, 3, 4, 5, 6, 7];
 const counter = 10;
+const {WEEK, MONTH, YEAR} = Interval;
 
-beforeEach(() => {
-    wrapper = shallow(
+const renderLineChart = () =>
+    render(
         <LineChart
             updateInterval={updateIntervalMock}
             labels={labels}
@@ -38,33 +41,40 @@ beforeEach(() => {
             pointBorderWidth={pointBorderWidth}
             pointHoverRadius={pointHoverRadius}
             data={data}
+            counter={counter}
+            currentInterval={WEEK}
         />
     );
-});
 
-describe('LineChart.test.jsx', () => {
-    it('renders one react-chartjs <Line /> component', () => {
-        expect(wrapper.find(Line)).toHaveLength(1);
+describe('BarChart.test.jsx', () => {
+    it('updateInterval is called when interval changes ', () => {
+        renderLineChart();
+
+        fireEvent.mouseDown(screen.getByRole('button'));
+        const listbox = within(screen.getByRole('listbox'));
+        fireEvent.click(listbox.getByText(/Last Month/i));
+
+        expect(updateIntervalMock).toHaveBeenCalled();
     });
-    it('stores the correct labels', () => {
-        expect(wrapper.find(Line).props().data.labels).toEqual(labels);
-    });
-    it('stores the correct label', () => {
-        expect(wrapper.find(Line).props().data.datasets[0].label).toEqual(label);
-    });
-    it('stores the correct backgroundColor', () => {
-        expect(wrapper.find(Line).props().data.datasets[0].backgroundColor).toEqual(backgroundColor);
-    });
-    it('stores the correct borderColor', () => {
-        expect(wrapper.find(Line).props().data.datasets[0].pointBackgroundColor).toEqual(pointBackgroundColor);
-    });
-    it('stores the correct pointBorderWidth', () => {
-        expect(wrapper.find(Line).props().data.datasets[0].pointBorderWidth).toEqual(pointBorderWidth);
-    });
-    it('stores the correct pointHoverRadius', () => {
-        expect(wrapper.find(Line).props().data.datasets[0].pointHoverRadius).toEqual(pointHoverRadius);
-    });
-    it('stores the correct data', () => {
-        expect(wrapper.find(Line).props().data.datasets[0].data).toEqual(data);
+
+    describe('interval setting is working correctly', () => {
+        it('week option is disabled when interval = week', () => {
+            renderLineChart();
+            fireEvent.mouseDown(screen.getByRole('button'));
+
+            const listbox = within(screen.getByRole('listbox'));
+            const lastWeek = listbox.getByText(/Last Week/).outerHTML;
+            
+            expect(lastWeek).toContain('true');
+        });
+        it('month option is enabled when interval = week', () => {
+            renderLineChart();
+            fireEvent.mouseDown(screen.getByRole('button'));
+
+            const listbox = within(screen.getByRole('listbox'));
+            const lastWeek = listbox.getByText(/Last Month/).outerHTML;
+            
+            expect(lastWeek).toContain('false');
+        });
     });
 });

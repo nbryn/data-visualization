@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-type ChartProps = {
+export type ChartProps = {
     label: string;
     type: string;
     data: number[];
@@ -120,7 +120,7 @@ const MixedChart: React.FC<Props> = ({firstChart, secondChart, labels}: Props): 
                 <h5>
                     {firstChart.label} and {secondChart.label}
                 </h5>
-            </div>{' '}
+            </div>
             <Bar data={data} options={options} />
         </>
     );

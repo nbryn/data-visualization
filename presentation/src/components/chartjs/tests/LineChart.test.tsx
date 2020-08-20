@@ -1,5 +1,5 @@
 import React from 'react';
-import {render, screen, fireEvent, getByLabelText, within} from '@testing-library/react';
+import {render, screen, fireEvent, within} from '@testing-library/react';
 
 import '../../../setupTests';
 import {Interval} from '../../../containers/chartjs/interval';
@@ -22,7 +22,7 @@ const pointBackgroundColor = 'rgba(75,192,192,3)';
 const pointBorderWidth = 1;
 const pointHoverRadius = 2;
 const data = [2, 3, 4, 5, 6, 7];
-const counter = 10;
+const counter = 13265487;
 const {WEEK, MONTH, YEAR} = Interval;
 
 const renderLineChart = () =>
@@ -64,8 +64,8 @@ describe('BarChart.test.jsx', () => {
 
             const listbox = within(screen.getByRole('listbox'));
             const lastWeek = listbox.getByText(/Last Week/).outerHTML;
-            
-            expect(lastWeek).toContain('true');
+
+            expect(lastWeek).toContain('disabled="true');
         });
         it('month option is enabled when interval = week', () => {
             renderLineChart();
@@ -73,8 +73,24 @@ describe('BarChart.test.jsx', () => {
 
             const listbox = within(screen.getByRole('listbox'));
             const lastWeek = listbox.getByText(/Last Month/).outerHTML;
-            
-            expect(lastWeek).toContain('false');
+
+            expect(lastWeek).toContain('disabled="false');
+        });
+        it('year option is enabled when interval = week', () => {
+            renderLineChart();
+            fireEvent.mouseDown(screen.getByRole('button'));
+
+            const listbox = within(screen.getByRole('listbox'));
+            const lastWeek = listbox.getByText(/Last Year/).outerHTML;
+
+            expect(lastWeek).toContain('disabled="false');
+        });
+    });
+    describe('displays the correct information', () => {
+        it('counter is correct', () => {
+            renderLineChart();
+
+            expect(screen.getByText('Last Week: ' + counter.toString())).toBeTruthy();
         });
     });
 });

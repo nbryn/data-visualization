@@ -1,9 +1,9 @@
-import {BarChart as BChart, Bar, CartesianGrid, ResponsiveContainer, XAxis, YAxis} from 'recharts';
+import {BarChart as BChart, Bar, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis} from 'recharts';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import {makeStyles} from '@material-ui/core/styles';
 import React, {ReactElement} from 'react';
 
-import {ChartData} from '../../store/datamodels/General';
+import {ChartProps} from './types';
 
 const useStyles = makeStyles((theme) => ({
     wrapper: {
@@ -21,27 +21,25 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-type Props = {
-    title: string;
-    data: ChartData[];
-    xLabelConfig: any;
-    yLabelConfig: any;
-    color: string;
-};
-
-const BarChart: React.FC<Props> = ({title, data, xLabelConfig, yLabelConfig, color}: Props): ReactElement => {
+const BarChart: React.FC<ChartProps> = ({
+    title,
+    data,
+    xLabelConfig,
+    yLabelConfig,
+    strokeColor,
+    height,
+}: ChartProps): ReactElement => {
     const classes = useStyles();
     return (
-        <>
+        <div>
             <p className={classes.title}>{title}</p>
 
             {data.length === 0 ? (
                 <CircularProgress className={classes.spinner} />
             ) : (
-                <ResponsiveContainer width="99%" aspect={1.6}>
+                <ResponsiveContainer width="99%" height={height || '99%'} aspect={1.6}>
                     <BChart
-                        width={450}
-                        height={300}
+                        test-id="barChart"
                         data={data}
                         margin={{
                             top: 5,
@@ -53,11 +51,12 @@ const BarChart: React.FC<Props> = ({title, data, xLabelConfig, yLabelConfig, col
                         <CartesianGrid strokeDasharray="3 3" />
                         <XAxis label={xLabelConfig} dataKey="name" />
                         <YAxis label={yLabelConfig} />
-                        <Bar dataKey="value" fill={color} />
+                        <Tooltip />
+                        <Bar maxBarSize={22} dataKey="value" fill={strokeColor} />
                     </BChart>
                 </ResponsiveContainer>
             )}
-        </>
+        </div>
     );
 };
 

@@ -6,7 +6,7 @@ export const fetchGroupViewData = async (): Promise<GroupViewDto> => {
       groupStats{
         groupTotal
         groupSize{
-          value
+          name
           count
         }
         groupsLastMonth{

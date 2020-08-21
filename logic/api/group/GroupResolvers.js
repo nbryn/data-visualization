@@ -62,7 +62,7 @@ const groupResolvers = {
                     .filter((element) => element._id.groupSize > 6)
                     .map((element) => {
                         return {
-                            value: element._id.groupSize,
+                            name: element._id.groupSize,
                             count: element.count,
                         };
                     });

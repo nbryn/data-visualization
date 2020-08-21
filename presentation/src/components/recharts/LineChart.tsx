@@ -1,9 +1,9 @@
-import {CartesianGrid, Line, LineChart as Chart, ResponsiveContainer, YAxis, XAxis} from 'recharts';
+import {CartesianGrid, Line, LineChart as Chart, ResponsiveContainer, Tooltip, YAxis, XAxis} from 'recharts';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import {makeStyles} from '@material-ui/core/styles';
 import React, {ReactElement} from 'react';
 
-import {ChartData} from '../../store/datamodels/General';
+import {ChartProps} from './types';
 
 const useStyles = makeStyles((theme) => ({
     title: {
@@ -17,15 +17,14 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-type Props = {
-    title: string;
-    data: ChartData[];
-    yLabelConfig: any;
-    xLabelConfig: any;
-    stroke: string;
-};
-
-const LineChart: React.FC<Props> = ({title, data, yLabelConfig, xLabelConfig, stroke}: Props): ReactElement => {
+const LineChart: React.FC<ChartProps> = ({
+    title,
+    data,
+    yLabelConfig,
+    xLabelConfig,
+    strokeColor,
+    height,
+}: ChartProps): ReactElement => {
     const classes = useStyles();
     return (
         <>
@@ -34,12 +33,13 @@ const LineChart: React.FC<Props> = ({title, data, yLabelConfig, xLabelConfig, st
             {data.length === 0 ? (
                 <CircularProgress className={classes.spinner} />
             ) : (
-                <ResponsiveContainer width="99%" aspect={1.6}>
+                <ResponsiveContainer width="99%" height={height || '99%'} aspect={1.6}>
                     <Chart width={450} height={300} data={data}>
                         <XAxis label={xLabelConfig} dataKey="name" />
                         <YAxis label={yLabelConfig} dataKey="value" />
+                        <Tooltip />
                         <CartesianGrid stroke="#eee" strokeDasharray="5 5" />
-                        <Line strokeWidth={3} type="monotone" dataKey="value" stroke={stroke} />
+                        <Line strokeWidth={1} type="monotone" dataKey="value" stroke={strokeColor} />
                     </Chart>
                 </ResponsiveContainer>
             )}

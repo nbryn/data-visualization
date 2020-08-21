@@ -1,4 +1,5 @@
 import {Card, CardContent} from '@material-ui/core';
+import {LabelProps} from 'recharts';
 import {makeStyles} from '@material-ui/core/styles';
 import React, {ReactElement} from 'react';
 import {useSelector} from 'react-redux';
@@ -23,22 +24,35 @@ type Props = {
     color: string;
 };
 
-export const BarChartContainer: React.FC<Props> = ({title, statsType, dataType, xLabel, yLabel, color}: Props): ReactElement => {
+export const BarChartContainer: React.FC<Props> = ({
+    title,
+    statsType,
+    dataType,
+    xLabel,
+    yLabel,
+    color,
+}: Props): ReactElement => {
     const classes = useStyles();
 
     const data: ChartData[] = useSelector<RootState, ChartData[]>((state) => state[statsType][dataType]);
 
-    const yLabelConfig = {
+    const yLabelConfig: LabelProps = {
         value: yLabel,
         angle: -90,
         position: 'insideLeft',
     };
-    const xLabelConfig = {value: xLabel, position: 'center', dy: 10};
+    const xLabelConfig: LabelProps = {value: xLabel, position: 'center', dy: 10};
 
     return (
         <Card className={classes.wrapper}>
             <CardContent>
-                <BarChart title={title} data={data} yLabelConfig={yLabelConfig} xLabelConfig={xLabelConfig} color={color} />
+                <BarChart
+                    title={title}
+                    data={data}
+                    yLabelConfig={yLabelConfig}
+                    xLabelConfig={xLabelConfig}
+                    strokeColor={color}
+                />
             </CardContent>
         </Card>
     );

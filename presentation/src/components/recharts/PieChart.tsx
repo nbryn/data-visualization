@@ -1,4 +1,4 @@
-import {Cell, PieChart as PieChartt, Pie, ResponsiveContainer} from 'recharts';
+import {Cell, PieChart as Chart, Pie, ResponsiveContainer} from 'recharts';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import {makeStyles} from '@material-ui/core/styles';
 import React, {ReactElement} from 'react';
@@ -21,14 +21,13 @@ type Props = {
     title: string;
     data: ChartData[];
     colors: string[];
+    height?: number;
 };
 
-const PieChart: React.FC<Props> = ({title, data, colors}: Props): ReactElement => {
+const PieChart: React.FC<Props> = ({title, data, colors, height}: Props): ReactElement => {
     const classes = useStyles();
 
-    const renderLabel = (entry: ChartData): string => {
-        return entry.name;
-    };
+    const renderLabel = (entry: ChartData): string => entry.name;
 
     return (
         <>
@@ -37,8 +36,8 @@ const PieChart: React.FC<Props> = ({title, data, colors}: Props): ReactElement =
             {data.length === 0 ? (
                 <CircularProgress className={classes.spinner} />
             ) : (
-                <ResponsiveContainer width="99%" aspect={1.6}>
-                    <PieChartt width={450} height={300}>
+                <ResponsiveContainer width="99%" height={height || '99%'} aspect={1.6}>
+                    <Chart width={450} height={300}>
                         <Pie
                             // @ts-ignore
                             label={renderLabel}
@@ -54,7 +53,7 @@ const PieChart: React.FC<Props> = ({title, data, colors}: Props): ReactElement =
                                 <Cell key={`cell-${index}`} fill={colors[index]} />
                             ))}
                         </Pie>
-                    </PieChartt>
+                    </Chart>
                 </ResponsiveContainer>
             )}
         </>

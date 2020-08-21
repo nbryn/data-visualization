@@ -2,7 +2,7 @@ const actionRunner = require('../util/ActionRunner.js');
 const Error = require('../util/Error');
 const {validateLogin} = require('../../data/mappers/UserMapper');
 
-const userResolvers = {
+const defaultResolvers = {
     Signin: {
         __resolveType: (obj) => {
             if (obj instanceof Error) return 'Error';
@@ -13,7 +13,6 @@ const userResolvers = {
     Mutation: {
         signin: async (parent, args) => {
             return actionRunner(async () => {
-                console.log(args);
                 const result = await validateLogin(args);
 
                 return result;
@@ -22,4 +21,4 @@ const userResolvers = {
     },
 };
 
-module.exports = userResolvers;
+module.exports = defaultResolvers;

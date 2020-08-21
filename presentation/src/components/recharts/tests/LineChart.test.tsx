@@ -1,16 +1,16 @@
 import React from 'react';
 import {render, screen} from '@testing-library/react';
 
-import BarChart from '../BarChart';
+import LineChart from '../LineChart';
 import {ChartData} from '../../../store/datamodels/General';
 import {ChartProps} from '../types';
 
 const mockChartProps: ChartProps = {
-    title: 'BarChartTitle2345',
+    title: 'LineChartTitle1122',
     data: [
-        {name: 'January', value: 50},
-        {name: 'February', value: 22350},
-        {name: 'March', value: 232},
+        {name: 'DK', value: 36598},
+        {name: 'SWE', value: 123458},
+        {name: 'NO', value: 98574},
     ],
     yLabelConfig: {
         value: 'Users',
@@ -26,19 +26,17 @@ const {title, data, yLabelConfig, xLabelConfig, strokeColor, height} = mockChart
 
 const renderBarChart = (newData?: ChartData[]) =>
     render(
-        
-            <BarChart
-                title={title}
-                data={newData || data}
-                xLabelConfig={xLabelConfig}
-                yLabelConfig={yLabelConfig}
-                strokeColor={strokeColor}
-                height={height}
-            />
-       
+        <LineChart
+            title={title}
+            data={newData || data}
+            xLabelConfig={xLabelConfig}
+            yLabelConfig={yLabelConfig}
+            strokeColor={strokeColor}
+            height={height}
+        />
     );
 
-describe('BarChart.test.jsx', () => {
+describe('LineChart.test.jsx', () => {
     describe('spinner is working', () => {
         it('shows a spinner when loading', () => {
             renderBarChart([]);

@@ -1,7 +1,6 @@
 import React from 'react';
 import {render, screen, fireEvent, within} from '@testing-library/react';
 
-import '../../../setupTests';
 import {Interval} from '../../../containers/chartjs/interval';
 import LineChart from '../LineChart';
 

@@ -4,7 +4,7 @@ import {render, screen} from '@testing-library/react';
 import MixedChart, {ChartProps} from '../MixedChart';
 
 jest.mock('react-chartjs-2', () => ({
-    Bar: () => null,
+    Bar: () => <div>BarChart </div>,
 }));
 
 const labels = ['January', 'February'];
@@ -24,11 +24,14 @@ const chartProps: ChartProps = {
 const renderMixedChart = () => render(<MixedChart labels={labels} firstChart={chartProps} secondChart={chartProps} />);
 
 describe('MixedChart.test.jsx', () => {
-    describe('displays the correct information', () => {
-        it('label is correct', () => {
-            renderMixedChart();
+    it('label is correct', () => {
+        renderMixedChart();
 
-            expect(screen.getByText(chartProps.label + " and " + chartProps.label)).toBeTruthy();
-        });
+        expect(screen.getByText(chartProps.label + ' and ' + chartProps.label)).toBeTruthy();
+    });
+    it('renders a chart', () => {
+        renderMixedChart();
+
+        expect(screen.getByText('BarChart')).toBeTruthy();
     });
 });

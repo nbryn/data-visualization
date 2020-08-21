@@ -4,7 +4,7 @@ import {render, screen} from '@testing-library/react';
 import PieChart from '../PieChart';
 
 jest.mock('react-chartjs-2', () => ({
-    Pie: () => null,
+    Pie: () => <div>PieChart</div>,
 }));
 
 const title = 'This is a mock title';
@@ -25,11 +25,14 @@ const renderPieChart = () =>
     );
 
 describe('PieChart.test.jsx', () => {
-    describe('displays the correct information', () => {
-        it('title is correct', () => {
-            renderPieChart();
+    it('title is correct', () => {
+        renderPieChart();
 
-            expect(screen.getByText(title)).toBeTruthy();
-        });
+        expect(screen.getByText(title)).toBeTruthy();
+    });
+    it('renders a chart', () => {
+        renderPieChart();
+
+        expect(screen.getByText('PieChart')).toBeTruthy();
     });
 });

@@ -50,14 +50,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 type Props = {
-    statsValue: number;
-    statsText: string;
-    statsIcon: string;
-    statsIconText: string;
-    bigIcon: string;
+    value: number;
+    text: string;
+    updateIcon: string;
+    updateIconText: string;
+    valueIcon: string;
 };
 
-const KPICard: React.FC<Props> = ({statsValue, statsText, statsIcon, statsIconText, bigIcon}: Props): ReactElement => {
+const KPICard: React.FC<Props> = ({value, text, updateIcon, updateIconText, valueIcon}: Props): ReactElement => {
     const classes = useStyles();
     return (
         <div className={classes.card}>
@@ -65,20 +65,20 @@ const KPICard: React.FC<Props> = ({statsValue, statsText, statsIcon, statsIconTe
                 <Row>
                     <Col xs={5} lg={5}>
                         <div className={classes.bigIcon}>
-                            <i className={bigIcon} />
+                            <i className={valueIcon} />
                         </div>
                     </Col>
                     <Col xs={7} lg={7}>
                         <div className={classes.numbers}>
-                            <p>{statsText}</p>
-                            {statsValue || <CircularProgress />}
+                            <p>{text}</p>
+                            {value || <CircularProgress />}
                         </div>
                     </Col>
                 </Row>
                 <div className={classes.footer}>
                     <hr />
                     <div className={classes.stats}>
-                        <i className={statsIcon} /> {statsIconText}
+                        <i className={updateIcon} /> {updateIconText}
                     </div>
                 </div>
             </div>

@@ -24,11 +24,11 @@ export const KPITodayContainer: React.FC<Props> = ({statsType, countData, dateDa
 
     return (
         <KPICard
-            bigIcon={icon}
-            statsText={`Today: ${date}`}
-            statsValue={count}
-            statsIcon="fa fa-refresh"
-            statsIconText={`Last Update: ${lastUpdate}`}
+            valueIcon={icon}
+            text={`Today: ${date}`}
+            value={count}
+            updateIcon="fa fa-refresh"
+            updateIconText={`Last Update: ${lastUpdate}`}
         />
     );
 };

@@ -144,7 +144,13 @@ const Signin: React.FC = (): ReactElement => {
 
                                     <Row className={classes.row}>
                                         <Col sm={6} lg={6} className={classes.formButton}>
-                                            <Button bsStyle="primary" bsSize="large" className="btn-block" type="submit">
+                                            <Button
+                                                disabled={!((email.length) > 0 && (password.length > 0))}
+                                                bsStyle="primary"
+                                                bsSize="large"
+                                                className="btn-block"
+                                                type="submit"
+                                            >
                                                 Sign in
                                             </Button>
                                         </Col>

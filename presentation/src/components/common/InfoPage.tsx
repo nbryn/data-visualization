@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 type Props = {
-    data: any;
+    data: Array<any>;
     title: string;
     columns: ColumnDescription[];
     column1: string[];

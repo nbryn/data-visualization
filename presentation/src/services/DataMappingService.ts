@@ -1,12 +1,12 @@
-import {ChartData, TodayData} from '../store/datamodels/General';
-import {ChartjsData, ChartjsLastMonthData, ChartjsPieData} from '../store/datamodels/Chartjs';
-import {convertNumberToMonth} from '../util/Date';
-import {GroupData, GroupDataProp} from '../store/datamodels/Group';
-import {GroupDto, Name} from '../services/requests';
-import {IntervalDto, LastMonthDto, LastYearDto, ServerDto} from '../services/requests/Dto';
+import { ChartData, TodayData } from '../store/datamodels/General';
+import { ChartjsData, ChartjsLastMonthData, ChartjsPieData } from '../store/datamodels/Chartjs';
+import { convertNumberToMonth } from '../util/Date';
+import { GroupData, GroupDataProp } from '../store/datamodels/Group';
+import { GroupDto, Name } from '../services/requests';
+import { IntervalDto, LastMonthDto, LastYearDto, ServerDto } from '../services/requests/Dto';
 
 export const mapDataForToday = (data: LastMonthDto[]): TodayData => {
-    const temp: ChartData[] = mapLastMonthBarChartData(data);
+    const temp: ChartData[] = mapLastMonthData(data);
 
     const todayCount: number = temp[temp.length - 1].value;
     const todayDate: string = temp[temp.length - 1].name;
@@ -30,7 +30,7 @@ export const mapGeneralChartData = (data: ServerDto[]): ChartData[] => {
     return result;
 };
 
-export const mapLastMonthBarChartData = (data: LastMonthDto[]): ChartData[] => {
+export const mapLastMonthData = (data: LastMonthDto[]): ChartData[] => {
     const lastMonthData = data.map((element: LastMonthDto) => {
         return {
             name: element.day.day + '/' + element.day.month,
@@ -41,32 +41,16 @@ export const mapLastMonthBarChartData = (data: LastMonthDto[]): ChartData[] => {
     return lastMonthData;
 };
 
-export const mapLastYearBarChartData = (data: LastYearDto[]): ChartData[] => {
-    let month, year;
-    const lastYear = data.map((element: LastYearDto) => {
-        year = element.year.toString().substring(2);
-        month = convertNumberToMonth(element.month);
-
-        return {
-            name: month + " '" + year,
-            value: element.count,
-        };
-    });
-
-    return lastYear;
-};
-
-export const mapLastYearLineChartData = (data: LastYearDto[]): ChartData[] => {
+export const mapLastYearData = (data: LastYearDto[], aggregate: boolean): ChartData[] => {
     let total: number = 0;
     let month, year: string;
     const lastYear = data.map((element: LastYearDto) => {
-        total += element.count;
         year = element.year.toString().substring(2);
         month = convertNumberToMonth(element.month);
 
         return {
             name: month + " '" + year,
-            value: total,
+            value: aggregate ? total += element.count : element.count,
         };
     });
     return lastYear;

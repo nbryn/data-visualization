@@ -26,11 +26,11 @@ export const KPIContainer: React.FC<Props> = ({title, fetchData, statsType, tota
 
     return (
         <KPICard
-            bigIcon={icon}
-            statsText={title}
-            statsValue={data}
-            statsIcon="fa fa-refresh"
-            statsIconText={`Last Update: ${lastUpdate}`}
+            valueIcon={icon}
+            text={title}
+            value={data}
+            updateIcon="fa fa-refresh"
+            updateIconText={`Last Update: ${lastUpdate}`}
         />
     );
 };

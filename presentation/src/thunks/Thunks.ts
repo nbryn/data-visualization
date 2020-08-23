@@ -47,9 +47,9 @@ export const updateMeetingViewData = (): ThunkAction<void, RootState, null, Acti
     result.lastMonthCount = DataMappingService.getTotalNumberInPeriod(meetingsLastMonth);
     result.lastYearCount = DataMappingService.getTotalNumberInPeriod(meetingsLastYear);
 
-    result.lastYearData = DataMappingService.mapLastYearLineChartData(meetingsLastYear);
-    result.lastMonthBarChartData = DataMappingService.mapLastMonthBarChartData(meetingsLastMonth);
-    result.lastYearBarChartData = DataMappingService.mapLastYearBarChartData(meetingsLastYear);
+    result.lastYearData = DataMappingService.mapLastYearData(meetingsLastYear, true);
+    result.lastMonthBarChartData = DataMappingService.mapLastMonthData(meetingsLastMonth);
+    result.lastYearBarChartData = DataMappingService.mapLastYearData(meetingsLastYear, false);
 
     result.perGroupData = DataMappingService.mapGeneralChartData(meetingsPerGroup);
     result.perCountryData = DataMappingService.mapGeneralChartData(meetingsCountryData);
@@ -80,9 +80,9 @@ export const updateFinanceViewData = (): ThunkAction<void, RootState, null, Acti
     result.mostShares = mostShares;
     result.etbOnLoan = etbOnLoan;
 
-    result.loansLastYearLineChartData = DataMappingService.mapLastYearLineChartData(loansLastYear);
-    result.loansLastMonthData = DataMappingService.mapLastMonthBarChartData(loansLastMonth);
-    result.loanslastYearBarChartData = DataMappingService.mapLastYearBarChartData(loansLastYear);
+    result.loansLastYearLineChartData = DataMappingService.mapLastYearData(loansLastYear, true);
+    result.loansLastMonthData = DataMappingService.mapLastMonthData(loansLastMonth);
+    result.loanslastYearBarChartData = DataMappingService.mapLastYearData(loansLastYear, false);
 
     result.currencyStats = DataMappingService.mapGeneralChartData(currencyStats);
     result.sharesPerGroup = DataMappingService.mapGeneralChartData(shareStats);
@@ -100,17 +100,17 @@ export const updateMainViewData = (): ThunkAction<void, RootState, null, Action<
     result.sharesTotal = await fetchTotalShares();
 
     const usersLastYear = await fetchUsersLastYear();
-    result.usersLastYearLineChartData = DataMappingService.mapLastYearLineChartData(usersLastYear);
-    result.usersLastYearBarChartData = DataMappingService.mapLastYearBarChartData(usersLastYear);
+    result.usersLastYearLineChartData = DataMappingService.mapLastYearData(usersLastYear, true);
+    result.usersLastYearBarChartData = DataMappingService.mapLastYearData(usersLastYear, false);
 
     const groupsLastYear = await fetchGroupsLastYear();
-    result.groupsLastYearData = DataMappingService.mapLastYearLineChartData(groupsLastYear);
+    result.groupsLastYearData = DataMappingService.mapLastYearData(groupsLastYear, true);
 
     const meetingsLastYear = await fetchMeetingsLastYear();
-    result.meetingsLastYearData = DataMappingService.mapLastYearLineChartData(meetingsLastYear);
+    result.meetingsLastYearData = DataMappingService.mapLastYearData(meetingsLastYear, true);
 
     const groupsLastMonth = await fetchGroupsLastMonth();
-    result.groupsLastMonthData = DataMappingService.mapLastMonthBarChartData(groupsLastMonth);
+    result.groupsLastMonthData = DataMappingService.mapLastMonthData(groupsLastMonth);
 
     const userGenderStats = await fetchUserGenderData();
     result.userGenderStats = DataMappingService.mapGeneralChartData(userGenderStats);

@@ -40,9 +40,9 @@ export const updateGroupViewData = (): ThunkAction<void, RootState, null, Action
     result.lastMonthCount = DataMappingService.getTotalNumberInPeriod(groupsLastMonth);
     result.lastYearCount = DataMappingService.getTotalNumberInPeriod(groupsLastYear);
 
-    result.lastYearLineChartData = DataMappingService.mapLastYearLineChartData(groupsLastYear);
-    result.lastYearBarChartData = DataMappingService.mapLastYearBarChartData(groupsLastYear);
-    result.lastMonthBarChartData = DataMappingService.mapLastMonthBarChartData(groupsLastMonth);
+    result.lastYearLineChartData = DataMappingService.mapLastYearData(groupsLastYear, true);
+    result.lastYearBarChartData = DataMappingService.mapLastYearData(groupsLastYear, false);
+    result.lastMonthBarChartData = DataMappingService.mapLastMonthData(groupsLastMonth);
 
     result.perCountryData = DataMappingService.mapGeneralChartData(groupCountryData);
     result.perNGOData = DataMappingService.mapGeneralChartData(groupNGOData);

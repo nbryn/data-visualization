@@ -38,21 +38,6 @@ describe('LineChart.test.jsx', () => {
         });
     });
     describe('chart is rendering correctly', () => {
-        // it('chart is showing the correct data for the first data entry', () => {
-        //     renderPieChart();
-
-        //     expect(screen.getByText(data[0].name)).toBeTruthy();
-        // });
-        // it('chart is showing the correct data for the second data entry', () => {
-        //     renderPieChart();
-
-        //     expect(screen.getByText(data[1].name)).toBeTruthy();
-        // });
-        // it('chart is showing the correct data for the third data entry', () => {
-        //     renderPieChart();
-
-        //     expect(screen.getByText(data[2].name)).toBeTruthy();
-        // });
         it('has the correct title', () => {
             renderPieChart();
 

@@ -30,6 +30,8 @@ const GroupSearchView: React.FC = (): ReactElement => {
 
     const searchData: GroupDataProp = useSelector<RootState, GroupDataProp>((state) => state.groups.searchData);
 
+    console.log(searchData);
+
     const dispatch = useDispatch();
 
     const onSubmit = async (event: React.FormEvent): Promise<void> => {

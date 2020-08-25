@@ -20,7 +20,7 @@ export interface RootState {
     general: GeneralState;
 }
 
-const initialState: RootState = {
+export const initialState: RootState = {
     chartjs: initialChartjsState,
     finance: initialFinanceState,
     meetings: initialMeetingState,
@@ -30,7 +30,7 @@ const initialState: RootState = {
     general: initialGeneralState,
 };
 
-const rootReducer = combineReducers({
+export const rootReducer = combineReducers({
     chartjs: ChartjsReducers,
     finance: FinanceReducers,
     groups: GroupReducers,

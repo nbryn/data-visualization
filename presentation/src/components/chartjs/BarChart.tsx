@@ -4,7 +4,7 @@ import {MenuItem} from '@material-ui/core';
 import React, {useEffect, useState} from 'react';
 
 import {BarChart as Chart, BarChartDataset} from './types';
-import {Interval} from '../../containers/chartjs/interval';
+import {Interval} from '../../containers/chartjs/types';
 import TextField from '../form/TextField';
 
 const useStyles = makeStyles((theme: any) => ({

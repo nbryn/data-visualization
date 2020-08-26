@@ -4,7 +4,7 @@ import {MenuItem} from '@material-ui/core';
 import React, {useEffect, useState} from 'react';
 
 import {LineChart as Chart, LineChartDataset} from './types';
-import {Interval} from '../../containers/chartjs/interval';
+import {Interval} from '../../containers/chartjs/types';
 import TextField from '../form/TextField';
 
 interface Props extends LineChartDataset {

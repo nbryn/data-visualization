@@ -1,7 +1,7 @@
 import React from 'react';
 import {render, screen, fireEvent, within} from '@testing-library/react';
 
-import {Interval} from '../../../containers/chartjs/interval';
+import {Interval} from '../../../containers/chartjs/types';
 import LineChart from '../LineChart';
 
 jest.mock('react-chartjs-2', () => ({

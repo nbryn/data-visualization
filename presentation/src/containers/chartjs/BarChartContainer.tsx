@@ -5,7 +5,7 @@ import React, {ReactElement, useEffect, useState} from 'react';
 import {useSelector} from 'react-redux';
 
 import {ChartjsData} from '../../store/datamodels/Chartjs';
-import {Interval, resolveInterval} from './interval';
+import {Interval, resolveInterval} from './types';
 import BarChart from '../../components/chartjs/BarChart';
 import {RootState} from '../../store/index';
 

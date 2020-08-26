@@ -1,9 +1,10 @@
 import * as redux from 'react-redux';
+import {fireEvent} from '@testing-library/react';
 import React from 'react';
 
 import {render, screen} from '../../test-utils';
 import Signin from './Signin';
-import {fireEvent} from '@testing-library/react';
+
 
 const mockEmail = 'test@test.com';
 const mockPassword = 'passwordTester';

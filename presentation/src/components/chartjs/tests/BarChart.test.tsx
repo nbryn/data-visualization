@@ -2,9 +2,8 @@ import {Bar} from 'react-chartjs-2';
 import React from 'react';
 import {shallow, ShallowWrapper} from 'enzyme';
 
-import '../../../setupTests';
 import BarChart from '../BarChart';
-import {Interval} from '../../../containers/chartjs/interval';
+import {Interval} from '../../../containers/chartjs/types';
 import TextField from '../../form/TextField';
 
 const updateIntervalMock = jest.fn();

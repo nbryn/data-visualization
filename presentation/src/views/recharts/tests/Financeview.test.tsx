@@ -7,7 +7,7 @@ import FinanceView from '../FinanceView';
 const mockUpdateFinanceView = jest.fn();
 const mockDispatch = jest.fn(() => mockUpdateFinanceView());
 
-jest.spyOn(redux, 'useDispatch').mockImplementation().mockReturnValue(mockDispatch);
+const spy = jest.spyOn(redux, 'useDispatch').mockImplementation().mockReturnValue(mockDispatch);
 
 const totalLoans = 'Total Loans';
 const etbOnLoan = 'ETB On Loan';

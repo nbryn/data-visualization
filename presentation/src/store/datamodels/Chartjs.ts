@@ -81,67 +81,25 @@ export interface ChartjsState {
     sharesTotal: number;
 }
 
+const initialChartjsData: ChartjsData = {
+    labels: [],
+    counter: 0,
+    data: [],
+}
+
 export const initialChartjsState: ChartjsState = {
-    groupsLastWeekBarChart: {
-        labels: [],
-        counter: 0,
-        data: [],
-    },
-    groupsLastMonthBarChart: {
-        labels: [],
-        counter: 0,
-        data: [],
-    },
-    groupsLastYearBarChart: {
-        labels: [],
-        counter: 0,
-        data: [],
-    },
-    groupsLastWeekLineChart: {
-        labels: [],
-        counter: 0,
-        data: [],
-    },
-    groupsLastMonthLineChart: {
-        labels: [],
-        counter: 0,
-        data: [],
-    },
-    groupsLastYearLineChart: {
-        labels: [],
-        counter: 0,
-        data: [],
-    },
-    usersLastMonthLineChart: {
-        labels: [],
-        counter: 0,
-        data: [],
-    },
-    usersLastWeekLineChart: {
-        labels: [],
-        counter: 0,
-        data: [],
-    },
-    usersLastYearLineChart: {
-        labels: [],
-        counter: 0,
-        data: [],
-    },
-    usersLastMonthBarChart: {
-        labels: [],
-        counter: 0,
-        data: [],
-    },
-    usersLastWeekBarChart: {
-        labels: [],
-        counter: 0,
-        data: [],
-    },
-    usersLastYearBarChart: {
-        labels: [],
-        counter: 0,
-        data: [],
-    },
+    groupsLastWeekBarChart: initialChartjsData,
+    groupsLastMonthBarChart: initialChartjsData,
+    groupsLastYearBarChart: initialChartjsData,
+    groupsLastWeekLineChart: initialChartjsData,
+    groupsLastMonthLineChart: initialChartjsData,
+    groupsLastYearLineChart: initialChartjsData,
+    usersLastMonthLineChart: initialChartjsData,
+    usersLastWeekLineChart: initialChartjsData,
+    usersLastYearLineChart: initialChartjsData,
+    usersLastMonthBarChart: initialChartjsData,
+    usersLastWeekBarChart: initialChartjsData,
+    usersLastYearBarChart: initialChartjsData,
     genderData: {
         labels: [],
         data: [],

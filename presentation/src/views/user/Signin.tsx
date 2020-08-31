@@ -131,6 +131,7 @@ const Signin: React.FC = (): ReactElement => {
                                  <TextField
                                     id="Password"
                                     label="Password"
+                                    type="Password"
                                     value={password}
                                     onChange={(event: React.ChangeEvent) => {
                                        const element = event.currentTarget as HTMLInputElement;

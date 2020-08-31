@@ -31,7 +31,11 @@ export const ChartjsLineChartContainer: React.FC<Props> = ({title, dataTypes, co
    const {WEEK, MONTH, YEAR} = Interval;
 
    const [period, setPeriod] = useState<Interval>(YEAR);
-   const [chartData, setChartData] = useState<ChartjsData>();
+   const [chartData, setChartData] = useState<ChartjsData>({
+      labels: [],
+      counter: 0,
+      data: [],
+   });
 
    const lastWeek = useSelector<RootState, ChartjsData>((state) => state.chartjs[dataTypes[0]]);
 
@@ -67,7 +71,7 @@ export const ChartjsLineChartContainer: React.FC<Props> = ({title, dataTypes, co
    return (
       <Card className={classes.wrapper}>
          <CardContent>
-            {lastYear.data.length === 0 ? (
+            {chartData.data.length === 0 ? (
                <CircularProgress className={classes.spinner} />
             ) : (
                <LineChart

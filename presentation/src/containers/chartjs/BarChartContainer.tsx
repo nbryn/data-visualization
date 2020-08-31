@@ -31,7 +31,11 @@ export const ChartjsBarChartContainer: React.FC<Props> = ({title, color, dataTyp
    const {WEEK, MONTH, YEAR} = Interval;
 
    const [period, setPeriod] = useState<Interval>(YEAR);
-   const [chartData, setChartData] = useState<ChartjsData>();
+   const [chartData, setChartData] = useState<ChartjsData>({
+      labels: [],
+      counter: 0,
+      data: [],
+   });
 
    const lastWeek: ChartjsData = useSelector<RootState, ChartjsData>((state) => state.chartjs[dataTypes[0]]);
 
@@ -68,7 +72,7 @@ export const ChartjsBarChartContainer: React.FC<Props> = ({title, color, dataTyp
    return (
       <Card className={classes.wrapper}>
          <CardContent>
-            {lastYear.data.length === 0 ? (
+            {chartData.data.length === 0 ? (
                <CircularProgress className={classes.spinner} />
             ) : (
                <BarChart

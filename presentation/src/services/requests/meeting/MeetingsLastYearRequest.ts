@@ -1,7 +1,7 @@
 import {fetchFromServer} from '../Fetch';
 
 export const fetchMeetingsLastYear = async (): Promise<any> => {
-    const data = `query{
+   const data = `query{
       meetingStats{
         meetingsLastYear{
             year
@@ -11,7 +11,7 @@ export const fetchMeetingsLastYear = async (): Promise<any> => {
       }
     }`;
 
-    const response = await fetchFromServer('meetingStats', data, 'meetingsLastYear');
+   const response = await fetchFromServer('meetingStats', data, 'meetingsLastYear');
 
-    return response;
+   return response;
 };

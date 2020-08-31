@@ -1,7 +1,7 @@
 import {fetchFromServer} from '../Fetch';
 
 export const fetchGroupEtbLoan = async (): Promise<any> => {
-    const data = `query{
+   const data = `query{
       financeStats{
           groupEtbLoan{
               name
@@ -10,7 +10,7 @@ export const fetchGroupEtbLoan = async (): Promise<any> => {
         }  
   }`;
 
-    const response = await fetchFromServer('financeStats', data, 'groupEtbLoan');
+   const response = await fetchFromServer('financeStats', data, 'groupEtbLoan');
 
-    return response;
+   return response;
 };

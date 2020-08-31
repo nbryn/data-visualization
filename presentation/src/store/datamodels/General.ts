@@ -5,89 +5,89 @@ const UPDATE_ENGAGEMENT_VIEW_DATA = 'UPDATE_ENGAGEMENT_VIEW_DATA';
 
 // Actions Types
 export interface LoginAction {
-    type: typeof LOGIN_USER;
-    payload: User;
+   type: typeof LOGIN_USER;
+   payload: User;
 }
 
 export interface LogoutAction {
-    type: typeof LOGOUT_USER;
-    payload: null;
+   type: typeof LOGOUT_USER;
+   payload: null;
 }
 
 export interface UpdateEngagementViewDataAction {
-    type: typeof UPDATE_ENGAGEMENT_VIEW_DATA;
-    payload: any;
+   type: typeof UPDATE_ENGAGEMENT_VIEW_DATA;
+   payload: any;
 }
 
 type GeneralActions = LoginAction | LogoutAction | UpdateEngagementViewDataAction;
 
 // Action Creators
 export function loginUser(data: User) {
-    return {
-        type: LOGIN_USER,
-        payload: data,
-    };
+   return {
+      type: LOGIN_USER,
+      payload: data,
+   };
 }
 
 export function logoutUser(data: any = null) {
-    return {
-        type: LOGOUT_USER,
-        payload: data,
-    };
+   return {
+      type: LOGOUT_USER,
+      payload: data,
+   };
 }
 
 export function updateEngagementViewData(data: any) {
-    return {
-        type: typeof UPDATE_ENGAGEMENT_VIEW_DATA,
-        payload: data,
-    };
+   return {
+      type: typeof UPDATE_ENGAGEMENT_VIEW_DATA,
+      payload: data,
+   };
 }
 
 // Reducers
 export default function (state = {}, action: GeneralActions) {
-    switch (action.type) {
-        case LOGIN_USER:
-            return Object.assign({}, state, {
-                currentUser: action.payload!.user,
-            });
-        case LOGOUT_USER:
-            return Object.assign({}, state, {
-                currentUser: action.payload,
-            });
-        case UPDATE_ENGAGEMENT_VIEW_DATA:
-            return Object.assign({}, state, {
-                engagementData: action.payload,
-            });
-        default:
-            return state;
-    }
+   switch (action.type) {
+      case LOGIN_USER:
+         return Object.assign({}, state, {
+            currentUser: action.payload!.user,
+         });
+      case LOGOUT_USER:
+         return Object.assign({}, state, {
+            currentUser: action.payload,
+         });
+      case UPDATE_ENGAGEMENT_VIEW_DATA:
+         return Object.assign({}, state, {
+            engagementData: action.payload,
+         });
+      default:
+         return state;
+   }
 }
 
 export type TodayData = {
-    todayDate: string;
-    todayCount: number;
+   todayDate: string;
+   todayCount: number;
 };
 
 export type ChartData = {
-    name: string;
-    value: number;
+   name: string;
+   value: number;
 };
 
 export type User = {
-    [key: string]: string;
-    token: string;
-    email: string;
-    firstName: string;
-    phoneNumber: string;
-    gender: string;
+   [key: string]: string;
+   token: string;
+   email: string;
+   firstName: string;
+   phoneNumber: string;
+   gender: string;
 } | null;
 
 export interface GeneralState {
-    currentUser: User;
-    engagementData: Array<any>;
+   currentUser: User;
+   engagementData: Array<any>;
 }
 
 export const initialGeneralState: GeneralState = {
-    currentUser: null,
-    engagementData: [],
+   currentUser: null,
+   engagementData: [],
 };

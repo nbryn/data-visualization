@@ -1,13 +1,13 @@
 import {fetchFromServer} from '../Fetch';
 
 export const fetchActiveUserData = async (): Promise<any> => {
-    const data = `query{
+   const data = `query{
         userStats{
           usersActive 
         }
       }`;
 
-    const response = await fetchFromServer('userStats', data, 'usersActive');
+   const response = await fetchFromServer('userStats', data, 'usersActive');
 
-    return response;
+   return response;
 };

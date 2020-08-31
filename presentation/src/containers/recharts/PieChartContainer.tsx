@@ -8,31 +8,31 @@ import PieChart from '../../components/recharts/PieChart';
 import {RootState} from '../../store/index';
 
 const useStyles = makeStyles((theme) => ({
-    wrapper: {
-        marginTop: 10,
-        marginBottom: 15,
-    },
+   wrapper: {
+      marginTop: 10,
+      marginBottom: 15,
+   },
 }));
 
 type Props = {
-    title: string;
-    statsType: string;
-    dataType: string;
-    colors: string[];
+   title: string;
+   statsType: string;
+   dataType: string;
+   colors: string[];
 };
 
 export const PieChartContainer: React.FC<Props> = ({title, statsType, dataType, colors}: Props): ReactElement => {
-    const classes = useStyles();
+   const classes = useStyles();
 
-    const data: ChartData[] = useSelector<RootState, ChartData[]>((state) => state[statsType][dataType]);
+   const data: ChartData[] = useSelector<RootState, ChartData[]>((state) => state[statsType][dataType]);
 
-    return (
-        <div className={classes.wrapper}>
-            <Card>
-                <CardContent>
-                    <PieChart title={title} data={data} colors={colors} />
-                </CardContent>
-            </Card>
-        </div>
-    );
+   return (
+      <div className={classes.wrapper}>
+         <Card>
+            <CardContent>
+               <PieChart title={title} data={data} colors={colors} />
+            </CardContent>
+         </Card>
+      </div>
+   );
 };

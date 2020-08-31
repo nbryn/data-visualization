@@ -1,13 +1,13 @@
 class Error {
-    private errorMessage: string;
+   private errorMessage: string;
 
-    constructor(errorMessage: string) {
-        this.errorMessage = errorMessage;
-    }
+   constructor(errorMessage: string) {
+      this.errorMessage = errorMessage;
+   }
 
-    getErrorMessage() {
-        return this.errorMessage;
-    }
+   getErrorMessage() {
+      return this.errorMessage;
+   }
 }
 
 export default Error;

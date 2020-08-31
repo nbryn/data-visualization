@@ -10,34 +10,34 @@ const mockDispatch = jest.fn(() => mockUpdateMainView());
 jest.spyOn(redux, 'useDispatch').mockImplementation().mockReturnValue(mockDispatch);
 
 afterEach(() => {
-    jest.clearAllMocks();
+   jest.clearAllMocks();
 });
 
 const totalUsers = 'Total Users';
 const groupsLastMonth = 'Groups Last Month';
 
 describe('MainView.test.jsx', () => {
-    describe('calls the correct functions', () => {
-        it('calls dispatch on mount', () => {
-            render(<MainView />);
+   describe('calls the correct functions', () => {
+      it('calls dispatch on mount', () => {
+         render(<MainView />);
 
-            expect(mockDispatch).toHaveBeenCalled();
-        });
-        it('calls updateMainView on mount', () => {
-            render(<MainView />);
+         expect(mockDispatch).toHaveBeenCalled();
+      });
+      it('calls updateMainView on mount', () => {
+         render(<MainView />);
 
-            expect(mockUpdateMainView).toHaveBeenCalled();
-        });
-    });
-    describe('renders the correct text', () => {
-        it(`renders the text ${totalUsers}`, () => {});
-        render(<MainView />);
+         expect(mockUpdateMainView).toHaveBeenCalled();
+      });
+   });
+   describe('renders the correct text', () => {
+      it(`renders the text ${totalUsers}`, () => {});
+      render(<MainView />);
 
-        expect(screen.getAllByText(totalUsers)).toBeTruthy();
-    });
-    it(`renders the text ${groupsLastMonth}`, () => {
-        render(<MainView />);
+      expect(screen.getAllByText(totalUsers)).toBeTruthy();
+   });
+   it(`renders the text ${groupsLastMonth}`, () => {
+      render(<MainView />);
 
-        expect(screen.getAllByText(groupsLastMonth)).toBeTruthy();
-    });
+      expect(screen.getAllByText(groupsLastMonth)).toBeTruthy();
+   });
 });

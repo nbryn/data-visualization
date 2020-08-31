@@ -1,151 +1,150 @@
-import { Action } from 'redux';
-import { ThunkAction } from 'redux-thunk';
+import {Action} from 'redux';
+import {ThunkAction} from 'redux-thunk';
 
 import {
-    fetchGroupsLastYear,
-    fetchGroupsLastMonth,
-    fetchMeetingsLastYear,
-    fetchTotalGroups,
-    fetchTotalMeetings,
-    fetchTotalShares,
-    fetchUserGenderData,
-    fetchTotalUsers,
-    fetchUsersLastYear,
-    fetchLogin,
-    fetchActiveUserData,
-    fetchGroupEngagementData,
-    FinanceViewDto,
-    MeetingViewDto,
+   fetchGroupsLastYear,
+   fetchGroupsLastMonth,
+   fetchMeetingsLastYear,
+   fetchTotalGroups,
+   fetchTotalMeetings,
+   fetchTotalShares,
+   fetchUserGenderData,
+   fetchTotalUsers,
+   fetchUsersLastYear,
+   fetchLogin,
+   fetchActiveUserData,
+   fetchGroupEngagementData,
+   FinanceViewDto,
+   MeetingViewDto,
 } from '../services/requests';
 import * as DataMappingService from '../services/DataMappingService';
-import { fetchFinanceData } from '../services/requests/finance/FinanceViewDataRequest';
-import { fetchMeetingViewData } from '../services/requests/meeting/MeetingViewDataRequest';
-import { fetchMeetingsPerCountry } from '../services/requests/meeting/MeetingsPerCountryRequest';
-import { FinanceState, setFinanceViewData } from '../store/datamodels/Finance';
-import { loginUser, logoutUser, updateEngagementViewData } from '../store/datamodels/General';
-import { MeetingState, setMeetingViewData } from '../store/datamodels/Meeting';
-import { RootState } from '../store/index';
-import { removeTokenFromLocalStorage, setTokenInLocalStorage } from '../util/Token';
-import { ServerDto, UserDto } from '../services/requests/Dto';
+import {fetchFinanceData} from '../services/requests/finance/FinanceViewDataRequest';
+import {fetchMeetingViewData} from '../services/requests/meeting/MeetingViewDataRequest';
+import {fetchMeetingsPerCountry} from '../services/requests/meeting/MeetingsPerCountryRequest';
+import {FinanceState, setFinanceViewData} from '../store/datamodels/Finance';
+import {loginUser, logoutUser, updateEngagementViewData} from '../store/datamodels/General';
+import {MeetingState, setMeetingViewData} from '../store/datamodels/Meeting';
+import {RootState} from '../store/index';
+import {removeTokenFromLocalStorage, setTokenInLocalStorage} from '../util/Token';
+import {ServerDto, UserDto} from '../services/requests/Dto';
 
-import { MainState, setMainViewData } from '../store/datamodels/Main';
+import {MainState, setMainViewData} from '../store/datamodels/Main';
 
 export const updateMeetingViewData = (): ThunkAction<void, RootState, null, Action<string>> => async (dispatch) => {
-    const result: MeetingState = {} as MeetingState;
+   const result: MeetingState = {} as MeetingState;
 
-    const meetingViewData: MeetingViewDto = await fetchMeetingViewData();
-    const meetingsCountryData: ServerDto[] = await fetchMeetingsPerCountry();
+   const meetingViewData: MeetingViewDto = await fetchMeetingViewData();
+   const meetingsCountryData: ServerDto[] = await fetchMeetingsPerCountry();
 
-    const { meetingTotal, meetingsLastMonth, meetingsLastYear, meetingsPerGroup, sharesPerMeeting } = meetingViewData;
+   const {meetingTotal, meetingsLastMonth, meetingsLastYear, meetingsPerGroup, sharesPerMeeting} = meetingViewData;
 
-    const { todayCount, todayDate } = DataMappingService.mapDataForToday(meetingsLastMonth);
+   const {todayCount, todayDate} = DataMappingService.mapDataForToday(meetingsLastMonth);
 
-    result.totalData = meetingTotal;
-    result.todayCount = todayCount;
-    result.todayDate = todayDate;
+   result.totalData = meetingTotal;
+   result.todayCount = todayCount;
+   result.todayDate = todayDate;
 
-    result.lastMonthCount = DataMappingService.getTotalNumberInPeriod(meetingsLastMonth);
-    result.lastYearCount = DataMappingService.getTotalNumberInPeriod(meetingsLastYear);
+   result.lastMonthCount = DataMappingService.getTotalNumberInPeriod(meetingsLastMonth);
+   result.lastYearCount = DataMappingService.getTotalNumberInPeriod(meetingsLastYear);
 
-    result.lastYearData = DataMappingService.mapLastYearData(meetingsLastYear, true);
-    result.lastMonthBarChartData = DataMappingService.mapLastMonthData(meetingsLastMonth);
-    result.lastYearBarChartData = DataMappingService.mapLastYearData(meetingsLastYear, false);
+   result.lastYearData = DataMappingService.mapLastYearData(meetingsLastYear, true);
+   result.lastMonthBarChartData = DataMappingService.mapLastMonthData(meetingsLastMonth);
+   result.lastYearBarChartData = DataMappingService.mapLastYearData(meetingsLastYear, false);
 
-    result.perGroupData = DataMappingService.mapGeneralChartData(meetingsPerGroup);
-    result.perCountryData = DataMappingService.mapGeneralChartData(meetingsCountryData);
-    result.sharesPerMeetingData = DataMappingService.mapGeneralChartData(sharesPerMeeting);
+   result.perGroupData = DataMappingService.mapGeneralChartData(meetingsPerGroup);
+   result.perCountryData = DataMappingService.mapGeneralChartData(meetingsCountryData);
+   result.sharesPerMeetingData = DataMappingService.mapGeneralChartData(sharesPerMeeting);
 
-    dispatch(setMeetingViewData(result));
+   dispatch(setMeetingViewData(result));
 };
 
 export const updateFinanceViewData = (): ThunkAction<void, RootState, null, Action<string>> => async (dispatch) => {
-    const result: FinanceState = {} as FinanceState;
+   const result: FinanceState = {} as FinanceState;
 
-    const financeStatsData: FinanceViewDto = await fetchFinanceData();
+   const financeStatsData: FinanceViewDto = await fetchFinanceData();
 
-    const {
-        shareTotal,
-        loanTotal,
-        mostShares,
-        etbOnLoan,
-        currencyStats,
-        loansLastMonth,
-        loansLastYear,
-        shareStats,
-        groupEtbLoan,
-    } = financeStatsData;
+   const {
+      shareTotal,
+      loanTotal,
+      mostShares,
+      etbOnLoan,
+      currencyStats,
+      loansLastMonth,
+      loansLastYear,
+      shareStats,
+      groupEtbLoan,
+   } = financeStatsData;
 
-    result.sharesTotal = shareTotal;
-    result.loansTotal = loanTotal;
-    result.mostShares = mostShares;
-    result.etbOnLoan = etbOnLoan;
+   result.sharesTotal = shareTotal;
+   result.loansTotal = loanTotal;
+   result.mostShares = mostShares;
+   result.etbOnLoan = etbOnLoan;
 
-    result.loansLastYearLineChartData = DataMappingService.mapLastYearData(loansLastYear, true);
-    result.loansLastMonthData = DataMappingService.mapLastMonthData(loansLastMonth);
-    result.loanslastYearBarChartData = DataMappingService.mapLastYearData(loansLastYear, false);
+   result.loansLastYearLineChartData = DataMappingService.mapLastYearData(loansLastYear, true);
+   result.loansLastMonthData = DataMappingService.mapLastMonthData(loansLastMonth);
+   result.loanslastYearBarChartData = DataMappingService.mapLastYearData(loansLastYear, false);
 
-    result.currencyStats = DataMappingService.mapGeneralChartData(currencyStats);
-    result.sharesPerGroup = DataMappingService.mapGeneralChartData(shareStats);
-    result.groupEtbLoan = DataMappingService.mapGeneralChartData(groupEtbLoan);
+   result.currencyStats = DataMappingService.mapGeneralChartData(currencyStats);
+   result.sharesPerGroup = DataMappingService.mapGeneralChartData(shareStats);
+   result.groupEtbLoan = DataMappingService.mapGeneralChartData(groupEtbLoan);
 
-    dispatch(setFinanceViewData(result));
+   dispatch(setFinanceViewData(result));
 };
 
 export const updateMainViewData = (): ThunkAction<void, RootState, null, Action<string>> => async (dispatch) => {
-    const result: MainState = {} as MainState;
+   const result: MainState = {} as MainState;
 
-    result.usersTotal = await fetchTotalUsers();
-    result.groupsTotal = await fetchTotalGroups();
-    result.meetingsTotal = await fetchTotalMeetings();
-    result.sharesTotal = await fetchTotalShares();
+   result.usersTotal = await fetchTotalUsers();
+   result.groupsTotal = await fetchTotalGroups();
+   result.meetingsTotal = await fetchTotalMeetings();
+   result.sharesTotal = await fetchTotalShares();
 
-    const usersLastYear = await fetchUsersLastYear();
-    result.usersLastYearLineChartData = DataMappingService.mapLastYearData(usersLastYear, true);
-    result.usersLastYearBarChartData = DataMappingService.mapLastYearData(usersLastYear, false);
+   const usersLastYear = await fetchUsersLastYear();
+   result.usersLastYearLineChartData = DataMappingService.mapLastYearData(usersLastYear, true);
+   result.usersLastYearBarChartData = DataMappingService.mapLastYearData(usersLastYear, false);
 
-    const groupsLastYear = await fetchGroupsLastYear();
-    result.groupsLastYearData = DataMappingService.mapLastYearData(groupsLastYear, true);
+   const groupsLastYear = await fetchGroupsLastYear();
+   result.groupsLastYearData = DataMappingService.mapLastYearData(groupsLastYear, true);
 
-    const meetingsLastYear = await fetchMeetingsLastYear();
-    result.meetingsLastYearData = DataMappingService.mapLastYearData(meetingsLastYear, true);
+   const meetingsLastYear = await fetchMeetingsLastYear();
+   result.meetingsLastYearData = DataMappingService.mapLastYearData(meetingsLastYear, true);
 
-    const groupsLastMonth = await fetchGroupsLastMonth();
-    result.groupsLastMonthData = DataMappingService.mapLastMonthData(groupsLastMonth);
+   const groupsLastMonth = await fetchGroupsLastMonth();
+   result.groupsLastMonthData = DataMappingService.mapLastMonthData(groupsLastMonth);
 
-    const userGenderStats = await fetchUserGenderData();
-    result.userGenderStats = DataMappingService.mapGeneralChartData(userGenderStats);
+   const userGenderStats = await fetchUserGenderData();
+   result.userGenderStats = DataMappingService.mapGeneralChartData(userGenderStats);
 
-    dispatch(setMainViewData(result));
+   dispatch(setMainViewData(result));
 };
 
 export const setEngagementViewData = (): ThunkAction<void, RootState, null, Action<string>> => async (dispatch) => {
-    let engagementData = {
-        groupEngagement: null,
-        userEngagement: null,
-    };
+   let engagementData = {
+      groupEngagement: null,
+      userEngagement: null,
+   };
 
-    const groupData = await fetchGroupEngagementData();
-    engagementData.groupEngagement = groupData.groupEngagement;
+   const groupData = await fetchGroupEngagementData();
+   engagementData.groupEngagement = groupData.groupEngagement;
 
-    engagementData.userEngagement = await fetchActiveUserData();
+   engagementData.userEngagement = await fetchActiveUserData();
 
-    dispatch(updateEngagementViewData(engagementData));
+   dispatch(updateEngagementViewData(engagementData));
 };
 
-export const login = (
-    username: string,
-    password: string,
-): ThunkAction<void, RootState, null, Action<string>> => async (dispatch) => {
-    const result: UserDto = await fetchLogin(username, password);
+export const login = (username: string, password: string): ThunkAction<void, RootState, null, Action<string>> => async (
+   dispatch
+) => {
+   const result: UserDto = await fetchLogin(username, password);
 
-    setTokenInLocalStorage(result);
-    dispatch(loginUser(result));
+   setTokenInLocalStorage(result);
+   dispatch(loginUser(result));
 };
 
 export const logout = (): ThunkAction<void, RootState, null, Action<string>> => async (dispatch) => {
-    removeTokenFromLocalStorage();
+   removeTokenFromLocalStorage();
 
-    window.location.href = '/';
+   window.location.href = '/';
 
-    dispatch(logoutUser());
+   dispatch(logoutUser());
 };

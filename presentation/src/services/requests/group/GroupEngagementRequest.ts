@@ -1,7 +1,7 @@
 import {fetchFromServer} from '../Fetch';
 
 export const fetchGroupEngagementData = async (): Promise<any> => {
-    const data = `query{
+   const data = `query{
         groupEngagement{
           groupsActive
           groupMeetingFrequency{
@@ -12,7 +12,7 @@ export const fetchGroupEngagementData = async (): Promise<any> => {
         }
       }`;
 
-    const response = await fetchFromServer('groupEngagement', data);
+   const response = await fetchFromServer('groupEngagement', data);
 
-    return response;
+   return response;
 };

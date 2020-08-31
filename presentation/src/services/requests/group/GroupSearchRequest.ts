@@ -2,7 +2,7 @@ import {fetchFromServer} from '../Fetch';
 import {GroupDto} from './GroupDto';
 
 export const fetchDataForGroup = async (group: string): Promise<GroupDto> => {
-    const data = `query {
+   const data = `query {
     groupSearch(input: { group: ${group} }) {
       ... on Group {
         regDate
@@ -30,7 +30,7 @@ export const fetchDataForGroup = async (group: string): Promise<GroupDto> => {
     }
   }`;
 
-    const response: GroupDto = await fetchFromServer<GroupDto>('groupSearch', data);
+   const response: GroupDto = await fetchFromServer<GroupDto>('groupSearch', data);
 
-    return response;
+   return response;
 };

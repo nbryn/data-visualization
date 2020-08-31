@@ -6,29 +6,29 @@ import KPICard from '../../components/kpi/KPICard';
 import {RootState} from '../../store/index';
 
 type Props = {
-    statsType: string;
-    countData: string;
-    dateData: string;
-    icon: string;
+   statsType: string;
+   countData: string;
+   dateData: string;
+   icon: string;
 };
 
 export const KPITodayContainer: React.FC<Props> = ({statsType, countData, dateData, icon}: Props): ReactElement => {
-    const [lastUpdate, setLastUpdate] = useState<string>('');
-    let count: any = useSelector<RootState, number>((state) => state[statsType][countData]);
+   const [lastUpdate, setLastUpdate] = useState<string>('');
+   let count: any = useSelector<RootState, number>((state) => state[statsType][countData]);
 
-    let date: string = useSelector<RootState, string>((state) => state[statsType][dateData]);
+   let date: string = useSelector<RootState, string>((state) => state[statsType][dateData]);
 
-    useEffect(() => {
-        setLastUpdate(getCurrentTime());
-    }, []);
+   useEffect(() => {
+      setLastUpdate(getCurrentTime());
+   }, []);
 
-    return (
-        <KPICard
-            valueIcon={icon}
-            text={`Today: ${date}`}
-            value={count}
-            updateIcon="fa fa-refresh"
-            updateIconText={`Last Update: ${lastUpdate}`}
-        />
-    );
+   return (
+      <KPICard
+         valueIcon={icon}
+         text={`Today: ${date}`}
+         value={count}
+         updateIcon="fa fa-refresh"
+         updateIconText={`Last Update: ${lastUpdate}`}
+      />
+   );
 };

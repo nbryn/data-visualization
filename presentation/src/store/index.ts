@@ -10,34 +10,34 @@ import MainReducers, {MainState, initialMainState} from './datamodels/Main';
 import UserReducers, {UserState, initialUserState} from './datamodels/User';
 
 export interface RootState {
-    [key: string]: any;
-    chartjs: ChartjsState;
-    finance: FinanceState;
-    groups: GroupState;
-    meetings: MeetingState;
-    users: UserState;
-    main: MainState;
-    general: GeneralState;
+   [key: string]: any;
+   chartjs: ChartjsState;
+   finance: FinanceState;
+   groups: GroupState;
+   meetings: MeetingState;
+   users: UserState;
+   main: MainState;
+   general: GeneralState;
 }
 
 export const initialState: RootState = {
-    chartjs: initialChartjsState,
-    finance: initialFinanceState,
-    meetings: initialMeetingState,
-    groups: initialGroupState,
-    users: initialUserState,
-    main: initialMainState,
-    general: initialGeneralState,
+   chartjs: initialChartjsState,
+   finance: initialFinanceState,
+   meetings: initialMeetingState,
+   groups: initialGroupState,
+   users: initialUserState,
+   main: initialMainState,
+   general: initialGeneralState,
 };
 
 export const rootReducer = combineReducers({
-    chartjs: ChartjsReducers,
-    finance: FinanceReducers,
-    groups: GroupReducers,
-    meetings: MeetingReducers,
-    users: UserReducers,
-    main: MainReducers,
-    general: GeneralReducers,
+   chartjs: ChartjsReducers,
+   finance: FinanceReducers,
+   groups: GroupReducers,
+   meetings: MeetingReducers,
+   users: UserReducers,
+   main: MainReducers,
+   general: GeneralReducers,
 });
 
 const middleWare = [thunk];
@@ -45,16 +45,16 @@ const middleWare = [thunk];
 let store;
 
 const ReactReduxDevTools =
-    // @ts-ignore
-    (window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ &&
-        // @ts-ignore
-        window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__()) ||
-    compose;
+   // @ts-ignore
+   (window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ &&
+      // @ts-ignore
+      window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__()) ||
+   compose;
 
 if (window.navigator.userAgent.includes('Chrome')) {
-    store = createStore(rootReducer, initialState, compose(applyMiddleware(...middleWare), ReactReduxDevTools));
+   store = createStore(rootReducer, initialState, compose(applyMiddleware(...middleWare), ReactReduxDevTools));
 } else {
-    store = createStore(rootReducer, initialState, compose(applyMiddleware(...middleWare)));
+   store = createStore(rootReducer, initialState, compose(applyMiddleware(...middleWare)));
 }
 
 export default store;

@@ -6,31 +6,31 @@ import KPICard from '../../components/kpi/KPICard';
 import {RootState} from '../../store/index';
 
 type Props = {
-    title: string;
-    fetchData?: Function;
-    statsType: string;
-    total: string;
-    icon: string;
+   title: string;
+   fetchData?: Function;
+   statsType: string;
+   total: string;
+   icon: string;
 };
 
 export const KPIContainer: React.FC<Props> = ({title, fetchData, statsType, total, icon}: Props): ReactElement => {
-    const [lastUpdate, setLastUpdate] = useState<string>('');
-    let data: any = useSelector<RootState, number>((state) => state[statsType][total]);
+   const [lastUpdate, setLastUpdate] = useState<string>('');
+   let data: any = useSelector<RootState, number>((state) => state[statsType][total]);
 
-    const dispatch = useDispatch();
+   const dispatch = useDispatch();
 
-    useEffect(() => {
-        if (fetchData) dispatch(fetchData());
-        setLastUpdate(getCurrentTime());
-    }, []);
+   useEffect(() => {
+      if (fetchData) dispatch(fetchData());
+      setLastUpdate(getCurrentTime());
+   }, []);
 
-    return (
-        <KPICard
-            valueIcon={icon}
-            text={title}
-            value={data}
-            updateIcon="fa fa-refresh"
-            updateIconText={`Last Update: ${lastUpdate}`}
-        />
-    );
+   return (
+      <KPICard
+         valueIcon={icon}
+         text={title}
+         value={data}
+         updateIcon="fa fa-refresh"
+         updateIconText={`Last Update: ${lastUpdate}`}
+      />
+   );
 };

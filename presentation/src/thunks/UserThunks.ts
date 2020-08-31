@@ -8,29 +8,29 @@ import {RootState} from '../store/index';
 import {ServerDto} from '../services/requests/Dto';
 
 export const updateUserViewData = (): ThunkAction<void, RootState, null, Action<string>> => async (dispatch) => {
-    const result: UserState = {} as UserState;
+   const result: UserState = {} as UserState;
 
-    const userData: UserViewDto = await fetchUserViewData();
-    const userCountryData: ServerDto[] = await fetchUsersPerCountry();
-    const userNGOData: ServerDto[] = await fetchUsersPerNGO();
+   const userData: UserViewDto = await fetchUserViewData();
+   const userCountryData: ServerDto[] = await fetchUsersPerCountry();
+   const userNGOData: ServerDto[] = await fetchUsersPerNGO();
 
-    const {userCount, usersLastMonth, usersLastYear, userGenderStats} = userData;
+   const {userCount, usersLastMonth, usersLastYear, userGenderStats} = userData;
 
-    const {todayDate, todayCount} = DataMappingService.mapDataForToday(usersLastMonth);
+   const {todayDate, todayCount} = DataMappingService.mapDataForToday(usersLastMonth);
 
-    result.total = userCount;
-    result.todayCount = todayCount;
-    result.todayDate = todayDate;
-    result.lastMonthCount = DataMappingService.getTotalNumberInPeriod(usersLastMonth);
-    result.lastYearCount = DataMappingService.getTotalNumberInPeriod(usersLastYear);
+   result.total = userCount;
+   result.todayCount = todayCount;
+   result.todayDate = todayDate;
+   result.lastMonthCount = DataMappingService.getTotalNumberInPeriod(usersLastMonth);
+   result.lastYearCount = DataMappingService.getTotalNumberInPeriod(usersLastYear);
 
-    result.lastYearLineChartData = DataMappingService.mapLastYearData(usersLastYear, true);
-    result.lastYearBarChartData = DataMappingService.mapLastYearData(usersLastYear, false);
-    result.lastMonthBarChartData = DataMappingService.mapLastMonthData(usersLastMonth);
+   result.lastYearLineChartData = DataMappingService.mapLastYearData(usersLastYear, true);
+   result.lastYearBarChartData = DataMappingService.mapLastYearData(usersLastYear, false);
+   result.lastMonthBarChartData = DataMappingService.mapLastMonthData(usersLastMonth);
 
-    result.perCountryData = DataMappingService.mapGeneralChartData(userCountryData);
-    result.perNGOData = DataMappingService.mapGeneralChartData(userNGOData);
-    result.genderStats = DataMappingService.mapGeneralChartData(userGenderStats);
+   result.perCountryData = DataMappingService.mapGeneralChartData(userCountryData);
+   result.perNGOData = DataMappingService.mapGeneralChartData(userNGOData);
+   result.genderStats = DataMappingService.mapGeneralChartData(userGenderStats);
 
-    dispatch(setUserViewData(result));
+   dispatch(setUserViewData(result));
 };

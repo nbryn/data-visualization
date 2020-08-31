@@ -1,111 +1,106 @@
-const { fetchFinanceData } = require('../../../data/mappers/FinanceMapper');
-const { fetchBoxBalanceData } = require('../../../data/mappers/FinanceMapper');
-const { fetchLoanData } = require('../../../data/mappers/GroupMapper');
+const {fetchFinanceData} = require('../../../data/mappers/FinanceMapper');
+const {fetchBoxBalanceData} = require('../../../data/mappers/FinanceMapper');
+const {fetchLoanData} = require('../../../data/mappers/GroupMapper');
 
 async function getCurrencyStats() {
-  const result = await fetchFinanceData(
-    'GroupAccount',
-    'totalBalance',
-    '$currency'
-  );
+   const result = await fetchFinanceData('GroupAccount', 'totalBalance', '$currency');
 
-  const currencyStats = result.map((element) => {
-    return {
-      name: element._id,
-      count: element.totalAmount
-    };
-  });
+   const currencyStats = result
+      .map((element) => {
+         return {
+            name: element._id,
+            count: element.totalAmount,
+         };
+      })
+      .sort((a, b) => a.count - b.count);
 
-  return currencyStats;
+   return currencyStats;
 }
 
 async function calculateBoxBalanceStats() {
-  const boxBalanceStats = await fetchBoxBalanceData();
+   const boxBalanceStats = await fetchBoxBalanceData();
 
-  let totalBalance = 0;
-  let highest = 0;
+   let totalBalance = 0;
+   let highest = 0;
 
-  boxBalanceStats.forEach((element) => {
-    if (element.count > 0) {
-      if (element.count > highest) {
-        highest = element.count;
+   boxBalanceStats.forEach((element) => {
+      if (element.count > 0) {
+         if (element.count > highest) {
+            highest = element.count;
+         }
+         totalBalance += element.count;
       }
-      totalBalance += element.count;
-    }
-  });
+   });
 
-  return {
-    totalBoxBalance: totalBalance,
-    groupWithMost: highest
-  };
+   return {
+      totalBoxBalance: totalBalance,
+      groupWithMost: highest,
+   };
 }
 
 async function calculateShareStats() {
-  const result = await fetchFinanceData('GroupAccount', 'totalShares', '$_id');
+   const result = await fetchFinanceData('GroupAccount', 'totalShares', '$_id');
 
-  let shareTotal = 0;
-  let groupWithMostShares = {
-    groupName: '',
-    count: ''
-  };
+   let shareTotal = 0;
+   let groupWithMostShares = {
+      groupName: '',
+      count: '',
+   };
 
-  const sharesPerGroup = result.map((element) => {
-    shareTotal += element.totalAmount;
-    if (element.totalAmount > groupWithMostShares.count) {
-      groupWithMostShares = {
-        name: element._id,
-        count: element.totalAmount
+   const sharesPerGroup = result.map((element) => {
+      shareTotal += element.totalAmount;
+      if (element.totalAmount > groupWithMostShares.count) {
+         groupWithMostShares = {
+            name: element._id,
+            count: element.totalAmount,
+         };
+      }
+      return {
+         name: element._id.toString().substring(0, 5),
+         count: element.totalAmount,
       };
-    }
-    return {
-      name: element._id.toString().substring(0, 5),
-      count: element.totalAmount
-    };
-  });
+   });
 
-  sharesPerGroup.sort((ele1, ele2) => ele2.count - ele1.count);
+   sharesPerGroup.sort((ele1, ele2) => ele1.count - ele2.count);
 
-  const shareStats = {
-    shareTotal: shareTotal,
-    mostShares: groupWithMostShares,
-    shareStats: sharesPerGroup.slice(0, 10)
-  };
+   const shareStats = {
+      shareTotal: shareTotal,
+      mostShares: groupWithMostShares,
+      shareStats: sharesPerGroup.slice(0, 10),
+   };
 
-  return shareStats;
+   return shareStats;
 }
 
 async function calculateEtbLoanStats() {
-  const result = await fetchLoanData();
-  let totalETB = 0;
+   const result = await fetchLoanData();
+   let totalETB = 0;
 
-  const etbGroups = result
-    .filter(
-      (element) =>
-        element.currency === 'ETB' &&
-        element.members.length > 6 &&
-        element.shares[0].totalShares > 0
-    )
-    .map((element) => {
-      totalETB += element.shares[0].totalShares;
-      return {
-        name: element._id.toString().substring(0, 5),
-        count: element.shares[0].totalShares * element.amountPerShare
-      };
-    });
+   const etbGroups = result
+      .filter(
+         (element) => element.currency === 'ETB' && element.members.length > 6 && element.shares[0].totalShares > 0
+      )
+      .map((element) => {
+         totalETB += element.shares[0].totalShares;
+         return {
+            name: element._id.toString().substring(0, 5),
+            count: element.shares[0].totalShares * element.amountPerShare,
+         };
+      });
 
-  etbGroups.sort((ele1, ele2) => ele2.count - ele1.count);
+   etbGroups.sort((ele1, ele2) => ele1.count - ele2.count);
 
-  const etbStats = {
-    etbOnLoan: totalETB,
-    groupEtbLoan: etbGroups
-  };
+   const etbStats = {
+      etbOnLoan: totalETB,
+      groupEtbLoan: etbGroups,
+   };
 
-  return etbStats;
+   return etbStats;
 }
 
 module.exports = {
-  getCurrencyStats,
-  calculateShareStats,
-  calculateEtbLoanStats,
-  calculateBoxBalanceStats
+   getCurrencyStats,
+   calculateShareStats,
+   calculateEtbLoanStats,
+   calculateBoxBalanceStats,
 };

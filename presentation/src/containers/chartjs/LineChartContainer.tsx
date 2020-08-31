@@ -10,96 +10,85 @@ import LineChart from '../../components/chartjs/LineChart';
 import {RootState} from '../../store/index';
 
 const useStyles = makeStyles((theme) => ({
-    wrapper: {
-        marginTop: 5,
-        marginBottom: 15,
-    },
-    spinner: {
-        margin: 125,
-        marginLeft: 200,
-    },
+   wrapper: {
+      marginTop: 5,
+      marginBottom: 15,
+   },
+   spinner: {
+      margin: 125,
+      marginLeft: 200,
+   },
 }));
 
 type Props = {
-    title: string;
-    dataTypes: string[];
-    color: string;
+   title: string;
+   dataTypes: string[];
+   color: string;
 };
 
 export const ChartjsLineChartContainer: React.FC<Props> = ({title, dataTypes, color}: Props): ReactElement => {
-    const classes = useStyles();
-    const {WEEK, MONTH, YEAR} = Interval;
+   const classes = useStyles();
+   const {WEEK, MONTH, YEAR} = Interval;
 
-    const [loading, setLoading] = useState<boolean>(true);
-    const [period, setPeriod] = useState<Interval>(YEAR);
+   const [period, setPeriod] = useState<Interval>(YEAR);
+   const [chartData, setChartData] = useState<ChartjsData>();
 
-    const [chartData, setChartData] = useState<ChartjsData>({
-        labels: [],
-        counter: 0,
-        data: [],
-    });
+   const lastWeek = useSelector<RootState, ChartjsData>((state) => state.chartjs[dataTypes[0]]);
 
-    const usersLastWeek = useSelector<RootState, ChartjsData>((state) => state.chartjs[dataTypes[0]]);
+   const lastMonth = useSelector<RootState, ChartjsData>((state) => state.chartjs[dataTypes[1]]);
 
-    const usersLastMonth = useSelector<RootState, ChartjsData>((state) => state.chartjs[dataTypes[1]]);
+   const lastYear = useSelector<RootState, ChartjsData>((state) => state.chartjs[dataTypes[2]]);
 
-    const usersLastYear = useSelector<RootState, ChartjsData>((state) => state.chartjs[dataTypes[2]]);
+   const handleChangeInterval = (event: React.ChangeEvent<HTMLInputElement>): void => {
+      const interval: Interval = resolveInterval(event.target.value);
 
-    const handleChangeInterval = (event: React.ChangeEvent<HTMLInputElement>): void => {
-        const interval: Interval = resolveInterval(event.target.value);
-        setLoading(true);
+      if (interval === WEEK) {
+         updateData(WEEK, lastWeek);
+      } else if (interval === MONTH) {
+         updateData(MONTH, lastMonth);
+      } else {
+         updateData(YEAR, lastYear);
+      }
+   };
 
-        if (interval === WEEK) {
-            updateData(WEEK, usersLastWeek);
-        } else if (interval === MONTH) {
-            updateData(MONTH, usersLastMonth);
-        } else {
-            updateData(YEAR, usersLastYear);
-        }
+   const updateData = (interval: Interval, chartData: ChartjsData): void => {
+      setPeriod(interval);
+      setChartData({
+         counter: chartData.counter,
+         data: chartData.data,
+         labels: chartData.labels,
+      });
+   };
 
-        setLoading(false);
-    };
+   useEffect(() => {
+      updateData(YEAR, lastYear);
+   }, [lastYear, YEAR]);
 
-    const updateData = (interval: Interval, chartData: ChartjsData): void => {
-        setPeriod(interval);
-        setChartData({
-            counter: chartData.counter,
-            data: chartData.data,
-            labels: chartData.labels,
-        });
-    };
-
-    useEffect(() => {
-        updateData(YEAR, usersLastYear);
-
-        setLoading(false);
-    }, [usersLastYear, YEAR]);
-
-    return (
-        <Card className={classes.wrapper}>
-            <CardContent>
-                {loading ? (
-                    <CircularProgress className={classes.spinner} />
-                ) : (
-                    <LineChart
-                        updateInterval={handleChangeInterval}
-                        labels={chartData.labels}
-                        label={title}
-                        fill={false}
-                        backgroundColor={color}
-                        borderColor={color}
-                        pointBorderColor={color}
-                        pointBackgroundColor={color}
-                        pointHoverBackgroundColor={color}
-                        pointHoverBorderColor={color}
-                        pointBorderWidth={3}
-                        pointHoverRadius={2}
-                        data={chartData.data}
-                        counter={chartData.counter}
-                        currentInterval={period}
-                    />
-                )}
-            </CardContent>
-        </Card>
-    );
+   return (
+      <Card className={classes.wrapper}>
+         <CardContent>
+            {lastYear.data.length === 0 ? (
+               <CircularProgress className={classes.spinner} />
+            ) : (
+               <LineChart
+                  updateInterval={handleChangeInterval}
+                  labels={chartData!.labels}
+                  label={title}
+                  fill={false}
+                  backgroundColor={color}
+                  borderColor={color}
+                  pointBorderColor={color}
+                  pointBackgroundColor={color}
+                  pointHoverBackgroundColor={color}
+                  pointHoverBorderColor={color}
+                  pointBorderWidth={3}
+                  pointHoverRadius={2}
+                  data={chartData!.data}
+                  counter={chartData!.counter}
+                  currentInterval={period}
+               />
+            )}
+         </CardContent>
+      </Card>
+   );
 };

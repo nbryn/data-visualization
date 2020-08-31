@@ -120,7 +120,7 @@ async function fetchUsersPerCountry() {
             },
         },
         {
-            $sort: {count: -1},
+            $sort: {count: 1},
         },
     ]);
 

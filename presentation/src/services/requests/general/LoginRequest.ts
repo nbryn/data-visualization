@@ -2,7 +2,7 @@ import {fetchFromServer} from '../Fetch';
 import {UserDto} from '../Dto';
 
 export const fetchLogin = async (username: string, password: string): Promise<UserDto> => {
-    const data = `mutation {
+   const data = `mutation {
       signin(input: {
         username: "${username}"
         password: "${password}"
@@ -22,7 +22,7 @@ export const fetchLogin = async (username: string, password: string): Promise<Us
       }
     }`;
 
-    const response: UserDto = await fetchFromServer<UserDto>('signin', data);
+   const response: UserDto = await fetchFromServer<UserDto>('signin', data);
 
-    return response;
+   return response;
 };

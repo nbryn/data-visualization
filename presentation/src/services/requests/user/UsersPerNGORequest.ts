@@ -2,7 +2,7 @@ import {fetchFromServer} from '../Fetch';
 import {ServerDto} from '../Dto';
 
 export const fetchUsersPerNGO = async (): Promise<ServerDto[]> => {
-    const data = `query {
+   const data = `query {
         ngoStats {
           usersNGO {
             name
@@ -11,7 +11,7 @@ export const fetchUsersPerNGO = async (): Promise<ServerDto[]> => {
         }
       }`;
 
-    const response: ServerDto[] = await fetchFromServer<ServerDto[]>('ngoStats', data, 'usersNGO');
+   const response: ServerDto[] = await fetchFromServer<ServerDto[]>('ngoStats', data, 'usersNGO');
 
-    return response;
+   return response;
 };

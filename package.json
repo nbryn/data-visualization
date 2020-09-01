@@ -38,10 +38,10 @@
       "lodash": "^4.17.15",
       "moment": "^2.24.0",
       "mongoose": "^5.7.12",
-      "ts-node": "^9.0.0"
+      "ts-node": "^9.0.0",
+      "typescript": "^3.9.7"
    },
    "devDependencies": {
-      "typescript": "^3.9.7",
       "concurrently": "^5.0.0",
       "prettier": "^2.0.5"
    }

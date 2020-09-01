@@ -3,27 +3,24 @@ import {createStore} from 'redux';
 import React from 'react';
 
 import {render, screen} from '../../../test-utils';
-import {ChartjsBarChartContainer} from '../BarChartContainer';
+import {ChartjsMixedChartContainer} from '../MixedChartContainer';
 import {setChartjsData} from '../../../store/datamodels/Chartjs';
 
 const useSelectorSpy = jest.spyOn(redux, 'useSelector');
 
-const title = 'TestTitle';
-const color = 'red';
+const firstTitle = 'TestTitle';
+const secondTitle = 'TesterTitle';
+const firstDataType = 'usersLastYearLineChart';
+const secondDataType = 'groupsLastYearLineChart';
 
 const mockStore = createStore(() => ({
    chartjs: {
-      usersLastWeekBarChart: {
+      groupsLastYearLineChart: {
          labels: ['Feb', 'Mar', 'Apr'],
          data: [0, 1, 2],
          counter: 3,
       },
-      usersLastMonthBarChart: {
-         labels: ['Feb', 'Mar', 'Apr'],
-         data: [0, 1, 2],
-         counter: 3,
-      },
-      usersLastYearBarChart: {
+      usersLastYearLineChart: {
          labels: ['Feb', 'Mar', 'Apr'],
          data: [0, 1, 2],
          counter: 3,
@@ -35,44 +32,40 @@ afterEach(() => {
    jest.clearAllMocks();
 });
 
-const renderBarChartContainer = (store?: any) =>
+const renderMixedChartContainer = (store?: any) =>
    render(
-      <ChartjsBarChartContainer
-         title={title}
-         color={color}
-         dataTypes={['usersLastYearBarChart', 'usersLastMonthBarChart', 'usersLastYearBarChart']}
+      <ChartjsMixedChartContainer
+         firstChartTitle={firstTitle}
+         firstDataType={firstDataType}
+         secondChartTitle={secondTitle}
+         secondDataType={secondDataType}
       />,
       {store}
    );
 
-describe('BarChartContainer.test.jsx', () => {
+describe('LineChartContainer.test.jsx', () => {
    it('useSelector is called on mount', () => {
-      renderBarChartContainer();
+      renderMixedChartContainer();
 
       expect(useSelectorSpy).toHaveBeenCalled();
    });
    it('renders a progressbar on mount', () => {
-      renderBarChartContainer();
+      renderMixedChartContainer();
 
       expect(screen.getByRole('progressbar')).toBeTruthy();
    });
    it('progress bar is not rendered when store is updated', () => {
-      renderBarChartContainer(mockStore);
+      renderMixedChartContainer(mockStore);
 
       mockStore.dispatch(
          // @ts-ignore
          setChartjsData({
-            usersLastWeekBarChart: {
+            groupsLastYearLineChart: {
                labels: ['Feb', 'Mar', 'Apr'],
                data: [0, 1, 2],
                counter: 3,
             },
-            usersLastMonthBarChart: {
-               labels: ['Feb', 'Mar', 'Apr'],
-               data: [0, 1, 2],
-               counter: 3,
-            },
-            usersLastYearBarChart: {
+            usersLastYearLineChart: {
                labels: ['Feb', 'Mar', 'Apr'],
                data: [0, 2, 2],
                counter: 4,

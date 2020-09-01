@@ -3,7 +3,7 @@ import {createStore} from 'redux';
 import React from 'react';
 
 import {render, screen} from '../../../test-utils';
-import {ChartjsBarChartContainer} from '../BarChartContainer';
+import {ChartjsLineChartContainer} from '../LineChartContainer';
 import {setChartjsData} from '../../../store/datamodels/Chartjs';
 
 const useSelectorSpy = jest.spyOn(redux, 'useSelector');
@@ -13,17 +13,17 @@ const color = 'red';
 
 const mockStore = createStore(() => ({
    chartjs: {
-      usersLastWeekBarChart: {
+      usersLastWeekLineChart: {
          labels: ['Feb', 'Mar', 'Apr'],
          data: [0, 1, 2],
          counter: 3,
       },
-      usersLastMonthBarChart: {
+      usersLastMonthLineChart: {
          labels: ['Feb', 'Mar', 'Apr'],
          data: [0, 1, 2],
          counter: 3,
       },
-      usersLastYearBarChart: {
+      usersLastYearLineChart: {
          labels: ['Feb', 'Mar', 'Apr'],
          data: [0, 1, 2],
          counter: 3,
@@ -35,44 +35,44 @@ afterEach(() => {
    jest.clearAllMocks();
 });
 
-const renderBarChartContainer = (store?: any) =>
+const renderLineChartContainer = (store?: any) =>
    render(
-      <ChartjsBarChartContainer
+      <ChartjsLineChartContainer
          title={title}
          color={color}
-         dataTypes={['usersLastYearBarChart', 'usersLastMonthBarChart', 'usersLastYearBarChart']}
+         dataTypes={['usersLastYearLineChart', 'usersLastMonthLineChart', 'usersLastYearLineChart']}
       />,
       {store}
    );
 
-describe('BarChartContainer.test.jsx', () => {
+describe('LineChartContainer.test.jsx', () => {
    it('useSelector is called on mount', () => {
-      renderBarChartContainer();
+      renderLineChartContainer();
 
       expect(useSelectorSpy).toHaveBeenCalled();
    });
    it('renders a progressbar on mount', () => {
-      renderBarChartContainer();
+      renderLineChartContainer();
 
       expect(screen.getByRole('progressbar')).toBeTruthy();
    });
    it('progress bar is not rendered when store is updated', () => {
-      renderBarChartContainer(mockStore);
+      renderLineChartContainer(mockStore);
 
       mockStore.dispatch(
          // @ts-ignore
          setChartjsData({
-            usersLastWeekBarChart: {
+            usersLastWeekLineChart: {
                labels: ['Feb', 'Mar', 'Apr'],
                data: [0, 1, 2],
                counter: 3,
             },
-            usersLastMonthBarChart: {
+            usersLastMonthLineChart: {
                labels: ['Feb', 'Mar', 'Apr'],
                data: [0, 1, 2],
                counter: 3,
             },
-            usersLastYearBarChart: {
+            usersLastYearLineChart: {
                labels: ['Feb', 'Mar', 'Apr'],
                data: [0, 2, 2],
                counter: 4,

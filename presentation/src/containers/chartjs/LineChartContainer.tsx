@@ -57,6 +57,7 @@ export const ChartjsLineChartContainer: React.FC<Props> = ({title, dataTypes, co
 
    const updateData = (interval: Interval, chartData: ChartjsData): void => {
       setPeriod(interval);
+
       setChartData({
          counter: chartData.counter,
          data: chartData.data,

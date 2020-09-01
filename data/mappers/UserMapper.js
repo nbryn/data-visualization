@@ -8,12 +8,15 @@ async function validateLogin(args) {
       email: `${args.input.username}`,
    });
 
+   console.log("User Model: " + userModel);
+   console.log("Username: " + args.input.username);
+   console.log("Password: " + args.input.password)
+   console.log(dbResult);
+
    if (dbResult[0] === undefined) {
       throw new Error('Wrong username/password');
    } else {
       const {password, email, firstName, lastName, phoneNumber, gender} = dbResult[0];
-
-      console.log(dbResult[0]);
 
       if (!password || password !== args.input.password) {
          throw new Error('Wrong username/password');

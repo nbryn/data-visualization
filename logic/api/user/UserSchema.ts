@@ -1,6 +1,6 @@
 const { gql } = require('apollo-server');
 
-export const UserSchema = gql`
+const UserSchema = gql`
    type UserInfo {
       usersWithPhone: [User]
       usersWithEmail: [User]
@@ -21,3 +21,4 @@ export const UserSchema = gql`
    }
 `;
 
+export default UserSchema;

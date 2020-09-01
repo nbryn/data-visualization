@@ -1,6 +1,6 @@
-const {gql} = require('apollo-server');
+const { gql } = require('apollo-server');
 
-export const FinanceSchema = gql`
+const FinanceSchema = gql`
    type Data {
       name: String
       count: Float
@@ -30,4 +30,7 @@ export const FinanceSchema = gql`
       financeStats: FinanceStats
    }
 `;
+
+export default FinanceSchema;
+
 

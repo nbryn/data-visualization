@@ -1,9 +1,5 @@
 {
    "compilerOptions": {
-      //   "baseUrl": ".",
-      //   "paths": {
-      //      "*": ["*", "generated/*"]
-      //   },
       "rootDir": ".",
       "target": "es5",
       "module": "commonjs",
@@ -19,6 +15,6 @@
       "moduleResolution": "node",
       "resolveJsonModule": true,
       "noEmit": true,
-      "isolatedModules": false,
+      "isolatedModules": true,
    }
 }

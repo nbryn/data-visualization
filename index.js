@@ -75,3 +75,5 @@ if (process.env.NODE_ENV === "PRODUCTION") {
 app.listen(process.env.PORT || 4000, () =>
   console.log(`Server ready at http://localhost:4000/graphql`)
 );
+
+export {};

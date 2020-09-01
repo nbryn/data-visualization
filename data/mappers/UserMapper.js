@@ -13,7 +13,7 @@ async function validateLogin(args) {
    } else {
       const {password, email, firstName, lastName, phoneNumber, gender} = dbResult[0];
 
-      console.log(password);
+      console.log(dbResult[0]);
 
       if (!password || password !== args.input.password) {
          throw new Error('Wrong username/password');

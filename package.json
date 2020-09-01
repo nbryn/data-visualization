@@ -8,7 +8,7 @@
       "node": "12.13.0"
    },
    "scripts": {
-      "start": "node ts-node index.js",
+      "start": "node index.js",
       "server": "ts-node index.js && nodemon index.js",
       "client": "npm start --prefix presentation",
       "dev": "concurrently \"npm run server\" \"npm run client\" ",
@@ -37,7 +37,8 @@
       "iso-country-currency": "^0.5.1",
       "lodash": "^4.17.15",
       "moment": "^2.24.0",
-      "mongoose": "^5.7.12"
+      "mongoose": "^5.7.12",
+      "ts-node": "^9.0.0"
    },
    "devDependencies": {
       "typescript": "^3.9.7",

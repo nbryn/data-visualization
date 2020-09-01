@@ -1,6 +1,6 @@
 const {gql} = require('apollo-server');
 
-const MeetingSchema = gql`
+export const MeetingSchema = gql`
    type MeetingStats {
       meetingTotal: Float
       meetingsLastMonth: [NumberDay]
@@ -14,4 +14,3 @@ const MeetingSchema = gql`
    }
 `;
 
-module.exports = MeetingSchema;

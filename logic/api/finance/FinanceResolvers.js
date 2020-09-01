@@ -1,4 +1,4 @@
-const actionRunner = require('../../util/ActionRunner.js');
+import {actionRunner} from '../../util/ActionRunner';
 const {
   calculateEtbLoanStats,
   calculateShareStats,

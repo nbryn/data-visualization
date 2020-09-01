@@ -15,19 +15,17 @@ const GroupMeetingStatesArray = [
    GroupMeetingState.ENDED,
 ];
 
-const groupMeetingSchema = new Schema({
+export const GroupMeetingSchema = new Schema({
    group: {type: mongoose.Schema.Types.ObjectId, ref: 'Group'},
    registrationDate: Date,
    cycleNumber: Number,
    meetingDay: Date,
    meetingEnded: Date,
    meetingNumber: Number,
-   shares: [{type: mongoose.Schema.Types.ObjectId, ref: 'GroupMeetingShare'}],
+   shares: [{type: mongoose.Schema.Types.ObjectId, ref: 'groupmeetingshare'}],
    state: {
       type: String,
       enum: GroupMeetingStatesArray,
       default: GroupMeetingState.CREATING,
    },
 });
-
-module.exports = groupMeetingSchema;

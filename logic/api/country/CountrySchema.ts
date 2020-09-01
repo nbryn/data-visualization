@@ -1,6 +1,6 @@
 const {gql} = require('apollo-server');
 
-const CountrySchema = gql`
+export const CountrySchema = gql`
    type Country {
       groups: Float
       users: Float
@@ -22,4 +22,3 @@ const CountrySchema = gql`
    }
 `;
 
-module.exports = CountrySchema;

@@ -1,6 +1,6 @@
-const {gql} = require('apollo-server');
+const { gql } = require('apollo-server');
 
-const DefaultSchema = gql`
+export const DefaultSchema = gql`
    scalar JSON
 
    type PerUnit {
@@ -59,4 +59,3 @@ const DefaultSchema = gql`
    }
 `;
 
-module.exports = DefaultSchema;

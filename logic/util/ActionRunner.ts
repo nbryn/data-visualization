@@ -1,4 +1,4 @@
-async function actionRunner(actionFunction, input, validateFunction) {
+export async function actionRunner(actionFunction: any, input?: any, validateFunction?: Function) {
     try {
         if (validateFunction) {
             await validateFunction(input);
@@ -6,9 +6,8 @@ async function actionRunner(actionFunction, input, validateFunction) {
         return await actionFunction(input);
     } catch (error) {
         console.log(error);
-        
+
         return error;
     }
 }
 
-module.exports = actionRunner;

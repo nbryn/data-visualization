@@ -1,199 +1,194 @@
-const moment = require("moment");
-const ObjectId = require("mongodb").ObjectId;
+const moment = require('moment');
+const ObjectId = require('mongodb').ObjectId;
 
 const Error = require('../../logic/util/Error');
-const { getModel } = require("../connection");
+const {getModel} = require('../connection');
 
 async function fetchGroupByID(id) {
-  const groupModel = await getModel("Group");
+   const groupModel = await getModel('Group');
 
-  const group = await groupModel.find(ObjectId(id));
+   const group = await groupModel.find(ObjectId(id));
 
-  return group;
+   return group;
 }
 
 async function fetchGroupStats(groupBy) {
-  const groupModel = await getModel("Group");
+   const groupModel = await getModel('Group');
 
-  const groupStats = await groupModel.aggregate([
-    {
-      $match: { state: "ACTIVE" },
-    },
-    {
-      $group: {
-        _id: groupBy,
-        count: { $sum: 1 },
+   const groupStats = await groupModel.aggregate([
+      {
+         $match: {state: 'ACTIVE'},
       },
-    },
-    {
-      $sort: { count: -1 },
-    },
-  ]);
+      {
+         $group: {
+            _id: groupBy,
+            count: {$sum: 1},
+         },
+      },
+      {
+         $sort: {count: -1},
+      },
+   ]);
 
-  return groupStats;
+   return groupStats;
 }
 
 async function fetchGroupMembersPerNGO() {
-  const groupModel = await getModel("Group");
+   const groupModel = await getModel('Group');
 
-  const groupMembersPerNGO = await groupModel.aggregate([
-    {
-      $match: { state: "ACTIVE" },
-    },
-    {
-      $group: {
-        _id: "$ngoOrganization",
-        count: { $sum: 1 },
-        groups: { $push: { groupSize: { $size: "$members" } } },
+   const groupMembersPerNGO = await groupModel.aggregate([
+      {
+         $match: {state: 'ACTIVE'},
       },
-    },
-  ]);
+      {
+         $group: {
+            _id: '$ngoOrganization',
+            count: {$sum: 1},
+            groups: {$push: {groupSize: {$size: '$members'}}},
+         },
+      },
+   ]);
 
-  return groupMembersPerNGO;
+   return groupMembersPerNGO;
 }
 
 async function fetchGroupByName(groupName) {
-  const groupModel = await getModel("Group");
+   const groupModel = await getModel('Group');
 
-  const result = await groupModel.find({ name: groupName });
+   const result = await groupModel.find({name: groupName});
 
-  if (result.length < 1) {
-    throw new Error('Group not found');
-  }
+   if (result.length < 1) {
+      throw new Error('Group not found');
+   }
 
-  return result;
+   return result;
 }
 
 //Only field fetched is member id's
 async function fetchAllGroups() {
-  const groupModel = await getModel("Group");
+   const groupModel = await getModel('Group');
 
-  const groupMembers = await groupModel.find(
-    { state: "ACTIVE" },
-    { projection: { _id: 1, members: 1 } }
-  );
+   const groupMembers = await groupModel.find({state: 'ACTIVE'}, {projection: {_id: 1, members: 1}});
 
-  return groupMembers;
+   return groupMembers;
 }
 
 async function fetchGroupSizeData() {
-  const groupModel = await getModel("Group");
+   const groupModel = await getModel('Group');
 
-  const groupSizeData = await groupModel.aggregate([
-    {
-      $group: {
-        _id: { groupSize: { $size: "$members" } },
-        count: { $sum: 1 },
+   const groupSizeData = await groupModel.aggregate([
+      {
+         $group: {
+            _id: {groupSize: {$size: '$members'}},
+            count: {$sum: 1},
+         },
       },
-    },
-  ]);
+   ]);
 
-  return groupSizeData;
+   return groupSizeData;
 }
 
 async function fetchAllGroupData() {
-  const groupModel = await getModel("Group");
+   const groupModel = await getModel('Group');
 
-  const allGroupData = await groupModel.find({});
+   const allGroupData = await groupModel.find({});
 
-  return allGroupData;
+   return allGroupData;
 }
 
 async function fetchGroupMeetingData() {
-  const groupModel = await getModel("Group");
+   const groupModel = await getModel('Group');
 
-  const groupMeetingData = await groupModel.aggregate([
-    {
-      $lookup: {
-        from: "groupmeetings",
-        localField: "_id",
-        foreignField: "group",
-        as: "meetings",
+   const groupMeetingData = await groupModel.aggregate([
+      {
+         $lookup: {
+            from: 'groupmeetings',
+            localField: '_id',
+            foreignField: 'group',
+            as: 'meetings',
+         },
       },
-    },
-  ]);
+   ]);
 
-  return groupMeetingData;
+   return groupMeetingData;
 }
 
 async function fetchGroupsByNGO(ngo) {
-  const groupModel = await getModel("Group");
+   const groupModel = await getModel('Group');
 
-  const groupsNGO = await groupModel.find({ ngoOrganization: ngo });
+   const groupsNGO = await groupModel.find({ngoOrganization: ngo});
 
-  return groupsNGO;
+   return groupsNGO;
 }
 
 async function fetchNumberOfGroupsWith(currency) {
-  const groupModel = await getModel("Group");
+   const groupModel = await getModel('Group');
 
-  const groupsWithCurrency = await groupModel
-    .find({ state: "ACTIVE", currency })
-    .count();
+   const groupsWithCurrency = await groupModel.find({state: 'ACTIVE', currency}).count();
 
-  return groupsWithCurrency;
+   return groupsWithCurrency;
 }
 
 async function fetchGroupsRegBefore(subtract) {
-  const groupModel = await getModel("Group");
+   const groupModel = await getModel('Group');
 
-  const before = moment().startOf("day").subtract(subtract, "days").toDate();
-  const dbResult = await groupModel.find(
-    {
-      $and: [
-        {
-          state: "ACTIVE",
-          registrationDate: { $lt: before },
-        },
-      ],
-    },
-    { projection: { _id: 1, mebers: 1, meetings: 1 } }
-  );
+   const before = moment().startOf('day').subtract(subtract, 'days').toDate();
+   const dbResult = await groupModel.find(
+      {
+         $and: [
+            {
+               state: 'ACTIVE',
+               registrationDate: {$lt: before},
+            },
+         ],
+      },
+      {projection: {_id: 1, mebers: 1, meetings: 1}}
+   );
 
-  const result = [];
+   const result = [];
 
-  dbResult.forEach((element) => {
-    if (element.members.length > 6 && element.meetings.length > 2) {
-      let group = {
-        _id: element._id,
-        size: element.members.length,
-        meetings: element.meetings.length,
-      };
-      result.push(group);
-    }
-  });
+   dbResult.forEach((element) => {
+      if (element.members.length > 6 && element.meetings.length > 2) {
+         let group = {
+            _id: element._id,
+            size: element.members.length,
+            meetings: element.meetings.length,
+         };
+         result.push(group);
+      }
+   });
 
-  return result;
+   return result;
 }
 
 async function fetchLoanData() {
-  const groupModel = await getModel("Group");
+   const groupModel = await getModel('Group');
 
-  const loanData = await groupModel.aggregate([
-    {
-      $lookup: {
-        from: "groupaccounts",
-        localField: "_id",
-        foreignField: "group",
-        as: "shares",
+   const loanData = await groupModel.aggregate([
+      {
+         $lookup: {
+            from: 'groupaccounts',
+            localField: '_id',
+            foreignField: 'group',
+            as: 'shares',
+         },
       },
-    },
-  ]);
+   ]);
 
-  return loanData;
+   return loanData;
 }
 
 module.exports = {
-  fetchGroupByID,
-  fetchGroupByName,
-  fetchAllGroups,
-  fetchGroupStats,
-  fetchGroupSizeData,
-  fetchGroupMeetingData,
-  fetchAllGroupData,
-  fetchGroupsByNGO,
-  fetchGroupsRegBefore,
-  fetchNumberOfGroupsWith,
-  fetchGroupMembersPerNGO,
-  fetchLoanData,
+   fetchGroupByID,
+   fetchGroupByName,
+   fetchAllGroups,
+   fetchGroupStats,
+   fetchGroupSizeData,
+   fetchGroupMeetingData,
+   fetchAllGroupData,
+   fetchGroupsByNGO,
+   fetchGroupsRegBefore,
+   fetchNumberOfGroupsWith,
+   fetchGroupMembersPerNGO,
+   fetchLoanData,
 };

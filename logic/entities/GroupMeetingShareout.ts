@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const groupMeetingShareoutSchema = new Schema({
+export const GroupMeetingShareoutSchema = new Schema({
    registrationDate: Date,
-   meeting: {type: mongoose.Schema.Types.ObjectId, ref: 'GroupMeeting'},
-   account: {type: mongoose.Schema.Types.ObjectId, ref: 'GroupAccount'},
+   meeting: {type: mongoose.Schema.Types.ObjectId, ref: 'groupmeeting'},
+   account: {type: mongoose.Schema.Types.ObjectId, ref: 'groupaccount'},
    currency: String,
    totalShares: Number,
    shareValue: Number,
@@ -13,4 +13,3 @@ const groupMeetingShareoutSchema = new Schema({
    leftInBox: Number,
 });
 
-module.exports = groupMeetingShareoutSchema;

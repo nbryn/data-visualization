@@ -1,6 +1,6 @@
-const {gql} = require('apollo-server');
+const { gql } = require('apollo-server');
 
-const GroupSchema = gql`
+export const GroupSchema = gql`
    type GroupStats {
       groupTotal: Float
       groupSize: [PerUnit]
@@ -79,4 +79,3 @@ const GroupSchema = gql`
    }
 `;
 
-module.exports = GroupSchema;

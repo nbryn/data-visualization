@@ -1,4 +1,4 @@
-const actionRunner = require('../util/ActionRunner.js');
+import {actionRunner} from '../util/ActionRunner.ts';
 const Error = require('../util/Error');
 const {validateLogin} = require('../../data/mappers/UserMapper');
 

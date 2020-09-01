@@ -1,19 +1,24 @@
 {
-    "compilerOptions": {
-        "target": "es5",
-        "module": "commonjs",
-        "jsx": "preserve",
-        "strict": true,
-        "esModuleInterop": true,
-        "skipLibCheck": true,
-        "forceConsistentCasingInFileNames": true,
-        "lib": ["dom", "dom.iterable", "esnext"],
-        "allowJs": true,
-        "allowSyntheticDefaultImports": true,
-        "moduleResolution": "node",
-        "resolveJsonModule": true,
-        "noEmit": true,
-        "isolatedModules": true
-    }
+   "compilerOptions": {
+      //   "baseUrl": ".",
+      //   "paths": {
+      //      "*": ["*", "generated/*"]
+      //   },
+      "rootDir": ".",
+      "target": "es5",
+      "module": "commonjs",
+      "jsx": "preserve",
+      "strict": true,
+      "outDir": ".build",
+      "esModuleInterop": true,
+      "skipLibCheck": true,
+      "forceConsistentCasingInFileNames": true,
+      "lib": ["es5", "es6", "webworker"],
+      "allowJs": true,
+      "allowSyntheticDefaultImports": true,
+      "moduleResolution": "node",
+      "resolveJsonModule": true,
+      "noEmit": true,
+      "isolatedModules": false,
+   }
 }
-

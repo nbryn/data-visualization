@@ -11,21 +11,18 @@ const GroupState = {
 
 const GroupStatesArray = [GroupState.CREATING, GroupState.ACTIVE, GroupState.NOT_ACTIVE];
 
-const GroupSchema = new Schema({
+export const GroupSchema = new Schema({
    name: String,
-   image: String,
    registrationDate: Date,
    currency: String,
    amountPerShare: Number,
    country: String,
-   location: String,
    ngoOrganization: String,
    state: {
       type: String,
       enum: GroupStatesArray,
       default: GroupState.CREATING,
    },
-   meetings: [{type: mongoose.Schema.Types.ObjectId, ref: 'GroupMeeting'}],
+   meetings: [{ type: mongoose.Schema.Types.ObjectId, ref: 'groupmeeting' }],
 });
 
-module.exports = GroupSchema;

@@ -13,12 +13,11 @@ const UserGenders = {
    FEMALE: 'FEMALE',
 };
 
-const userSchema = new Schema({
+export const UserSchema = new Schema({
    email: String,
    language: String,
    firstName: String,
    lastName: String,
-   image: String,
    gender: {
       type: String,
       default: UserGenders.NOT_SET,
@@ -33,7 +32,5 @@ const userSchema = new Schema({
       default: UserStates.CREATING,
    },
    username: String,
-   verifiedTime: Date,
 });
 
-module.exports = userSchema;

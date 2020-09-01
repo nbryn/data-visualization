@@ -1,6 +1,6 @@
 const {gql} = require('apollo-server');
 
-const NGOSchema = gql`
+export const NGOSchema = gql`
    type GroupsPer {
       name: String
       count: Float
@@ -23,4 +23,3 @@ const NGOSchema = gql`
    }
 `;
 
-module.exports = NGOSchema;

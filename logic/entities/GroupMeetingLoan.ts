@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const groupMeetingLoanSchema = new Schema({
+export const GroupMeetingLoanSchema = new Schema({
    group: {type: mongoose.Schema.Types.ObjectId, ref: 'Group'},
-   account: {type: mongoose.Schema.Types.ObjectId, ref: 'GroupAccount'},
-   meeting: {type: mongoose.Schema.Types.ObjectId, ref: 'GroupMeeting'},
-   member: {type: mongoose.Schema.Types.ObjectId, ref: 'GroupMember'},
+   account: {type: mongoose.Schema.Types.ObjectId, ref: 'groupaccount'},
+   meeting: {type: mongoose.Schema.Types.ObjectId, ref: 'groupmeeting'},
+   member: {type: mongoose.Schema.Types.ObjectId, ref: 'groupmember'},
    registrationDate: Date,
    dayOfLoan: Date,
    endDate: Date,
@@ -15,4 +15,3 @@ const groupMeetingLoanSchema = new Schema({
    totalAmount: Number,
 });
 
-module.exports = groupMeetingLoanSchema;

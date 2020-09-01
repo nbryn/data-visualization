@@ -8,12 +8,12 @@ const GroupAccountState = {
 
 const GroupAccountStatesArray = [GroupAccountState.ACTIVE, GroupAccountState.NOT_ACTIVE];
 
-const groupAccountSchema = new Schema({
+export const GroupAccountSchema = new Schema({
    name: String,
    registrationDate: Date,
    mainAccount: Boolean,
    group: {type: mongoose.Schema.Types.ObjectId, ref: 'Group'},
-   parent: {type: mongoose.Schema.Types.ObjectId, ref: 'GroupAccount'},
+   parent: {type: mongoose.Schema.Types.ObjectId, ref: 'groupaccount'},
    currency: String,
    totalBalance: Number,
    totalShares: Number,
@@ -26,4 +26,3 @@ const groupAccountSchema = new Schema({
    description: String,
 });
 
-module.exports = groupAccountSchema;

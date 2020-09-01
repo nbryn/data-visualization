@@ -1,4 +1,4 @@
-const actionRunner = require('../../util/ActionRunner.js');
+import {actionRunner} from '../../util/ActionRunner';
 const {calculateGroupsPerUser, calculateUsersPerNGO} = require('./NGOService');
 const {fetchGroupStats} = require('../../../data/mappers/GroupMapper');
 

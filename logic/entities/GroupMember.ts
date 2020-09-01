@@ -30,7 +30,7 @@ const GroupMemberRolesArray = [
    GroupMemberRole.MONEYCOUNTER,
 ];
 
-const groupMemberSchema = new Schema({
+export const GroupMemberSchema = new Schema({
    group: {type: mongoose.Schema.Types.ObjectId, ref: 'Group'},
    user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
    registrationDate: Date,
@@ -51,4 +51,3 @@ const groupMemberSchema = new Schema({
    },
 });
 
-module.exports = groupMemberSchema;

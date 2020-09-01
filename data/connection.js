@@ -51,9 +51,7 @@ async function getModel(model) {
          return groupModel;
 
       case 'User':
-         console.log("Connection");
          if (!userModel) userModel = connection.model('User', UserSchema);
-         console.log("Connection 2");
          return userModel;
    }
 }

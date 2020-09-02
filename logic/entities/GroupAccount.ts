@@ -25,4 +25,3 @@ export const GroupAccountSchema = new Schema({
    },
    description: String,
 });
-

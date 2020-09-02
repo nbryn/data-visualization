@@ -4,7 +4,7 @@ const {
 } = require("../../../data/mappers/GroupMemberMapper");
 const { fetchAllUsers } = require("../../../data/mappers/UserMapper");
 
-async function calculateActiveUsers() {
+export async function calculateActiveUsers() {
   const allGroupMembers = await fetchAllGroupMembers();
 
   const allUsers = await fetchAllUsers();
@@ -38,4 +38,3 @@ async function calculateActiveUsers() {
   return activeUsers;
 }
 
-module.exports = { calculateActiveUsers };

@@ -1,4 +1,4 @@
-const { gql } = require('apollo-server');
+const {gql} = require('apollo-server');
 
 export const GroupSchema = gql`
    type GroupStats {
@@ -78,5 +78,3 @@ export const GroupSchema = gql`
       groupActivity: GroupActivity
    }
 `;
-
-

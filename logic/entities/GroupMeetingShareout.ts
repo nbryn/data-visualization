@@ -12,4 +12,3 @@ export const GroupMeetingShareoutSchema = new Schema({
    shareAmount: Number,
    leftInBox: Number,
 });
-

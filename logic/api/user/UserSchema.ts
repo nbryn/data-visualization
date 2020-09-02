@@ -1,4 +1,4 @@
-const { gql } = require('apollo-server');
+const {gql} = require('apollo-server');
 
 export const UserSchema = gql`
    type UserInfo {
@@ -20,4 +20,3 @@ export const UserSchema = gql`
       userInfo: UserInfo
    }
 `;
-

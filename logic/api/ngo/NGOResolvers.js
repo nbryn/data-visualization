@@ -2,7 +2,7 @@ import {actionRunner} from '../../util/ActionRunner';
 const {calculateGroupsPerUser, calculateUsersPerNGO} = require('./NGOService');
 const {fetchGroupStats} = require('../../../data/mappers/GroupMapper');
 
-const ngoResolvers = {
+export const ngoResolvers = {
    Query: {
       ngoStats: async (root, context) => ({root, context}),
    },
@@ -39,5 +39,3 @@ const ngoResolvers = {
       },
    },
 };
-
-module.exports = ngoResolvers;

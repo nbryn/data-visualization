@@ -1,17 +1,32 @@
-const mongoose = require('mongoose');
+import mongoose, {Document} from 'mongoose';
 const Schema = mongoose.Schema;
 
-const UserStates = {
-   CREATING: 'CREATING',
-   ACTIVE: 'ACTIVE',
-   NOT_ACTIVE: 'NOT_ACTIVE',
-};
+export enum UserState {
+   CREATING = 'CREATING',
+   ACTIVE = 'ACTIVE',
+   NOT_ACTIVE = 'NOT_ACTIVE',
+}
 
-const UserGenders = {
-   NOT_SET: 'NOT_SET',
-   MALE: 'MALE',
-   FEMALE: 'FEMALE',
-};
+export enum UserGender {
+   NOT_SET = 'NOT_SET',
+   MALE = 'MALE',
+   FEMALE = 'FEMALE',
+}
+
+export interface User extends Document {
+   email: string | null;
+   language: string;
+   firstName: string;
+   lastName: string;
+   gender: UserGender;
+   password: string;
+   phoneCode: string;
+   phoneNumber: String | null;
+   pinCode: string;
+   signupDate?: Date;
+   state?: UserState;
+   token: string;
+}
 
 export const UserSchema = new Schema({
    email: String,
@@ -20,7 +35,7 @@ export const UserSchema = new Schema({
    lastName: String,
    gender: {
       type: String,
-      default: UserGenders.NOT_SET,
+      default: UserGender.NOT_SET,
    },
    password: String,
    phoneCode: String,
@@ -29,8 +44,7 @@ export const UserSchema = new Schema({
    signupDate: Date,
    state: {
       type: String,
-      default: UserStates.CREATING,
+      default: UserState.CREATING,
    },
-   username: String,
+   token: String,
 });
-

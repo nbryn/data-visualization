@@ -1,4 +1,4 @@
-const { gql } = require('apollo-server');
+const {gql} = require('apollo-server');
 
 export const CountrySchema = gql`
    type Country {
@@ -21,4 +21,3 @@ export const CountrySchema = gql`
       country: CountryStats
    }
 `;
-

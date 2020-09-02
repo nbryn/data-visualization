@@ -22,4 +22,3 @@ export const NGOSchema = gql`
       ngoStats: NGOStats
    }
 `;
-

@@ -50,4 +50,3 @@ export const GroupMemberSchema = new Schema({
       default: GroupMemberState.ACTIVE,
    },
 });
-

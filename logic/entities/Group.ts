@@ -23,6 +23,5 @@ export const GroupSchema = new Schema({
       enum: GroupStatesArray,
       default: GroupState.CREATING,
    },
-   meetings: [{ type: mongoose.Schema.Types.ObjectId, ref: 'groupmeeting' }],
+   meetings: [{type: mongoose.Schema.Types.ObjectId, ref: 'groupmeeting'}],
 });
-

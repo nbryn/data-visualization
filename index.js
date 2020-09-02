@@ -1,8 +1,9 @@
-const { ApolloServer } = require("apollo-server-express");
-const { merge } = require("lodash");
-const { makeExecutableSchema } = require("graphql-tools");
-const express = require("express");
+import {ApolloServer} from "apollo-server-express";
+import {merge} from "lodash";
+import {makeExecutableSchema} from "graphql-tools";
+import express from "express";
 
+import {connectToDB} from './data/connection'
 import {DefaultSchema} from "./logic/api/DefaultSchema.ts";
 import {FinanceSchema} from "./logic/api/finance/FinanceSchema.ts";
 import {GroupSchema} from "./logic/api/group/GroupSchema.ts";
@@ -11,13 +12,13 @@ import {UserSchema} from "./logic/api/user/UserSchema.ts";
 import {NGOSchema} from "./logic/api/ngo/NGOSchema.ts";
 import {CountrySchema} from "./logic/api/country/CountrySchema.ts";
 
-const defaultResolvers = require("./logic/api/DefaultResolvers");
-const financeResolvers = require("./logic/api/finance/FinanceResolvers");
-const groupResolvers = require("./logic/api/group/GroupResolvers");
-const meetingResolvers = require("./logic/api/meeting/MeetingResolvers");
-const userResolvers = require("./logic/api/user/UserResolvers");
-const ngoResolvers = require("./logic/api/ngo/NGOResolvers");
-const countryResolvers = require("./logic/api/country/CountryResolvers");
+import {defaultResolvers} from "./logic/api/DefaultResolvers";
+import {financeResolvers} from "./logic/api/finance/FinanceResolvers";
+import {groupResolvers} from "./logic/api/group/GroupResolvers";
+import {meetingResolvers} from "./logic/api/meeting/MeetingResolvers";
+import {userResolvers} from "./logic/api/user/UserResolvers"
+import {ngoResolvers} from "./logic/api/ngo/NGOResolvers";
+import {countryResolvers} from "./logic/api/country/CountryResolvers";
 
 const app = express();
 
@@ -71,6 +72,8 @@ if (process.env.NODE_ENV === "PRODUCTION") {
     );
   });
 }
+
+connectToDB();
 
 app.listen(process.env.PORT || 4000, () =>
   console.log(`Server ready at http://localhost:4000/graphql`)

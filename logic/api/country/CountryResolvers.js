@@ -7,7 +7,7 @@ const {
 } = require('./CountryService');
 const {fetchGroupStats} = require('../../../data/mappers/GroupMapper');
 
-const countryResolvers = {
+export const countryResolvers = {
    Query: {
       generalCountryStats: (root, context) => ({root, context}),
       country: (obj, args, root, context) => ({obj, args, root, context}),
@@ -59,5 +59,3 @@ const countryResolvers = {
       },
    },
 };
-
-module.exports = countryResolvers;

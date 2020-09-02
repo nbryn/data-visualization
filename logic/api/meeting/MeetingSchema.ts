@@ -13,4 +13,3 @@ export const MeetingSchema = gql`
       meetingStats: MeetingStats
    }
 `;
-

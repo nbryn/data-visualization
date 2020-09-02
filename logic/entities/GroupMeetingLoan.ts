@@ -14,4 +14,3 @@ export const GroupMeetingLoanSchema = new Schema({
    fee: Number,
    totalAmount: Number,
 });
-

@@ -1,57 +1,55 @@
+import * as UserMapper from '../../../data/mappers/UserMapper';
 import {actionRunner} from '../../util/ActionRunner';
-const {fetchDailyData} = require('../../../data/common/fetchDailyData');
-const {fetchMonthlyData} = require('../../../data/common/fetchMonthlyData');
-const {fetchGenderStats, fetchUserCount} = require('../../../data/mappers/UserMapper');
-const {fetchUsersWithEmail, fetchUsersWithPhone} = require('../../../data/mappers/UserMapper');
+import {calculateActiveUsers} from './UserService';
+import {fetchDailyData} from '../../../data/common/fetchDailyData';
+import {fetchMonthlyData} from '../../../data/common/fetchMonthlyData';
 
-const {calculateActiveUsers} = require('./UserService');
-
-const userResolvers = {
+export const userResolvers = {
    Query: {
-      userStats: (root, context) => ({root, context}),
-      userInfo: (root, context) => ({root, context}),
+      userStats: (root: any, context: any) => ({root, context}),
+      userInfo: (root: any, context: any) => ({root, context}),
    },
    UserStats: {
-      userCount: async (root, context) => {
+      userCount: async (): Promise<number> => {
          return actionRunner(async () => {
-            const userCount = await fetchUserCount();
+            const userCount = await UserMapper.fetchUserCount();
 
             return userCount;
          });
       },
-      usersActive: async (root, context) => {
+      usersActive: async (): Promise<number> => {
          return actionRunner(async () => {
-            const activeUsers = calculateActiveUsers();
+            const activeUsers = await calculateActiveUsers();
 
             return activeUsers;
          });
       },
-      usersLastMonth: async (root, context) => {
+      usersLastMonth: async () => {
          return actionRunner(async () => {
             const usersLastMonth = await fetchDailyData('User', 'signupDate', 30);
 
             return usersLastMonth;
          });
       },
-      usersLastYear: async (root, context) => {
+      usersLastYear: async () => {
          return actionRunner(async () => {
             const result = await fetchMonthlyData('User', 'signupDate');
 
             return result;
          });
       },
-      userGenderStats: async (root, context) => {
+      userGenderStats: async () => {
          return actionRunner(async () => {
-            const result = await fetchGenderStats();
+            const result = await UserMapper.fetchGenderStats();
 
             return result;
          });
       },
    },
    UserInfo: {
-      usersWithPhone: async (root, context) => {
+      usersWithPhone: async () => {
          return actionRunner(async () => {
-            const result = await fetchUsersWithPhone();
+            const result = await UserMapper.fetchUsersWithPhone();
 
             const final = removeDuplicates(result, true);
 
@@ -59,9 +57,9 @@ const userResolvers = {
          });
       },
 
-      usersWithEmail: async (root, context) => {
+      usersWithEmail: async () => {
          return actionRunner(async () => {
-            const result = await fetchUsersWithEmail();
+            const result = await UserMapper.fetchUsersWithEmail();
 
             const final = removeDuplicates(result, false);
 
@@ -71,13 +69,11 @@ const userResolvers = {
    },
 };
 
-module.exports = userResolvers;
-
 // TODO: Move to service
-function removeDuplicates(needsFiltering, phone) {
-   const s = [];
+function removeDuplicates(needsFiltering: any, phone: any) {
+   const s: any = [];
 
-   const filtered = needsFiltering.map((element) => {
+   const filtered = needsFiltering.map((element: any) => {
       if (s.includes(phone ? element.phoneNumber : element.email)) {
          return;
       } else {

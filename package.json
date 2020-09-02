@@ -12,7 +12,7 @@
       "server": "ts-node index.js && nodemon index.js",
       "client": "npm start --prefix presentation",
       "dev": "concurrently \"npm run server\" \"npm run client\" ",
-      "prettier": "prettier --config .prettierrc 'logic/**/*.ts' --write",
+      "prettier": "prettier --config .prettierrc 'logic/**/*.ts' 'data/**/*.ts' --write",
       "heroku-postbuild": "cd presentation && npm install && npm run build"
    },
    "repository": {

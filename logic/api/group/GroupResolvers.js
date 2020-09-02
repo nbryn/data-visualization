@@ -7,7 +7,7 @@ const {fetchDailyData} = require('../../../data/common/fetchDailyData');
 const {fetchMonthlyData} = require('../../../data/common/fetchMonthlyData');
 const {fetchTotal} = require('../../../data/common/fetchTotal');
 
-const groupResolvers = {
+export const groupResolvers = {
    Query: {
       groupStats: (root, context) => ({root, context}),
       groupEngagement: (root, context) => ({root, context}),
@@ -139,4 +139,3 @@ const groupResolvers = {
    },
 };
 
-module.exports = groupResolvers;

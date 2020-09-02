@@ -1,4 +1,4 @@
-const { gql } = require('apollo-server');
+const {gql} = require('apollo-server');
 
 export const FinanceSchema = gql`
    type Data {
@@ -30,5 +30,3 @@ export const FinanceSchema = gql`
       financeStats: FinanceStats
    }
 `;
-
-

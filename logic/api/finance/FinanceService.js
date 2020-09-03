@@ -1,6 +1,6 @@
 const {fetchFinanceData} = require('../../../data/mappers/FinanceMapper');
 const {fetchBoxBalanceData} = require('../../../data/mappers/FinanceMapper');
-const {fetchLoanData} = require('../../../data/mappers/GroupMapper');
+import {fetchLoanData} from '../../../data/mappers/GroupMapper';
 
 async function getCurrencyStats() {
    const result = await fetchFinanceData('GroupAccount', 'totalBalance', '$currency');

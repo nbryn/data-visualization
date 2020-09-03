@@ -5,7 +5,7 @@ const {
    calculateUsersPerCountry,
    calculateMeetingsPerCountry,
 } = require('./CountryService');
-const {fetchGroupStats} = require('../../../data/mappers/GroupMapper');
+import {fetchGroupStats} from '../../../data/mappers/GroupMapper';
 
 export const countryResolvers = {
    Query: {

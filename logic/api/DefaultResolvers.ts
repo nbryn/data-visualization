@@ -1,5 +1,5 @@
 import {actionRunner} from '../util/ActionRunner';
-import Error from '../util/Error';
+import {Error} from '../util/Error';
 import {validateLogin} from '../../data/mappers/UserMapper';
 import {User} from '../entities/User';
 

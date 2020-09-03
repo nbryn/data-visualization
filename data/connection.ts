@@ -1,20 +1,20 @@
 import mongoose from 'mongoose';
 require('dotenv').config();
 
-import {GroupAccountSchema} from '../logic/entities/GroupAccount';
-import {GroupMeetingLoanSchema} from '../logic/entities/GroupMeetingLoan';
-import {GroupMeetingSchema} from '../logic/entities/GroupMeeting';
-import {GroupMeetingShareoutSchema} from '../logic/entities/GroupMeetingShareout';
-import {GroupMemberSchema} from '../logic/entities/GroupMember';
-import {GroupSchema} from '../logic/entities/Group';
+import {GroupAccount, GroupAccountSchema} from '../logic/entities/GroupAccount';
+import {GroupMeetingLoan, GroupMeetingLoanSchema} from '../logic/entities/GroupMeetingLoan';
+import {GroupMeeting, GroupMeetingSchema} from '../logic/entities/GroupMeeting';
+import {GroupMeetingShareout, GroupMeetingShareoutSchema} from '../logic/entities/GroupMeetingShareout';
+import {GroupMember, GroupMemberSchema} from '../logic/entities/GroupMember';
+import {Group, GroupSchema} from '../logic/entities/Group';
 import {User, UserSchema} from '../logic/entities/User';
 
-export let GroupAccountModel: any;
-export let GroupMeetingLoanModel: any;
-export let GroupMeetingModel: any;
-export let GroupMeetingShareoutModel: any;
-export let GroupMemberModel: any;
-export let GroupModel: any;
+export let GroupAccountModel: mongoose.Model<GroupAccount, {}>;
+export let GroupMeetingLoanModel: mongoose.Model<GroupMeetingLoan, {}>;
+export let GroupMeetingModel: mongoose.Model<GroupMeeting, {}>;
+export let GroupMeetingShareoutModel: mongoose.Model<GroupMeetingShareout, {}>;
+export let GroupMemberModel: mongoose.Model<GroupMember, {}>;
+export let GroupModel: mongoose.Model<Group, {}>;
 export let UserModel: mongoose.Model<User, {}>;
 
 export async function getModel(model: any) {

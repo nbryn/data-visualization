@@ -1,5 +1,4 @@
-import mongoose, {Document} from 'mongoose';
-const Schema = mongoose.Schema;
+import {Document, Schema} from 'mongoose';
 
 export enum UserState {
    CREATING = 'CREATING',

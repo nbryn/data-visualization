@@ -1,5 +1,5 @@
 import {actionRunner} from '../../util/ActionRunner';
-const Error = require('../../util/Error');
+import {Error} from '../../util/Error';
 const GroupActivityService = require('./GroupActivityService');
 const GroupService = require('./GroupService');
 const GroupMapper = require('../../../data/mappers/GroupMapper');

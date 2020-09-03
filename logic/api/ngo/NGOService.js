@@ -1,6 +1,6 @@
-const {fetchAllUsers} = require('../../../data/mappers/UserMapper');
-const {fetchGroupMembersPerNGO} = require('../../../data/mappers/GroupMapper');
-const {fetchAllGroupMembers} = require('../../../data/mappers/GroupMemberMapper');
+import fetchAllUsers from '../../../data/mappers/UserMapper';
+import {fetchGroupMembersPerNGO} from '../../../data/mappers/GroupMapper';
+import {fetchAllGroupMembers} from'../../../data/mappers/GroupMemberMapper';
 
 async function calculateGroupsPerUser() {
    //   return await fetchGroupMemberByUser();

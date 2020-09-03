@@ -1,15 +1,27 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+import {Document, Schema} from 'mongoose';
 
-const GroupState = {
-   CREATING: 'CREATING',
-   ACTIVE: 'ACTIVE',
-   CLOSING: 'CLOSING',
-   CLOSED: 'CLOSED',
-   NOT_ACTIVE: 'NOT_ACTIVE',
-};
+import {GroupMeeting} from './GroupMeeting';
+import {GroupMember} from './GroupMember';
 
-const GroupStatesArray = [GroupState.CREATING, GroupState.ACTIVE, GroupState.NOT_ACTIVE];
+export enum GroupState {
+   CREATING = 'CREATING',
+   ACTIVE = 'ACTIVE',
+   CLOSING = 'CLOSING',
+   CLOSED = 'CLOSED',
+   NOT_ACTIVE = 'NOT_ACTIVE',
+}
+
+export interface Group extends Document {
+   name: String;
+   registrationDate: Date;
+   currency: String;
+   amountPerShare: Number;
+   country: String;
+   ngoOrganization: String;
+   state: GroupState;
+   meetings: GroupMeeting[];
+   members: GroupMember[];
+}
 
 export const GroupSchema = new Schema({
    name: String,
@@ -20,8 +32,8 @@ export const GroupSchema = new Schema({
    ngoOrganization: String,
    state: {
       type: String,
-      enum: GroupStatesArray,
       default: GroupState.CREATING,
    },
-   meetings: [{type: mongoose.Schema.Types.ObjectId, ref: 'groupmeeting'}],
+   meetings: [{type: Schema.Types.ObjectId, ref: 'groupmeeting'}],
+   members: [{type: Schema.Types.ObjectId, ref: 'groupmember'}],
 });

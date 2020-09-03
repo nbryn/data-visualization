@@ -1,26 +1,39 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+import {Document, Schema} from 'mongoose';
 
-const GroupAccountState = {
-   ACTIVE: 'ACTIVE',
-   NOT_ACTIVE: 'NOT_ACTIVE',
-};
+export enum GroupAccountState {
+   ACTIVE = 'ACTIVE',
+   NOT_ACTIVE = 'NOT_ACTIVE',
+}
 
-const GroupAccountStatesArray = [GroupAccountState.ACTIVE, GroupAccountState.NOT_ACTIVE];
+export interface GroupAccount extends Document {
+   name: String;
+   registrationDate: Date;
+   mainAccount: Boolean;
+   group: Schema.Types.ObjectId;
+   parent: Schema.Types.ObjectId;
+   currency: String;
+   totalBalance: Number;
+   totalShares: Number;
+   boxBalance: Number;
+   state: {
+      type: String;
+      default: GroupAccountState.ACTIVE;
+   };
+   description: String;
+}
 
 export const GroupAccountSchema = new Schema({
    name: String,
    registrationDate: Date,
    mainAccount: Boolean,
-   group: {type: mongoose.Schema.Types.ObjectId, ref: 'Group'},
-   parent: {type: mongoose.Schema.Types.ObjectId, ref: 'groupaccount'},
+   group: {type: Schema.Types.ObjectId, ref: 'Group'},
+   parent: {type: Schema.Types.ObjectId, ref: 'groupaccount'},
    currency: String,
    totalBalance: Number,
    totalShares: Number,
    boxBalance: Number,
    state: {
       type: String,
-      enum: GroupAccountStatesArray,
       default: GroupAccountState.ACTIVE,
    },
    description: String,

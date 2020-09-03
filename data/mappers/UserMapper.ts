@@ -1,4 +1,4 @@
-import Error from '../../logic/util/Error';
+import {Error} from '../../logic/util/Error';
 import {UserModel} from '../connection';
 import {User, UserState} from '../../logic/entities/User';
 

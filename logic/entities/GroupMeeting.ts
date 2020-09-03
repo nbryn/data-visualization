@@ -1,31 +1,33 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+import {Document, Schema} from 'mongoose';
 
-const GroupMeetingState = {
-   CREATING: 'CREATING',
-   ACTIVE: 'ACTIVE',
-   ENDING: 'ENDING',
-   ENDED: 'ENDED',
-};
+export enum GroupMeetingState {
+   CREATING = 'CREATING',
+   ACTIVE = 'ACTIVE',
+   ENDING = 'ENDING',
+   ENDED = 'ENDED',
+}
 
-const GroupMeetingStatesArray = [
-   GroupMeetingState.CREATING,
-   GroupMeetingState.ACTIVE,
-   GroupMeetingState.ENDING,
-   GroupMeetingState.ENDED,
-];
+export interface GroupMeeting extends Document {
+   group: Schema.Types.ObjectId;
+   registrationDate: Date;
+   cycleNumber: Number;
+   meetingDay: Date;
+   meetingEnded: Date;
+   meetingNumber: Number;
+   shares: Schema.Types.ObjectId[];
+   state: GroupMeetingState;
+}
 
 export const GroupMeetingSchema = new Schema({
-   group: {type: mongoose.Schema.Types.ObjectId, ref: 'Group'},
+   group: {type: Schema.Types.ObjectId, ref: 'Group'},
    registrationDate: Date,
    cycleNumber: Number,
    meetingDay: Date,
    meetingEnded: Date,
    meetingNumber: Number,
-   shares: [{type: mongoose.Schema.Types.ObjectId, ref: 'groupmeetingshare'}],
+   shares: [{type: Schema.Types.ObjectId, ref: 'groupmeetingshare'}],
    state: {
       type: String,
-      enum: GroupMeetingStatesArray,
       default: GroupMeetingState.CREATING,
    },
 });

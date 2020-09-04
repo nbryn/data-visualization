@@ -1,6 +1,6 @@
 import {fetchGroupsRegBefore} from '../../../data/mappers/GroupMapper';
-const {fetchGroupShareouts} = require('../../../data/mappers/FinanceMapper');
-import {fetchGroupMeetingsSince} from '../../../data/mappers/MeetingMapper';
+import {fetchGroupShareoutsByMeeting} from '../../../data/mappers/FinanceMapper';
+import {fetchGroupMeetingsSince} from '../../../data/mappers/GroupMeetingMapper';
 
 async function calculateGroupActivitySince(since) {
    const groups = await fetchGroupsRegBefore(since);
@@ -59,7 +59,7 @@ async function calculateShareoutActivitySince(since) {
       meetings.map(async (group) => {
          const data = await Promise.all(
             group.meetings.map(async (id) => {
-               const share = await fetchGroupShareouts(id);
+               const share = await fetchGroupShareoutsByMeeting(id);
 
                if (share.length > 0) {
                   return {groupID: group.groupID, shareouts: share};

@@ -1,9 +1,8 @@
-const {fetchFinanceData} = require('../../../data/mappers/FinanceMapper');
-const {fetchBoxBalanceData} = require('../../../data/mappers/FinanceMapper');
+import * as FinanceMapper from '../../../data/mappers/FinanceMapper';
 import {fetchLoanData} from '../../../data/mappers/GroupMapper';
 
 async function getCurrencyStats() {
-   const result = await fetchFinanceData('GroupAccount', 'totalBalance', '$currency');
+   const result = await FinanceMapper.fetchFinanceData('totalBalance', '$currency');
 
    const currencyStats = result
       .map((element) => {
@@ -18,7 +17,7 @@ async function getCurrencyStats() {
 }
 
 async function calculateBoxBalanceStats() {
-   const boxBalanceStats = await fetchBoxBalanceData();
+   const boxBalanceStats = await FinanceMapper.fetchBoxBalanceData();
 
    let totalBalance = 0;
    let highest = 0;
@@ -39,7 +38,7 @@ async function calculateBoxBalanceStats() {
 }
 
 async function calculateShareStats() {
-   const result = await fetchFinanceData('GroupAccount', 'totalShares', '$_id');
+   const result = await FinanceMapper.fetchFinanceData('totalShares', '$_id');
 
    let shareTotal = 0;
    let groupWithMostShares = {

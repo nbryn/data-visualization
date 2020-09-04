@@ -1,16 +1,14 @@
 import {actionRunner} from '../../util/ActionRunner';
+import * as FinanceMapper from '../../../data/mappers/FinanceMapper';
 const {calculateEtbLoanStats, calculateShareStats, getCurrencyStats} = require('./FinanceService');
-const {fetchDailyData} = require('../../../data/common/fetchDailyData');
-const {fetchMonthlyData} = require('../../../data/common/fetchMonthlyData');
-const {fetchTotal} = require('../../../data/common/fetchTotal');
 
 export const financeResolvers = {
    Query: {
-      financeStats: (root, context) => ({root, context}),
+      financeStats: () => ({}),
    },
 
    FinanceStats: {
-      numberOfCurrencies: async ({root, context}) => {
+      numberOfCurrencies: async () => {
          return actionRunner(async () => {
             const currencyStats = await getCurrencyStats();
 
@@ -19,7 +17,7 @@ export const financeResolvers = {
             return numberOfCurrencies;
          });
       },
-      currencyStats: async ({root, context}) => {
+      currencyStats: async () => {
          return actionRunner(async () => {
             const currency = await getCurrencyStats();
 
@@ -27,28 +25,28 @@ export const financeResolvers = {
          });
       },
 
-      loanTotal: async ({root, context}) => {
+      loanTotal: async () => {
          return actionRunner(async () => {
-            const loanTotal = await fetchTotal('GroupMeetingLoan');
+            const loanTotal = await FinanceMapper.fetchTotalLoanCount();
 
             return loanTotal;
          });
       },
-      loansLastMonth: async ({root, context}) => {
+      loansLastMonth: async () => {
          return actionRunner(async () => {
-            const loansLastMonth = await fetchDailyData('GroupMeetingLoan', 'registrationDate');
+            const loansLastMonth = await FinanceMapper.fetchLoansLastMonth();
 
             return loansLastMonth;
          });
       },
-      loansLastYear: async ({root, context}) => {
+      loansLastYear: async () => {
          return actionRunner(async () => {
-            const loansLastYear = await fetchMonthlyData('GroupMeetingLoan', 'registrationDate');
+            const loansLastYear = await FinanceMapper.fetchLoansLastYear();
 
             return loansLastYear;
          });
       },
-      shareTotal: async ({root, context}) => {
+      shareTotal: async () => {
          return actionRunner(async () => {
             const shareStats = await calculateShareStats();
 
@@ -57,7 +55,7 @@ export const financeResolvers = {
             return shareTotal;
          });
       },
-      mostSharesData: async ({root, context}) => {
+      mostSharesData: async () => {
          return actionRunner(async () => {
             const shareStats = await calculateShareStats();
 
@@ -66,7 +64,7 @@ export const financeResolvers = {
             return mostShares;
          });
       },
-      mostShares: async ({root, context}) => {
+      mostShares: async () => {
          return actionRunner(async () => {
             const shareStats = await calculateShareStats();
 
@@ -75,7 +73,7 @@ export const financeResolvers = {
             return mostShares.count;
          });
       },
-      shareStats: async ({root, context}) => {
+      shareStats: async () => {
          return actionRunner(async () => {
             const shareStats = await calculateShareStats();
 
@@ -83,7 +81,7 @@ export const financeResolvers = {
          });
       },
 
-      groupEtbLoan: async ({root, context}) => {
+      groupEtbLoan: async () => {
          return actionRunner(async () => {
             const etbStats = await calculateEtbLoanStats();
 
@@ -92,7 +90,7 @@ export const financeResolvers = {
             return groupEtbLoan;
          });
       },
-      etbOnLoan: async ({root, context}) => {
+      etbOnLoan: async () => {
          return actionRunner(async () => {
             const etbStats = await calculateEtbLoanStats();
 

@@ -1,15 +1,15 @@
-import {fetchNumberOfGroupsWith} from '../../../data/mappers/GroupMapper';
-const {calculateMeetingsPerGroup} = require('../meeting/MeetingService');
-const {fetchNumberOfUsersFrom, fetchUsersPerCountry} = require('../../../data/mappers/UserMapper');
+import countryCodes from 'country-codes-list';
+import {getCountry} from 'country-currency-map';
+import isoCurrency from 'iso-country-currency';
 
-const isoCurrency = require('iso-country-currency');
-const getCountry = require('country-currency-map').getCountry;
-const countryCodes = require('country-codes-list');
+import {fetchNumberOfGroupsWith} from '../../../data/mappers/GroupMapper';
+import * as UserMapper from '../../../data/mappers/UserMapper';
+const {calculateMeetingsPerGroup} = require('../meeting/MeetingService');
 
 const countries = countryCodes.customList('countryNameEn', '{countryCode} {countryNameEn}: {countryCallingCode}');
 
 async function calculateUsersPerCountry() {
-   const tempUsersPerCountry = await fetchUsersPerCountry();
+   const tempUsersPerCountry = await UserMapper.fetchUsersPerCountry();
 
    const usersPerCountry = tempUsersPerCountry.map((country) => {
       return {
@@ -62,7 +62,7 @@ async function calculateNumberOfGroups(country) {
 async function calculateNumberOfUsers(country) {
    const phoneCode = countries[country].substring(countries[country].lastIndexOf(':') + 2);
 
-   const users = await fetchNumberOfUsersFrom(phoneCode);
+   const users = await UserMapper.fetchNumberOfUsersFrom(phoneCode);
 
    return users;
 }

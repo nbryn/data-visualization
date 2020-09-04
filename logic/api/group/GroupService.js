@@ -1,7 +1,8 @@
-const {fetchByID} = require('../../../data/common/fetchByID');
-const FinanceMapper = require('../../../data/mappers/FinanceMapper');
-const GroupMemberMapper = require('../../../data/mappers/GroupMemberMapper');
-const GroupMapper = require('../../../data/mappers/GroupMapper');
+import * as FinanceMapper from '../../../data/mappers/FinanceMapper';
+import * as GroupMeetingMapper from '../../../data/mappers/GroupMeetingMapper';
+import * as GroupMemberMapper from '../../../data/mappers/GroupMemberMapper';
+import * as GroupMapper from '../../../data/mappers/GroupMapper';
+import * as UserMapper from '../../../data/mappers/UserMapper';
 
 async function listGroupData(groupName) {
    const generalData = await GroupMapper.fetchGroupByName(groupName);
@@ -135,9 +136,11 @@ module.exports = {
 // ---- Helper Functions ---- //
 
 async function retrieveGroupData(group) {
-   const accountData = await FinanceMapper.fetchAccountDataByGroup(group._id);
-   const loans = await FinanceMapper.fetchLoansByGroup(group._id);
-   const lastMeetingData = await fetchByID('GroupMeeting', group.meetings[group.meetings.length - 1]);
+   const accountData = await FinanceMapper.fetchAccountDataForGroup(group._id);
+   const loans = await FinanceMapper.fetchLoanCountForGroup(group._id);
+   const lastMeetingData = await GroupMeetingMapper.fetchGroupMeetingById(
+      group.meetings[group.meetings.length - 1]
+   );
    const memberIDs = await GroupMemberMapper.fetchAllMemberIDsFromGroup(group._id);
    const adminIDs = await GroupMemberMapper.fetchUserIDByRole('ADMINISTRATOR', group._id);
    const ownerIDs = await GroupMemberMapper.fetchUserIDByRole('OWNER', group._id);
@@ -153,22 +156,20 @@ async function retrieveGroupData(group) {
    const {totalShares, boxBalance} = accountData[0];
 
    return {
+      ...group,
       id: group._id,
-      name: group.name,
       regDate: regDate,
-      currency: group.currency,
       cycle: group.cycleNumber,
       type: group.groupType,
       ngo: group.ngoState,
-      lastMeeting: lastMeeting,
+      lastMeeting,
       meetingsTotal: group.meetings.length,
       perShare: group.amountPerShare,
       serviceFee: group.loanServiceFee,
-      loanLimit: group.loanLimit,
       shares: totalShares,
-      boxBalance: boxBalance,
-      loans: loans,
-      members: members,
+      boxBalance,
+      loans,
+      members,
       owner: owners[0],
       admin: admins[1] || admins[0],
    };
@@ -177,12 +178,12 @@ async function retrieveGroupData(group) {
 async function mapIDtoUser(users) {
    const result = await Promise.all(
       await users.map(async (element) => {
-         const memberInfo = await fetchByID('User', element.user);
+         const memberInfo = await UserMapper.fetchUserById(element.user);
 
          return {
             id: element.user,
-            firstName: memberInfo[0].firstName,
-            lastName: memberInfo[0].lastName,
+            firstName: memberInfo.firstName,
+            lastName: memberInfo.lastName,
             email: element.email,
             gender: element.gender,
          };
@@ -193,7 +194,7 @@ async function mapIDtoUser(users) {
 }
 
 function extractLastMeetingDate(meetingData) {
-   const lastMeetingDate = meetingData[0].meetingDay;
+   const lastMeetingDate = meetingData.meetingDay;
    const lastMeetingDay = lastMeetingDate.getDate();
    const lastMeetingM = lastMeetingDate.getMonth() + 1;
    const lastMeetingYear = lastMeetingDate.getFullYear();

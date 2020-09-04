@@ -1,13 +1,12 @@
 import * as UserMapper from '../../../data/mappers/UserMapper';
-import {actionRunner} from '../../util/ActionRunner';
-import {calculateActiveUsers} from './UserService';
-import {fetchDailyData} from '../../../data/common/fetchDailyData';
-import {fetchMonthlyData} from '../../../data/common/fetchMonthlyData';
+import { actionRunner } from '../../util/ActionRunner';
+import { calculateActiveUsers } from './UserService';
+
 
 export const userResolvers = {
    Query: {
-      userStats: (root: any, context: any) => ({root, context}),
-      userInfo: (root: any, context: any) => ({root, context}),
+      userStats: (root: any, context: any) => ({ root, context }),
+      userInfo: (root: any, context: any) => ({ root, context }),
    },
    UserStats: {
       userCount: async (): Promise<number> => {
@@ -26,14 +25,14 @@ export const userResolvers = {
       },
       usersLastMonth: async () => {
          return actionRunner(async () => {
-            const usersLastMonth = await fetchDailyData('User', 'signupDate', 30);
+            const usersLastMonth = await UserMapper.fetchUsersLastMonth();
 
             return usersLastMonth;
          });
       },
       usersLastYear: async () => {
          return actionRunner(async () => {
-            const result = await fetchMonthlyData('User', 'signupDate');
+            const result = await UserMapper.fetchUsersLastYear();
 
             return result;
          });

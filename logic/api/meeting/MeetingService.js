@@ -1,4 +1,4 @@
-import * as MeetingMapper from '../../../data/mappers/MeetingMapper';
+import * as MeetingMapper from '../../../data/mappers/GroupMeetingMapper';
 import {fetchGroupByID} from '../../../data/mappers/GroupMapper';
 
 async function calculateMeetingsPerGroup() {

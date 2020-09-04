@@ -1,10 +1,16 @@
-import mongoose, {Document, Schema} from 'mongoose';
+import {Document, Schema} from 'mongoose';
+
+import {Group} from './Group';
+import {GroupAccount} from './GroupAccount';
+import {GroupMeeting} from './GroupMeeting';
+import {GroupMember} from './GroupMember';
+
 
 export interface GroupMeetingLoan extends Document {
-   group: mongoose.Schema.Types.ObjectId;
-   account: mongoose.Schema.Types.ObjectId;
-   meeting: mongoose.Schema.Types.ObjectId;
-   member: mongoose.Schema.Types.ObjectId;
+   group: Group;
+   account: GroupAccount;
+   meeting: GroupMeeting;
+   member: GroupMember;
    registrationDate: Date;
    amount: Number;
    currency: String;
@@ -12,10 +18,10 @@ export interface GroupMeetingLoan extends Document {
 }
 
 export const GroupMeetingLoanSchema = new Schema({
-   group: {type: mongoose.Schema.Types.ObjectId, ref: 'Group'},
-   account: {type: mongoose.Schema.Types.ObjectId, ref: 'groupaccount'},
-   meeting: {type: mongoose.Schema.Types.ObjectId, ref: 'groupmeeting'},
-   member: {type: mongoose.Schema.Types.ObjectId, ref: 'groupmember'},
+   group: {type: Schema.Types.ObjectId, ref: 'Group'},
+   account: {type: Schema.Types.ObjectId, ref: 'groupaccount'},
+   meeting: {type: Schema.Types.ObjectId, ref: 'groupmeeting'},
+   member: {type: Schema.Types.ObjectId, ref: 'groupmember'},
    registrationDate: Date,
    amount: Number,
    currency: String,

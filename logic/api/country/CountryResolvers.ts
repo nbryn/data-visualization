@@ -1,19 +1,14 @@
-import {actionRunner} from '../../util/ActionRunner';
-const {
-   calculateNumberOfGroups,
-   calculateNumberOfUsers,
-   calculateUsersPerCountry,
-   calculateMeetingsPerCountry,
-} = require('./CountryService');
 import {fetchGroupStats} from '../../../data/mappers/GroupMapper';
+import {actionRunner} from '../../util/ActionRunner';
+const CountryService = require('./CountryService');
 
 export const countryResolvers = {
    Query: {
-      generalCountryStats: (root, context) => ({root, context}),
-      country: (obj, args, root, context) => ({obj, args, root, context}),
+      generalCountryStats: () => ({}),
+      country: (obj: any, args: any) => ({obj, args}),
    },
    GeneralCountryStats: {
-      groupsCountry: async (root, context) => {
+      groupsCountry: async () => {
          return actionRunner(async () => {
             const result = await fetchGroupStats('$country');
 
@@ -29,27 +24,27 @@ export const countryResolvers = {
             return groupsCountry;
          });
       },
-      usersCountry: async (root, context) => {
+      usersCountry: async () => {
          return actionRunner(async () => {
-            const usersPerCountry = await calculateUsersPerCountry();
+            const usersPerCountry = await CountryService.calculateUsersPerCountry();
 
             return usersPerCountry;
          });
       },
-      meetingsCountry: async (root, context) => {
+      meetingsCountry: async () => {
          return actionRunner(async () => {
-            const meetingsPerCountry = await calculateMeetingsPerCountry();
+            const meetingsPerCountry = await CountryService.calculateMeetingsPerCountry();
 
             return meetingsPerCountry;
          });
       },
    },
    CountryStats: {
-      country: async (obj, args, root, context) => {
+      country: async (obj: any, args: any) => {
          return actionRunner(async () => {
-            const groups = await calculateNumberOfGroups(args.country);
+            const groups = await CountryService.calculateNumberOfGroups(args.country);
 
-            const users = await calculateNumberOfUsers(args.country);
+            const users = await CountryService.calculateNumberOfUsers(args.country);
 
             return {
                groups,

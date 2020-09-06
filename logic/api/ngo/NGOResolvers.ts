@@ -1,13 +1,13 @@
 import {actionRunner} from '../../util/ActionRunner';
+import {fetchGroupStats} from '../../../data/mappers/GroupMapper';
 const {calculateGroupsPerUser, calculateUsersPerNGO} = require('./NGOService');
-const {fetchGroupStats} = require('../../../data/mappers/GroupMapper');
 
 export const ngoResolvers = {
    Query: {
-      ngoStats: async (root, context) => ({root, context}),
+      ngoStats: async () => ({}),
    },
    NGOStats: {
-      groupsNGO: async (root, context) => {
+      groupsNGO: async (): Promise<any[]> => {
          return actionRunner(async () => {
             const result = await fetchGroupStats('$ngoOrganization');
 
@@ -23,14 +23,14 @@ export const ngoResolvers = {
             return groupsNGO;
          });
       },
-      usersNGO: async (root, context) => {
+      usersNGO: async (): Promise<any[]> => {
          return actionRunner(async () => {
             const usersNGO = await calculateUsersPerNGO();
 
             return usersNGO;
          });
       },
-      groupsUser: async (root, context) => {
+      groupsUser: async (): Promise<any[]> => {
          return actionRunner(async () => {
             const groupsUser = await calculateGroupsPerUser();
 

@@ -1,43 +1,43 @@
-import {actionRunner} from '../../util/ActionRunner';
 import * as MeetingMapper from '../../../data/mappers/GroupMeetingMapper';
-const {calculateMeetingsPerGroup, calculateSharesPerMeeting} = require('./MeetingService');
+import {actionRunner} from '../../util/ActionRunner';
+const MeetingService = require('./MeetingService');
 
 export const meetingResolvers = {
    Query: {
       meetingStats: () => ({}),
    },
    MeetingStats: {
-      meetingTotal: async () => {
+      meetingTotal: async (): Promise<number> => {
          return actionRunner(async () => {
             const meetingTotal = await MeetingMapper.fetchTotalMeetingCount();
 
             return meetingTotal;
          });
       },
-      meetingsLastMonth: async () => {
+      meetingsLastMonth: async (): Promise<any[]> => {
          return actionRunner(async () => {
             const meetingsLastMonth = await MeetingMapper.fetchMeetingsLastMonth();
 
             return meetingsLastMonth;
          });
       },
-      meetingsLastYear: async () => {
+      meetingsLastYear: async (): Promise<any[]> => {
          return actionRunner(async () => {
             const meetingsLastYear = await MeetingMapper.fetchMeetingLastYear();
 
             return meetingsLastYear;
          });
       },
-      meetingsPerGroup: async () => {
+      meetingsPerGroup: async (): Promise<any[]> => {
          return actionRunner(async () => {
-            const meetingsPerGroup = await calculateMeetingsPerGroup();
+            const meetingsPerGroup = await MeetingService.calculateMeetingsPerGroup();
 
             return meetingsPerGroup.slice(0, 10);
          });
       },
-      sharesPerMeeting: async () => {
+      sharesPerMeeting: async (): Promise<any[]> => {
          return actionRunner(async () => {
-            const meetingShares = await calculateSharesPerMeeting();
+            const meetingShares = await MeetingService.calculateSharesPerMeeting();
 
             return meetingShares;
          });

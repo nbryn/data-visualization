@@ -1,8 +1,8 @@
 import moment from 'moment';
 
-import { Error } from '../../logic/util/Error';
-import { UserModel } from '../connection';
-import { User, UserState } from '../../logic/entities/User';
+import {Error} from '../../logic/util/Error';
+import {UserModel} from '../connection';
+import {User, UserState} from '../../logic/entities/User';
 
 export async function validateLogin(args: any): Promise<User | Error> {
    const dbResult: User[] = await UserModel.find({
@@ -12,7 +12,7 @@ export async function validateLogin(args: any): Promise<User | Error> {
    if (dbResult[0] === undefined) {
       throw new Error('Wrong username/password');
    } else {
-      const { password } = dbResult[0];
+      const {password} = dbResult[0];
 
       if (!password || password !== args.input.password) {
          throw new Error('Wrong username/password');
@@ -31,7 +31,7 @@ export async function fetchUserById(id: string) {
 }
 
 export async function fetchUserCount(): Promise<number> {
-   const total = await UserModel.find({ state: UserState.ACTIVE }).countDocuments();
+   const total = await UserModel.find({state: UserState.ACTIVE}).countDocuments();
 
    return total;
 }
@@ -41,7 +41,7 @@ export async function fetchAllUsers(): Promise<User[]> {
       {
          state: UserState.ACTIVE,
       },
-      { projection: { _id: 1, firstName: 1, lastName: 1 } }
+      {projection: {_id: 1, firstName: 1, lastName: 1}}
    );
 
    return activeUsers;
@@ -50,10 +50,10 @@ export async function fetchAllUsers(): Promise<User[]> {
 export async function fetchUsersWithEmail(): Promise<User[]> {
    const fetchUsersWithEmail = await UserModel.find(
       {
-         email: { $ne: null },
+         email: {$ne: null},
          state: UserState.ACTIVE,
       },
-      { projection: { _id: 1, firstName: 1, lastName: 1, email: 1 } }
+      {projection: {_id: 1, firstName: 1, lastName: 1, email: 1}}
    );
 
    return fetchUsersWithEmail;
@@ -62,10 +62,10 @@ export async function fetchUsersWithEmail(): Promise<User[]> {
 export async function fetchUsersWithPhone(): Promise<User[]> {
    const usersUsersWithPhone = await UserModel.find(
       {
-         phoneNumber: { $ne: null },
+         phoneNumber: {$ne: null},
          state: UserState.ACTIVE,
       },
-      { projection: { _id: 1, firstName: 1, lastName: 1, phoneNumber: 1 } }
+      {projection: {_id: 1, firstName: 1, lastName: 1, phoneNumber: 1}}
    );
 
    return usersUsersWithPhone;
@@ -75,13 +75,13 @@ export async function fetchGenderStats() {
    const genderStats = await UserModel.aggregate([
       {
          $match: {
-            $or: [{ gender: 'FEMALE' }, { gender: 'MALE' }],
+            $or: [{gender: 'FEMALE'}, {gender: 'MALE'}],
          },
       },
       {
          $group: {
             _id: '$gender',
-            count: { $sum: 1 },
+            count: {$sum: 1},
          },
       },
    ]);
@@ -99,16 +99,16 @@ export async function fetchGenderStats() {
 export async function fetchUsersPerCountry(): Promise<User[]> {
    const usersPerCountry = await UserModel.aggregate([
       {
-         $match: { state: 'ACTIVE' },
+         $match: {state: 'ACTIVE'},
       },
       {
          $group: {
             _id: '$phoneCode',
-            count: { $sum: 1 },
+            count: {$sum: 1},
          },
       },
       {
-         $sort: { count: 1 },
+         $sort: {count: 1},
       },
    ]);
 
@@ -130,21 +130,21 @@ export async function fetchUsersLastMonth() {
    const dbResult = await UserModel.aggregate([
       {
          $match: {
-            signupDate: { $gt: since },
+            signupDate: {$gt: since},
             state: 'ACTIVE',
          },
       },
       {
          $group: {
             _id: {
-               year: { $year: '$signupDate' },
-               month: { $month: '$signupDate' },
-               day: { $dayOfMonth: '$signupDate' },
+               year: {$year: '$signupDate'},
+               month: {$month: '$signupDate'},
+               day: {$dayOfMonth: '$signupDate'},
             },
-            count: { $sum: 1 },
+            count: {$sum: 1},
          },
       },
-      { $sort: { _id: 1 } },
+      {$sort: {_id: 1}},
    ]);
 
    const users = dbResult.map((element) => {
@@ -159,9 +159,7 @@ export async function fetchUsersLastMonth() {
    });
 
    return users;
-
 }
-
 
 export async function fetchUsersLastYear() {
    const since = moment('2020-02-01').subtract(365, 'days').toDate();
@@ -169,20 +167,20 @@ export async function fetchUsersLastYear() {
    const dbResult = await UserModel.aggregate([
       {
          $match: {
-            signupDate: { $gt: since },
+            signupDate: {$gt: since},
             state: 'ACTIVE',
          },
       },
       {
          $group: {
             _id: {
-               month: { $month: '$signupDate' },
-               year: { $year: '$signupDate' },
+               month: {$month: '$signupDate'},
+               year: {$year: '$signupDate'},
             },
-            count: { $sum: 1 },
+            count: {$sum: 1},
          },
       },
-      { $sort: { _id: 1 } },
+      {$sort: {_id: 1}},
    ]);
 
    const users = dbResult
@@ -196,5 +194,4 @@ export async function fetchUsersLastYear() {
       .sort((el1, el2) => el1.year - el2.year);
 
    return users;
-
 }

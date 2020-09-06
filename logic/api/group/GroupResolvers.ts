@@ -1,6 +1,7 @@
+import * as GroupMapper from '../../../data/mappers/GroupMapper';
 import {actionRunner} from '../../util/ActionRunner';
 import {Error} from '../../util/Error';
-import * as GroupMapper from '../../../data/mappers/GroupMapper';
+
 const GroupActivityService = require('./GroupActivityService');
 const GroupService = require('./GroupService');
 
@@ -8,9 +9,9 @@ export const groupResolvers = {
    Query: {
       groupStats: () => ({}),
       groupEngagement: () => ({}),
-      ngoGroupData: (obj, args) => ({obj, args}),
+      ngoGroupData: (obj: any, args: any) => ({obj, args}),
       groupActivity: async () => ({}),
-      groupSearch: async (obj, args) => {
+      groupSearch: async (obj: any, args: any) => {
          return actionRunner(async () => {
             const groupData = await GroupService.listGroupData(args.input.group);
 
@@ -19,7 +20,7 @@ export const groupResolvers = {
       },
    },
    GroupSearch: {
-      __resolveType: (obj) => {
+      __resolveType: (obj: any) => {
          if (obj instanceof Error) return 'Error';
 
          return 'Group';
@@ -44,7 +45,7 @@ export const groupResolvers = {
       },
    },
    GroupStats: {
-      groupTotal: async () => {
+      groupTotal: async (): Promise<number> => {
          return actionRunner(async () => {
             const groupTotal = await GroupMapper.fetchTotalGroupCount();
 
@@ -55,29 +56,21 @@ export const groupResolvers = {
          return actionRunner(async () => {
             const result = await GroupMapper.fetchGroupSizeData();
 
-            const tempResult = result
-               .filter((element) => element._id.groupSize > 6)
-               .map((element) => {
-                  return {
-                     name: element._id.groupSize,
-                     count: element.count,
-                  };
-               });
-
-            const groupSizeStats = tempResult.filter((element) => element.count > 2);
+            const groupSizeStats = result
+               .filter((element) => element._id.groupSize > 6 && element.count > 2)
+               .map((element) => ({
+                  name: element._id.groupSize,
+                  count: element.count,
+               }));
 
             return groupSizeStats;
          });
       },
-      groupsLastWeek: async () => {
+      groupsLastWeek: async (): Promise<number> => {
          return actionRunner(async () => {
             const groupsLastWeek = await GroupMapper.fetchGroupCountLastWeek();
 
-            let groups = 0;
-
-            groupsLastWeek.forEach((group) => (groups += group.count));
-
-            return groups;
+            return groupsLastWeek;
          });
       },
       groupsLastMonth: async () => {
@@ -119,14 +112,14 @@ export const groupResolvers = {
       },
       groupMeetingStats: async () => {
          return actionRunner(async () => {
-            meetingStats = await GroupService.generateMeetingOverview();
+            const meetingStats = await GroupService.generateMeetingOverview();
 
             return meetingStats;
          });
       },
    },
    NGOGroupData: {
-      groupData: async (obj, args) => {
+      groupData: async (obj: any, args: any) => {
          return actionRunner(async () => {
             const groupData = await GroupService.listGroupsByNGO(args.ngo);
 

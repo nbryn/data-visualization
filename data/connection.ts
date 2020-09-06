@@ -1,13 +1,13 @@
 import mongoose from 'mongoose';
 require('dotenv').config();
 
-import { GroupAccount, GroupAccountSchema } from '../logic/entities/GroupAccount';
-import { GroupMeetingLoan, GroupMeetingLoanSchema } from '../logic/entities/GroupMeetingLoan';
-import { GroupMeeting, GroupMeetingSchema } from '../logic/entities/GroupMeeting';
-import { GroupMeetingShareout, GroupMeetingShareoutSchema } from '../logic/entities/GroupMeetingShareout';
-import { GroupMember, GroupMemberSchema } from '../logic/entities/GroupMember';
-import { Group, GroupSchema } from '../logic/entities/Group';
-import { User, UserSchema } from '../logic/entities/User';
+import {GroupAccount, GroupAccountSchema} from '../logic/entities/GroupAccount';
+import {GroupMeetingLoan, GroupMeetingLoanSchema} from '../logic/entities/GroupMeetingLoan';
+import {GroupMeeting, GroupMeetingSchema} from '../logic/entities/GroupMeeting';
+import {GroupMeetingShareout, GroupMeetingShareoutSchema} from '../logic/entities/GroupMeetingShareout';
+import {GroupMember, GroupMemberSchema} from '../logic/entities/GroupMember';
+import {Group, GroupSchema} from '../logic/entities/Group';
+import {User, UserSchema} from '../logic/entities/User';
 
 export let GroupAccountModel: mongoose.Model<GroupAccount, {}>;
 export let GroupMeetingLoanModel: mongoose.Model<GroupMeetingLoan, {}>;

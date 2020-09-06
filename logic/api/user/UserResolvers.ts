@@ -1,12 +1,12 @@
 import * as UserMapper from '../../../data/mappers/UserMapper';
-import { actionRunner } from '../../util/ActionRunner';
-import { calculateActiveUsers } from './UserService';
-
+import {actionRunner} from '../../util/ActionRunner';
+import {calculateActiveUsers} from './UserService';
+import {User} from '../../entities/User';
 
 export const userResolvers = {
    Query: {
-      userStats: (root: any, context: any) => ({ root, context }),
-      userInfo: (root: any, context: any) => ({ root, context }),
+      userStats: () => ({}),
+      userInfo: () => ({}),
    },
    UserStats: {
       userCount: async (): Promise<number> => {
@@ -23,21 +23,21 @@ export const userResolvers = {
             return activeUsers;
          });
       },
-      usersLastMonth: async () => {
+      usersLastMonth: async (): Promise<any[]> => {
          return actionRunner(async () => {
             const usersLastMonth = await UserMapper.fetchUsersLastMonth();
 
             return usersLastMonth;
          });
       },
-      usersLastYear: async () => {
+      usersLastYear: async (): Promise<any[]> => {
          return actionRunner(async () => {
             const result = await UserMapper.fetchUsersLastYear();
 
             return result;
          });
       },
-      userGenderStats: async () => {
+      userGenderStats: async (): Promise<any[]> => {
          return actionRunner(async () => {
             const result = await UserMapper.fetchGenderStats();
 
@@ -46,7 +46,7 @@ export const userResolvers = {
       },
    },
    UserInfo: {
-      usersWithPhone: async () => {
+      usersWithPhone: async (): Promise<User[]> => {
          return actionRunner(async () => {
             const result = await UserMapper.fetchUsersWithPhone();
 
@@ -56,7 +56,7 @@ export const userResolvers = {
          });
       },
 
-      usersWithEmail: async () => {
+      usersWithEmail: async (): Promise<User[]> => {
          return actionRunner(async () => {
             const result = await UserMapper.fetchUsersWithEmail();
 
@@ -69,28 +69,20 @@ export const userResolvers = {
 };
 
 // TODO: Move to service
-function removeDuplicates(needsFiltering: any, phone: any) {
-   const s: any = [];
+function removeDuplicates(needsFiltering: User[], phone: boolean): User[] {
+   const s: Array<string | undefined | null> = [];
 
-   const filtered = needsFiltering.map((element: any) => {
+   const filtered = needsFiltering.map((element: User) => {
       if (s.includes(phone ? element.phoneNumber : element.email)) {
          return;
       } else {
          s.push(phone ? element.phoneNumber : element.email);
-         if (phone) {
-            return {
-               firstName: element.firstName,
-               lastName: element.lastName,
-               phoneNumber: element.phoneNumber,
-            };
-         } else {
-            return {
-               firstName: element.firstName,
-               lastName: element.lastName,
-               email: element.email,
-            };
-         }
+         return {
+            ...element,
+         };
       }
    });
+
+   // @ts-ignore
    return filtered;
 }

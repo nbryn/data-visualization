@@ -1,5 +1,6 @@
-import {actionRunner} from '../../util/ActionRunner';
 import * as FinanceMapper from '../../../data/mappers/FinanceMapper';
+import {actionRunner} from '../../util/ActionRunner';
+
 const {calculateEtbLoanStats, calculateShareStats, getCurrencyStats} = require('./FinanceService');
 
 export const financeResolvers = {
@@ -25,7 +26,7 @@ export const financeResolvers = {
          });
       },
 
-      loanTotal: async () => {
+      loanTotal: async (): Promise<number> => {
          return actionRunner(async () => {
             const loanTotal = await FinanceMapper.fetchTotalLoanCount();
 

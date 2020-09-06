@@ -1,4 +1,4 @@
-import { Document, Schema } from 'mongoose';
+import {Document, Schema} from 'mongoose';
 
 export enum UserState {
    CREATING = 'CREATING',
@@ -20,7 +20,7 @@ export interface User extends Document {
    gender: UserGender;
    password: string;
    phoneCode: string;
-   phoneNumber: String | null;
+   phoneNumber: string | null;
    pinCode: string;
    signupDate?: Date;
    state?: UserState;

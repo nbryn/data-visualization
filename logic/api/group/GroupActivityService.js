@@ -3,7 +3,20 @@ import {fetchGroupShareoutsByMeeting} from '../../../data/mappers/FinanceMapper'
 import {fetchGroupMeetingsSince} from '../../../data/mappers/GroupMeetingMapper';
 
 async function calculateGroupActivitySince(since) {
-   const groups = await fetchGroupsRegBefore(since);
+   const dbResult = await fetchGroupsRegBefore(since);
+
+   const groups = [];
+
+   dbResult.forEach((element) => {
+      if (element.members.length > 6 && element.meetings.length > 2) {
+         let group = {
+            _id: element._id,
+            size: element.members.length,
+            meetings: element.meetings.length,
+         };
+         groups.push(group);
+      }
+   });
 
    const temp = [];
 

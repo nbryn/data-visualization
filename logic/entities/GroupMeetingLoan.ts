@@ -5,7 +5,6 @@ import {GroupAccount} from './GroupAccount';
 import {GroupMeeting} from './GroupMeeting';
 import {GroupMember} from './GroupMember';
 
-
 export interface GroupMeetingLoan extends Document {
    group: Group;
    account: GroupAccount;

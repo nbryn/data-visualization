@@ -1,4 +1,4 @@
-export async function actionRunner(actionFunction: any, input?: any, validateFunction?: Function) {
+export async function actionRunner(actionFunction: Function, input?: any, validateFunction?: Function) {
    try {
       if (validateFunction) {
          await validateFunction(input);

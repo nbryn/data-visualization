@@ -6,6 +6,7 @@
         "start": "react-scripts start",
         "build": "react-scripts build",
         "test": "react-scripts test --env=jsdom",
+        "test-all": "react-scripts test --watchAll=false",
         "eject": "react-scripts eject",
         "prettier": "prettier --config .prettierrc 'src/**/*.{js,ts,tsx}' --write",
         "compile-sass": "node-sass src/assets/sass/dashboard.scss src/assets/css/dashboard.css",

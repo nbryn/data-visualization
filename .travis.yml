@@ -1,10 +1,14 @@
 language: node_js
 node_js:
-  - 12.13.0
+- 12.13.0
 install:
-  - npm install
+- npm install && cd presentation && npm install
 script:
-  - npm run test
-branches:
-  only:
-    - master
+- npm run test
+deploy:
+  provider: heroku
+  api_key:
+    secure: FjLqa+tlJCRpmQqEhXKXdNdDJeQtNk2g5qYdJ1oTKp7uMziqgQkNNP82EgDYycVc2DTxhGvvSRP0ArPitFZOlTp+ibYiTOFR2JrBFNr3GRLx7O+4VF1RbeMGDcG8sMVySW0RsEfNZ3npus2jrhYvSrpXYlsFn0lHAxrO+bDauHipOqlQzXA1HJuNpKss8ABzYPXgnI/veuAckxf8O3wk9wOm05RJ64sO+GwSUKDJtSalY9ApJXsoIyCKYMdaRbxJYw6oUHOrPkkFB4Be+GflW8cYGIPMqdJ1kYZr8erdg7DydNkDkMqp8Weolsd4fGtC5ngRp/zkNBUwImCsAX81lSNsSRyVsTcwBS4yDTq3RMat2KxTF5HgVfPy/6RZEKcnYx+Ij13+MMSOLG3rI5t/yIC0npv4HPFb2AV0ZpoSTguJwyGW+3sUxlSF0mr3MMuwli/Mrwh0wnS+YVPzvn1CR/iCBXkHAgrRAXLRA6/7fpQr22wc3MhgfAh6FEtIYkbZvGkGsfLNeXg5M/sihGcckJ7g1CEvZzW8ni/CbCYH5NDUS6nNQGAZE5FSAAguemIKoi1KLBFJ/L6EHlb6ozWcDR0SvD7NXWzOqtmkE0bE0f/3ElxdK1Ip8GI8JirBGu8ClGQvklfeoN0TDds8je72PpSfy6tVEtsqMXwV07zZLj8=
+  app: statsboard
+  on:
+    branch: master

@@ -8,6 +8,7 @@
       "node": "12.13.0"
    },
    "scripts": {
+      "test": "cd presentation && npm test",
       "start": "node index.js",
       "server": "ts-node index.js && nodemon index.js",
       "client": "npm start --prefix presentation",

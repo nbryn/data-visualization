@@ -19,6 +19,17 @@ const useStyles = makeStyles((theme) => ({
    search: {
       marginLeft: -15,
    },
+   searchText: {
+      fontSize: 20,
+      marginBottom: 10,
+   },
+   groupInfo: {
+      textAlign: 'center',
+      marginTop: 30,
+   },
+   spinner: {
+      textAlign: 'center',
+   }
 }));
 
 const GroupSearchView: React.FC = (): ReactElement => {
@@ -29,8 +40,6 @@ const GroupSearchView: React.FC = (): ReactElement => {
    const [searchString, setSearchString] = useState<string>('');
 
    const searchData: GroupDataProp = useSelector<RootState, GroupDataProp>((state) => state.groups.searchData);
-
-   console.log(searchData);
 
    const dispatch = useDispatch();
 
@@ -75,7 +84,7 @@ const GroupSearchView: React.FC = (): ReactElement => {
                         )}
                         <form onSubmit={onSubmit}>
                            <FormGroup controlId="formSearch">
-                              <ControlLabel>Search</ControlLabel>
+                              <ControlLabel className={classes.searchText}>Search</ControlLabel>
                               <FormControl
                                  type="text"
                                  placeholder="Group Name"
@@ -88,14 +97,15 @@ const GroupSearchView: React.FC = (): ReactElement => {
                               />
                            </FormGroup>
                            <Button variant="primary" type="submit">
-                              Go!
+                              Submit
                            </Button>
                         </form>
                      </Col>
                   </Row>
-                  <Row>
-                     {loading && !errorMessage && <CircularProgress className="spinner" />}
-                     {searchData.length > 0 && !errorMessage && (
+
+                  <Row className={classes.groupInfo}>
+                     {loading && !errorMessage && <CircularProgress className={classes.spinner} />}
+                     {searchData.length > 0 && !errorMessage && !loading && (
                         <InfoPage data={searchData} title="Group Info" columns={columns} column1={infoPageColumn} />
                      )}
                   </Row>

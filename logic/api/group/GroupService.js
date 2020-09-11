@@ -156,13 +156,13 @@ async function retrieveGroupData(group) {
    const {totalShares, boxBalance} = accountData[0];
 
    return {
-      ...group,
       id: group._id,
       regDate: regDate,
       cycle: group.cycleNumber,
       type: group.groupType,
       ngo: group.ngoState,
       lastMeeting,
+      currency: group.currency,
       meetingsTotal: group.meetings.length,
       perShare: group.amountPerShare,
       serviceFee: group.loanServiceFee,

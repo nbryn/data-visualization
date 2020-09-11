@@ -49,7 +49,7 @@ export async function fetchUserIDByRole(role: string, groupID: string): Promise<
       $and: [{group: groupID}, {groupRoles: role}],
    });
    if (role === '(.*?)') {
-      console.log(userIDs);
+      //console.log(userIDs);
    }
 
    return userIDs;

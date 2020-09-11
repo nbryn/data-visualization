@@ -77,8 +77,8 @@ export type User = {
    [key: string]: string;
    token: string;
    email: string;
-   firstName: string;
-   phoneNumber: string;
+   name: string;
+   phone: string;
    gender: string;
 } | null;
 

@@ -22,15 +22,15 @@ const Sidebar: React.FC = (): ReactElement => {
    };
 
    const miscLinks: Links = {
-      profile: '/profile',
       ngoview: '/ngo-view',
       search: '/search',
+      profile: '/profile',
    };
 
    return (
       <div id="sidebar" className="sidebar" data-color="black" data-image="../../assets/img/dashboard.png">
          <div className="logo">
-            <img src={Logo} />
+            <img />
          </div>
 
          <div className="sidebar-wrapper">

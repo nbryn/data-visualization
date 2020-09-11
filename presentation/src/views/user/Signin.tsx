@@ -2,12 +2,14 @@ import {Card} from '@material-ui/core';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import {makeStyles} from '@material-ui/core/styles';
 import React, {ReactElement, useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import {useHistory} from 'react-router-dom';
-import {useDispatch} from 'react-redux';
 
 import * as Thunks from '../../thunks/Thunks';
 import Error from '../../util/Error';
 import TextField from '../../components/form/TextField';
+import {useUserContext} from '../../store/UserContext';
+
 
 const {Alert, Button, Col, Grid, Row} = require('react-bootstrap');
 
@@ -61,6 +63,7 @@ const Signin: React.FC = (): ReactElement => {
    const [errorMessage, setErrorMessage] = useState<string>('');
 
    const dispatch = useDispatch();
+   const userContext = useUserContext();
    let history = useHistory();
 
    useEffect(() => {
@@ -76,7 +79,7 @@ const Signin: React.FC = (): ReactElement => {
          event.preventDefault();
          setLoading(true);
 
-         await dispatch(Thunks.login(email, password));
+         await dispatch(Thunks.login(email, password, userContext));
 
          history.push('/dashboard');
       } catch (error) {

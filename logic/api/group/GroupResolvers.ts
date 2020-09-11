@@ -1,6 +1,6 @@
 import * as GroupMapper from '../../../data/mappers/GroupMapper';
-import {actionRunner} from '../../util/ActionRunner';
-import {Error} from '../../util/Error';
+import { actionRunner } from '../../util/ActionRunner';
+import { Error } from '../../util/Error';
 
 const GroupActivityService = require('./GroupActivityService');
 const GroupService = require('./GroupService');
@@ -9,7 +9,7 @@ export const groupResolvers = {
    Query: {
       groupStats: () => ({}),
       groupEngagement: () => ({}),
-      ngoGroupData: (obj: any, args: any) => ({obj, args}),
+      ngoGroupData: (obj: any, args: any) => ({ obj, args }),
       groupActivity: async () => ({}),
       groupSearch: async (obj: any, args: any) => {
          return actionRunner(async () => {

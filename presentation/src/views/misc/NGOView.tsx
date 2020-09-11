@@ -22,6 +22,13 @@ const useStyles = makeStyles((theme) => ({
    search: {
       marginTop: -35,
    },
+   searchBar: {
+      marginLeft: 14,
+   },
+   spinner: {
+      textAlign: 'center',
+      marginTop: 50,
+   },
 }));
 
 const NGOView: React.FC = (): ReactElement => {
@@ -97,15 +104,17 @@ const NGOView: React.FC = (): ReactElement => {
                         >
                            {(props: any) => (
                               <>
-                                 <h4>
-                                    <b>Groups</b>
-                                 </h4>
                                  <Row>
                                     <Col lg={10} md={8} sm={6}>
-                                       <SearchBar {...props.searchProps} placeholder="Search" />
+                                       <h4>
+                                          <b>NGO Search</b>
+                                       </h4>
                                     </Col>
                                  </Row>
                                  <Row>
+                                    <Row className={classes.searchBar}>
+                                       <SearchBar {...props.searchProps} placeholder="NGO" />
+                                    </Row>
                                     <Col lg={6} md={6} sm={6}>
                                        <BootstrapTable
                                           {...props.baseProps}
@@ -123,8 +132,8 @@ const NGOView: React.FC = (): ReactElement => {
                         </ToolkitProvider>
                      </Col>
                   </Row>
+                  <Row className={classes.spinner}>{data.length === 0 && <CircularProgress />}</Row>
                   <Row>
-                     {data.length === 0 && <CircularProgress />}
                      {selectedGroupData.length > 0 && (
                         <InfoPage
                            data={selectedGroupData}

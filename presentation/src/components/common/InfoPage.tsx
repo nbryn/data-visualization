@@ -6,6 +6,9 @@ import paginationFactory from 'react-bootstrap-table2-paginator';
 const {Col, ControlLabel, ListGroup, ListGroupItem} = require('react-bootstrap');
 
 const useStyles = makeStyles((theme) => ({
+   wrapper: {
+      marginLeft: 100,
+   },
    header: {
       width: '50%',
       textAlign: 'center',

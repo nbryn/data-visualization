@@ -32,5 +32,7 @@ export const fetchDataForGroup = async (group: string): Promise<GroupDto> => {
 
    const response: GroupDto = await fetchFromServer<GroupDto>('groupSearch', data);
 
+   console.log(response);
+
    return response;
 };

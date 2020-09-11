@@ -22,33 +22,35 @@ import RechartsMainView from './views/recharts/MainView';
 import SecureRoute from './components/common/SecureRoute';
 import Store from './store/index';
 import Signin from './views/user/Signin';
-
 import Sidebar from './components/navigation/Sidebar';
+import {UserContextProvider} from './store/UserContext';
 
 class App extends Component {
    render() {
       return (
          <Router>
             <Provider store={Store}>
-               <Switch>
-                  <Route exact path="/" component={Signin} />
+               <UserContextProvider>
+                  <Switch>
+                     <Route exact path="/" component={Signin} />
 
-                  <SecureRoute exact path="/dashboard" component={ChartsjMainView} />
+                     <SecureRoute exact path="/dashboard" component={ChartsjMainView} />
 
-                  <SecureRoute exact path="/overview" component={RechartsMainView} />
-                  <SecureRoute exact path="/engagement" component={EngagementView} />
-                  <SecureRoute exact path="/finance" component={FinanceView} />
-                  <SecureRoute exact path="/groups" component={GroupView} />
-                  <SecureRoute exact path="/meetings" component={MeetingView} />
-                  <SecureRoute exact path="/users" component={UserView} />
+                     <SecureRoute exact path="/overview" component={RechartsMainView} />
+                     <SecureRoute exact path="/engagement" component={EngagementView} />
+                     <SecureRoute exact path="/finance" component={FinanceView} />
+                     <SecureRoute exact path="/groups" component={GroupView} />
+                     <SecureRoute exact path="/meetings" component={MeetingView} />
+                     <SecureRoute exact path="/users" component={UserView} />
 
-                  <SecureRoute exact path="/profile" component={Profile} />
-                  <SecureRoute exact path="/ngo-view" component={NGOView} />
-                  <SecureRoute exact path="/search" component={GroupSearchView} />
-                  <SecureRoute exact path="/s" component={Sidebar} />
+                     <SecureRoute exact path="/profile" component={Profile} />
+                     <SecureRoute exact path="/ngo-view" component={NGOView} />
+                     <SecureRoute exact path="/search" component={GroupSearchView} />
+                     <SecureRoute exact path="/s" component={Sidebar} />
 
-                  <Route path="*" component={NotFound} />
-               </Switch>
+                     <Route path="*" component={NotFound} />
+                  </Switch>
+               </UserContextProvider>
             </Provider>
          </Router>
       );

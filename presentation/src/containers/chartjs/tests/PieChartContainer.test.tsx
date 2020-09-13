@@ -13,13 +13,12 @@ const dataType = 'genderData';
 const backgroundColor = ['red', 'black'];
 const hoverBackgroundColor = ['red', 'black'];
 
-
 const mockStore = createStore(() => ({
    chartjs: {
-    genderData: {
-        labels: ['Test', 'Tester'],
-        data: [3, 4],
-     },
+      genderData: {
+         labels: ['Test', 'Tester'],
+         data: [3, 4],
+      },
    },
 }));
 
@@ -56,9 +55,9 @@ describe('LineChartContainer.test.jsx', () => {
          // @ts-ignore
          setChartjsData({
             genderData: {
-                labels: ['Test', 'Tester'],
-                data: [2, 6],
-             },
+               labels: ['Test', 'Tester'],
+               data: [2, 6],
+            },
          })
       );
 

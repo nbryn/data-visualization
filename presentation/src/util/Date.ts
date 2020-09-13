@@ -3,7 +3,7 @@ type Month = {
 };
 
 export const getCurrentTime = () => {
-   let date: Date = new Date();
+   const date: Date = new Date();
    let minutes: string = date.getMinutes().toString();
    let hours: string = date.getHours().toString();
    let day: string = date.getDate().toString();
@@ -25,13 +25,13 @@ export const getCurrentTime = () => {
       month = '0' + month;
    }
 
-   let currentTime = day + '/' + month + ' at ' + hours + ':' + minutes;
+   const currentTime = day + '/' + month + ' at ' + hours + ':' + minutes;
 
    return currentTime;
 };
 
 export const convertNumberToMonth = (monthNumber: string): string | undefined => {
-   let result: string = '';
+   let result = '';
    const number = monthNumber.toString();
 
    const months: Month = {
@@ -49,7 +49,7 @@ export const convertNumberToMonth = (monthNumber: string): string | undefined =>
       '12': 'dec',
    };
 
-   for (let key in months) {
+   for (const key in months) {
       if (number === key) {
          result = months[key];
       }

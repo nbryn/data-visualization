@@ -10,10 +10,10 @@ export enum GroupMeetingState {
 export interface GroupMeeting extends Document {
    group: Schema.Types.ObjectId;
    registrationDate: Date;
-   cycleNumber: Number;
+   cycleNumber: number;
    meetingDay: Date;
    meetingEnded: Date;
-   meetingNumber: Number;
+   meetingNumber: number;
    shares: Schema.Types.ObjectId[];
    state: GroupMeetingState;
 }

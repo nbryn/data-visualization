@@ -12,12 +12,12 @@ export enum GroupState {
 }
 
 export interface Group extends Document {
-   name: String;
+   name: string;
    registrationDate: Date;
-   currency: String;
-   amountPerShare: Number;
-   country: String;
-   ngoOrganization: String;
+   currency: string;
+   amountPerShare: number;
+   country: string;
+   ngoOrganization: string;
    state: GroupState;
    meetings: GroupMeeting[];
    members: GroupMember[];

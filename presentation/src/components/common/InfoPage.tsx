@@ -28,6 +28,9 @@ const useStyles = makeStyles((theme) => ({
       width: 125,
       marginLeft: -5,
    },
+   groupInfo: {
+      textAlign: 'center',
+   },
 }));
 
 type Props = {
@@ -39,7 +42,7 @@ type Props = {
 
 const InfoPage: React.FC<Props> = ({data, title, columns, column1}: Props): ReactElement => {
    const classes = useStyles();
-   let dataIndex: number = 0;
+   let dataIndex = 0;
 
    return (
       <>
@@ -49,7 +52,7 @@ const InfoPage: React.FC<Props> = ({data, title, columns, column1}: Props): Reac
 
          <Col lg={4} md={6} className={classes.box}>
             {column1.map((prop: any, index: number) => (
-               <div key={index}>
+               <div className={classes.groupInfo} key={index}>
                   <ListGroup className={classes.listGroup}>
                      <ControlLabel>{prop}</ControlLabel>
                      <ListGroupItem>{data[dataIndex++]}</ListGroupItem>

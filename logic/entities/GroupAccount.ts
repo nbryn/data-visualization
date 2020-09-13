@@ -6,20 +6,20 @@ export enum GroupAccountState {
 }
 
 export interface GroupAccount extends Document {
-   name: String;
+   name: string;
    registrationDate: Date;
-   mainAccount: Boolean;
+   mainAccount: boolean;
    group: Schema.Types.ObjectId;
    parent: Schema.Types.ObjectId;
-   currency: String;
-   totalBalance: Number;
-   totalShares: Number;
-   boxBalance: Number;
+   currency: string;
+   totalBalance: number;
+   totalShares: number;
+   boxBalance: number;
    state: {
-      type: String;
+      type: string;
       default: GroupAccountState.ACTIVE;
    };
-   description: String;
+   description: string;
 }
 
 export const GroupAccountSchema = new Schema({

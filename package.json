@@ -8,12 +8,13 @@
       "node": "12.13.0"
    },
    "scripts": {
+      "lint": "eslint '*/**/*.{ts,tsx}' --quiet --fix",
       "test": "cd presentation && npm run test-all",
       "start": "node index.js",
       "server": "ts-node index.js && nodemon index.js",
       "client": "npm start --prefix presentation",
       "dev": "concurrently \"npm run server\" \"npm run client\" ",
-      "prettier": "prettier --config .prettierrc 'logic/**/*.ts' 'data/**/*.ts' --write",
+      "prettier": "prettier --config .prettierrc '*/**/*.{js,ts,tsx}' --write",
       "heroku-postbuild": "cd presentation && npm install && npm run build"
    },
    "repository": {
@@ -32,6 +33,8 @@
       "country-codes-list": "^1.6.5",
       "country-currency-map": "^2.1.7",
       "dotenv": "^8.2.0",
+      "eslint-config-prettier": "^6.11.0",
+      "eslint-plugin-prettier": "^3.1.4",
       "graphql": "^14.5.8",
       "graphql-tools": "^4.0.6",
       "graphql-type-json": "^0.3.1",
@@ -43,7 +46,11 @@
       "typescript": "^3.9.7"
    },
    "devDependencies": {
+      "@typescript-eslint/eslint-plugin": "^4.1.0",
+      "@typescript-eslint/parser": "^4.1.0",
       "concurrently": "^5.0.0",
-      "prettier": "^2.0.5"
+      "eslint": "^7.9.0",
+      "eslint-plugin-react": "^7.20.6",
+      "prettier": "^2.1.1"
    }
 }

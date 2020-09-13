@@ -42,7 +42,7 @@ export const mapLastMonthData = (data: LastMonthDto[]): ChartData[] => {
 };
 
 export const mapLastYearData = (data: LastYearDto[], aggregate: boolean): ChartData[] => {
-   let total: number = 0;
+   let total = 0;
    let month, year: string;
    const lastYear = data.map((element: LastYearDto) => {
       year = element.year.toString().substring(2);
@@ -57,7 +57,7 @@ export const mapLastYearData = (data: LastYearDto[], aggregate: boolean): ChartD
 };
 
 export const getTotalNumberInPeriod = (data: IntervalDto[]): number => {
-   let result: number = 0;
+   let result = 0;
 
    data.map((element: IntervalDto) => (result += element.count));
 
@@ -152,7 +152,7 @@ export const mapGroupSearchData = (data: GroupDto): GroupDataProp => {
 };
 
 export const mapNGOGroupsData = (data: GroupDto[]): GroupData[] => {
-   let id: number = 0;
+   let id = 0;
    const groupsData = data.map((element: GroupDto) => {
       return {
          id: id++,

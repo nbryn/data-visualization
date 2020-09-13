@@ -108,21 +108,6 @@
         
     } 
 }
-.navbar-ct-blue{
-    @include navbar-color($blue-navbar);
-}
-.navbar-ct-azure{
-    @include navbar-color($azure-navbar);
-}
-.navbar-ct-green{
-    @include navbar-color($green-navbar);
-}
-.navbar-ct-orange{
-    @include navbar-color($orange-navbar);
-}
-.navbar-ct-red{
-    @include navbar-color($red-navbar);
-}
 
 .navbar-transparent{
     padding-top: 15px;
@@ -143,10 +128,6 @@
         border-color: transparent;
     }
     
-    &.navbar-default .navbar-toggle:hover,
-    &.navbar-default .navbar-toggle:focus {
-        background-color: transparent;
-    }
 }
 
 

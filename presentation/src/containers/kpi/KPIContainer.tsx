@@ -15,7 +15,7 @@ type Props = {
 
 export const KPIContainer: React.FC<Props> = ({title, fetchData, statsType, total, icon}: Props): ReactElement => {
    const [lastUpdate, setLastUpdate] = useState<string>('');
-   let data: any = useSelector<RootState, number>((state) => state[statsType][total]);
+   const data: any = useSelector<RootState, number>((state) => state[statsType][total]);
 
    const dispatch = useDispatch();
 

@@ -2,8 +2,10 @@ language: node_js
 node_js:
 - 12.13.0
 install:
-- npm install && cd presentation && npm install
+- npm install
+- cd presentation && npm install
 script:
+- npm run lint  
 - npm run test
 deploy:
   provider: heroku

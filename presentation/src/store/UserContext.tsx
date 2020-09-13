@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 
 import {User} from './datamodels/General';
 
@@ -21,7 +21,17 @@ export const UserContextProvider = ({children}: Props) => {
 
    const setUser = (user: User) => {
       setCurrentUser(user);
+
+      localStorage.setItem('User', JSON.stringify(user));
    };
+
+   useEffect(() => {
+      if (localStorage.getItem('User')) {
+         const user: User = JSON.parse(localStorage.getItem('User') as string);
+
+         setCurrentUser(user);
+      }
+   }, []);
 
    return <UserContext.Provider value={{user, setUser}}>{children}</UserContext.Provider>;
 };

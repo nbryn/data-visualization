@@ -14,9 +14,9 @@ type Props = {
 
 export const KPITodayContainer: React.FC<Props> = ({statsType, countData, dateData, icon}: Props): ReactElement => {
    const [lastUpdate, setLastUpdate] = useState<string>('');
-   let count: any = useSelector<RootState, number>((state) => state[statsType][countData]);
+   const count: any = useSelector<RootState, number>((state) => state[statsType][countData]);
 
-   let date: string = useSelector<RootState, string>((state) => state[statsType][dateData]);
+   const date: string = useSelector<RootState, string>((state) => state[statsType][dateData]);
 
    useEffect(() => {
       setLastUpdate(getCurrentTime());

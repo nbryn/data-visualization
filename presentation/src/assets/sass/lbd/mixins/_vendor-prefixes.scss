@@ -37,6 +37,35 @@
   transform: translateY(-50%);
 }
 
+@mixin input-size($padding-vertical, $padding-horizontal, $height){
+  padding: $padding-vertical $padding-horizontal;
+  height: $height;
+}
+
+@mixin placeholder($color, $opacity){
+ color: $color;
+ @include opacity(1);
+}
+
+
+@mixin navbar-color($color){
+  background-color: $color;
+}
+
+@mixin center-item(){
+  left: 0;
+  right: 0;
+  margin-right: auto;
+  margin-left: auto;
+  position: absolute;
+}
+
+@mixin opacity($opacity) {
+  opacity: $opacity;
+  $opacity-ie: ($opacity * 100);
+  filter: #{alpha(opacity=$opacity-ie)};
+}
+
 
 
 

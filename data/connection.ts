@@ -18,7 +18,7 @@ export let GroupModel: mongoose.Model<Group, {}>;
 export let UserModel: mongoose.Model<User, {}>;
 
 let connection: any;
-let isConnected: boolean = false;
+let isConnected = false;
 
 export async function connectToDB(): Promise<void> {
    try {

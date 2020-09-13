@@ -52,7 +52,7 @@ const NGOView: React.FC = (): ReactElement => {
       style: {backgroundColor: '#c8e6c9'},
       onSelect: (row: GroupData) => {
          const data: GroupDataProp = [];
-         for (let key in row) {
+         for (const key in row) {
             if (key !== 'id' && key !== 'name') data.push(row[key]);
          }
          setSelectedGroupData(data);

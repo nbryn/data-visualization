@@ -24,12 +24,11 @@ const useStyles = makeStyles((theme) => ({
       marginBottom: 10,
    },
    groupInfo: {
-      textAlign: 'center',
       marginTop: 30,
    },
    spinner: {
       textAlign: 'center',
-   }
+   },
 }));
 
 const GroupSearchView: React.FC = (): ReactElement => {
@@ -104,7 +103,7 @@ const GroupSearchView: React.FC = (): ReactElement => {
                   </Row>
 
                   <Row className={classes.groupInfo}>
-                     {loading && !errorMessage && <CircularProgress className={classes.spinner} />}
+                     <Row className={classes.spinner}> {loading && !errorMessage && <CircularProgress />} </Row>
                      {searchData.length > 0 && !errorMessage && !loading && (
                         <InfoPage data={searchData} title="Group Info" columns={columns} column1={infoPageColumn} />
                      )}

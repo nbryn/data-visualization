@@ -11,9 +11,9 @@ export interface GroupMeetingLoan extends Document {
    meeting: GroupMeeting;
    member: GroupMember;
    registrationDate: Date;
-   amount: Number;
-   currency: String;
-   totalAmount: Number;
+   amount: number;
+   currency: string;
+   totalAmount: number;
 }
 
 export const GroupMeetingLoanSchema = new Schema({

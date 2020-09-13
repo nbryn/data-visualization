@@ -10,7 +10,6 @@ import Error from '../../util/Error';
 import TextField from '../../components/form/TextField';
 import {useUserContext} from '../../store/UserContext';
 
-
 const {Alert, Button, Col, Grid, Row} = require('react-bootstrap');
 
 const useStyles = makeStyles((theme) => ({
@@ -64,7 +63,7 @@ const Signin: React.FC = (): ReactElement => {
 
    const dispatch = useDispatch();
    const userContext = useUserContext();
-   let history = useHistory();
+   const history = useHistory();
 
    useEffect(() => {
       const token = localStorage.getItem('token');

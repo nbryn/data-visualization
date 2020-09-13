@@ -1,6 +1,6 @@
 import fetchAllUsers from '../../../data/mappers/UserMapper';
 import {fetchGroupMembersPerNGO} from '../../../data/mappers/GroupMapper';
-import {fetchAllGroupMembers} from'../../../data/mappers/GroupMemberMapper';
+import {fetchAllGroupMembers} from '../../../data/mappers/GroupMemberMapper';
 
 async function calculateGroupsPerUser() {
    //   return await fetchGroupMemberByUser();

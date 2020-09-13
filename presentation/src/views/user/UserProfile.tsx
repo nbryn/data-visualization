@@ -1,18 +1,31 @@
-import React, {ReactElement, useEffect, useState} from 'react';
+import React, {ReactElement} from 'react';
+import {makeStyles} from '@material-ui/core/styles';
 
 import Header from '../../components/navigation/Header.js';
 import Sidebar from '../../components/navigation/Sidebar';
 import {useUserContext} from '../../store/UserContext';
 
-const {Grid, Row, ControlLabel, ListGroup, ListGroupItem} = require('react-bootstrap');
+const {Grid, Row, Col, ControlLabel, ListGroup, ListGroupItem} = require('react-bootstrap');
+
+const useStyles = makeStyles((theme) => ({
+   title: {
+      marginTop: 5,
+      marginBottom: 40,
+      marginLeft: -20,
+   },
+   userInfo: {
+      marginLeft: -20,
+   },
+}));
 
 const UserProfile: React.FC = (): ReactElement => {
+   const classes = useStyles();
    const user = useUserContext().user;
 
-   const properties = ['Email', 'Name', 'Phone Number', 'Gender'];
+   const properties = ['Name', 'Email', 'Phone Number', 'Gender'];
    const data: string[] = [];
 
-   for (let key in user) {
+   for (const key in user) {
       data.push(user[key]);
    }
 
@@ -22,24 +35,22 @@ const UserProfile: React.FC = (): ReactElement => {
          <div id="main-panel" className="main-panel">
             <Header title="Profile" />
             <div className="content">
-               <div className="card">
-                  <div className="header">
-                     <h3 className="title">User Info</h3>
-                  </div>
+               <Grid fluid>
+                  <h3 className={classes.title}>
+                     <b>User Info</b>
+                  </h3>
 
-                  <Grid fluid>
-                     {properties.map((element, index) => (
-                        <Row>
-                           <div className="col-md-6">
-                              <ListGroup>
-                                 <ControlLabel>{element}</ControlLabel>
-                                 <ListGroupItem>{data[index++].toString().toUpperCase()}</ListGroupItem>
-                              </ListGroup>
-                           </div>
-                        </Row>
-                     ))}
-                  </Grid>
-               </div>
+                  {properties.map((element, index) => (
+                     <Row key={index}>
+                        <Col sm={4} lg={2}>
+                           <ListGroup className={classes.userInfo}>
+                              <ControlLabel>{element}</ControlLabel>
+                              <ListGroupItem>{user && data[index++].toString().toUpperCase()}</ListGroupItem>
+                           </ListGroup>
+                        </Col>
+                     </Row>
+                  ))}
+               </Grid>
             </div>
          </div>
       </div>

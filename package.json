@@ -8,7 +8,7 @@
       "node": "12.13.0"
    },
    "scripts": {
-      "lint": "eslint '*/**/*.{ts,tsx}' --quiet --fix",
+      "lint": "eslint --ignore-pattern node_modules '*/**/*.{ts,tsx}' --quiet --fix",
       "test": "cd presentation && npm run test-all",
       "start": "node index.js",
       "server": "ts-node index.js && nodemon index.js",

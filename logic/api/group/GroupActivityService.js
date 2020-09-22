@@ -2,10 +2,12 @@ import {fetchGroupsRegBefore} from '../../../data/mappers/GroupMapper';
 import {fetchGroupShareoutsByMeeting} from '../../../data/mappers/FinanceMapper';
 import {fetchGroupMeetingsSince} from '../../../data/mappers/GroupMeetingMapper';
 
-async function calculateGroupActivitySince(since) {
+export async function calculateGroupActivitySince(since) {
    const dbResult = await fetchGroupsRegBefore(since);
 
    const groups = [];
+
+   console.log(dbResult);
 
    dbResult.forEach((element) => {
       if (element.members.length > 6 && element.meetings.length > 2) {
@@ -36,7 +38,7 @@ async function calculateGroupActivitySince(since) {
    return result;
 }
 
-async function getGroupMeetings(since, groups) {
+export async function getGroupMeetings(since, groups) {
    const activity = await Promise.all(
       groups.map(async (group) => {
          let data = await fetchGroupMeetingsSince(group._id, since);
@@ -47,7 +49,7 @@ async function getGroupMeetings(since, groups) {
    return activity;
 }
 
-async function calculateShareoutActivitySince(since) {
+export async function calculateShareoutActivitySince(since) {
    const groups = await fetchGroupsRegBefore(since);
 
    const meetings = await Promise.all(
@@ -68,8 +70,8 @@ async function calculateShareoutActivitySince(since) {
       }
    });
 
-   const shareouts = await Promise.all(
-      meetings.map(async (group) => {
+   await Promise.all(
+      meetings.forEach(async (group) => {
          const data = await Promise.all(
             group.meetings.map(async (id) => {
                const share = await fetchGroupShareoutsByMeeting(id);
@@ -84,8 +86,3 @@ async function calculateShareoutActivitySince(since) {
       })
    );
 }
-
-module.exports = {
-   calculateGroupActivitySince,
-   calculateShareoutActivitySince,
-};

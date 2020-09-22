@@ -16,6 +16,10 @@ const useStyles = makeStyles((theme) => ({
    userInfo: {
       marginLeft: -20,
    },
+   data: {
+      paddingLeft: 5,
+      paddingBottom: 3,
+   },
 }));
 
 const UserProfile: React.FC = (): ReactElement => {
@@ -45,7 +49,9 @@ const UserProfile: React.FC = (): ReactElement => {
                         <Col sm={4} lg={2}>
                            <ListGroup className={classes.userInfo}>
                               <ControlLabel>{element}</ControlLabel>
-                              <ListGroupItem>{user && data[index++].toString().toUpperCase()}</ListGroupItem>
+                              <ListGroupItem className={classes.data}>
+                                 {user && data[index++].toString().toUpperCase()}
+                              </ListGroupItem>
                            </ListGroup>
                         </Col>
                      </Row>

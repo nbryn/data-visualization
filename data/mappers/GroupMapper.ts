@@ -113,14 +113,10 @@ export async function fetchGroupsRegBefore(subtract: string): Promise<Group[]> {
    const before = moment('2020-02-10').subtract(subtract, 'days').toDate();
    const dbResult = await GroupModel.find(
       {
-         $and: [
-            {
-               state: GroupState.ACTIVE,
-               registrationDate: {$lt: before},
-            },
-         ],
+         state: GroupState.ACTIVE,
+         registrationDate: {$lt: before},
       },
-      {projection: {_id: 1, mebers: 1, meetings: 1}}
+      'id members meetings'
    );
 
    return dbResult;

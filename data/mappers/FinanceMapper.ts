@@ -1,6 +1,7 @@
 import moment from 'moment';
 
-import {GroupAccount} from '../../logic/entities/GroupAccount';
+import {CountDTO, LastMonthDTO, LastYearDTO} from '../../logic/util/DTOs';
+import {GroupAccount, GroupAccountState} from '../../logic/entities/GroupAccount';
 import {GroupMeetingShareout} from '../../logic/entities/GroupMeetingShareout';
 import {GroupMeetingLoanModel, GroupMeetingShareoutModel, GroupAccountModel} from '../connection';
 
@@ -9,21 +10,6 @@ export async function fetchAccountDataForGroup(groupID: string): Promise<GroupAc
    const accountData = await GroupAccountModel.find({group: groupID});
 
    return accountData;
-}
-
-export async function fetchBoxBalanceData(): Promise<Array<any>> {
-   const boxBalanceData = await GroupAccountModel.aggregate([
-      {
-         $match: {currency: 'ETB'},
-      },
-      {
-         $group: {
-            _id: '$_id',
-            count: {$sum: '$totalBalance'},
-         },
-      },
-   ]);
-   return boxBalanceData;
 }
 
 export async function fetchLoanCountForGroup(groupID: string): Promise<number> {
@@ -45,20 +31,72 @@ export async function fetchGroupShareoutsByMeeting(meetingID: string): Promise<G
    return groupShareouts;
 }
 
-export async function fetchFinanceData(attribute: string, idString: string): Promise<Array<any>> {
-   const result = await GroupAccountModel.aggregate([
+export async function fetchCurrencyStats(): Promise<CountDTO[]> {
+   const currencyStats = await GroupAccountModel.aggregate([
       {
          $match: {
-            [attribute]: {$gt: 0},
+            totalBalance: {$gt: 0},
          },
       },
       {
          $group: {
-            _id: idString,
-            totalAmount: {$sum: '$' + attribute},
+            _id: '$currency',
+            totalAmount: {$sum: '$totalBalance'},
+         },
+      },
+      {
+         $sort: {totalAmount: -1},
+      },
+   ]);
+
+   const result: CountDTO[] = currencyStats.map((x: any) => ({
+      name: x._id,
+      count: x.totalAmount,
+   }));
+
+   return result;
+}
+
+export async function fetchTotalShareCount(): Promise<number> {
+   const result = await GroupAccountModel.aggregate([
+      {
+         $match: {
+            state: GroupAccountState.ACTIVE,
+         },
+      },
+      {
+         $group: {
+            _id: 'total',
+            totalAmount: {$sum: {$add: ['$totalShares']}},
          },
       },
    ]);
+
+   return result[0].totalAmount;
+}
+
+export async function fetchGroupsWithMostShares(): Promise<CountDTO[]> {
+   const temp = await GroupAccountModel.aggregate([
+      {
+         $match: {
+            state: GroupAccountState.ACTIVE,
+         },
+      },
+      {
+         $group: {
+            _id: '$group',
+            count: {$max: '$totalShares'},
+         },
+      },
+      {
+         $sort: {count: -1},
+      },
+   ]);
+
+   const result: CountDTO[] = temp.splice(0, 10).map((x: any) => ({
+      name: x._id.toString().substring(0, 5),
+      count: x.count,
+   }));
 
    return result;
 }
@@ -69,7 +107,66 @@ export async function fetchTotalLoanCount(): Promise<number> {
    return total;
 }
 
-export async function fetchLoansLastMonth(): Promise<Array<any>> {
+export async function fetchETBLoanData(): Promise<CountDTO[]> {
+   const boxBalanceData = await GroupAccountModel.aggregate([
+      {
+         $match: {
+            currency: 'ETB',
+            totalShares: {$gt: 0},
+         },
+      },
+      {
+         $lookup: {
+            from: 'groups',
+            localField: 'group',
+            foreignField: '_id',
+            as: 'data',
+         },
+      },
+      {
+         $replaceRoot: {newRoot: {$mergeObjects: [{$arrayElemAt: ['$data', 0]}, '$$ROOT']}},
+      },
+      {
+         $project: {
+            data: 0,
+         },
+      },
+      {
+         $group: {
+            _id: '$_id',
+            count: {$sum: {$multiply: ['$totalShares', '$amountPerShare']}},
+         },
+      },
+      {
+         $sort: {count: -1},
+      },
+   ]);
+
+   const result: CountDTO[] = boxBalanceData.splice(0, 10).map((x: any) => ({
+      name: x._id.toString().substring(0, 5),
+      count: x.count,
+   }));
+
+   return result;
+}
+
+export async function fetchBoxBalanceData(): Promise<Array<any>> {
+   const boxBalanceData = await GroupAccountModel.aggregate([
+      {
+         $match: {currency: 'ETB'},
+      },
+      {
+         $group: {
+            _id: '$_id',
+            count: {$sum: '$totalBalance'},
+         },
+      },
+   ]);
+
+   return boxBalanceData;
+}
+
+export async function fetchLoansLastMonth(): Promise<LastMonthDTO[]> {
    const since = moment('2020-02-01').subtract(30, 'days').toDate();
 
    const dbResult = await GroupMeetingLoanModel.aggregate([
@@ -88,7 +185,9 @@ export async function fetchLoansLastMonth(): Promise<Array<any>> {
             count: {$sum: 1},
          },
       },
-      {$sort: {_id: 1}},
+      {
+         $sort: {_id: 1},
+      },
    ]);
 
    const loans = dbResult.map((element) => {
@@ -105,7 +204,7 @@ export async function fetchLoansLastMonth(): Promise<Array<any>> {
    return loans;
 }
 
-export async function fetchLoansLastYear() {
+export async function fetchLoansLastYear(): Promise<LastYearDTO[]> {
    const since = moment('2020-02-01').subtract(365, 'days').toDate();
 
    const dbResult = await GroupMeetingLoanModel.aggregate([

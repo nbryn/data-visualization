@@ -1,103 +1,75 @@
 import * as FinanceMapper from '../../../data/mappers/FinanceMapper';
 import {actionRunner} from '../../util/ActionRunner';
-
-const {calculateEtbLoanStats, calculateShareStats, getCurrencyStats} = require('./FinanceService');
+import {CountDTO, FinanceDataDTO, LastMonthDTO, LastYearDTO} from '../../util/DTOs';
 
 export const financeResolvers = {
    Query: {
-      financeStats: () => ({}),
-   },
+      financeStats: async (): Promise<FinanceDataDTO> => {
+         return actionRunner<FinanceDataDTO>(async () => {
+            const mostShares = await FinanceMapper.fetchGroupsWithMostShares();
+            const currencyData = await FinanceMapper.fetchCurrencyStats();
+            const etbData = await FinanceMapper.fetchETBLoanData();
 
-   FinanceStats: {
-      numberOfCurrencies: async () => {
-         return actionRunner(async () => {
-            const currencyStats = await getCurrencyStats();
-
-            const numberOfCurrencies = currencyStats.length;
-
-            return numberOfCurrencies;
+            return {
+               mostShares,
+               currencyData,
+               etbData,
+            };
          });
       },
-      currencyStats: async () => {
-         return actionRunner(async () => {
-            const currency = await getCurrencyStats();
+   },
+   FinanceStats: {
+      mostSharesData: (root: FinanceDataDTO): CountDTO => {
+         return root.mostShares[0];
+      },
+      mostShares: (root: FinanceDataDTO): number => {
+         return root.mostShares[0].count;
+      },
+      shareStats: (root: FinanceDataDTO): CountDTO[] => {
+         return root.mostShares;
+      },
+      numberOfCurrencies: async (root: FinanceDataDTO): Promise<number> => {
+         return root.currencyData.length;
+      },
+      currencyStats: async (root: FinanceDataDTO): Promise<CountDTO[]> => {
+         return root.currencyData;
+      },
+      groupEtbLoan: (root: FinanceDataDTO): CountDTO[] => {
+         return root.etbData;
+      },
+      etbOnLoan: async (root: FinanceDataDTO): Promise<number> => {
+         let etbOnLoan = 0;
+         root.etbData.forEach((x: CountDTO) => (etbOnLoan += x.count));
 
-            return currency;
-         });
+         return etbOnLoan;
       },
 
       loanTotal: async (): Promise<number> => {
-         return actionRunner(async () => {
+         return actionRunner<number>(async () => {
             const loanTotal = await FinanceMapper.fetchTotalLoanCount();
 
             return loanTotal;
          });
       },
-      loansLastMonth: async () => {
-         return actionRunner(async () => {
+      loansLastMonth: async (): Promise<LastMonthDTO[]> => {
+         return actionRunner<LastMonthDTO[]>(async () => {
             const loansLastMonth = await FinanceMapper.fetchLoansLastMonth();
 
             return loansLastMonth;
          });
       },
-      loansLastYear: async () => {
-         return actionRunner(async () => {
+      loansLastYear: async (): Promise<LastYearDTO[]> => {
+         return actionRunner<LastYearDTO[]>(async () => {
             const loansLastYear = await FinanceMapper.fetchLoansLastYear();
 
             return loansLastYear;
          });
       },
-      shareTotal: async () => {
-         return actionRunner(async () => {
-            const shareStats = await calculateShareStats();
-
-            const {shareTotal} = shareStats;
+      shareTotal: async (): Promise<number> => {
+         return actionRunner<number>(async () => {
+            const shareTotal = await FinanceMapper.fetchTotalShareCount();
 
             return shareTotal;
-         });
-      },
-      mostSharesData: async () => {
-         return actionRunner(async () => {
-            const shareStats = await calculateShareStats();
-
-            const {mostShares} = shareStats;
-
-            return mostShares;
-         });
-      },
-      mostShares: async () => {
-         return actionRunner(async () => {
-            const shareStats = await calculateShareStats();
-
-            const {mostShares} = shareStats;
-
-            return mostShares.count;
-         });
-      },
-      shareStats: async () => {
-         return actionRunner(async () => {
-            const shareStats = await calculateShareStats();
-
-            return shareStats.shareStats;
-         });
-      },
-
-      groupEtbLoan: async () => {
-         return actionRunner(async () => {
-            const etbStats = await calculateEtbLoanStats();
-
-            const {groupEtbLoan} = etbStats;
-
-            return groupEtbLoan;
-         });
-      },
-      etbOnLoan: async () => {
-         return actionRunner(async () => {
-            const etbStats = await calculateEtbLoanStats();
-
-            const {etbOnLoan} = etbStats;
-
-            return etbOnLoan;
          });
       },
    },

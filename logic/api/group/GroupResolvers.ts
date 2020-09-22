@@ -1,9 +1,9 @@
+import * as GroupActivityService from './GroupActivityService';
 import * as GroupMapper from '../../../data/mappers/GroupMapper';
+import * as GroupService from './GroupService';
 import {actionRunner} from '../../util/ActionRunner';
 import {Error} from '../../util/Error';
-
-const GroupActivityService = require('./GroupActivityService');
-const GroupService = require('./GroupService');
+import {Group} from '../../entities/Group';
 
 export const groupResolvers = {
    Query: {
@@ -11,7 +11,7 @@ export const groupResolvers = {
       groupEngagement: () => ({}),
       ngoGroupData: (obj: any, args: any) => ({obj, args}),
       groupActivity: async () => ({}),
-      groupSearch: async (obj: any, args: any) => {
+      groupSearch: async (obj: any, args: any): Promise<Partial<Group>> => {
          return actionRunner(async () => {
             const groupData = await GroupService.listGroupData(args.input.group);
 
@@ -20,14 +20,14 @@ export const groupResolvers = {
       },
    },
    GroupSearch: {
-      __resolveType: (obj: any) => {
+      __resolveType: (obj: any): string => {
          if (obj instanceof Error) return 'Error';
 
          return 'Group';
       },
    },
    GroupActivity: {
-      meetingActivity: async () => {
+      meetingActivity: async (): Promise<number> => {
          return actionRunner(async () => {
             const last105Days = await GroupActivityService.calculateGroupActivitySince(105);
 

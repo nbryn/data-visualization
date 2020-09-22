@@ -4,7 +4,7 @@ import * as GroupMemberMapper from '../../../data/mappers/GroupMemberMapper';
 import * as GroupMapper from '../../../data/mappers/GroupMapper';
 import * as UserMapper from '../../../data/mappers/UserMapper';
 
-async function listGroupData(groupName) {
+export async function listGroupData(groupName) {
    const generalData = await GroupMapper.fetchGroupByName(groupName);
 
    const allGroupData = await retrieveGroupData(generalData[0]);
@@ -12,7 +12,7 @@ async function listGroupData(groupName) {
    return allGroupData;
 }
 
-async function listGroupsByNGO(ngo) {
+export async function listGroupsByNGO(ngo) {
    const generalGroupData = await GroupMapper.fetchGroupsByNGO(ngo);
 
    const allGroupData = await Promise.all(
@@ -26,7 +26,7 @@ async function listGroupsByNGO(ngo) {
    return allGroupData;
 }
 
-async function calculateMeetingFrequency() {
+export async function calculateMeetingFrequency() {
    const meetingData = await GroupMapper.fetchGroupMeetingData();
 
    //Test groups < 6 members & New groups regDate < 14 days
@@ -78,7 +78,7 @@ async function calculateMeetingFrequency() {
    return groupEngagement;
 }
 
-async function generateMeetingOverview() {
+export async function generateMeetingOverview() {
    const result = await GroupMapper.fetchAllGroupData();
 
    const groupMeetingData = result.map((element) => {
@@ -125,13 +125,6 @@ async function generateMeetingOverview() {
 
    return groupMeetingData;
 }
-
-module.exports = {
-   listGroupData,
-   listGroupsByNGO,
-   calculateMeetingFrequency,
-   generateMeetingOverview,
-};
 
 // ---- Helper Functions ---- //
 

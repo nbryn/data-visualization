@@ -16,5 +16,7 @@
       "resolveJsonModule": true,
       "noEmit": true,
       "isolatedModules": true,
+      "noUnusedLocals": true,
+      "noImplicitReturns": true
    }
 }

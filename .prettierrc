@@ -6,5 +6,8 @@
   "quoteProps": "consistent",
   "bracketSpacing": false,
   "arrowParens": "always",
-  "printWidth": 115
+  "printWidth": 115,
+  "[javascript]": {
+    "editor.formatOnSave": true
+}
 }

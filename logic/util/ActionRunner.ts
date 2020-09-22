@@ -1,4 +1,8 @@
-export async function actionRunner(actionFunction: Function, input?: any, validateFunction?: Function) {
+export async function actionRunner<T>(
+   actionFunction: Function,
+   input?: any,
+   validateFunction?: Function
+): Promise<T> {
    try {
       if (validateFunction) {
          await validateFunction(input);

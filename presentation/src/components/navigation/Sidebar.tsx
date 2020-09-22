@@ -1,7 +1,7 @@
 import {NavLink} from 'react-router-dom';
 import React, {ReactElement} from 'react';
 
-import Logo from '../../assets/img/dashboard.jpeg';
+import Logo from '../../assets/img/chart.png';
 
 type Links = {
    [key: string]: string;
@@ -30,7 +30,7 @@ const Sidebar: React.FC = (): ReactElement => {
    return (
       <div id="sidebar" className="sidebar" data-color="black" data-image="../../assets/img/dashboard.png">
          <div className="logo">
-            <img />
+            <img src={Logo} />
          </div>
 
          <div className="sidebar-wrapper">

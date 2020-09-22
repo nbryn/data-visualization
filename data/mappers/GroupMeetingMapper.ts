@@ -29,13 +29,9 @@ export async function fetchGroupMeetingsSince(groupID: string, subtract: string)
    const since = moment('2020-02-10').subtract(subtract, 'days').toDate();
 
    const groupMeetingsSince = await GroupMeetingModel.find({
-      $and: [
-         {
-            // @ts-ignore
-            group: groupID,
-            meetingDay: {$gt: since},
-         },
-      ],
+      // @ts-ignore
+      group: groupID,
+      meetingDay: {$gt: since},
    });
 
    return groupMeetingsSince;

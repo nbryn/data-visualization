@@ -1,6 +1,7 @@
+import * as NGOService from './NGOService';
 import {actionRunner} from '../../util/ActionRunner';
+import {CountDTO} from '../../util/DTOs';
 import {fetchGroupStats} from '../../../data/mappers/GroupMapper';
-const {calculateGroupsPerUser, calculateUsersPerNGO} = require('./NGOService');
 
 export const ngoResolvers = {
    Query: {
@@ -23,16 +24,16 @@ export const ngoResolvers = {
             return groupsNGO;
          });
       },
-      usersNGO: async (): Promise<any[]> => {
-         return actionRunner(async () => {
-            const usersNGO = await calculateUsersPerNGO();
+      usersNGO: async (): Promise<CountDTO[]> => {
+         return actionRunner<CountDTO[]>(async () => {
+            const usersNGO = await NGOService.calculateUsersPerNGO();
 
             return usersNGO;
          });
       },
       groupsUser: async (): Promise<any[]> => {
          return actionRunner(async () => {
-            const groupsUser = await calculateGroupsPerUser();
+            const groupsUser = await NGOService.calculateGroupsPerUser();
 
             return groupsUser;
          });

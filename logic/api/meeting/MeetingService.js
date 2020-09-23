@@ -1,7 +1,7 @@
 import * as MeetingMapper from '../../../data/mappers/GroupMeetingMapper';
 import {fetchGroupByID} from '../../../data/mappers/GroupMapper';
 
-async function calculateMeetingsPerGroup() {
+export async function calculateMeetingsPerGroup() {
    const meetingsPerGroup = await MeetingMapper.fetchMeetingsPerGroup();
 
    const groups = await Promise.all(
@@ -19,7 +19,7 @@ async function calculateMeetingsPerGroup() {
    return groups;
 }
 
-async function calculateSharesPerMeeting() {
+export async function calculateSharesPerMeeting() {
    const meetingShares = await MeetingMapper.fetchMeetingShares();
 
    meetingShares.sort((a, b) => b.shares.length - a.shares.length);

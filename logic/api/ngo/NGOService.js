@@ -2,7 +2,7 @@ import fetchAllUsers from '../../../data/mappers/UserMapper';
 import {fetchGroupMembersPerNGO} from '../../../data/mappers/GroupMapper';
 import {fetchAllGroupMembers} from '../../../data/mappers/GroupMemberMapper';
 
-async function calculateGroupsPerUser() {
+export async function calculateGroupsPerUser() {
    //   return await fetchGroupMemberByUser();
    const users = await fetchAllUsers();
    const groupMembers = await fetchAllGroupMembers();
@@ -37,7 +37,7 @@ async function calculateGroupsPerUser() {
    return result;
 }
 
-async function calculateUsersPerNGO() {
+export async function calculateUsersPerNGO() {
    const result = await fetchGroupMembersPerNGO();
 
    const usersPerNGO = result
@@ -55,5 +55,3 @@ async function calculateUsersPerNGO() {
 
    return usersPerNGO;
 }
-
-module.exports = {calculateGroupsPerUser, calculateUsersPerNGO};

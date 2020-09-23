@@ -2,6 +2,7 @@ import * as UserMapper from '../../../data/mappers/UserMapper';
 import {actionRunner} from '../../util/ActionRunner';
 import {calculateActiveUsers} from './UserService';
 import {User} from '../../entities/User';
+import {CountDTO, LastMonthDTO, LastYearDTO} from '../../util/DTOs';
 
 export const userResolvers = {
    Query: {
@@ -23,22 +24,22 @@ export const userResolvers = {
             return activeUsers;
          });
       },
-      usersLastMonth: async (): Promise<any[]> => {
-         return actionRunner(async () => {
+      usersLastMonth: async (): Promise<LastMonthDTO[]> => {
+         return actionRunner<LastMonthDTO[]>(async () => {
             const usersLastMonth = await UserMapper.fetchUsersLastMonth();
 
             return usersLastMonth;
          });
       },
-      usersLastYear: async (): Promise<any[]> => {
-         return actionRunner(async () => {
+      usersLastYear: async (): Promise<LastYearDTO[]> => {
+         return actionRunner<LastYearDTO[]>(async () => {
             const result = await UserMapper.fetchUsersLastYear();
 
             return result;
          });
       },
-      userGenderStats: async (): Promise<any[]> => {
-         return actionRunner(async () => {
+      userGenderStats: async (): Promise<CountDTO[]> => {
+         return actionRunner<CountDTO[]>(async () => {
             const result = await UserMapper.fetchGenderStats();
 
             return result;

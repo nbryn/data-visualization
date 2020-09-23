@@ -5,32 +5,6 @@ import {GroupAccount, GroupAccountState} from '../../logic/entities/GroupAccount
 import {GroupMeetingShareout} from '../../logic/entities/GroupMeetingShareout';
 import {GroupMeetingLoanModel, GroupMeetingShareoutModel, GroupAccountModel} from '../connection';
 
-export async function fetchAccountDataForGroup(groupID: string): Promise<GroupAccount[]> {
-   // @ts-ignore
-   const accountData = await GroupAccountModel.find({group: groupID});
-
-   return accountData;
-}
-
-export async function fetchLoanCountForGroup(groupID: string): Promise<number> {
-   // @ts-ignore
-   const loanData = await GroupMeetingLoanModel.count({group: groupID});
-
-   return loanData;
-}
-
-export async function fetchGroupShareoutsByMeeting(meetingID: string): Promise<GroupMeetingShareout[]> {
-   const groupShareouts = await GroupMeetingShareoutModel.find({
-      $and: [
-         {
-            // @ts-ignore
-            meeting: meetingID,
-         },
-      ],
-   });
-   return groupShareouts;
-}
-
 export async function fetchCurrencyStats(): Promise<CountDTO[]> {
    const currencyStats = await GroupAccountModel.aggregate([
       {
@@ -148,6 +122,32 @@ export async function fetchETBLoanData(): Promise<CountDTO[]> {
    }));
 
    return result;
+}
+
+export async function fetchAccountDataForGroup(groupID: string): Promise<GroupAccount[]> {
+   // @ts-ignore
+   const accountData = await GroupAccountModel.find({group: groupID});
+
+   return accountData;
+}
+
+export async function fetchLoanCountForGroup(groupID: string): Promise<number> {
+   // @ts-ignore
+   const loanData = await GroupMeetingLoanModel.count({group: groupID});
+
+   return loanData;
+}
+
+export async function fetchGroupShareoutsByMeeting(meetingID: string): Promise<GroupMeetingShareout[]> {
+   const groupShareouts = await GroupMeetingShareoutModel.find({
+      $and: [
+         {
+            // @ts-ignore
+            meeting: meetingID,
+         },
+      ],
+   });
+   return groupShareouts;
 }
 
 export async function fetchBoxBalanceData(): Promise<Array<any>> {

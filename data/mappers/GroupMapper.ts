@@ -1,5 +1,6 @@
 import moment from 'moment';
 
+import {CountDTO, LastMonthDTO, LastYearDTO} from '../../logic/util/DTOs';
 import {Error} from '../../logic/util/Error';
 import {Group, GroupState} from '../../logic/entities/Group';
 import {GroupModel} from '../connection';
@@ -63,8 +64,8 @@ export async function fetchAllGroups(): Promise<Group[]> {
    return groupMembers;
 }
 
-export async function fetchGroupSizeData() {
-   const groupSizeData = await GroupModel.aggregate([
+export async function fetchGroupSizeData(): Promise<CountDTO[]> {
+   const temp = await GroupModel.aggregate([
       {
          $group: {
             _id: {groupSize: {$size: '$members'}},
@@ -72,6 +73,13 @@ export async function fetchGroupSizeData() {
          },
       },
    ]);
+
+   const groupSizeData = temp
+      .filter((element) => element._id.groupSize > 6 && element.count > 2)
+      .map((element) => ({
+         name: element._id.groupSize,
+         count: element.count,
+      }));
 
    return groupSizeData;
 }
@@ -140,7 +148,7 @@ export async function fetchGroupCountLastWeek(): Promise<number> {
    return groupCount;
 }
 
-export async function fetchGroupsLastMonth() {
+export async function fetchGroupsLastMonth(): Promise<LastMonthDTO[]> {
    const since = moment('2020-02-01').subtract(30, 'days').toDate();
 
    const dbResult = await GroupModel.aggregate([
@@ -177,7 +185,7 @@ export async function fetchGroupsLastMonth() {
    return signups;
 }
 
-export async function fetchGroupsLastYear() {
+export async function fetchGroupsLastYear(): Promise<LastYearDTO[]> {
    const since = moment('2020-02-01').subtract(365, 'days').toDate();
 
    const dbResult = await GroupModel.aggregate([

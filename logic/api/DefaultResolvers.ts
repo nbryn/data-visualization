@@ -5,7 +5,7 @@ import {User} from '../entities/User';
 
 export const defaultResolvers = {
    Signin: {
-      __resolveType: (obj: User | Error) => {
+      __resolveType: (obj: User | Error): string => {
          if (obj instanceof Error) return 'Error';
 
          return 'User';
@@ -13,7 +13,7 @@ export const defaultResolvers = {
    },
    Mutation: {
       signin: async (parent: any, args: unknown): Promise<User | Error> => {
-         return actionRunner(async () => {
+         return actionRunner<User | Error>(async () => {
             const result = await validateLogin(args);
 
             return result;

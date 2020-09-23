@@ -1,5 +1,7 @@
 import moment from 'moment';
+import mongoose from 'mongoose';
 
+import {LastMonthDTO, LastYearDTO} from '../../logic/util/DTOs';
 import {GroupMeeting, GroupMeetingState} from '../../logic/entities/GroupMeeting';
 import {GroupMeetingModel} from '../connection';
 
@@ -9,7 +11,7 @@ export async function fetchTotalMeetingCount(): Promise<number> {
    return meetingCount;
 }
 
-export async function fetchGroupMeetingById(id: string) {
+export async function fetchGroupMeetingById(id: string): Promise<GroupMeeting | null> {
    const meeting = await GroupMeetingModel.findById(id);
 
    return meeting;
@@ -29,8 +31,7 @@ export async function fetchGroupMeetingsSince(groupID: string, subtract: string)
    const since = moment('2020-02-10').subtract(subtract, 'days').toDate();
 
    const groupMeetingsSince = await GroupMeetingModel.find({
-      // @ts-ignore
-      group: groupID,
+      group: new mongoose.Schema.Types.ObjectId(groupID),
       meetingDay: {$gt: since},
    });
 
@@ -43,8 +44,6 @@ export async function fetchAllMeetingsSince(subtract: string): Promise<GroupMeet
    const groupMeetingsSince = await GroupMeetingModel.find({
       $and: [
          {
-            // @ts-ignore
-            group: groupID,
             meetingDay: {$gt: since},
          },
       ],
@@ -74,7 +73,7 @@ export async function fetchMeetingShares(): Promise<GroupMeeting[]> {
    return meetingShares;
 }
 
-export async function fetchMeetingsLastMonth(): Promise<any[]> {
+export async function fetchMeetingsLastMonth(): Promise<LastMonthDTO[]> {
    const since = moment('2020-02-10').subtract(30, 'days').toDate();
 
    const dbResult = await GroupMeetingModel.aggregate([
@@ -110,7 +109,7 @@ export async function fetchMeetingsLastMonth(): Promise<any[]> {
    return meetings;
 }
 
-export async function fetchMeetingLastYear(): Promise<any[]> {
+export async function fetchMeetingLastYear(): Promise<LastYearDTO[]> {
    const since = moment('2020-02-01').subtract(365, 'days').toDate();
 
    const dbResult = await GroupMeetingModel.aggregate([

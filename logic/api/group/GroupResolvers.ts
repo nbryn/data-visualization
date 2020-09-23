@@ -4,6 +4,7 @@ import * as GroupService from './GroupService';
 import {actionRunner} from '../../util/ActionRunner';
 import {Error} from '../../util/Error';
 import {Group} from '../../entities/Group';
+import {CountDTO, LastMonthDTO, LastYearDTO} from '../../util/DTOs';
 
 export const groupResolvers = {
    Query: {
@@ -27,13 +28,11 @@ export const groupResolvers = {
       },
    },
    GroupActivity: {
-      meetingActivity: async (): Promise<number> => {
-         return actionRunner(async () => {
+      meetingActivity: async (): Promise<number[]> => {
+         return actionRunner<number[]>(async () => {
             const last105Days = await GroupActivityService.calculateGroupActivitySince(105);
 
-            return {
-               last105Days: last105Days,
-            };
+            return last105Days;
          });
       },
       shareoutActivity: async () => {
@@ -46,42 +45,35 @@ export const groupResolvers = {
    },
    GroupStats: {
       groupTotal: async (): Promise<number> => {
-         return actionRunner(async () => {
+         return actionRunner<number>(async () => {
             const groupTotal = await GroupMapper.fetchTotalGroupCount();
 
             return groupTotal;
          });
       },
-      groupSize: async () => {
-         return actionRunner(async () => {
+      groupSize: async (): Promise<CountDTO[]> => {
+         return actionRunner<CountDTO[]>(async () => {
             const result = await GroupMapper.fetchGroupSizeData();
 
-            const groupSizeStats = result
-               .filter((element) => element._id.groupSize > 6 && element.count > 2)
-               .map((element) => ({
-                  name: element._id.groupSize,
-                  count: element.count,
-               }));
-
-            return groupSizeStats;
+            return result;
          });
       },
       groupsLastWeek: async (): Promise<number> => {
-         return actionRunner(async () => {
+         return actionRunner<number>(async () => {
             const groupsLastWeek = await GroupMapper.fetchGroupCountLastWeek();
 
             return groupsLastWeek;
          });
       },
-      groupsLastMonth: async () => {
-         return actionRunner(async () => {
+      groupsLastMonth: async (): Promise<LastMonthDTO[]> => {
+         return actionRunner<LastMonthDTO[]>(async () => {
             const groupsLastMonth = await GroupMapper.fetchGroupsLastMonth();
 
             return groupsLastMonth;
          });
       },
-      groupsLastYear: async () => {
-         return actionRunner(async () => {
+      groupsLastYear: async (): Promise<LastYearDTO[]> => {
+         return actionRunner<LastYearDTO[]>(async () => {
             const groupsLastYear = await GroupMapper.fetchGroupsLastYear();
 
             return groupsLastYear;
@@ -89,8 +81,8 @@ export const groupResolvers = {
       },
    },
    GroupEngagement: {
-      groupsActive: async () => {
-         return actionRunner(async () => {
+      groupsActive: async (): Promise<number> => {
+         return actionRunner<number>(async () => {
             const allGroups = await GroupMapper.fetchAllGroups();
             let activeGroups = 0;
 

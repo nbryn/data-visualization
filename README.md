@@ -4,7 +4,7 @@
 Web app that visualizes data stored in a MongoDB database using both Chart.js and Recharts. 
 The backend is implemented using Apollo/Express, the frontend using React and they are connected with a GraphQL API. <br /> 
 
-Travis CI is used for continuous integration which means that all tests(which are implemented with React Testing Library) are run on every PR.
+Travis CI is used for continuous integration which means that all tests(which are implemented using React Testing Library) are run on every PR.
 If all tests are green and it's a PR to master the app is automatically deployed.
 The app was originally implemented using JavaScript but converted to TypeScript.
 

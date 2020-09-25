@@ -23,20 +23,20 @@ The app is deployed to Heroku and can be accessed using the link below.
 
 ## Tech 
 * TypeScript - Strict syntactical superset of JavaScript which adds optional static typing to the language.
-* GraphQL - GraphQL is a query language which prioritizes giving clients exactly the data they request. 
-* Chart.js - Free open-source JavaScript library for data visualization.
-* Recharts - Free open-source JavaScript library for data visualization.
+* GraphQL - Query language which prioritizes giving clients exactly the data they request. 
 * Travis CI - Hosted continuous integration service used to build and test software projects.
 * MongoDB - NoSQL Database used for storing and accessing data.
-* MongoDBAtlas - MongoDB Atlas is a cloud database service for applications using MongoDB.
+* MongoDBAtlas - Cloud database service for applications using MongoDB.
 * Mongoose - Object Data Modeling library for MongoDB.
 * React - UI component library used as base for the frontend.
 * Redux - Used for state management and for making the app even more modular and functional.
 * React Testing Library - Helpers that enables testing React components without relying on implementation details.
+* Chart.js - Free open-source JavaScript library for data visualization.
+* Recharts - Free open-source JavaScript library for data visualization.
 * Apollo Server - Open-source GraphQL server.
 * Express.js - Node.js web application framework that provides features for web applications.
-* Prettier - Prettier is an opinionated code formatter which enforces consistent style.
-* ESLint - Statically analyzes code to quickly find problems.
+* Prettier - Opinionated code formatter which enforces consistent style.
+* ESLint - Static code analyzer that identifies common problems.
 * Bootstrap - Predefined CSS and components with options for customization.
 
 ## Setup

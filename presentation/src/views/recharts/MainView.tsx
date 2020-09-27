@@ -30,25 +30,25 @@ const MainView: React.FC = (): ReactElement => {
                      </Col>
                      <Col lg={3} sm={6}>
                         <KPIContainer
-                           title="Total Groups"
+                           title="Total Teams"
                            statsType="main"
-                           total="groupsTotal"
+                           total="teamsTotal"
                            icon="pe-7s-users text-info"
+                        />
+                     </Col>
+                     <Col lg={3} sm={6}>
+                        <KPIContainer
+                           title="Total Matches"
+                           statsType="main"
+                           total="matchTotal"
+                           icon="pe-7s-graph1 text-danger"
                         />
                      </Col>
                      <Col lg={3} sm={6}>
                         <KPIContainer
                            title="Total Meetings"
                            statsType="main"
-                           total="meetingsTotal"
-                           icon="pe-7s-graph1 text-danger"
-                        />
-                     </Col>
-                     <Col lg={3} sm={6}>
-                        <KPIContainer
-                           title="Total Shares"
-                           statsType="main"
-                           total="sharesTotal"
+                           total="meetingTotal"
                            icon="pe-7s-graph1 text-danger"
                         />
                      </Col>
@@ -67,21 +67,21 @@ const MainView: React.FC = (): ReactElement => {
                      </Col>
                      <Col lg={4} md={6}>
                         <LineChartContainer
-                           title="Total Groups"
+                           title="Total Teams"
                            statsType="main"
-                           dataType="groupsLastYearData"
+                           dataType="teamsLastYearData"
                            xLabel="Month"
-                           yLabel="Groups"
+                           yLabel="Teams"
                            color="#228b22"
                         />
                      </Col>
                      <Col lg={4} md={6}>
                         <LineChartContainer
-                           title="Total Meetings"
+                           title="Total Matches"
                            statsType="main"
-                           dataType="meetingsLastYearData"
+                           dataType="matchesLastYearData"
                            xLabel="Month"
-                           yLabel="Meetings"
+                           yLabel="matches"
                            color="#2196f3"
                         />
                      </Col>
@@ -90,11 +90,11 @@ const MainView: React.FC = (): ReactElement => {
                   <Row>
                      <Col lg={4} md={6}>
                         <BarChartContainer
-                           title="Groups Last Month"
+                           title="Teams Last Month"
                            statsType="main"
-                           dataType="groupsLastMonthData"
+                           dataType="teamsLastMonthData"
                            xLabel="Day"
-                           yLabel="Groups"
+                           yLabel="Teams"
                            color="#228b22"
                         />
                      </Col>

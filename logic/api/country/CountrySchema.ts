@@ -2,22 +2,22 @@ const {gql} = require('apollo-server');
 
 export const CountrySchema = gql`
    type Country {
-      groups: Float
+      teams: Float
       users: Float
    }
 
-   type CountryStats {
+   type CountryData {
       country(country: String!): Country
    }
 
-   type GeneralCountryStats {
-      groupsCountry: [PerUnit]
-      usersCountry: [PerUnit]
-      meetingsCountry: [PerUnit]
+   type GeneralCountryData {
+      teamsCountry: [Count]
+      usersCountry: [Count]
+      matchesCountry: [Count]
    }
 
    extend type Query {
-      generalCountryStats: GeneralCountryStats
-      country: CountryStats
+      generalCountryData: GeneralCountryData
+      country: CountryData
    }
 `;

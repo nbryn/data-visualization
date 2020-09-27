@@ -4,8 +4,8 @@ import thunk from 'redux-thunk';
 import ChartjsReducers, {ChartjsState, initialChartjsState} from './datamodels/Chartjs';
 import FinanceReducers, {FinanceState, initialFinanceState} from './datamodels/Finance';
 import GeneralReducers, {GeneralState, initialGeneralState} from './datamodels/General';
-import GroupReducers, {GroupState, initialGroupState} from './datamodels/Group';
-import MeetingReducers, {MeetingState, initialMeetingState} from './datamodels/Meeting';
+import TeamReducers, {TeamState, initialTeamState} from './datamodels/Team';
+import MatchReducers, {MatchState, initialMatchState} from './datamodels/Match';
 import MainReducers, {MainState, initialMainState} from './datamodels/Main';
 import UserReducers, {UserState, initialUserState} from './datamodels/User';
 
@@ -13,8 +13,8 @@ export interface RootState {
    [key: string]: any;
    chartjs: ChartjsState;
    finance: FinanceState;
-   groups: GroupState;
-   meetings: MeetingState;
+   teams: TeamState;
+   matches: MatchState;
    users: UserState;
    main: MainState;
    general: GeneralState;
@@ -23,8 +23,8 @@ export interface RootState {
 export const initialState: RootState = {
    chartjs: initialChartjsState,
    finance: initialFinanceState,
-   meetings: initialMeetingState,
-   groups: initialGroupState,
+   matches: initialMatchState,
+   teams: initialTeamState,
    users: initialUserState,
    main: initialMainState,
    general: initialGeneralState,
@@ -33,8 +33,8 @@ export const initialState: RootState = {
 export const rootReducer = combineReducers({
    chartjs: ChartjsReducers,
    finance: FinanceReducers,
-   groups: GroupReducers,
-   meetings: MeetingReducers,
+   teams: TeamReducers,
+   matches: MatchReducers,
    users: UserReducers,
    main: MainReducers,
    general: GeneralReducers,

@@ -28,27 +28,27 @@ export default function (state = {}, action: FinanceAction) {
 export interface FinanceState {
    [key: string]: any;
    numberOfCurrencies?: number;
-   currencyStats: ChartData[];
-   loansTotal: number;
-   loansLastMonthData: ChartData[];
-   loansLastYearLineChartData: ChartData[];
-   loansLastYearBarChartData: ChartData[];
-   sharesTotal: number;
-   sharesPerGroup: ChartData[];
-   mostShares: string;
-   etbOnLoan: number;
-   groupEtbLoan: ChartData[];
+   currencyData: ChartData[];
+   eventTotal: number;
+   eventsLastMonthData: ChartData[];
+   eventsLastYearLineChartData: ChartData[];
+   eventsLastYearBarChartData: ChartData[];
+   meetingTotal: number;
+   meetingsPerTeam: ChartData[];
+   mostMeetings: string;
+   etbEventCount: number;
+   teamETBEventData: ChartData[];
 }
 
 export const initialFinanceState: FinanceState = {
-   currencyStats: [],
-   loansTotal: 0,
-   loansLastMonthData: [],
-   loansLastYearLineChartData: [],
-   loansLastYearBarChartData: [],
-   sharesTotal: 0,
-   sharesPerGroup: [],
-   groupEtbLoan: [],
-   etbOnLoan: 0,
-   mostShares: '',
+   currencyData: [],
+   eventTotal: 0,
+   eventsLastMonthData: [],
+   eventsLastYearLineChartData: [],
+   eventsLastYearBarChartData: [],
+   meetingTotal: 0,
+   meetingsPerTeam: [],
+   teamETBEventData: [],
+   etbEventCount: 0,
+   mostMeetings: '',
 };

@@ -2,11 +2,11 @@ import {Action} from 'redux';
 import {ThunkAction} from 'redux-thunk';
 
 import {
-   fetchGroupsLastMonth,
-   fetchGroupsLastYear,
-   fetchTotalGroups,
+   fetchTeamsLastMonth,
+   fetchTeamsLastYear,
+   fetchTotalTeams,
+   fetchTotalMatches,
    fetchTotalMeetings,
-   fetchTotalShares,
    fetchTotalUsers,
    fetchUserGenderData,
    fetchUsersLastYear,
@@ -14,23 +14,23 @@ import {
 } from '../services/requests';
 import * as DataMappingService from '../services/DataMappingService';
 import {ChartjsLastMonthData, ChartjsState, setChartjsData} from '../store/datamodels/Chartjs';
-import {LastMonthDto, LastYearDto, ServerDto} from '../services/requests/Dto';
+import {LastMonthDTO, LastYearDTO, ServerDTO} from '../services/requests/DTO';
 import {RootState} from '../store/index';
 
 export const updateChartjsData = (): ThunkAction<void, RootState, null, Action<string>> => async (dispatch) => {
    const result: ChartjsState = {} as ChartjsState;
 
    result.usersTotal = await fetchTotalUsers();
-   result.groupsTotal = await fetchTotalGroups();
-   result.meetingsTotal = await fetchTotalMeetings();
-   result.sharesTotal = await fetchTotalShares();
+   result.teamsTotal = await fetchTotalTeams();
+   result.matchTotal = await fetchTotalMatches();
+   result.meetingTotal = await fetchTotalMeetings();
 
-   const usersLastMonth: LastMonthDto[] = await fetchUsersLastMonth();
-   const usersLastYear: LastYearDto[] = await fetchUsersLastYear();
-   const genderData: ServerDto[] = await fetchUserGenderData();
+   const usersLastMonth: LastMonthDTO[] = await fetchUsersLastMonth();
+   const usersLastYear: LastYearDTO[] = await fetchUsersLastYear();
+   const genderData: ServerDTO[] = await fetchUserGenderData();
 
-   const groupsLastMonth: LastMonthDto[] = await fetchGroupsLastMonth();
-   const groupsLastYear: LastYearDto[] = await fetchGroupsLastYear();
+   const teamsLastMonth: LastMonthDTO[] = await fetchTeamsLastMonth();
+   const teamsLastYear: LastYearDTO[] = await fetchTeamsLastYear();
 
    const usersLastMonthLineChart: ChartjsLastMonthData = DataMappingService.mapChartjsLastMonthData(
       usersLastMonth,
@@ -52,23 +52,23 @@ export const updateChartjsData = (): ThunkAction<void, RootState, null, Action<s
 
    result.genderData = DataMappingService.mapChartjsPieChartData(genderData);
 
-   const groupsLastMonthLineChart: ChartjsLastMonthData = DataMappingService.mapChartjsLastMonthData(
-      groupsLastMonth,
+   const teamsLastMonthLineChart: ChartjsLastMonthData = DataMappingService.mapChartjsLastMonthData(
+      teamsLastMonth,
       true
    );
-   const groupsLastMonthBarChart: ChartjsLastMonthData = DataMappingService.mapChartjsLastMonthData(
-      groupsLastMonth,
+   const teamsLastMonthBarChart: ChartjsLastMonthData = DataMappingService.mapChartjsLastMonthData(
+      teamsLastMonth,
       false
    );
 
-   result.groupsLastMonthLineChart = groupsLastMonthLineChart;
-   result.groupsLastWeekLineChart = groupsLastMonthLineChart.lastWeek;
+   result.teamsLastMonthLineChart = teamsLastMonthLineChart;
+   result.teamsLastWeekLineChart = teamsLastMonthLineChart.lastWeek;
 
-   result.groupsLastMonthBarChart = groupsLastMonthBarChart;
-   result.groupsLastWeekBarChart = groupsLastMonthBarChart.lastWeek;
-   result.groupsLastYearBarChart = DataMappingService.mapChartjsLastYearData(groupsLastYear, false);
+   result.teamsLastMonthBarChart = teamsLastMonthBarChart;
+   result.teamsLastWeekBarChart = teamsLastMonthBarChart.lastWeek;
+   result.teamsLastYearBarChart = DataMappingService.mapChartjsLastYearData(teamsLastYear, false);
 
-   result.groupsLastYearLineChart = DataMappingService.mapChartjsLastYearData(groupsLastYear, true);
+   result.teamsLastYearLineChart = DataMappingService.mapChartjsLastYearData(teamsLastYear, true);
 
    dispatch(setChartjsData(result));
 };

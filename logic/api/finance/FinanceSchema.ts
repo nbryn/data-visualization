@@ -1,32 +1,27 @@
 const {gql} = require('apollo-server');
 
 export const FinanceSchema = gql`
-   type Data {
-      name: String
-      count: Float
-   }
-
-   type BoxBalanceStats {
+   type BoxBalanceData {
       totalBoxBalance: Float
-      groupWithMost: Float
+      teamWithMost: Float
    }
 
-   type FinanceStats {
+   type FinanceData {
       numberOfCurrencies: Float
-      currencyStats: [Data]
-      loanTotal: Float
-      loansLastMonth: [NumberDay]
-      loansLastYear: [NumberMonth]
-      shareTotal: Float
-      mostSharesData: Data
-      mostShares: Float
-      shareStats: [Data]
-      etbOnLoan: Float
-      groupEtbLoan: [Data]
-      boxBalanceStats: BoxBalanceStats
+      currencyData: [Count]
+      eventTotal: Float
+      eventsLastMonth: [NumberDay]
+      eventsLastYear: [NumberMonth]
+      meetingTotal: Float
+      mostMeetingData: Count
+      teamWithMostMeetings: Float
+      meetingData: [Count]
+      etbEventCount: Float
+      teamETBEventData: [Count]
+      boxBalanceData: BoxBalanceData
    }
 
    extend type Query {
-      financeStats: FinanceStats
+      financeData: FinanceData
    }
 `;

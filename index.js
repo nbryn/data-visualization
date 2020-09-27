@@ -6,18 +6,18 @@ import express from 'express';
 import {connectToDB} from './data/connection';
 import {DefaultSchema} from './logic/api/DefaultSchema.ts';
 import {FinanceSchema} from './logic/api/finance/FinanceSchema.ts';
-import {GroupSchema} from './logic/api/group/GroupSchema.ts';
-import {MeetingSchema} from './logic/api/meeting/MeetingSchema.ts';
+import {TeamSchema} from './logic/api/team/TeamSchema.ts';
+import {MatchSchema} from './logic/api/match/MatchSchema.ts';
 import {UserSchema} from './logic/api/user/UserSchema.ts';
-import {NGOSchema} from './logic/api/ngo/NGOSchema.ts';
+import {OrgSchema} from './logic/api/organization/OrgSchema.ts';
 import {CountrySchema} from './logic/api/country/CountrySchema.ts';
 
 import {defaultResolvers} from './logic/api/DefaultResolvers';
 import {financeResolvers} from './logic/api/finance/FinanceResolvers';
-import {groupResolvers} from './logic/api/group/GroupResolvers';
-import {meetingResolvers} from './logic/api/meeting/MeetingResolvers';
+import {teamResolvers} from './logic/api/team/TeamResolvers';
+import {matchResolvers} from './logic/api/match/MatchResolvers';
 import {userResolvers} from './logic/api/user/UserResolvers';
-import {ngoResolvers} from './logic/api/ngo/NGOResolvers';
+import {orgResolvers} from './logic/api/organization/OrgResolvers';
 import {countryResolvers} from './logic/api/country/CountryResolvers';
 
 const app = express();
@@ -27,15 +27,15 @@ app.use(express.static('presentation/build'));
 const resolvers = merge(
    defaultResolvers,
    financeResolvers,
-   groupResolvers,
-   meetingResolvers,
+   teamResolvers,
+   matchResolvers,
    userResolvers,
-   ngoResolvers,
+   orgResolvers,
    countryResolvers
 );
 
 const schema = makeExecutableSchema({
-   typeDefs: [DefaultSchema, FinanceSchema, GroupSchema, MeetingSchema, UserSchema, NGOSchema, CountrySchema],
+   typeDefs: [DefaultSchema, FinanceSchema, TeamSchema, MatchSchema, UserSchema, OrgSchema, CountrySchema],
    resolvers,
 });
 

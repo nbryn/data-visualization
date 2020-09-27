@@ -14,16 +14,16 @@ const Sidebar: React.FC = (): ReactElement => {
 
    const rechartsLinks: Links = {
       overview: '/overview',
-      groups: '/groups',
+      teams: '/teams',
       users: '/users',
       finance: '/finance',
-      meetings: '/meetings',
+      matches: '/matches',
       // engagement: "/engagement",
    };
 
    const miscLinks: Links = {
-      ngoview: '/ngo-view',
-      search: '/search',
+      orgview: '/org-view',
+      teamsearch: '/search',
       profile: '/profile',
    };
 

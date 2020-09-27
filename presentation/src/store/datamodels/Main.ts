@@ -32,26 +32,26 @@ export default function (state = {}, action: MainAction) {
 export interface MainState {
    [key: string]: any;
    usersTotal: number;
-   groupsTotal: number;
-   meetingsTotal: string;
-   sharesTotal: number;
+   teamsTotal: number;
+   matchTotal: number;
+   meetingTotal: number;
    usersLastYearBarChartData: ChartData[];
    usersLastYearLineChartData: ChartData[];
-   groupsLastMonthData: ChartData[];
-   groupsLastYearData: ChartData[];
-   meetingsLastYearData: ChartData[];
+   teamsLastMonthData: ChartData[];
+   teamsLastYearData: ChartData[];
+   matchesLastYearData: ChartData[];
    userGenderStats: ChartData[];
 }
 
 export const initialMainState: MainState = {
    usersTotal: 0,
-   groupsTotal: 0,
-   meetingsTotal: '',
-   sharesTotal: 0,
+   teamsTotal: 0,
+   matchTotal: 0,
+   meetingTotal: 0,
    usersLastYearBarChartData: [],
    usersLastYearLineChartData: [],
-   groupsLastYearData: [],
-   meetingsLastYearData: [],
-   groupsLastMonthData: [],
+   teamsLastYearData: [],
+   matchesLastYearData: [],
+   teamsLastMonthData: [],
    userGenderStats: [],
 };

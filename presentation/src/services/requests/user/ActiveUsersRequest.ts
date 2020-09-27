@@ -7,7 +7,7 @@ export const fetchActiveUserData = async (): Promise<any> => {
         }
       }`;
 
-   const response = await fetchFromServer('userStats', data, 'usersActive');
+   const response = await fetchFromServer<any>('userStats', data, 'usersActive');
 
    return response;
 };

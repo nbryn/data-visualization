@@ -3,7 +3,7 @@ const {gql} = require('apollo-server');
 export const DefaultSchema = gql`
    scalar JSON
 
-   type PerUnit {
+   type Count {
       name: String
       count: Float
    }

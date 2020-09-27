@@ -83,9 +83,9 @@ const UserView: React.FC = (): ReactElement => {
                      </Col>
                      <Col lg={4} sm={6}>
                         <BarChartContainer
-                           title="Users Per NGO"
+                           title="Users Per org"
                            statsType="users"
-                           dataType="perNGOData"
+                           dataType="perOrgData"
                            xLabel="NGO"
                            yLabel="Users"
                            color="#2196f3"

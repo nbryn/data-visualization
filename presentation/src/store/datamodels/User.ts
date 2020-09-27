@@ -39,7 +39,7 @@ export interface UserState {
    lastWeek: ChartData[];
    genderStats: ChartData[];
    perCountryData: ChartData[];
-   perNGOData: ChartData[];
+   perOrgData: ChartData[];
    total: number;
    todayCount: number;
    todayDate: string;
@@ -54,7 +54,7 @@ export const initialUserState: UserState = {
    lastYearLineChartData: [],
    lastWeek: [],
    perCountryData: [],
-   perNGOData: [],
+   perOrgData: [],
    genderStats: [],
    total: 0,
    todayDate: '',

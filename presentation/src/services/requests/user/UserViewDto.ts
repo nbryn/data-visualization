@@ -1,8 +1,8 @@
-import {LastMonthDto, LastYearDto, ServerDto} from '../Dto';
+import {LastMonthDTO, LastYearDTO, ServerDTO} from '../DTO';
 
-export type UserViewDto = {
+export type UserViewDTO = {
    userCount: number;
-   usersLastMonth: LastMonthDto[];
-   usersLastYear: LastYearDto[];
-   userGenderStats: ServerDto[];
+   usersLastMonth: LastMonthDTO[];
+   usersLastYear: LastYearDTO[];
+   userGenderStats: ServerDTO[];
 };

@@ -1,18 +1,18 @@
 import {Action} from 'redux';
 import {ThunkAction} from 'redux-thunk';
 
-import {fetchUserViewData, fetchUsersPerCountry, fetchUsersPerNGO, UserViewDto} from '../services/requests';
+import {fetchUserViewData, fetchUsersPerCountry, fetchUsersPerOrg, UserViewDTO} from '../services/requests';
 import {setUserViewData, UserState} from '../store/datamodels/User';
 import * as DataMappingService from '../services/DataMappingService';
 import {RootState} from '../store/index';
-import {ServerDto} from '../services/requests/Dto';
+import {ServerDTO} from '../services/requests/DTO';
 
 export const updateUserViewData = (): ThunkAction<void, RootState, null, Action<string>> => async (dispatch) => {
    const result: UserState = {} as UserState;
 
-   const userData: UserViewDto = await fetchUserViewData();
-   const userCountryData: ServerDto[] = await fetchUsersPerCountry();
-   const userNGOData: ServerDto[] = await fetchUsersPerNGO();
+   const userData: UserViewDTO = await fetchUserViewData();
+   const userCountryData: ServerDTO[] = await fetchUsersPerCountry();
+   const userOrgData: ServerDTO[] = await fetchUsersPerOrg();
 
    const {userCount, usersLastMonth, usersLastYear, userGenderStats} = userData;
 
@@ -29,7 +29,7 @@ export const updateUserViewData = (): ThunkAction<void, RootState, null, Action<
    result.lastMonthBarChartData = DataMappingService.mapLastMonthData(usersLastMonth);
 
    result.perCountryData = DataMappingService.mapGeneralChartData(userCountryData);
-   result.perNGOData = DataMappingService.mapGeneralChartData(userNGOData);
+   result.perOrgData = DataMappingService.mapGeneralChartData(userOrgData);
    result.genderStats = DataMappingService.mapGeneralChartData(userGenderStats);
 
    dispatch(setUserViewData(result));

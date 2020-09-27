@@ -1,7 +1,7 @@
 import axios from 'axios';
-import {UserDto} from '../services/requests/Dto';
+import {UserDTO} from '../services/requests/DTO';
 
-export const setTokenInLocalStorage = (response: UserDto): void => {
+export const setTokenInLocalStorage = (response: UserDTO): void => {
    const token = response.token;
    localStorage.setItem('Token', token);
 };

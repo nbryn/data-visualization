@@ -4,11 +4,11 @@ import {CountDTO, FinanceDataDTO, LastMonthDTO, LastYearDTO} from '../../util/DT
 
 export const financeResolvers = {
    Query: {
-      financeStats: async (): Promise<FinanceDataDTO> => {
+      financeData: async (): Promise<FinanceDataDTO> => {
          return actionRunner<FinanceDataDTO>(async () => {
-            const mostShares = await FinanceMapper.fetchGroupsWithMostShares();
-            const currencyData = await FinanceMapper.fetchCurrencyStats();
-            const etbData = await FinanceMapper.fetchETBLoanData();
+            const mostShares = await FinanceMapper.fetchTeamsWithMostEvents();
+            const currencyData = await FinanceMapper.fetchCurrencyData();
+            const etbData = await FinanceMapper.fetchETBEventData();
 
             return {
                mostShares,
@@ -18,58 +18,58 @@ export const financeResolvers = {
          });
       },
    },
-   FinanceStats: {
-      mostSharesData: (root: FinanceDataDTO): CountDTO => {
+   FinanceData: {
+      mostMeetingData: (root: FinanceDataDTO): CountDTO => {
          return root.mostShares[0];
       },
-      mostShares: (root: FinanceDataDTO): number => {
+      teamWithMostMeetings: (root: FinanceDataDTO): number => {
          return root.mostShares[0].count;
       },
-      shareStats: (root: FinanceDataDTO): CountDTO[] => {
+      meetingData: (root: FinanceDataDTO): CountDTO[] => {
          return root.mostShares;
       },
       numberOfCurrencies: async (root: FinanceDataDTO): Promise<number> => {
          return root.currencyData.length;
       },
-      currencyStats: async (root: FinanceDataDTO): Promise<CountDTO[]> => {
+      currencyData: async (root: FinanceDataDTO): Promise<CountDTO[]> => {
          return root.currencyData;
       },
-      groupEtbLoan: (root: FinanceDataDTO): CountDTO[] => {
+      teamETBEventData: (root: FinanceDataDTO): CountDTO[] => {
          return root.etbData;
       },
-      etbOnLoan: async (root: FinanceDataDTO): Promise<number> => {
-         let etbOnLoan = 0;
-         root.etbData.forEach((x: CountDTO) => (etbOnLoan += x.count));
+      etbEventCount: async (root: FinanceDataDTO): Promise<number> => {
+         let etbEventCount = 0;
+         root.etbData.forEach((x: CountDTO) => (etbEventCount += x.count));
 
-         return etbOnLoan;
+         return etbEventCount;
       },
 
-      loanTotal: async (): Promise<number> => {
+      eventTotal: async (): Promise<number> => {
          return actionRunner<number>(async () => {
-            const loanTotal = await FinanceMapper.fetchTotalLoanCount();
+            const eventTotal = await FinanceMapper.fetchTotalEventCount();
 
-            return loanTotal;
+            return eventTotal;
          });
       },
-      loansLastMonth: async (): Promise<LastMonthDTO[]> => {
+      eventsLastMonth: async (): Promise<LastMonthDTO[]> => {
          return actionRunner<LastMonthDTO[]>(async () => {
-            const loansLastMonth = await FinanceMapper.fetchLoansLastMonth();
+            const eventsLastMonth = await FinanceMapper.fetchEventLastMonth();
 
-            return loansLastMonth;
+            return eventsLastMonth;
          });
       },
-      loansLastYear: async (): Promise<LastYearDTO[]> => {
+      eventsLastYear: async (): Promise<LastYearDTO[]> => {
          return actionRunner<LastYearDTO[]>(async () => {
-            const loansLastYear = await FinanceMapper.fetchLoansLastYear();
+            const eventsLastYear = await FinanceMapper.fetchEventsLastYear();
 
-            return loansLastYear;
+            return eventsLastYear;
          });
       },
-      shareTotal: async (): Promise<number> => {
+      meetingTotal: async (): Promise<number> => {
          return actionRunner<number>(async () => {
-            const shareTotal = await FinanceMapper.fetchTotalShareCount();
+            const meetingTotal = await FinanceMapper.fetchTotalMeetingCount();
 
-            return shareTotal;
+            return meetingTotal;
          });
       },
    },

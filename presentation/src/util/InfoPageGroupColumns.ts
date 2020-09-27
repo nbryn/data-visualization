@@ -1,12 +1,12 @@
 export const infoPageColumn: string[] = [
    'Registration Date',
    'Currency',
-   'Last Meeting',
+   'Last Match',
    'Box Balance',
-   'Amount Per Share',
+   'Per Event',
+   'Total Matches',
+   'Total Evemts',
    'Total Meetings',
-   'Total Loans',
-   'Total Shares',
    'Owner',
    'Admin',
 ];

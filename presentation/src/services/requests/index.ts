@@ -1,30 +1,30 @@
-export * from './finance/CurrencyStatsRequest';
-export * from './finance/EtbOnLoanRequest';
-export * from './finance/FinanceViewDto';
-export * from './finance/SharesTotalRequest';
+export * from './finance/CurrencyDataRequest';
+export * from './finance/EtbEventCountRequest';
+export * from './finance/FinanceViewDTO';
+export * from './finance/MeetingTotalRequest';
 
-export * from './group/NGOGroupsRequest';
+export * from './team/TeamByOrgRequest';
 
-export * from './group/GroupDto';
-export * from './group/GroupsLastMonthRequest';
-export * from './group/GroupsLastYearRequest';
-export * from './group/GroupSearchRequest';
-export * from './group/TotalGroupsRequest';
-export * from './group/GroupsPerCountryRequest';
-export * from './group/GroupsPerNGORequest';
-export * from './group/GroupEngagementRequest';
-export * from './group/GroupViewDataRequest';
-export * from './group/GroupViewDto';
+export * from './team/TeamDTO';
+export * from './team/TeamsLastMonthRequest';
+export * from './team/TeamsLastYearRequest';
+export * from './team/TeamSearchRequest';
+export * from './team/TotalTeamsRequest';
+export * from './team/TeamsPerCountryRequest';
+export * from './team/TeamsPerOrgRequest';
+export * from './team/TeamEngagementRequest';
+export * from './team/TeamViewDataRequest';
+export * from './team/TeamViewDTO';
 
 export * from './general/LoginRequest';
 
-export * from './meeting/MeetingsLastYearRequest';
-export * from './meeting/MeetingViewDto';
-export * from './meeting/TotalMeetingsRequest';
+export * from './match/MatchesLastYearRequest';
+export * from './match/MatchViewDTO';
+export * from './match/TotalMatchRequest';
 
 export * from './user/ActiveUsersRequest';
 export * from './user/UsersPerCountryRequest';
-export * from './user/UsersPerNGORequest';
+export * from './user/UsersPerOrgRequest';
 export * from './user/UserViewDataRequest';
 export * from './user/GenderDataRequest';
 export * from './user/UsersLastMonthRequest';

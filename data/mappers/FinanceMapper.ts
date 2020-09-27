@@ -1,12 +1,12 @@
 import moment from 'moment';
 
 import {CountDTO, LastMonthDTO, LastYearDTO} from '../../logic/util/DTOs';
-import {GroupAccount, GroupAccountState} from '../../logic/entities/GroupAccount';
-import {GroupMeetingShareout} from '../../logic/entities/GroupMeetingShareout';
-import {GroupMeetingLoanModel, GroupMeetingShareoutModel, GroupAccountModel} from '../connection';
+import {TeamReport, TeamReportState} from '../../logic/entities/TeamReport';
+import {TeamMeeting} from '../../logic/entities/TeamMeeting';
+import {TeamEventModel, TeamMeetingModel, TeamReportModel} from '../connection';
 
-export async function fetchCurrencyStats(): Promise<CountDTO[]> {
-   const currencyStats = await GroupAccountModel.aggregate([
+export async function fetchCurrencyData(): Promise<CountDTO[]> {
+   const currencyData = await TeamReportModel.aggregate([
       {
          $match: {
             totalBalance: {$gt: 0},
@@ -23,7 +23,7 @@ export async function fetchCurrencyStats(): Promise<CountDTO[]> {
       },
    ]);
 
-   const result: CountDTO[] = currencyStats.map((x: any) => ({
+   const result: CountDTO[] = currencyData.map((x: any) => ({
       name: x._id,
       count: x.totalAmount,
    }));
@@ -31,11 +31,11 @@ export async function fetchCurrencyStats(): Promise<CountDTO[]> {
    return result;
 }
 
-export async function fetchTotalShareCount(): Promise<number> {
-   const result = await GroupAccountModel.aggregate([
+export async function fetchTotalMeetingCount(): Promise<number> {
+   const result = await TeamReportModel.aggregate([
       {
          $match: {
-            state: GroupAccountState.ACTIVE,
+            state: TeamReportState.ACTIVE,
          },
       },
       {
@@ -49,11 +49,11 @@ export async function fetchTotalShareCount(): Promise<number> {
    return result[0].totalAmount;
 }
 
-export async function fetchGroupsWithMostShares(): Promise<CountDTO[]> {
-   const temp = await GroupAccountModel.aggregate([
+export async function fetchTeamsWithMostEvents(): Promise<CountDTO[]> {
+   const temp = await TeamReportModel.aggregate([
       {
          $match: {
-            state: GroupAccountState.ACTIVE,
+            state: TeamReportState.ACTIVE,
          },
       },
       {
@@ -75,14 +75,14 @@ export async function fetchGroupsWithMostShares(): Promise<CountDTO[]> {
    return result;
 }
 
-export async function fetchTotalLoanCount(): Promise<number> {
-   const total = await GroupMeetingLoanModel.countDocuments();
+export async function fetchTotalEventCount(): Promise<number> {
+   const total = await TeamEventModel.countDocuments();
 
    return total;
 }
 
-export async function fetchETBLoanData(): Promise<CountDTO[]> {
-   const boxBalanceData = await GroupAccountModel.aggregate([
+export async function fetchETBEventData(): Promise<CountDTO[]> {
+   const eventData = await TeamReportModel.aggregate([
       {
          $match: {
             currency: 'ETB',
@@ -116,7 +116,7 @@ export async function fetchETBLoanData(): Promise<CountDTO[]> {
       },
    ]);
 
-   const result: CountDTO[] = boxBalanceData.splice(0, 10).map((x: any) => ({
+   const result: CountDTO[] = eventData.splice(0, 10).map((x: any) => ({
       name: x._id.toString().substring(0, 5),
       count: x.count,
    }));
@@ -124,22 +124,22 @@ export async function fetchETBLoanData(): Promise<CountDTO[]> {
    return result;
 }
 
-export async function fetchAccountDataForGroup(groupID: string): Promise<GroupAccount[]> {
+export async function fetchReportDataByTeamId(teamId: string): Promise<TeamReport[]> {
    // @ts-ignore
-   const accountData = await GroupAccountModel.find({group: groupID});
+   const reportData = await TeamReportModel.find({group: teamId});
 
-   return accountData;
+   return reportData;
 }
 
-export async function fetchLoanCountForGroup(groupID: string): Promise<number> {
+export async function fetchEventCountByTeam(teamId: string): Promise<number> {
    // @ts-ignore
-   const loanData = await GroupMeetingLoanModel.count({group: groupID});
+   const eventData = await TeamMeetingModel.count({group: teamId});
 
-   return loanData;
+   return eventData;
 }
 
-export async function fetchGroupShareoutsByMeeting(meetingID: string): Promise<GroupMeetingShareout[]> {
-   const groupShareouts = await GroupMeetingShareoutModel.find({
+export async function fetchTeamMeetingById(meetingID: string): Promise<TeamMeeting[]> {
+   const teamMeetings = await TeamMeetingModel.find({
       $and: [
          {
             // @ts-ignore
@@ -147,11 +147,11 @@ export async function fetchGroupShareoutsByMeeting(meetingID: string): Promise<G
          },
       ],
    });
-   return groupShareouts;
+   return teamMeetings;
 }
 
-export async function fetchBoxBalanceData(): Promise<Array<any>> {
-   const boxBalanceData = await GroupAccountModel.aggregate([
+export async function fetchAccountData(): Promise<any[]> {
+   const accountData = await TeamReportModel.aggregate([
       {
          $match: {currency: 'ETB'},
       },
@@ -163,13 +163,13 @@ export async function fetchBoxBalanceData(): Promise<Array<any>> {
       },
    ]);
 
-   return boxBalanceData;
+   return accountData;
 }
 
-export async function fetchLoansLastMonth(): Promise<LastMonthDTO[]> {
+export async function fetchEventLastMonth(): Promise<LastMonthDTO[]> {
    const since = moment('2020-02-01').subtract(30, 'days').toDate();
 
-   const dbResult = await GroupMeetingLoanModel.aggregate([
+   const dbResult = await TeamEventModel.aggregate([
       {
          $match: {
             registrationDate: {$gt: since},
@@ -204,10 +204,10 @@ export async function fetchLoansLastMonth(): Promise<LastMonthDTO[]> {
    return loans;
 }
 
-export async function fetchLoansLastYear(): Promise<LastYearDTO[]> {
+export async function fetchEventsLastYear(): Promise<LastYearDTO[]> {
    const since = moment('2020-02-01').subtract(365, 'days').toDate();
 
-   const dbResult = await GroupMeetingLoanModel.aggregate([
+   const dbResult = await TeamEventModel.aggregate([
       {
          $match: {
             registrationDate: {$gt: since},

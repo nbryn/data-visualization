@@ -23,33 +23,33 @@ const FinanceView: React.FC = (): ReactElement => {
                   <Row>
                      <Col lg={3} sm={6}>
                         <KPIContainer
-                           title="Total Loans"
+                           title="Total Events"
                            statsType="finance"
-                           total="loansTotal"
+                           total="eventTotal"
                            icon="pe-7s-users text-info"
                         />
                      </Col>
                      <Col lg={3} sm={6}>
                         <KPIContainer
-                           title="Total Shares"
+                           title="Total Meetings"
                            statsType="finance"
-                           total="sharesTotal"
+                           total="meetingTotal"
                            icon="pe-7s-graph1 text-danger"
                         />
                      </Col>
                      <Col lg={3} sm={6}>
                         <KPIContainer
-                           title="ETB On Loan"
+                           title="ETB Per Event"
                            statsType="finance"
-                           total="etbOnLoan"
+                           total="etbEventCount"
                            icon="pe-7s-wallet text-success"
                         />
                      </Col>
                      <Col lg={3} sm={6}>
                         <KPIContainer
-                           title="Most Shares"
+                           title="Most Meetings"
                            statsType="finance"
-                           total="mostShares"
+                           total="mostMeetings"
                            icon="pe-7s-wallet text-success"
                         />
                      </Col>
@@ -58,29 +58,29 @@ const FinanceView: React.FC = (): ReactElement => {
                   <Row>
                      <Col lg={4} sm={6}>
                         <LineChartContainer
-                           title="Total Loans"
+                           title="Total Events"
                            statsType="finance"
-                           dataType="loansLastYearLineChartData"
+                           dataType="eventsLastYearLineChartData"
                            xLabel="Months"
-                           yLabel="Loans"
+                           yLabel="Events"
                            color="#228b22"
                         />
                      </Col>
                      <Col lg={4} sm={6}>
                         <BarChartContainer
-                           title="Most Shares"
+                           title="Most Meetings"
                            statsType="finance"
-                           dataType="sharesPerGroup"
-                           xLabel="Group Name"
-                           yLabel="Shares"
+                           dataType="meetingsPerTeam"
+                           xLabel="Team Name"
+                           yLabel="Meetings"
                            color="#1828E8"
                         />
                      </Col>
                      <Col lg={4} sm={6}>
                         <BarChartContainer
-                           title="ETB On Loan"
+                           title="Team ETB Data"
                            statsType="finance"
-                           dataType="groupEtbLoan"
+                           dataType="teamETBEventData"
                            xLabel="Group Name"
                            yLabel="Amount"
                            color="#2196f3"
@@ -91,21 +91,21 @@ const FinanceView: React.FC = (): ReactElement => {
                   <Row>
                      <Col lg={4} sm={6}>
                         <BarChartContainer
-                           title="Loans Per Month"
+                           title="Events Per Month"
                            statsType="finance"
-                           dataType="loansLastMonthData"
+                           dataType="eventsLastMonthData"
                            xLabel="Month"
-                           yLabel="Loans"
+                           yLabel="Events"
                            color="#8918E8"
                         />
                      </Col>
                      <Col lg={4} sm={6}>
                         <BarChartContainer
-                           title="Loans Per Day"
+                           title="Events Per Day"
                            statsType="finance"
-                           dataType="loansLastMonthData"
+                           dataType="eventsLastMonthData"
                            xLabel="Day"
-                           yLabel="Loans"
+                           yLabel="events"
                            color="#ff0000"
                         />
                      </Col>
@@ -113,7 +113,7 @@ const FinanceView: React.FC = (): ReactElement => {
                         <BarChartContainer
                            title="Currencies"
                            statsType="finance"
-                           dataType="currencyStats"
+                           dataType="currencyData"
                            color="#2196f3"
                            xLabel="Currency"
                            yLabel="Amount"

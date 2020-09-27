@@ -11,7 +11,7 @@ export const UserSchema = gql`
       usersActive: Float
       usersLastMonth: [NumberDay]
       usersLastYear: [NumberMonth]
-      userGenderStats: [PerUnit]
+      userGenderStats: [Count]
    }
 
    extend type Query {

@@ -1,18 +1,18 @@
-import {fetchGroupStats} from '../../../data/mappers/GroupMapper';
+import {fetchTeamData} from '../../../data/mappers/TeamMapper';
 import {actionRunner} from '../../util/ActionRunner';
 const CountryService = require('./CountryService');
 
 export const countryResolvers = {
    Query: {
-      generalCountryStats: () => ({}),
+      generalCountryData: () => ({}),
       country: (obj: any, args: any) => ({obj, args}),
    },
-   GeneralCountryStats: {
-      groupsCountry: async () => {
+   GeneralCountryData: {
+      teamsCountry: async () => {
          return actionRunner(async () => {
-            const result = await fetchGroupStats('$country');
+            const result = await fetchTeamData('$country');
 
-            const groupsCountry = result
+            const teamsCountry = result
                .map((element) => {
                   return {
                      name: element._id,
@@ -21,7 +21,7 @@ export const countryResolvers = {
                })
                .sort((a, b) => a.count - b.count);
 
-            return groupsCountry;
+            return teamsCountry;
          });
       },
       usersCountry: async () => {
@@ -31,18 +31,18 @@ export const countryResolvers = {
             return usersPerCountry;
          });
       },
-      meetingsCountry: async () => {
+      matchesCountry: async () => {
          return actionRunner(async () => {
-            const meetingsPerCountry = await CountryService.calculateMeetingsPerCountry();
+            const matchesPerCountry = await CountryService.calculateMatchesPerCountry();
 
-            return meetingsPerCountry;
+            return matchesPerCountry;
          });
       },
    },
-   CountryStats: {
+   CountryData: {
       country: async (obj: any, args: any) => {
          return actionRunner(async () => {
-            const groups = await CountryService.calculateNumberOfGroups(args.country);
+            const groups = await CountryService.calculateNumberOfTeamPerCountry(args.country);
 
             const users = await CountryService.calculateNumberOfUsers(args.country);
 

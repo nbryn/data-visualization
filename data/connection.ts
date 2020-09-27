@@ -1,20 +1,20 @@
 import mongoose from 'mongoose';
 require('dotenv').config();
 
-import {GroupAccount, GroupAccountSchema} from '../logic/entities/GroupAccount';
-import {GroupMeetingLoan, GroupMeetingLoanSchema} from '../logic/entities/GroupMeetingLoan';
-import {GroupMeeting, GroupMeetingSchema} from '../logic/entities/GroupMeeting';
-import {GroupMeetingShareout, GroupMeetingShareoutSchema} from '../logic/entities/GroupMeetingShareout';
-import {GroupMember, GroupMemberSchema} from '../logic/entities/GroupMember';
-import {Group, GroupSchema} from '../logic/entities/Group';
+import {TeamReport, TeamReportSchema} from '../logic/entities/TeamReport';
+import {TeamEvent, TeamEventSchema} from '../logic/entities/TeamEvent';
+import {Match, MatchSchema} from '../logic/entities/Match';
+import {TeamMeeting, TeamMeetingSchema} from '../logic/entities/TeamMeeting';
+import {TeamMember, TeamMemberSchema} from '../logic/entities/TeamMember';
+import {Team, TeamSchema} from '../logic/entities/Team';
 import {User, UserSchema} from '../logic/entities/User';
 
-export let GroupAccountModel: mongoose.Model<GroupAccount, {}>;
-export let GroupMeetingLoanModel: mongoose.Model<GroupMeetingLoan, {}>;
-export let GroupMeetingModel: mongoose.Model<GroupMeeting, {}>;
-export let GroupMeetingShareoutModel: mongoose.Model<GroupMeetingShareout, {}>;
-export let GroupMemberModel: mongoose.Model<GroupMember, {}>;
-export let GroupModel: mongoose.Model<Group, {}>;
+export let TeamReportModel: mongoose.Model<TeamReport, {}>;
+export let TeamEventModel: mongoose.Model<TeamEvent, {}>;
+export let MatchModel: mongoose.Model<Match, {}>;
+export let TeamMeetingModel: mongoose.Model<TeamMeeting, {}>;
+export let TeamMemberModel: mongoose.Model<TeamMember, {}>;
+export let TeamModel: mongoose.Model<Team, {}>;
 export let UserModel: mongoose.Model<User, {}>;
 
 let connection: any;
@@ -32,12 +32,12 @@ export async function connectToDB(): Promise<void> {
       isConnected = true;
       connection = mongoose.connection;
 
-      GroupAccountModel = connection.model('GroupAccount', GroupAccountSchema);
-      GroupMeetingLoanModel = connection.model('GroupMeetingLoan', GroupMeetingLoanSchema);
-      GroupMeetingModel = connection.model('GroupMeeting', GroupMeetingSchema);
-      GroupMeetingShareoutModel = connection.model('GroupMeetingShareout', GroupMeetingShareoutSchema);
-      GroupMemberModel = connection.model('GroupMember', GroupMemberSchema);
-      GroupModel = connection.model('Group', GroupSchema);
+      TeamReportModel = connection.model('GroupAccount', TeamReportSchema);
+      TeamEventModel = connection.model('GroupMeetingLoan', TeamEventSchema);
+      MatchModel = connection.model('GroupMeeting', MatchSchema);
+      TeamMeetingModel = connection.model('GroupMeetingShareout', TeamMeetingSchema);
+      TeamMemberModel = connection.model('GroupMember', TeamMemberSchema);
+      TeamModel = connection.model('Group', TeamSchema);
       UserModel = connection.model('User', UserSchema);
    } catch (err) {
       console.log(err);

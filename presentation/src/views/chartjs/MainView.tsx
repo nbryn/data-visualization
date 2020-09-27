@@ -37,25 +37,25 @@ const MainView: React.FC = (): ReactElement => {
                      </Col>
                      <Col lg={3} sm={6}>
                         <KPIContainer
-                           title="Total Groups"
+                           title="Total Teams"
                            statsType="chartjs"
-                           total="groupsTotal"
+                           total="teamsTotal"
                            icon="pe-7s-users text-info"
+                        />
+                     </Col>
+                     <Col lg={3} sm={6}>
+                        <KPIContainer
+                           title="Total Matches"
+                           statsType="chartjs"
+                           total="matchesTotal"
+                           icon="pe-7s-graph1 text-danger"
                         />
                      </Col>
                      <Col lg={3} sm={6}>
                         <KPIContainer
                            title="Total Meetings"
                            statsType="chartjs"
-                           total="meetingsTotal"
-                           icon="pe-7s-graph1 text-danger"
-                        />
-                     </Col>
-                     <Col lg={3} sm={6}>
-                        <KPIContainer
-                           title="Total Shares"
-                           statsType="chartjs"
-                           total="sharesTotal"
+                           total="meetingTotal"
                            icon="pe-7s-graph1 text-danger"
                         />
                      </Col>
@@ -80,8 +80,8 @@ const MainView: React.FC = (): ReactElement => {
                         <ChartjsMixedChartContainer
                            firstDataType="usersLastYearLineChart"
                            firstChartTitle="Users"
-                           secondDataType="groupsLastYearLineChart"
-                           secondChartTitle="Groups"
+                           secondDataType="teamsLastYearLineChart"
+                           secondChartTitle="Teams"
                         />
                      </Col>
                   </Row>
@@ -89,20 +89,16 @@ const MainView: React.FC = (): ReactElement => {
                   <Row>
                      <Col lg={4} md={8}>
                         <ChartjsLineChartContainer
-                           title="Groups"
+                           title="Teams"
                            color="#52A5EE"
-                           dataTypes={[
-                              'groupsLastWeekLineChart',
-                              'groupsLastMonthLineChart',
-                              'groupsLastYearLineChart',
-                           ]}
+                           dataTypes={['teamsLastWeekLineChart', 'teamsLastMonthLineChart', 'teamsLastYearLineChart']}
                         />
                      </Col>
                      <Col lg={4} m={8}>
                         <ChartjsBarChartContainer
-                           title="Groups"
+                           title="Teams"
                            color="#22B324"
-                           dataTypes={['groupsLastWeekBarChart', 'groupsLastMonthBarChart', 'groupsLastYearBarChart']}
+                           dataTypes={['teamsLastWeekBarChart', 'teamsLastMonthBarChart', 'teamsLastYearBarChart']}
                         />
                      </Col>
 

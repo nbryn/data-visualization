@@ -2,13 +2,13 @@ import countryCodes from 'country-codes-list';
 import {getCountry} from 'country-currency-map';
 import isoCurrency from 'iso-country-currency';
 
-import {fetchNumberOfGroupsWith} from '../../../data/mappers/GroupMapper';
+import {fetchTeamsByCurrency} from '../../../data/mappers/TeamMapper';
 import * as UserMapper from '../../../data/mappers/UserMapper';
-const {calculateMeetingsPerGroup} = require('../meeting/MeetingService');
+import {calculateMatchesPerTeam} from '../match/MatchService';
 
 const countries = countryCodes.customList('countryNameEn', '{countryCode} {countryNameEn}: {countryCallingCode}');
 
-async function calculateUsersPerCountry() {
+export async function calculateUsersPerCountry() {
    const tempUsersPerCountry = await UserMapper.fetchUsersPerCountry();
 
    const usersPerCountry = tempUsersPerCountry.map((country) => {
@@ -23,13 +23,13 @@ async function calculateUsersPerCountry() {
    return usersPerCountry;
 }
 
-async function calculateMeetingsPerCountry() {
-   const meetingsPerGroup = await calculateMeetingsPerGroup();
+export async function calculateMatchesPerCountry() {
+   const matchesPerTeams = await calculateMatchesPerTeam();
 
-   const meetingsPerCountry = [];
+   const matchesPerCountry = [];
 
-   meetingsPerGroup.forEach((element) => {
-      const index = meetingsPerCountry.findIndex((x) => x.currency === element.currency);
+   matchesPerTeams.forEach((element) => {
+      const index = matchesPerCountry.findIndex((x) => x.currency === element.currency);
       if (index === -1) {
          const countries = isoCurrency.getAllCountriesByCurrencyOrSymbol('currency', element.currency);
          let country;
@@ -38,38 +38,31 @@ async function calculateMeetingsPerCountry() {
          else if (element.currency === 'DKK') country = 'Denmark';
          else country = countries[0];
 
-         meetingsPerCountry.push({
+         matchesPerCountry.push({
             name: country,
             count: element.count,
             currency: element.currency,
          });
       } else {
-         meetingsPerCountry[index].count += element.count;
+         matchesPerCountry[index].count += element.count;
       }
    });
 
-   return meetingsPerCountry;
+   return matchesPerCountry;
 }
 
-async function calculateNumberOfGroups(country) {
+export async function calculateNumberOfTeamsPerCountry(country) {
    const currency = getCountry(country).currency;
 
-   const numberOfGroups = await fetchNumberOfGroupsWith(currency);
+   const numberOfTeams = await fetchTeamsByCurrency(currency);
 
-   return numberOfGroups;
+   return numberOfTeams;
 }
 
-async function calculateNumberOfUsers(country) {
+export async function calculateNumberOfUsers(country) {
    const phoneCode = countries[country].substring(countries[country].lastIndexOf(':') + 2);
 
    const users = await UserMapper.fetchNumberOfUsersFrom(phoneCode);
 
    return users;
 }
-
-module.exports = {
-   calculateNumberOfGroups,
-   calculateNumberOfUsers,
-   calculateUsersPerCountry,
-   calculateMeetingsPerCountry,
-};

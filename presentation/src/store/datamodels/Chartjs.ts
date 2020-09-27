@@ -46,12 +46,12 @@ export default function (state = {}, action: ChartjsAction) {
 
 export interface ChartjsState {
    [key: string]: number | ChartjsData | any;
-   groupsLastWeekBarChart: ChartjsData;
-   groupsLastMonthBarChart: ChartjsData;
-   groupsLastYearBarChart: ChartjsData;
-   groupsLastWeekLineChart: ChartjsData;
-   groupsLastMonthLineChart: ChartjsData;
-   groupsLastYearLineChart: ChartjsData;
+   teamsLastWeekBarChart: ChartjsData;
+   teamsLastMonthBarChart: ChartjsData;
+   teamsLastYearBarChart: ChartjsData;
+   teamsLastWeekLineChart: ChartjsData;
+   teamsLastMonthLineChart: ChartjsData;
+   teamsLastYearLineChart: ChartjsData;
    usersLastMonthLineChart: ChartjsData;
    usersLastWeekLineChart: ChartjsData;
    usersLastYearLineChart: ChartjsData;
@@ -60,38 +60,38 @@ export interface ChartjsState {
    usersLastYearBarChart: ChartjsData;
    genderData: ChartjsPieData | null;
    usersTotal: number;
-   groupsTotal: number;
-   meetingsTotal: number;
-   sharesTotal: number;
+   teamsTotal: number;
+   matchTotal: number;
+   meetingTotal: number;
 }
 
 export const initialChartjsState: ChartjsState = {
-   groupsLastWeekBarChart: {
+   teamsLastWeekBarChart: {
       labels: [],
       counter: 0,
       data: [],
    },
-   groupsLastMonthBarChart: {
+   teamsLastMonthBarChart: {
       labels: [],
       counter: 0,
       data: [],
    },
-   groupsLastYearBarChart: {
+   teamsLastYearBarChart: {
       labels: [],
       counter: 0,
       data: [],
    },
-   groupsLastWeekLineChart: {
+   teamsLastWeekLineChart: {
       labels: [],
       counter: 0,
       data: [],
    },
-   groupsLastMonthLineChart: {
+   teamsLastMonthLineChart: {
       labels: [],
       counter: 0,
       data: [],
    },
-   groupsLastYearLineChart: {
+   teamsLastYearLineChart: {
       labels: [],
       counter: 0,
       data: [],
@@ -131,7 +131,7 @@ export const initialChartjsState: ChartjsState = {
       data: [],
    },
    usersTotal: 0,
-   groupsTotal: 0,
-   meetingsTotal: 0,
-   sharesTotal: 0,
+   teamsTotal: 0,
+   matchTotal: 0,
+   meetingTotal: 0,
 };

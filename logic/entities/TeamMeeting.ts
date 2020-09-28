@@ -13,8 +13,8 @@ export interface TeamMeeting extends Document {
 
 export const TeamMeetingSchema = new Schema({
    registrationDate: Date,
-   meeting: {type: Schema.Types.ObjectId, ref: 'groupmeeting'},
-   account: {type: Schema.Types.ObjectId, ref: 'groupaccount'},
+   meeting: {type: Schema.Types.ObjectId, ref: 'match'},
+   account: {type: Schema.Types.ObjectId, ref: 'teamreport'},
    currency: String,
    totalShares: Number,
    shareValue: Number,

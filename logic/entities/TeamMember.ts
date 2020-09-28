@@ -23,8 +23,8 @@ export interface TeamMember extends Document {
 }
 
 export const TeamMemberSchema = new Schema({
-   group: {type: Schema.Types.ObjectId, ref: 'Group'},
-   user: {type: Schema.Types.ObjectId, ref: 'User'},
+   group: {type: Schema.Types.ObjectId, ref: 'team'},
+   user: {type: Schema.Types.ObjectId, ref: 'user'},
    registrationDate: Date,
    groupRoles: [
       {

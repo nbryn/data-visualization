@@ -25,7 +25,7 @@ export const MatchSchema = new Schema({
    meetingDay: Date,
    meetingEnded: Date,
    meetingNumber: Number,
-   shares: [{type: Schema.Types.ObjectId, ref: 'groupmeetingshare'}],
+   shares: [{type: Schema.Types.ObjectId, ref: 'trainings'}],
    state: {
       type: String,
       default: MatchState.CREATING,

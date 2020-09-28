@@ -34,6 +34,6 @@ export const TeamSchema = new Schema({
       type: String,
       default: TeamState.CREATING,
    },
-   meetings: [{type: Schema.Types.ObjectId, ref: 'groupmeeting'}],
-   members: [{type: Schema.Types.ObjectId, ref: 'groupmember'}],
+   meetings: [{type: Schema.Types.ObjectId, ref: 'match'}],
+   members: [{type: Schema.Types.ObjectId, ref: 'teammember'}],
 });

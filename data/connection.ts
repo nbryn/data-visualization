@@ -32,12 +32,12 @@ export async function connectToDB(): Promise<void> {
       isConnected = true;
       connection = mongoose.connection;
 
-      TeamReportModel = connection.model('GroupAccount', TeamReportSchema);
-      TeamEventModel = connection.model('GroupMeetingLoan', TeamEventSchema);
-      MatchModel = connection.model('GroupMeeting', MatchSchema);
-      TeamMeetingModel = connection.model('GroupMeetingShareout', TeamMeetingSchema);
-      TeamMemberModel = connection.model('GroupMember', TeamMemberSchema);
-      TeamModel = connection.model('Group', TeamSchema);
+      TeamReportModel = connection.model('TeamReport', TeamReportSchema);
+      TeamEventModel = connection.model('TeamEvent', TeamEventSchema);
+      MatchModel = connection.model('Match', MatchSchema);
+      TeamMeetingModel = connection.model('TeamMeeting', TeamMeetingSchema);
+      TeamMemberModel = connection.model('TeamMember', TeamMemberSchema);
+      TeamModel = connection.model('Team', TeamSchema);
       UserModel = connection.model('User', UserSchema);
    } catch (err) {
       console.log(err);

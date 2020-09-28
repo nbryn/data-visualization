@@ -6,7 +6,7 @@ export const MatchSchema = gql`
       matchesLastMonth: [NumberDay]
       matchesLastYear: [NumberMonth]
       matchesPerTeam: [Count]
-      meetingsPerEvent: [Count]
+      meetingsPerMatch: [Count]
    }
 
    extend type Query {

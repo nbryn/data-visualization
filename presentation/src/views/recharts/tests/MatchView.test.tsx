@@ -13,8 +13,8 @@ afterEach(() => {
    jest.clearAllMocks();
 });
 
-const totalMeetings = 'Total Matches';
-const meetingsLastMonth = 'Matches Last Month';
+const totalMatches = 'Total Matches';
+const matches = 'Matches Last Month';
 
 describe('MatchView.test.jsx', () => {
    describe('calls the correct functions', () => {
@@ -30,15 +30,15 @@ describe('MatchView.test.jsx', () => {
       });
    });
    describe('renders the correct text', () => {
-      it(`renders the text ${totalMeetings}`, () => {
+      it(`renders the text ${totalMatches}`, () => {
          render(<MatchView />);
 
-         expect(screen.getAllByText(totalMeetings)).toBeTruthy();
+         expect(screen.getAllByText(totalMatches)).toBeTruthy();
       });
    });
-   it(`renders the text ${meetingsLastMonth}`, () => {
+   it(`renders the text ${matches}`, () => {
       render(<MatchView />);
 
-      expect(screen.getAllByText(meetingsLastMonth)).toBeTruthy();
+      expect(screen.getAllByText(matches)).toBeTruthy();
    });
 });

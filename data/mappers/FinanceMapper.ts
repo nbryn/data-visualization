@@ -91,7 +91,7 @@ export async function fetchETBEventData(): Promise<CountDTO[]> {
       },
       {
          $lookup: {
-            from: 'groups',
+            from: 'teams',
             localField: 'group',
             foreignField: '_id',
             as: 'data',

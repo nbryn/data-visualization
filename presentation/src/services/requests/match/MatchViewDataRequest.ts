@@ -1,7 +1,7 @@
 import {fetchFromServer} from '../Fetch';
-import {MeetingViewDTO} from './MatchViewDTO';
+import {MatchViewDTO} from './MatchViewDTO';
 
-export const fetchMatchViewData = async (): Promise<MeetingViewDTO> => {
+export const fetchMatchViewData = async (): Promise<MatchViewDTO> => {
    const data = `query{
       matchData {
         matchTotal
@@ -22,14 +22,14 @@ export const fetchMatchViewData = async (): Promise<MeetingViewDTO> => {
           name
           count
         }
-        meetingsPerEvent {
+        meetingsPerMatch {
           name
           count
         }
       }
     }`;
 
-   const response: MeetingViewDTO = await fetchFromServer<MeetingViewDTO>('matchData', data);
+   const response: MatchViewDTO = await fetchFromServer<MatchViewDTO>('matchData', data);
 
    return response;
 };

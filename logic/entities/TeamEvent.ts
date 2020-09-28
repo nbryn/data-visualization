@@ -17,10 +17,10 @@ export interface TeamEvent extends Document {
 }
 
 export const TeamEventSchema = new Schema({
-   Team: {type: Schema.Types.ObjectId, ref: 'group'},
-   account: {type: Schema.Types.ObjectId, ref: 'groupaccount'},
-   meeting: {type: Schema.Types.ObjectId, ref: 'groupmeeting'},
-   member: {type: Schema.Types.ObjectId, ref: 'groupmember'},
+   Team: {type: Schema.Types.ObjectId, ref: 'team'},
+   account: {type: Schema.Types.ObjectId, ref: 'teamreport'},
+   meeting: {type: Schema.Types.ObjectId, ref: 'match'},
+   member: {type: Schema.Types.ObjectId, ref: 'teammember'},
    registrationDate: Date,
    amount: Number,
    currency: String,

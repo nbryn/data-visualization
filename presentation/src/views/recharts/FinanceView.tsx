@@ -81,7 +81,7 @@ const FinanceView: React.FC = (): ReactElement => {
                            title="Team ETB Data"
                            statsType="finance"
                            dataType="teamETBEventData"
-                           xLabel="Group Name"
+                           xLabel="Team Name"
                            yLabel="Amount"
                            color="#2196f3"
                         />
@@ -93,7 +93,7 @@ const FinanceView: React.FC = (): ReactElement => {
                         <BarChartContainer
                            title="Events Per Month"
                            statsType="finance"
-                           dataType="eventsLastMonthData"
+                           dataType="eventsLastYearBarChartData"
                            xLabel="Month"
                            yLabel="Events"
                            color="#8918E8"

@@ -15,7 +15,7 @@ import {
    fetchActiveUserData,
    fetchTeamEngagementData,
    FinanceViewDTO,
-   MeetingViewDTO,
+   MatchViewDTO,
 } from '../services/requests';
 import * as DataMappingService from '../services/DataMappingService';
 import {fetchFinanceData} from '../services/requests/finance/FinanceViewDataRequest';
@@ -31,13 +31,13 @@ import {ServerDTO, UserDTO} from '../services/requests/DTO';
 import {MainState, setMainViewData} from '../store/datamodels/Main';
 import {UserContextValue} from '../store/UserContext';
 
-export const updateMeetingViewData = (): ThunkAction<void, RootState, null, Action<string>> => async (dispatch) => {
+export const updateMatchViewData = (): ThunkAction<void, RootState, null, Action<string>> => async (dispatch) => {
    const result: MatchState = {} as MatchState;
 
-   const meetingViewData: MeetingViewDTO = await fetchMatchViewData();
-   const meetingsCountryData: ServerDTO[] = await fetchMatchesPerCountry();
+   const matchViewData: MatchViewDTO = await fetchMatchViewData();
+   const matchCountryData: ServerDTO[] = await fetchMatchesPerCountry();
 
-   const {matchTotal, matchesLastMonth, matchesLastYear, matchesPerTeam, meetingsPerEvent} = meetingViewData;
+   const {matchTotal, matchesLastMonth, matchesLastYear, matchesPerTeam, meetingsPerMatch} = matchViewData;
 
    const {todayCount, todayDate} = DataMappingService.mapDataForToday(matchesLastMonth);
 
@@ -52,9 +52,9 @@ export const updateMeetingViewData = (): ThunkAction<void, RootState, null, Acti
    result.lastMonthBarChartData = DataMappingService.mapLastMonthData(matchesLastMonth);
    result.lastYearBarChartData = DataMappingService.mapLastYearData(matchesLastYear, false);
 
-   result.perGroupData = DataMappingService.mapGeneralChartData(matchesPerTeam);
-   result.perCountryData = DataMappingService.mapGeneralChartData(meetingsCountryData);
-   result.sharesPerMeetingData = DataMappingService.mapGeneralChartData(meetingsPerEvent);
+   result.perTeamData = DataMappingService.mapGeneralChartData(matchesPerTeam);
+   result.perCountryData = DataMappingService.mapGeneralChartData(matchCountryData);
+   result.meetingsPerMatchData = DataMappingService.mapGeneralChartData(meetingsPerMatch);
 
    dispatch(setMatchViewData(result));
 };
@@ -62,7 +62,7 @@ export const updateMeetingViewData = (): ThunkAction<void, RootState, null, Acti
 export const updateFinanceViewData = (): ThunkAction<void, RootState, null, Action<string>> => async (dispatch) => {
    const result: FinanceState = {} as FinanceState;
 
-   const financeStatsData: FinanceViewDTO = await fetchFinanceData();
+   const financeData: FinanceViewDTO = await fetchFinanceData();
 
    const {
       meetingTotal,
@@ -74,7 +74,7 @@ export const updateFinanceViewData = (): ThunkAction<void, RootState, null, Acti
       eventsLastYear,
       meetingData,
       teamETBEventData,
-   } = financeStatsData;
+   } = financeData;
 
    result.meetingTotal = meetingTotal;
    result.eventTotal = eventTotal;

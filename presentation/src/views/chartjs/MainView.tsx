@@ -47,7 +47,7 @@ const MainView: React.FC = (): ReactElement => {
                         <KPIContainer
                            title="Total Matches"
                            statsType="chartjs"
-                           total="matchesTotal"
+                           total="matchTotal"
                            icon="pe-7s-graph1 text-danger"
                         />
                      </Col>

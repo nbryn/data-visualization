@@ -36,11 +36,11 @@ export const matchResolvers = {
             return matchesPerTeam.slice(0, 10);
          });
       },
-      meetingsPerEvent: async (): Promise<CountDTO[]> => {
+      meetingsPerMatch: async (): Promise<CountDTO[]> => {
          return actionRunner<CountDTO[]>(async () => {
-            const meetingsPerEvent = await MatchService.calculateMeetingsPerMatch();
+            const meetingsPerMatch = await MatchService.calculateMeetingsPerMatch();
 
-            return meetingsPerEvent;
+            return meetingsPerMatch;
          });
       },
    },

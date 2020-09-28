@@ -70,7 +70,7 @@ const MatchView: React.FC = (): ReactElement => {
                         <BarChartContainer
                            title="Matches Per Team"
                            statsType="matches"
-                           dataType="perGroupData"
+                           dataType="perTeamData"
                            xLabel="Team"
                            yLabel="Matches"
                            color="#ff0000"
@@ -114,7 +114,7 @@ const MatchView: React.FC = (): ReactElement => {
                         <BarChartContainer
                            title="Matches With Most Meetings"
                            statsType="matches"
-                           dataType="meetingsPermatchData"
+                           dataType="meetingsPerMatchData"
                            xLabel="Match"
                            yLabel="Meetings"
                            color="#2196f3"

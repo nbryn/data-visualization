@@ -14,7 +14,7 @@ afterEach(() => {
 });
 
 const totalUsers = 'Total Users';
-const groupsLastMonth = 'Groups Last Month';
+const teamsLastMonth = 'Teams Last Month';
 
 describe('MainView.test.jsx', () => {
    describe('calls the correct functions', () => {
@@ -30,14 +30,15 @@ describe('MainView.test.jsx', () => {
       });
    });
    describe('renders the correct text', () => {
-      it(`renders the text ${totalUsers}`, () => {});
-      render(<MainView />);
+      it(`renders the text ${totalUsers}`, () => {
+         render(<MainView />);
 
-      expect(screen.getAllByText(totalUsers)).toBeTruthy();
+         expect(screen.getAllByText(totalUsers)).toBeTruthy();
+      });
    });
-   it(`renders the text ${groupsLastMonth}`, () => {
+   it(`renders the text ${teamsLastMonth}`, () => {
       render(<MainView />);
 
-      expect(screen.getAllByText(groupsLastMonth)).toBeTruthy();
+      expect(screen.getAllByText(teamsLastMonth)).toBeTruthy();
    });
 });

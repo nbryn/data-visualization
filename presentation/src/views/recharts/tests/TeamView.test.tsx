@@ -2,42 +2,43 @@ import * as redux from 'react-redux';
 import React from 'react';
 
 import {render, screen} from '../../../test-utils';
-import GroupView from '../TeamView';
+import TeamView from '../TeamView';
 
-const mockUpdateGroupView = jest.fn();
-const mockDispatch = jest.fn(() => mockUpdateGroupView());
+const mockUpdateTeamView = jest.fn();
+const mockDispatch = jest.fn(() => mockUpdateTeamView());
 
 jest.spyOn(redux, 'useDispatch').mockImplementation().mockReturnValue(mockDispatch);
 
-const totalGroups = 'Total Groups';
-const groupsPerCountry = 'Groups Per Country';
+const totalTeams = 'Total Teams';
+const teamPerCountry = 'Teams Per Country';
 
 afterEach(() => {
    jest.clearAllMocks();
 });
 
-describe('GroupView.test.jsx', () => {
+describe('TeamView.test.jsx', () => {
    describe('calls the correct functions', () => {
       it('calls dispatch on mount', () => {
-         render(<GroupView />);
+         render(<TeamView />);
 
          expect(mockDispatch).toHaveBeenCalled();
       });
-      it('calls updateGroupView on mount', () => {
-         render(<GroupView />);
+      it('calls updateTeamView on mount', () => {
+         render(<TeamView />);
 
-         expect(mockUpdateGroupView).toHaveBeenCalled();
+         expect(mockUpdateTeamView).toHaveBeenCalled();
       });
    });
    describe('renders the correct text', () => {
-      it(`renders the text ${totalGroups}`, () => {});
-      render(<GroupView />);
+      it(`renders the text ${totalTeams}`, () => {
+         render(<TeamView />);
 
-      expect(screen.getAllByText(totalGroups)).toBeTruthy();
+         expect(screen.getAllByText(totalTeams)).toBeTruthy();
+      });
    });
-   it(`renders the text ${groupsPerCountry}`, () => {
-      render(<GroupView />);
+   it(`renders the text ${teamPerCountry}`, () => {
+      render(<TeamView />);
 
-      expect(screen.getAllByText(groupsPerCountry)).toBeTruthy();
+      expect(screen.getAllByText(teamPerCountry)).toBeTruthy();
    });
 });

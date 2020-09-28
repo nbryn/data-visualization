@@ -9,8 +9,8 @@ const mockDispatch = jest.fn(() => mockUpdateFinanceView());
 
 jest.spyOn(redux, 'useDispatch').mockImplementation().mockReturnValue(mockDispatch);
 
-const totalLoans = 'Total Loans';
-const etbOnLoan = 'ETB On Loan';
+const totalEvents = 'Total Events';
+const etbPerEvent = 'ETB Per Event';
 
 afterEach(() => {
    jest.clearAllMocks();
@@ -30,14 +30,15 @@ describe('FinanceView.test.jsx', () => {
       });
    });
    describe('renders the correct text', () => {
-      it(`renders the text ${totalLoans}`, () => {});
-      render(<FinanceView />);
+      it(`renders the text ${totalEvents}`, () => {
+         render(<FinanceView />);
 
-      expect(screen.getAllByText(totalLoans)).toBeTruthy();
+         expect(screen.getAllByText(totalEvents)).toBeTruthy();
+      });
    });
-   it(`renders the text ${etbOnLoan}`, () => {
+   it(`renders the text ${etbPerEvent}`, () => {
       render(<FinanceView />);
 
-      expect(screen.getAllByText(etbOnLoan)).toBeTruthy();
+      expect(screen.getAllByText(etbPerEvent)).toBeTruthy();
    });
 });

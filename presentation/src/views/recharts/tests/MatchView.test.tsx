@@ -2,41 +2,42 @@ import * as redux from 'react-redux';
 import React from 'react';
 
 import {render, screen} from '../../../test-utils';
-import MeetingView from '../MatchView';
+import MatchView from '../MatchView';
 
-const mockUpdateMeetingView = jest.fn();
-const mockDispatch = jest.fn(() => mockUpdateMeetingView());
+const mockUpdateMatchView = jest.fn();
+const mockDispatch = jest.fn(() => mockUpdateMatchView());
 
 jest.spyOn(redux, 'useDispatch').mockImplementation().mockReturnValue(mockDispatch);
-
-const totalMeetings = 'Total Meetings';
-const meetingsLastMonth = 'Meetings Last Month';
 
 afterEach(() => {
    jest.clearAllMocks();
 });
 
-describe('MeetingView.test.jsx', () => {
+const totalMeetings = 'Total Matches';
+const meetingsLastMonth = 'Matches Last Month';
+
+describe('MatchView.test.jsx', () => {
    describe('calls the correct functions', () => {
       it('calls dispatch on mount', () => {
-         render(<MeetingView />);
+         render(<MatchView />);
 
          expect(mockDispatch).toHaveBeenCalled();
       });
-      it('calls updateMeetingView on mount', () => {
-         render(<MeetingView />);
+      it('calls updateMatchView on mount', () => {
+         render(<MatchView />);
 
-         expect(mockUpdateMeetingView).toHaveBeenCalled();
+         expect(mockUpdateMatchView).toHaveBeenCalled();
       });
    });
    describe('renders the correct text', () => {
-      it(`renders the text ${totalMeetings}`, () => {});
-      render(<MeetingView />);
+      it(`renders the text ${totalMeetings}`, () => {
+         render(<MatchView />);
 
-      expect(screen.getAllByText(totalMeetings)).toBeTruthy();
+         expect(screen.getAllByText(totalMeetings)).toBeTruthy();
+      });
    });
    it(`renders the text ${meetingsLastMonth}`, () => {
-      render(<MeetingView />);
+      render(<MatchView />);
 
       expect(screen.getAllByText(meetingsLastMonth)).toBeTruthy();
    });

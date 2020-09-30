@@ -3,7 +3,7 @@ import {LastYearDTO} from '../DTO';
 
 export const fetchEventsLastYear = async (): Promise<LastYearDTO[]> => {
    const data = `query{
-      financeData{
+      accountData{
         eventsLastYear{
             count
             month
@@ -12,7 +12,7 @@ export const fetchEventsLastYear = async (): Promise<LastYearDTO[]> => {
         }  
   }`;
 
-   const response: LastYearDTO[] = await fetchFromServer<LastYearDTO[]>('financeData', data, 'eventsLastYear');
+   const response: LastYearDTO[] = await fetchFromServer<LastYearDTO[]>('accountData', data, 'eventsLastYear');
 
    return response;
 };

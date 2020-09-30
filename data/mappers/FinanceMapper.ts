@@ -19,7 +19,7 @@ export async function fetchCurrencyData(): Promise<CountDTO[]> {
          },
       },
       {
-         $sort: {totalAmount: -1},
+         $sort: {totalAmount: 1},
       },
    ]);
 
@@ -49,7 +49,7 @@ export async function fetchTotalMeetingCount(): Promise<number> {
    return result[0].totalAmount;
 }
 
-export async function fetchTeamsWithMostEvents(): Promise<CountDTO[]> {
+export async function fetchTeamsWithMostMeetings(): Promise<CountDTO[]> {
    const temp = await TeamReportModel.aggregate([
       {
          $match: {
@@ -81,7 +81,7 @@ export async function fetchTotalEventCount(): Promise<number> {
    return total;
 }
 
-export async function fetchETBEventData(): Promise<CountDTO[]> {
+export async function fetchDollarEventData(): Promise<CountDTO[]> {
    const eventData = await TeamReportModel.aggregate([
       {
          $match: {
@@ -112,7 +112,7 @@ export async function fetchETBEventData(): Promise<CountDTO[]> {
          },
       },
       {
-         $sort: {count: -1},
+         $sort: {count: 1},
       },
    ]);
 

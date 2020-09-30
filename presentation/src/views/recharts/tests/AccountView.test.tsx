@@ -2,7 +2,7 @@ import * as redux from 'react-redux';
 import React from 'react';
 
 import {render, screen} from '../../../test-utils';
-import FinanceView from '../FinanceView';
+import FinanceView from '../AccountView';
 
 const mockUpdateFinanceView = jest.fn();
 const mockDispatch = jest.fn(() => mockUpdateFinanceView());

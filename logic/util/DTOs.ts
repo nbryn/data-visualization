@@ -20,8 +20,8 @@ export type LastYearDTO = {
    count: number;
 };
 
-export type FinanceDataDTO = {
-   mostShares: CountDTO[];
+export type AccountDataDTO = {
+   mostMeetings: CountDTO[];
    currencyData: CountDTO[];
-   etbData: CountDTO[];
+   dollarData: CountDTO[];
 };

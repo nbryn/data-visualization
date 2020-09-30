@@ -16,7 +16,7 @@ const Sidebar: React.FC = (): ReactElement => {
       overview: '/overview',
       teams: '/teams',
       users: '/users',
-      finance: '/finance',
+      accounts: '/accounts',
       matches: '/matches',
       // engagement: "/engagement",
    };

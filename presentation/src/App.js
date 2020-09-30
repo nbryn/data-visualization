@@ -10,7 +10,7 @@ import './assets/fonts/pe-icon-7-stroke.css';
 
 import ChartsjMainView from './views/chartjs/MainView';
 import EngagementView from './views/recharts/EngagementView';
-import FinanceView from './views/recharts/FinanceView';
+import AccountView from './views/recharts/AccountView';
 import TeamSearchView from './views/misc/TeamSearchView';
 import TeamView from './views/recharts/TeamView';
 import MatchView from './views/recharts/MatchView';
@@ -37,7 +37,7 @@ class App extends Component {
 
                      <SecureRoute exact path="/overview" component={RechartsMainView} />
                      <SecureRoute exact path="/engagement" component={EngagementView} />
-                     <SecureRoute exact path="/finance" component={FinanceView} />
+                     <SecureRoute exact path="/accounts" component={AccountView} />
                      <SecureRoute exact path="/teams" component={TeamView} />
                      <SecureRoute exact path="/matches" component={MatchView} />
                      <SecureRoute exact path="/users" component={UserView} />

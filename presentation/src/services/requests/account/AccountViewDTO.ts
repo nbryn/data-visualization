@@ -1,6 +1,6 @@
 import {LastMonthDTO, LastYearDTO, ServerDTO} from '../DTO';
 
-export type FinanceViewDTO = {
+export type AccountViewDTO = {
    numberOfCurrencies?: number;
    currencyData: ServerDTO[];
    eventTotal: number;
@@ -10,6 +10,6 @@ export type FinanceViewDTO = {
    teamWithMostMeetings: string;
    mostMeetingData: ServerDTO[];
    meetingData: ServerDTO[];
-   etbEventCount: number;
-   teamETBEventData: ServerDTO[];
+   dollarEventCount: number;
+   teamDollarEventData: ServerDTO[];
 };

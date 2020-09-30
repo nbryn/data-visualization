@@ -8,23 +8,23 @@ import Sidebar from '../../components/navigation/Sidebar';
 
 const {Col, Grid, Row} = require('react-bootstrap');
 
-const FinanceView: React.FC = (): ReactElement => {
+const AccountView: React.FC = (): ReactElement => {
    const dispatch = useDispatch();
 
-   dispatch(Thunks.updateFinanceViewData());
+   dispatch(Thunks.updateAccountViewData());
 
    return (
       <div className="wrapper">
          <Sidebar />
          <div id="main-panel" className="main-panel">
-            <Header title="Finance" />
+            <Header title="account" />
             <div className="content">
                <Grid fluid>
                   <Row>
                      <Col lg={3} sm={6}>
                         <KPIContainer
                            title="Total Events"
-                           statsType="finance"
+                           statsType="account"
                            total="eventTotal"
                            icon="pe-7s-users text-info"
                         />
@@ -32,23 +32,23 @@ const FinanceView: React.FC = (): ReactElement => {
                      <Col lg={3} sm={6}>
                         <KPIContainer
                            title="Total Meetings"
-                           statsType="finance"
+                           statsType="account"
                            total="meetingTotal"
                            icon="pe-7s-graph1 text-danger"
                         />
                      </Col>
                      <Col lg={3} sm={6}>
                         <KPIContainer
-                           title="ETB Per Event"
-                           statsType="finance"
-                           total="etbEventCount"
+                           title="Dollars Per Event"
+                           statsType="account"
+                           total="dollarEventCount"
                            icon="pe-7s-wallet text-success"
                         />
                      </Col>
                      <Col lg={3} sm={6}>
                         <KPIContainer
                            title="Most Meetings"
-                           statsType="finance"
+                           statsType="account"
                            total="mostMeetings"
                            icon="pe-7s-wallet text-success"
                         />
@@ -59,7 +59,7 @@ const FinanceView: React.FC = (): ReactElement => {
                      <Col lg={4} sm={6}>
                         <LineChartContainer
                            title="Total Events"
-                           statsType="finance"
+                           statsType="account"
                            dataType="eventsLastYearLineChartData"
                            xLabel="Months"
                            yLabel="Events"
@@ -69,7 +69,7 @@ const FinanceView: React.FC = (): ReactElement => {
                      <Col lg={4} sm={6}>
                         <BarChartContainer
                            title="Most Meetings"
-                           statsType="finance"
+                           statsType="account"
                            dataType="meetingsPerTeam"
                            xLabel="Team Name"
                            yLabel="Meetings"
@@ -78,9 +78,9 @@ const FinanceView: React.FC = (): ReactElement => {
                      </Col>
                      <Col lg={4} sm={6}>
                         <BarChartContainer
-                           title="Team ETB Data"
-                           statsType="finance"
-                           dataType="teamETBEventData"
+                           title="Team Dollar Data"
+                           statsType="account"
+                           dataType="teamDollarEventData"
                            xLabel="Team Name"
                            yLabel="Amount"
                            color="#2196f3"
@@ -92,7 +92,7 @@ const FinanceView: React.FC = (): ReactElement => {
                      <Col lg={4} sm={6}>
                         <BarChartContainer
                            title="Events Per Month"
-                           statsType="finance"
+                           statsType="account"
                            dataType="eventsLastYearBarChartData"
                            xLabel="Month"
                            yLabel="Events"
@@ -102,7 +102,7 @@ const FinanceView: React.FC = (): ReactElement => {
                      <Col lg={4} sm={6}>
                         <BarChartContainer
                            title="Events Per Day"
-                           statsType="finance"
+                           statsType="account"
                            dataType="eventsLastMonthData"
                            xLabel="Day"
                            yLabel="events"
@@ -112,7 +112,7 @@ const FinanceView: React.FC = (): ReactElement => {
                      <Col lg={4} sm={6}>
                         <BarChartContainer
                            title="Currencies"
-                           statsType="finance"
+                           statsType="account"
                            dataType="currencyData"
                            color="#2196f3"
                            xLabel="Currency"
@@ -127,4 +127,4 @@ const FinanceView: React.FC = (): ReactElement => {
    );
 };
 
-export default FinanceView;
+export default AccountView;

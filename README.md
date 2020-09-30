@@ -10,7 +10,7 @@ The app was originally implemented using JavaScript but converted to TypeScript.
 
 <h3 align="center">Picture of the app</h3>
 <p align="center">
-<img  src="https://user-images.githubusercontent.com/44057369/94198118-0c79ca80-feb7-11ea-84aa-93b83dd7de6c.png"  width="85%" height="400"/> 
+<img  src="https://user-images.githubusercontent.com/44057369/94737311-f0ba6c80-036d-11eb-8b4e-f318f208dc60.png"  width="85%" height="400"/> 
 </p>
 
 The app is deployed to Heroku and can be accessed using the link below.

@@ -1,12 +1,12 @@
 const {gql} = require('apollo-server');
 
-export const FinanceSchema = gql`
-   type BoxBalanceData {
-      totalBoxBalance: Float
+export const AccountSchema = gql`
+   type AccountBalanceData {
+      totalAccountBalance: Float
       teamWithMost: Float
    }
 
-   type FinanceData {
+   type AccountData {
       numberOfCurrencies: Float
       currencyData: [Count]
       eventTotal: Float
@@ -16,12 +16,12 @@ export const FinanceSchema = gql`
       mostMeetingData: Count
       teamWithMostMeetings: Float
       meetingData: [Count]
-      etbEventCount: Float
-      teamETBEventData: [Count]
-      boxBalanceData: BoxBalanceData
+      dollarEventCount: Float
+      teamDollarEventData: [Count]
+      accountBalanceData: AccountBalanceData
    }
 
    extend type Query {
-      financeData: FinanceData
+      accountData: AccountData
    }
 `;

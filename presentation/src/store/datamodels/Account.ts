@@ -1,22 +1,22 @@
 import {ChartData} from './General';
 
-const UPDATE_FINANCE_VIEW_DATA = 'UPDATE_FINANCE_VIEW_DATA';
+const UPDATE_ACCOUNT_VIEW_DATA = 'UPDATE_ACCOUNT_VIEW_DATA';
 
-export interface FinanceAction {
-   type: typeof UPDATE_FINANCE_VIEW_DATA;
-   payload: FinanceState;
+export interface AccountAction {
+   type: typeof UPDATE_ACCOUNT_VIEW_DATA;
+   payload: AccountState;
 }
 
-export function setFinanceViewData(data: FinanceState): FinanceAction {
+export function setAccountViewData(data: AccountState): AccountAction {
    return {
-      type: UPDATE_FINANCE_VIEW_DATA,
+      type: UPDATE_ACCOUNT_VIEW_DATA,
       payload: data,
    };
 }
 
-export default function (state = {}, action: FinanceAction) {
+export default function (state = {}, action: AccountAction) {
    switch (action.type) {
-      case UPDATE_FINANCE_VIEW_DATA:
+      case UPDATE_ACCOUNT_VIEW_DATA:
          return Object.assign({}, state, {
             ...action.payload,
          });
@@ -25,7 +25,7 @@ export default function (state = {}, action: FinanceAction) {
    }
 }
 
-export interface FinanceState {
+export interface AccountState {
    [key: string]: any;
    numberOfCurrencies?: number;
    currencyData: ChartData[];
@@ -36,11 +36,11 @@ export interface FinanceState {
    meetingTotal: number;
    meetingsPerTeam: ChartData[];
    mostMeetings: string;
-   etbEventCount: number;
-   teamETBEventData: ChartData[];
+   dollarEventCount: number;
+   teamDollarEventData: ChartData[];
 }
 
-export const initialFinanceState: FinanceState = {
+export const initialAccountState: AccountState = {
    currencyData: [],
    eventTotal: 0,
    eventsLastMonthData: [],
@@ -48,7 +48,7 @@ export const initialFinanceState: FinanceState = {
    eventsLastYearBarChartData: [],
    meetingTotal: 0,
    meetingsPerTeam: [],
-   teamETBEventData: [],
-   etbEventCount: 0,
+   teamDollarEventData: [],
+   dollarEventCount: 0,
    mostMeetings: '',
 };

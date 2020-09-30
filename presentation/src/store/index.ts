@@ -2,7 +2,7 @@ import {applyMiddleware, compose, combineReducers, createStore} from 'redux';
 import thunk from 'redux-thunk';
 
 import ChartjsReducers, {ChartjsState, initialChartjsState} from './datamodels/Chartjs';
-import FinanceReducers, {FinanceState, initialFinanceState} from './datamodels/Finance';
+import AccountReducers, {AccountState, initialAccountState} from './datamodels/Account';
 import GeneralReducers, {GeneralState, initialGeneralState} from './datamodels/General';
 import TeamReducers, {TeamState, initialTeamState} from './datamodels/Team';
 import MatchReducers, {MatchState, initialMatchState} from './datamodels/Match';
@@ -12,7 +12,7 @@ import UserReducers, {UserState, initialUserState} from './datamodels/User';
 export interface RootState {
    [key: string]: any;
    chartjs: ChartjsState;
-   finance: FinanceState;
+   account: AccountState;
    teams: TeamState;
    matches: MatchState;
    users: UserState;
@@ -22,7 +22,7 @@ export interface RootState {
 
 export const initialState: RootState = {
    chartjs: initialChartjsState,
-   finance: initialFinanceState,
+   account: initialAccountState,
    matches: initialMatchState,
    teams: initialTeamState,
    users: initialUserState,
@@ -32,7 +32,7 @@ export const initialState: RootState = {
 
 export const rootReducer = combineReducers({
    chartjs: ChartjsReducers,
-   finance: FinanceReducers,
+   account: AccountReducers,
    teams: TeamReducers,
    matches: MatchReducers,
    users: UserReducers,

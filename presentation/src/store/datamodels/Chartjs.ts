@@ -65,67 +65,25 @@ export interface ChartjsState {
    meetingTotal: number;
 }
 
+const defaultData: ChartjsData = {
+   labels: [],
+   data: [],
+   counter: 0,
+};
+
 export const initialChartjsState: ChartjsState = {
-   teamsLastWeekBarChart: {
-      labels: [],
-      counter: 0,
-      data: [],
-   },
-   teamsLastMonthBarChart: {
-      labels: [],
-      counter: 0,
-      data: [],
-   },
-   teamsLastYearBarChart: {
-      labels: [],
-      counter: 0,
-      data: [],
-   },
-   teamsLastWeekLineChart: {
-      labels: [],
-      counter: 0,
-      data: [],
-   },
-   teamsLastMonthLineChart: {
-      labels: [],
-      counter: 0,
-      data: [],
-   },
-   teamsLastYearLineChart: {
-      labels: [],
-      counter: 0,
-      data: [],
-   },
-   usersLastMonthLineChart: {
-      labels: [],
-      counter: 0,
-      data: [],
-   },
-   usersLastWeekLineChart: {
-      labels: [],
-      counter: 0,
-      data: [],
-   },
-   usersLastYearLineChart: {
-      labels: [],
-      counter: 0,
-      data: [],
-   },
-   usersLastMonthBarChart: {
-      labels: [],
-      counter: 0,
-      data: [],
-   },
-   usersLastWeekBarChart: {
-      labels: [],
-      counter: 0,
-      data: [],
-   },
-   usersLastYearBarChart: {
-      labels: [],
-      counter: 0,
-      data: [],
-   },
+   teamsLastWeekBarChart: defaultData,
+   teamsLastMonthBarChart: defaultData,
+   teamsLastYearBarChart: defaultData,
+   teamsLastWeekLineChart: defaultData,
+   teamsLastMonthLineChart: defaultData,
+   teamsLastYearLineChart: defaultData,
+   usersLastMonthLineChart: defaultData,
+   usersLastWeekLineChart: defaultData,
+   usersLastYearLineChart: defaultData,
+   usersLastMonthBarChart: defaultData,
+   usersLastWeekBarChart: defaultData,
+   usersLastYearBarChart: defaultData,
    genderData: {
       labels: [],
       data: [],

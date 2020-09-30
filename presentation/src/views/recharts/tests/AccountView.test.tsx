@@ -2,43 +2,43 @@ import * as redux from 'react-redux';
 import React from 'react';
 
 import {render, screen} from '../../../test-utils';
-import FinanceView from '../FinanceView';
+import AccountView from '../AccountView';
 
-const mockUpdateFinanceView = jest.fn();
-const mockDispatch = jest.fn(() => mockUpdateFinanceView());
+const mockUpdateAccountView = jest.fn();
+const mockDispatch = jest.fn(() => mockUpdateAccountView());
 
 jest.spyOn(redux, 'useDispatch').mockImplementation().mockReturnValue(mockDispatch);
 
 const totalEvents = 'Total Events';
-const etbPerEvent = 'ETB Per Event';
+const dollarPerEvent = 'Dollars Per Event';
 
 afterEach(() => {
    jest.clearAllMocks();
 });
 
-describe('FinanceView.test.jsx', () => {
+describe('AccountView.test.jsx', () => {
    describe('calls the correct functions', () => {
       it('calls dispatch on mount', () => {
-         render(<FinanceView />);
+         render(<AccountView />);
 
          expect(mockDispatch).toHaveBeenCalled();
       });
-      it('calls updateFinanceView on mount', () => {
-         render(<FinanceView />);
+      it('calls updateAccountView on mount', () => {
+         render(<AccountView />);
 
-         expect(mockUpdateFinanceView).toHaveBeenCalled();
+         expect(mockUpdateAccountView).toHaveBeenCalled();
       });
    });
    describe('renders the correct text', () => {
       it(`renders the text ${totalEvents}`, () => {
-         render(<FinanceView />);
+         render(<AccountView />);
 
          expect(screen.getAllByText(totalEvents)).toBeTruthy();
       });
    });
-   it(`renders the text ${etbPerEvent}`, () => {
-      render(<FinanceView />);
+   it(`renders the text ${dollarPerEvent}`, () => {
+      render(<AccountView />);
 
-      expect(screen.getAllByText(etbPerEvent)).toBeTruthy();
+      expect(screen.getAllByText(dollarPerEvent)).toBeTruthy();
    });
 });

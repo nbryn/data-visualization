@@ -15,28 +15,28 @@ export interface LogoutAction {
 }
 
 export interface UpdateEngagementViewDataAction {
-   type: typeof UPDATE_ENGAGEMENT_VIEW_DATA;
+   type: string;
    payload: any;
 }
 
-type GeneralActions = LoginAction | LogoutAction | UpdateEngagementViewDataAction;
+type GeneralAction = LoginAction | LogoutAction | UpdateEngagementViewDataAction;
 
 // Action Creators
-export function loginUser(data: User) {
+export function loginUser(data: User): LoginAction {
    return {
       type: LOGIN_USER,
       payload: data,
    };
 }
 
-export function logoutUser(data: any = null) {
+export function logoutUser(data: any = null): LogoutAction {
    return {
       type: LOGOUT_USER,
       payload: data,
    };
 }
 
-export function updateEngagementViewData(data: any) {
+export function updateEngagementViewData(data: any): UpdateEngagementViewDataAction {
    return {
       type: typeof UPDATE_ENGAGEMENT_VIEW_DATA,
       payload: data,
@@ -44,7 +44,7 @@ export function updateEngagementViewData(data: any) {
 }
 
 // Reducers
-export default function (state = {}, action: GeneralActions) {
+export default function (state = {}, action: GeneralAction) {
    switch (action.type) {
       case LOGIN_USER:
          return Object.assign({}, state, {

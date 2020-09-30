@@ -67,7 +67,7 @@ const BarChart: React.FC<Props> = (props: Props) => {
          <div className={classes.dropdown}>
             <TextField
                id="interval"
-               label="chart.interval"
+               label="Interval"
                size="small"
                value={props.currentInterval}
                select

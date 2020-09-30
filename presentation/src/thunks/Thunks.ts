@@ -14,14 +14,14 @@ import {
    fetchLogin,
    fetchActiveUserData,
    fetchTeamEngagementData,
-   FinanceViewDTO,
+   AccountViewDTO,
    MatchViewDTO,
 } from '../services/requests';
 import * as DataMappingService from '../services/DataMappingService';
-import {fetchFinanceData} from '../services/requests/finance/FinanceViewDataRequest';
+import {fetchAccountData} from '../services/requests/account/AccountViewDataRequest';
 import {fetchMatchViewData} from '../services/requests/match/MatchViewDataRequest';
 import {fetchMatchesPerCountry} from '../services/requests/match/MatchesPerCountryRequest';
-import {FinanceState, setFinanceViewData} from '../store/datamodels/Finance';
+import {AccountState, setAccountViewData} from '../store/datamodels/Account';
 import {loginUser, logoutUser, updateEngagementViewData} from '../store/datamodels/General';
 import {MatchState, setMatchViewData} from '../store/datamodels/Match';
 import {RootState} from '../store/index';
@@ -59,27 +59,27 @@ export const updateMatchViewData = (): ThunkAction<void, RootState, null, Action
    dispatch(setMatchViewData(result));
 };
 
-export const updateFinanceViewData = (): ThunkAction<void, RootState, null, Action<string>> => async (dispatch) => {
-   const result: FinanceState = {} as FinanceState;
+export const updateAccountViewData = (): ThunkAction<void, RootState, null, Action<string>> => async (dispatch) => {
+   const result: AccountState = {} as AccountState;
 
-   const financeData: FinanceViewDTO = await fetchFinanceData();
+   const AccountData: AccountViewDTO = await fetchAccountData();
 
    const {
       meetingTotal,
       eventTotal,
       teamWithMostMeetings,
-      etbEventCount,
+      dollarEventCount,
       currencyData,
       eventsLastMonth,
       eventsLastYear,
       meetingData,
-      teamETBEventData,
-   } = financeData;
+      teamDollarEventData,
+   } = AccountData;
 
    result.meetingTotal = meetingTotal;
    result.eventTotal = eventTotal;
    result.mostMeetings = teamWithMostMeetings;
-   result.etbEventCount = etbEventCount;
+   result.dollarEventCount = dollarEventCount;
 
    result.eventsLastYearLineChartData = DataMappingService.mapLastYearData(eventsLastYear, true);
    result.eventsLastMonthData = DataMappingService.mapLastMonthData(eventsLastMonth);
@@ -87,9 +87,9 @@ export const updateFinanceViewData = (): ThunkAction<void, RootState, null, Acti
 
    result.currencyData = DataMappingService.mapGeneralChartData(currencyData);
    result.meetingsPerTeam = DataMappingService.mapGeneralChartData(meetingData);
-   result.teamETBEventData = DataMappingService.mapGeneralChartData(teamETBEventData);
+   result.teamDollarEventData = DataMappingService.mapGeneralChartData(teamDollarEventData);
 
-   dispatch(setFinanceViewData(result));
+   dispatch(setAccountViewData(result));
 };
 
 export const updateMainViewData = (): ThunkAction<void, RootState, null, Action<string>> => async (dispatch) => {

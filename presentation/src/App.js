@@ -10,6 +10,7 @@ import './assets/fonts/pe-icon-7-stroke.css';
 
 import ChartsjMainView from './views/chartjs/MainView';
 import EngagementView from './views/recharts/EngagementView';
+import ErrorBoundary from './components/common/ErrorBoundary';
 import AccountView from './views/recharts/AccountView';
 import TeamSearchView from './views/misc/TeamSearchView';
 import TeamView from './views/recharts/TeamView';
@@ -30,24 +31,26 @@ class App extends Component {
          <Router>
             <Provider store={Store}>
                <UserContextProvider>
-                  <Switch>
-                     <Route exact path="/" component={Signin} />
+                  <ErrorBoundary>
+                     <Switch>
+                        <Route exact path="/" component={Signin} />
 
-                     <SecureRoute exact path="/dashboard" component={ChartsjMainView} />
+                        <SecureRoute exact path="/dashboard" component={ChartsjMainView} />
 
-                     <SecureRoute exact path="/overview" component={RechartsMainView} />
-                     <SecureRoute exact path="/engagement" component={EngagementView} />
-                     <SecureRoute exact path="/accounts" component={AccountView} />
-                     <SecureRoute exact path="/teams" component={TeamView} />
-                     <SecureRoute exact path="/matches" component={MatchView} />
-                     <SecureRoute exact path="/users" component={UserView} />
+                        <SecureRoute exact path="/overview" component={RechartsMainView} />
+                        <SecureRoute exact path="/engagement" component={EngagementView} />
+                        <SecureRoute exact path="/accounts" component={AccountView} />
+                        <SecureRoute exact path="/teams" component={TeamView} />
+                        <SecureRoute exact path="/matches" component={MatchView} />
+                        <SecureRoute exact path="/users" component={UserView} />
 
-                     <SecureRoute exact path="/profile" component={Profile} />
-                     <SecureRoute exact path="/org-view" component={NGOView} />
-                     <SecureRoute exact path="/search" component={TeamSearchView} />
+                        <SecureRoute exact path="/profile" component={Profile} />
+                        <SecureRoute exact path="/org-view" component={NGOView} />
+                        <SecureRoute exact path="/search" component={TeamSearchView} />
 
-                     <Route path="*" component={NotFound} />
-                  </Switch>
+                        <Route path="*" component={NotFound} />
+                     </Switch>
+                  </ErrorBoundary>
                </UserContextProvider>
             </Provider>
          </Router>

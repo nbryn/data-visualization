@@ -1,9 +1,9 @@
 import {fetchFromServer} from '../Fetch';
-import {FinanceViewDTO} from './FinanceViewDTO';
+import {AccountViewDTO} from './AccountViewDTO';
 
-export const fetchFinanceData = async (): Promise<FinanceViewDTO> => {
+export const fetchAccountData = async (): Promise<AccountViewDTO> => {
    const data = `query {
-        financeData {
+        accountData {
           numberOfCurrencies
           currencyData {
             name
@@ -33,15 +33,15 @@ export const fetchFinanceData = async (): Promise<FinanceViewDTO> => {
             name
             count
           }
-          etbEventCount
-          teamETBEventData {
+          dollarEventCount
+          teamDollarEventData {
             name
             count
           }
         }
       }`;
 
-   const response: FinanceViewDTO = await fetchFromServer<FinanceViewDTO>('financeData', data);
+   const response: AccountViewDTO = await fetchFromServer<AccountViewDTO>('accountData', data);
 
    return response;
 };

@@ -1,47 +1,47 @@
 import * as FinanceMapper from '../../../data/mappers/FinanceMapper';
 import {actionRunner} from '../../util/ActionRunner';
-import {CountDTO, FinanceDataDTO, LastMonthDTO, LastYearDTO} from '../../util/DTOs';
+import {CountDTO, AccountDataDTO, LastMonthDTO, LastYearDTO} from '../../util/DTOs';
 
-export const financeResolvers = {
+export const accountResolvers = {
    Query: {
-      financeData: async (): Promise<FinanceDataDTO> => {
-         return actionRunner<FinanceDataDTO>(async () => {
-            const mostShares = await FinanceMapper.fetchTeamsWithMostEvents();
+      accountData: async (): Promise<AccountDataDTO> => {
+         return actionRunner<AccountDataDTO>(async () => {
+            const mostMeetings = await FinanceMapper.fetchTeamsWithMostMeetings();
             const currencyData = await FinanceMapper.fetchCurrencyData();
-            const etbData = await FinanceMapper.fetchETBEventData();
+            const dollarData = await FinanceMapper.fetchDollarEventData();
 
             return {
-               mostShares,
+               mostMeetings,
                currencyData,
-               etbData,
+               dollarData,
             };
          });
       },
    },
-   FinanceData: {
-      mostMeetingData: (root: FinanceDataDTO): CountDTO => {
-         return root.mostShares[0];
+   AccountData: {
+      mostMeetingData: (root: AccountDataDTO): CountDTO => {
+         return root.mostMeetings[0];
       },
-      teamWithMostMeetings: (root: FinanceDataDTO): number => {
-         return root.mostShares[0].count;
+      teamWithMostMeetings: (root: AccountDataDTO): number => {
+         return root.mostMeetings[0].count;
       },
-      meetingData: (root: FinanceDataDTO): CountDTO[] => {
-         return root.mostShares;
+      meetingData: (root: AccountDataDTO): CountDTO[] => {
+         return root.mostMeetings.sort((a, b) => a.count - b.count);
       },
-      numberOfCurrencies: async (root: FinanceDataDTO): Promise<number> => {
+      numberOfCurrencies: async (root: AccountDataDTO): Promise<number> => {
          return root.currencyData.length;
       },
-      currencyData: async (root: FinanceDataDTO): Promise<CountDTO[]> => {
+      currencyData: async (root: AccountDataDTO): Promise<CountDTO[]> => {
          return root.currencyData;
       },
-      teamETBEventData: (root: FinanceDataDTO): CountDTO[] => {
-         return root.etbData;
+      teamDollarEventData: (root: AccountDataDTO): CountDTO[] => {
+         return root.dollarData;
       },
-      etbEventCount: async (root: FinanceDataDTO): Promise<number> => {
-         let etbEventCount = 0;
-         root.etbData.forEach((x: CountDTO) => (etbEventCount += x.count));
+      dollarEventCount: async (root: AccountDataDTO): Promise<number> => {
+         let dollarEventCount = 0;
+         root.dollarData.forEach((x: CountDTO) => (dollarEventCount += x.count));
 
-         return etbEventCount;
+         return dollarEventCount;
       },
 
       eventTotal: async (): Promise<number> => {

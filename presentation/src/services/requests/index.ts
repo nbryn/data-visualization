@@ -1,7 +1,7 @@
-export * from './finance/CurrencyDataRequest';
-export * from './finance/EtbEventCountRequest';
-export * from './finance/FinanceViewDTO';
-export * from './finance/MeetingTotalRequest';
+export * from './account/CurrencyDataRequest';
+export * from './account/DollarEventCountRequest';
+export * from './account/AccountViewDTO';
+export * from './account/MeetingTotalRequest';
 
 export * from './team/TeamByOrgRequest';
 

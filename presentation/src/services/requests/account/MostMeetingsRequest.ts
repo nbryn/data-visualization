@@ -2,12 +2,12 @@ import {fetchFromServer} from '../Fetch';
 
 export const fetchMostMeetings = async (): Promise<number> => {
    const data = `query{
-      financeData{
+      accountData{
           teamWithMostMeetings    
         }  
   }`;
 
-   const response = await fetchFromServer<number>('financeData', data, 'teamWithMostMeetings');
+   const response = await fetchFromServer<number>('accountData', data, 'teamWithMostMeetings');
 
    return response;
 };

@@ -29,18 +29,18 @@ export const matchResolvers = {
             return matchesLastYear;
          });
       },
-      matchesPerTeam: async (): Promise<any[]> => {
+      matchesPerTeam: async (): Promise<CountDTO[]> => {
          return actionRunner(async () => {
             const matchesPerTeam = await MatchService.calculateMatchesPerTeam();
 
-            return matchesPerTeam.slice(0, 10);
+            return matchesPerTeam.slice(0, 10).sort((a, b) => a.count - b.count);
          });
       },
       meetingsPerMatch: async (): Promise<CountDTO[]> => {
          return actionRunner<CountDTO[]>(async () => {
             const meetingsPerMatch = await MatchService.calculateMeetingsPerMatch();
 
-            return meetingsPerMatch;
+            return meetingsPerMatch.sort((a, b) => a.count - b.count);
          });
       },
    },

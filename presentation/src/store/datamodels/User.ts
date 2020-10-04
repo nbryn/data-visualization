@@ -18,7 +18,7 @@ export function setUserViewData(data: UserState): UserViewAction {
 }
 
 // Reducers
-export default function (state = {}, action: UserViewAction) {
+export default function (state = initialUserState, action: UserViewAction): UserState {
    switch (action.type) {
       case UPDATE_USER_VIEW_DATA:
          return Object.assign({}, state, {

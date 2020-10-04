@@ -9,6 +9,7 @@ import {
    PieChartContainer,
 } from '../../containers';
 import * as UserThunks from '../../thunks/UserThunks';
+import {Model, UserData} from '../../store/datamodels/types';
 import Header from '../../components/navigation/Header';
 import Sidebar from '../../components/navigation/Sidebar';
 
@@ -30,32 +31,28 @@ const UserView: React.FC = (): ReactElement => {
                      <Col lg={3} sm={6}>
                         <KPIContainer
                            title="Total Users"
-                           statsType="users"
-                           total="total"
+                           data={{model: Model.User, modelData: UserData.Total}}
                            icon="pe-7s-user text-warning"
                         />
                      </Col>
                      <Col lg={3} sm={6}>
                         <KPITodayContainer
-                           statsType="users"
-                           countData="todayCount"
-                           dateData="todayDate"
+                           data={{model: Model.User, modelData: UserData.TodayCount}}
+                           dateData={UserData.TodayDate}
                            icon="pe-7s-users text-info"
                         />
                      </Col>
                      <Col lg={3} sm={6}>
                         <KPIContainer
                            title="Last Year"
-                           statsType="users"
-                           total="lastYearCount"
+                           data={{model: Model.User, modelData: UserData.LastYearCount}}
                            icon="pe-7s-wallet text-success"
                         />
                      </Col>
                      <Col lg={3} sm={6}>
                         <KPIContainer
                            title="Last Month"
-                           statsType="users"
-                           total="lastMonthCount"
+                           data={{model: Model.User, modelData: UserData.LastMonthCount}}
                            icon="pe-7s-users text-info"
                         />
                      </Col>

@@ -14,7 +14,7 @@ export function setAccountViewData(data: AccountState): AccountAction {
    };
 }
 
-export default function (state = {}, action: AccountAction) {
+export default function (state = initialAccountState, action: AccountAction): AccountState {
    switch (action.type) {
       case UPDATE_ACCOUNT_VIEW_DATA:
          return Object.assign({}, state, {

@@ -21,7 +21,7 @@ import {
    setOrgTeamData,
 } from '../store/datamodels/Team';
 import {RootState} from '../store/index';
-import {ServerDTO} from '../services/requests/DTO';
+import {ServerDTO} from '../services/requests/DTOs';
 
 export const updateTeamViewData = (): ThunkAction<void, RootState, null, Action<string>> => async (dispatch) => {
    const result: TeamState = {} as TeamState;

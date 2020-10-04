@@ -17,7 +17,7 @@ export function setMatchViewData(data: MatchState): MatchAction {
    };
 }
 
-export default function (state = {}, action: MatchAction) {
+export default function (state = initialMatchState, action: MatchAction): MatchState {
    switch (action.type) {
       case UPDATE_MATCH_VIEW_DATA:
          return Object.assign({}, state, {

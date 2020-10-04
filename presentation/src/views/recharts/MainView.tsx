@@ -2,6 +2,7 @@ import React, {ReactElement} from 'react';
 import {useDispatch} from 'react-redux';
 
 import {BarChartContainer, KPIContainer, LineChartContainer, PieChartContainer} from '../../containers';
+import {MainData, Model} from '../../store/datamodels/types';
 import * as Thunks from '../../thunks/Thunks';
 import Header from '../../components/navigation/Header';
 import Sidebar from '../../components/navigation/Sidebar';
@@ -23,32 +24,28 @@ const MainView: React.FC = (): ReactElement => {
                      <Col lg={3} sm={6}>
                         <KPIContainer
                            title="Total Users"
-                           statsType="main"
-                           total="usersTotal"
+                           data={{model: Model.Main, modelData: MainData.UsersTotal}}
                            icon="pe-7s-user text-warning"
                         />
                      </Col>
                      <Col lg={3} sm={6}>
                         <KPIContainer
                            title="Total Teams"
-                           statsType="main"
-                           total="teamsTotal"
+                           data={{model: Model.Main, modelData: MainData.TeamsTotal}}
                            icon="pe-7s-users text-info"
                         />
                      </Col>
                      <Col lg={3} sm={6}>
                         <KPIContainer
                            title="Total Matches"
-                           statsType="main"
-                           total="matchTotal"
+                           data={{model: Model.Main, modelData: MainData.MatchTotal}}
                            icon="pe-7s-graph1 text-danger"
                         />
                      </Col>
                      <Col lg={3} sm={6}>
                         <KPIContainer
                            title="Total Meetings"
-                           statsType="main"
-                           total="meetingTotal"
+                           data={{model: Model.Main, modelData: MainData.MeetingTotal}}
                            icon="pe-7s-graph1 text-danger"
                         />
                      </Col>

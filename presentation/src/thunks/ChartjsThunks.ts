@@ -14,7 +14,7 @@ import {
 } from '../services/requests';
 import * as DataMappingService from '../services/DataMappingService';
 import {ChartjsLastMonthData, ChartjsState, setChartjsData} from '../store/datamodels/Chartjs';
-import {LastMonthDTO, LastYearDTO, ServerDTO} from '../services/requests/DTO';
+import {LastMonthDTO, LastYearDTO, ServerDTO} from '../services/requests/DTOs';
 import {RootState} from '../store/index';
 
 export const updateChartjsData = (): ThunkAction<void, RootState, null, Action<string>> => async (dispatch) => {

@@ -1,6 +1,7 @@
 import {useDispatch} from 'react-redux';
 import React, {ReactElement} from 'react';
 
+import {AccountData, Model} from '../../store/datamodels/types';
 import * as Thunks from '../../thunks/Thunks';
 import {BarChartContainer, KPIContainer, LineChartContainer} from '../../containers';
 import Header from '../../components/navigation/Header';
@@ -24,32 +25,28 @@ const AccountView: React.FC = (): ReactElement => {
                      <Col lg={3} sm={6}>
                         <KPIContainer
                            title="Total Events"
-                           statsType="account"
-                           total="eventTotal"
+                           data={{model: Model.Account, modelData: AccountData.EventTotal}}
                            icon="pe-7s-users text-info"
                         />
                      </Col>
                      <Col lg={3} sm={6}>
                         <KPIContainer
                            title="Total Meetings"
-                           statsType="account"
-                           total="meetingTotal"
+                           data={{model: Model.Account, modelData: AccountData.MeetingTotal}}
                            icon="pe-7s-graph1 text-danger"
                         />
                      </Col>
                      <Col lg={3} sm={6}>
                         <KPIContainer
                            title="Dollars Per Event"
-                           statsType="account"
-                           total="dollarEventCount"
+                           data={{model: Model.Account, modelData: AccountData.DollarEventCount}}
                            icon="pe-7s-wallet text-success"
                         />
                      </Col>
                      <Col lg={3} sm={6}>
                         <KPIContainer
                            title="Most Meetings"
-                           statsType="account"
-                           total="mostMeetings"
+                           data={{model: Model.Account, modelData: AccountData.MostMeetings}}
                            icon="pe-7s-wallet text-success"
                         />
                      </Col>

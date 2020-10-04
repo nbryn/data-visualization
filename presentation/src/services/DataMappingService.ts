@@ -3,7 +3,7 @@ import {ChartjsData, ChartjsLastMonthData, ChartjsPieData} from '../store/datamo
 import {convertNumberToMonth} from '../util/Date';
 import {TeamData, TeamDataProp} from '../store/datamodels/Team';
 import {TeamDTO, Name} from '../services/requests';
-import {IntervalDTO, LastMonthDTO, LastYearDTO, ServerDTO} from './requests/DTO';
+import {IntervalDTO, LastMonthDTO, LastYearDTO, ServerDTO} from './requests/DTOs';
 
 export const mapDataForToday = (data: LastMonthDTO[]): TodayData => {
    const temp: ChartData[] = mapLastMonthData(data);
@@ -49,7 +49,7 @@ export const mapLastYearData = (data: LastYearDTO[], aggregate: boolean): ChartD
       month = convertNumberToMonth(element.month);
 
       return {
-         name: month + "'" + year,
+         name: month + '\'' + year,
          value: aggregate ? (total += element.count) : element.count,
       };
    });
@@ -90,7 +90,7 @@ export const mapChartjsLastMonthData = (data: LastMonthDTO[], aggregate: boolean
       },
    };
 
-   lastMonth.labels = data.map((element: LastMonthDTO) => element.day.day + "'" + element.day.month);
+   lastMonth.labels = data.map((element: LastMonthDTO) => element.day.day + '\'' + element.day.month);
    lastMonth.data = data.map((element: LastMonthDTO) => {
       const counter = (lastMonth.counter += element.count);
       if (aggregate) return counter;
@@ -118,7 +118,7 @@ export const mapChartjsLastYearData = (data: LastYearDTO[], aggregate: boolean):
    };
 
    lastYear.labels = data.map((element: LastYearDTO) => {
-      return convertNumberToMonth(element.month) + "'" + element.year.toString().substring(2);
+      return convertNumberToMonth(element.month) + '\'' + element.year.toString().substring(2);
    });
 
    lastYear.data = data.map((element: LastYearDTO) => {

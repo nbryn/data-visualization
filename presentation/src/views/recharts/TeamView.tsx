@@ -1,6 +1,7 @@
 import {useDispatch} from 'react-redux';
 import React, {ReactElement} from 'react';
 
+import {Model, TeamData} from '../../store/datamodels/types';
 import {
    BarChartContainer,
    KPIContainer,
@@ -8,7 +9,6 @@ import {
    LineChartContainer,
    PieChartContainer,
 } from '../../containers';
-
 import * as Thunks from '../../thunks/TeamThunks';
 import Header from '../../components/navigation/Header';
 import Sidebar from '../../components/navigation/Sidebar';
@@ -31,32 +31,28 @@ const TeamView: React.FC = (): ReactElement => {
                      <Col lg={3} sm={6}>
                         <KPIContainer
                            title="Total Teams"
-                           statsType="teams"
-                           total="total"
+                           data={{model: Model.Team, modelData: TeamData.Total}}
                            icon="pe-7s-graph1 text-danger"
                         />
                      </Col>
                      <Col lg={3} sm={6}>
                         <KPITodayContainer
-                           statsType="teams"
-                           countData="todayCount"
-                           dateData="todayDate"
+                           data={{model: Model.Team, modelData: TeamData.TodayCount}}
+                           dateData={TeamData.TodayCount}
                            icon="pe-7s-graph1 text-danger"
                         />
                      </Col>
                      <Col lg={3} sm={6}>
                         <KPIContainer
                            title="Last Year"
-                           statsType="teams"
-                           total="lastYearCount"
+                           data={{model: Model.Team, modelData: TeamData.LastYearCount}}
                            icon="pe-7s-graph1 text-danger"
                         />
                      </Col>
                      <Col lg={3} sm={6}>
                         <KPIContainer
                            title="Last Month"
-                           statsType="teams"
-                           total="lastMonthCount"
+                           data={{model: Model.Team, modelData: TeamData.LastMonthCount}}
                            icon="pe-7s-users text-info"
                         />
                      </Col>

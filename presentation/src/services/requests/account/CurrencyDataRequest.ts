@@ -1,5 +1,5 @@
 import {fetchFromServer} from '../Fetch';
-import {ServerDTO} from '../DTO';
+import {ServerDTO} from '../DTOs';
 
 export const fetchCurrencyData = async (): Promise<ServerDTO[]> => {
    const data = `query{

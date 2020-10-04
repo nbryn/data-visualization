@@ -26,7 +26,7 @@ import {loginUser, logoutUser, updateEngagementViewData} from '../store/datamode
 import {MatchState, setMatchViewData} from '../store/datamodels/Match';
 import {RootState} from '../store/index';
 import {removeTokenFromLocalStorage, setTokenInLocalStorage} from '../util/Token';
-import {ServerDTO, UserDTO} from '../services/requests/DTO';
+import {ServerDTO, UserDTO} from '../services/requests/DTOs';
 
 import {MainState, setMainViewData} from '../store/datamodels/Main';
 import {UserContextValue} from '../store/UserContext';

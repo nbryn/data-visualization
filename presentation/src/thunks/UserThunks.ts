@@ -5,7 +5,7 @@ import {fetchUserViewData, fetchUsersPerCountry, fetchUsersPerOrg, UserViewDTO} 
 import {setUserViewData, UserState} from '../store/datamodels/User';
 import * as DataMappingService from '../services/DataMappingService';
 import {RootState} from '../store/index';
-import {ServerDTO} from '../services/requests/DTO';
+import {ServerDTO} from '../services/requests/DTOs';
 
 export const updateUserViewData = (): ThunkAction<void, RootState, null, Action<string>> => async (dispatch) => {
    const result: UserState = {} as UserState;

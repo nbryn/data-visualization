@@ -4,7 +4,8 @@ import {makeStyles} from '@material-ui/core/styles';
 import React, {ReactElement, useEffect, useState} from 'react';
 import {useSelector} from 'react-redux';
 
-import {ChartjsData} from '../../store/datamodels/Chartjs';
+import {ChartjsData} from '../../store/datamodels/types';
+import {ChartjsData as ChartjsChartData} from '../../store/datamodels/Chartjs';
 import {Interval, resolveInterval} from './types';
 import BarChart from '../../components/chartjs/BarChart';
 import {RootState} from '../../store/index';
@@ -23,25 +24,25 @@ const useStyles = makeStyles((theme) => ({
 export type Props = {
    title: string;
    color: string;
-   dataTypes: string[];
+   data: ChartjsData[];
 };
 
-export const ChartjsBarChartContainer: React.FC<Props> = ({title, color, dataTypes}: Props): ReactElement => {
+export const ChartjsBarChartContainer: React.FC<Props> = ({title, color, data}: Props): ReactElement => {
    const classes = useStyles();
    const {WEEK, MONTH, YEAR} = Interval;
 
    const [period, setPeriod] = useState<Interval>(YEAR);
-   const [chartData, setChartData] = useState<ChartjsData>({
+   const [chartData, setChartData] = useState<ChartjsChartData>({
       labels: [],
       counter: 0,
       data: [],
    });
 
-   const lastWeek: ChartjsData = useSelector<RootState, ChartjsData>((state) => state.chartjs[dataTypes[0]]);
+   const lastWeek: ChartjsChartData = useSelector<RootState, ChartjsChartData>((state) => state.chartjs[data[0]]);
 
-   const lastMonth: ChartjsData = useSelector<RootState, ChartjsData>((state) => state.chartjs[dataTypes[1]]);
+   const lastMonth: ChartjsChartData = useSelector<RootState, ChartjsChartData>((state) => state.chartjs[data[1]]);
 
-   const lastYear: ChartjsData = useSelector<RootState, ChartjsData>((state) => state.chartjs[dataTypes[2]]);
+   const lastYear: ChartjsChartData = useSelector<RootState, ChartjsChartData>((state) => state.chartjs[data[2]]);
 
    const handleChangeInterval = (event: React.ChangeEvent<HTMLInputElement>): void => {
       const interval: Interval = resolveInterval(event.target.value);
@@ -55,7 +56,7 @@ export const ChartjsBarChartContainer: React.FC<Props> = ({title, color, dataTyp
       }
    };
 
-   const updateData = (interval: Interval, chartData: ChartjsData): void => {
+   const updateData = (interval: Interval, chartData: ChartjsChartData): void => {
       setPeriod(interval);
 
       setChartData({

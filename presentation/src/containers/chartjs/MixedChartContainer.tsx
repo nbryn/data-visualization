@@ -4,7 +4,8 @@ import {makeStyles} from '@material-ui/core/styles';
 import React, {ReactElement} from 'react';
 import {useSelector} from 'react-redux';
 
-import {ChartjsData} from '../../store/datamodels/Chartjs';
+import {ChartjsData} from '../../store/datamodels/types';
+import {ChartjsData as ChartjsChartData} from '../../store/datamodels/Chartjs';
 import MixedChart from '../../components/chartjs/MixedChart';
 import {RootState} from '../../store/index';
 
@@ -20,9 +21,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 type Props = {
-   firstDataType: string;
+   firstDataType: ChartjsData;
    firstChartTitle: string;
-   secondDataType: string;
+   secondDataType: ChartjsData;
    secondChartTitle: string;
 };
 
@@ -34,8 +35,12 @@ export const ChartjsMixedChartContainer: React.FC<Props> = ({
 }: Props): ReactElement => {
    const classes = useStyles();
 
-   const firstChartData: ChartjsData = useSelector<RootState, ChartjsData>((state) => state.chartjs[firstDataType]);
-   const secondChartData: ChartjsData = useSelector<RootState, ChartjsData>((state) => state.chartjs[secondDataType]);
+   const firstChartData: ChartjsChartData = useSelector<RootState, ChartjsChartData>(
+      (state) => state.chartjs[firstDataType]
+   );
+   const secondChartData: ChartjsChartData = useSelector<RootState, ChartjsChartData>(
+      (state) => state.chartjs[secondDataType]
+   );
 
    return (
       <Card className={classes.wrapper}>

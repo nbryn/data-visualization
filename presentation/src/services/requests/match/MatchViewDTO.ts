@@ -1,4 +1,4 @@
-import {LastMonthDTO, LastYearDTO, ServerDTO} from '../DTO';
+import {LastMonthDTO, LastYearDTO, ServerDTO} from '../DTOs';
 
 export type MatchViewDTO = {
    matchTotal: number;

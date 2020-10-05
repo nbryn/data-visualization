@@ -6,7 +6,7 @@ import MixedChart, {ChartProps} from '../MixedChart';
 const text = 'MixedChart';
 
 jest.mock('react-chartjs-2', () => ({
-   Bar: () => <div>{text} </div>,
+   Bar: () => <div>MixedChart </div>,
 }));
 
 const labels = ['January', 'February'];

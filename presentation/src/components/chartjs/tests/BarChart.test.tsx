@@ -8,7 +8,7 @@ import TextField from '../../form/TextField';
 
 const updateIntervalMock = jest.fn();
 const labels = ['2017', '2018', '2019', '2020'];
-const label = "NGO's";
+const label = 'Orgs';
 const backgroundColor = 'rgba(75,192,192,1)';
 const borderWidth = 3;
 const borderColor = 'rgba(75,192,192,3)';
@@ -123,7 +123,7 @@ describe('BarChart.test.jsx', () => {
       it('stores the correct label', () => {
          wrapper = renderBarChart();
 
-         expect(wrapper.find(Bar).props().data.datasets[0].label).toEqual("NGO's");
+         expect(wrapper.find(Bar).props().data.datasets[0].label).toEqual(label);
       });
       it('stores the correct backgroundColor', () => {
          wrapper = renderBarChart();
@@ -138,7 +138,9 @@ describe('BarChart.test.jsx', () => {
       it('stores the correct hoverBackGroundColor', () => {
          wrapper = renderBarChart();
 
-         expect(wrapper.find(Bar).props().data.datasets[0].hoverBackgroundColor).toEqual(hoverBackgroundColor);
+         expect(wrapper.find(Bar).props().data.datasets[0].hoverBackgroundColor).toEqual(
+            hoverBackgroundColor
+         );
       });
       it('stores the correct hoverBorderColor', () => {
          wrapper = renderBarChart();

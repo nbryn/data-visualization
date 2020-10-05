@@ -2,20 +2,21 @@ import * as redux from 'react-redux';
 import {createStore} from 'redux';
 import React from 'react';
 
-import {render, screen} from '../../../test-utils';
+import {ChartjsData} from '../../../store/datamodels/types';
 import {ChartjsMixedChartContainer} from '../MixedChartContainer';
+import {render, screen} from '../../../test-utils';
 import {setChartjsData} from '../../../store/datamodels/Chartjs';
 
 const useSelectorSpy = jest.spyOn(redux, 'useSelector');
 
 const firstTitle = 'TestTitle';
 const secondTitle = 'TesterTitle';
-const firstDataType = 'usersLastYearLineChart';
-const secondDataType = 'groupsLastYearLineChart';
+const firstDataType = ChartjsData.UsersLastYearLineChart;
+const secondDataType = ChartjsData.TeamsLastYearLineChart;
 
 const mockStore = createStore(() => ({
    chartjs: {
-      groupsLastYearLineChart: {
+      teamsLastYearLineChart: {
          labels: ['Feb', 'Mar', 'Apr'],
          data: [0, 1, 2],
          counter: 3,
@@ -60,7 +61,7 @@ describe('LineChartContainer.test.jsx', () => {
       mockStore.dispatch(
          // @ts-ignore
          setChartjsData({
-            groupsLastYearLineChart: {
+            teamsLastYearLineChart: {
                labels: ['Feb', 'Mar', 'Apr'],
                data: [0, 1, 2],
                counter: 3,

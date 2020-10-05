@@ -2,6 +2,7 @@ import React, {ReactElement} from 'react';
 import {useDispatch} from 'react-redux';
 
 import {BarChartContainer, KPIContainer, LineChartContainer, PieChartContainer} from '../../containers';
+import {MainData, Model} from '../../store/datamodels/types';
 import * as Thunks from '../../thunks/Thunks';
 import Header from '../../components/navigation/Header';
 import Sidebar from '../../components/navigation/Sidebar';
@@ -23,32 +24,28 @@ const MainView: React.FC = (): ReactElement => {
                      <Col lg={3} sm={6}>
                         <KPIContainer
                            title="Total Users"
-                           statsType="main"
-                           total="usersTotal"
+                           data={{model: Model.Main, modelData: MainData.UsersTotal}}
                            icon="pe-7s-user text-warning"
                         />
                      </Col>
                      <Col lg={3} sm={6}>
                         <KPIContainer
                            title="Total Teams"
-                           statsType="main"
-                           total="teamsTotal"
+                           data={{model: Model.Main, modelData: MainData.TeamsTotal}}
                            icon="pe-7s-users text-info"
                         />
                      </Col>
                      <Col lg={3} sm={6}>
                         <KPIContainer
                            title="Total Matches"
-                           statsType="main"
-                           total="matchTotal"
+                           data={{model: Model.Main, modelData: MainData.MatchTotal}}
                            icon="pe-7s-graph1 text-danger"
                         />
                      </Col>
                      <Col lg={3} sm={6}>
                         <KPIContainer
                            title="Total Meetings"
-                           statsType="main"
-                           total="meetingTotal"
+                           data={{model: Model.Main, modelData: MainData.MeetingTotal}}
                            icon="pe-7s-graph1 text-danger"
                         />
                      </Col>
@@ -58,8 +55,7 @@ const MainView: React.FC = (): ReactElement => {
                      <Col lg={4} md={6}>
                         <LineChartContainer
                            title="Total Users"
-                           statsType="main"
-                           dataType="usersLastYearLineChartData"
+                           dataType={{model: Model.Main, modelData: MainData.UsersLastYearLineChartData}}
                            xLabel="Month"
                            yLabel="Users"
                            color="#ff0000"
@@ -68,8 +64,7 @@ const MainView: React.FC = (): ReactElement => {
                      <Col lg={4} md={6}>
                         <LineChartContainer
                            title="Total Teams"
-                           statsType="main"
-                           dataType="teamsLastYearData"
+                           dataType={{model: Model.Main, modelData: MainData.TeamsLastYearData}}
                            xLabel="Month"
                            yLabel="Teams"
                            color="#228b22"
@@ -78,8 +73,7 @@ const MainView: React.FC = (): ReactElement => {
                      <Col lg={4} md={6}>
                         <LineChartContainer
                            title="Total Matches"
-                           statsType="main"
-                           dataType="matchesLastYearData"
+                           dataType={{model: Model.Main, modelData: MainData.MatchesLastYearData}}
                            xLabel="Month"
                            yLabel="matches"
                            color="#2196f3"
@@ -91,8 +85,7 @@ const MainView: React.FC = (): ReactElement => {
                      <Col lg={4} md={6}>
                         <BarChartContainer
                            title="Teams Last Month"
-                           statsType="main"
-                           dataType="teamsLastMonthData"
+                           dataType={{model: Model.Main, modelData: MainData.TeamsLastMonthData}}
                            xLabel="Day"
                            yLabel="Teams"
                            color="#228b22"
@@ -101,16 +94,14 @@ const MainView: React.FC = (): ReactElement => {
                      <Col lg={4} md={6}>
                         <PieChartContainer
                            title="Gender Distribution"
-                           statsType="main"
-                           dataType="userGenderStats"
+                           dataType={{model: Model.Main, modelData: MainData.UserGenderStats}}
                            colors={['#1828E8', '#228b22']}
                         />
                      </Col>
                      <Col lg={4} md={6}>
                         <BarChartContainer
                            title="Users Last Year"
-                           statsType="main"
-                           dataType="usersLastYearBarChartData"
+                           dataType={{model: Model.Main, modelData: MainData.UsersLastYearBarChartData}}
                            xLabel="Month"
                            yLabel="Users"
                            color="#ff0000"

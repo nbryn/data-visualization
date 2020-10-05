@@ -9,6 +9,7 @@ import {
    PieChartContainer,
 } from '../../containers';
 import * as UserThunks from '../../thunks/UserThunks';
+import {Model, UserData} from '../../store/datamodels/types';
 import Header from '../../components/navigation/Header';
 import Sidebar from '../../components/navigation/Sidebar';
 
@@ -30,32 +31,28 @@ const UserView: React.FC = (): ReactElement => {
                      <Col lg={3} sm={6}>
                         <KPIContainer
                            title="Total Users"
-                           statsType="users"
-                           total="total"
+                           data={{model: Model.User, modelData: UserData.Total}}
                            icon="pe-7s-user text-warning"
                         />
                      </Col>
                      <Col lg={3} sm={6}>
                         <KPITodayContainer
-                           statsType="users"
-                           countData="todayCount"
-                           dateData="todayDate"
+                           data={{model: Model.User, modelData: UserData.TodayCount}}
+                           dateData={UserData.TodayDate}
                            icon="pe-7s-users text-info"
                         />
                      </Col>
                      <Col lg={3} sm={6}>
                         <KPIContainer
                            title="Last Year"
-                           statsType="users"
-                           total="lastYearCount"
+                           data={{model: Model.User, modelData: UserData.LastYearCount}}
                            icon="pe-7s-wallet text-success"
                         />
                      </Col>
                      <Col lg={3} sm={6}>
                         <KPIContainer
                            title="Last Month"
-                           statsType="users"
-                           total="lastMonthCount"
+                           data={{model: Model.User, modelData: UserData.LastMonthCount}}
                            icon="pe-7s-users text-info"
                         />
                      </Col>
@@ -64,8 +61,7 @@ const UserView: React.FC = (): ReactElement => {
                      <Col lg={4} sm={6}>
                         <LineChartContainer
                            title="Total Users"
-                           statsType="users"
-                           dataType="lastYearLineChartData"
+                           dataType={{model: Model.User, modelData: UserData.LastYearLineChartData}}
                            xLabel="Months"
                            yLabel="Users"
                            color="#ff0000"
@@ -74,8 +70,7 @@ const UserView: React.FC = (): ReactElement => {
                      <Col lg={4} sm={6}>
                         <BarChartContainer
                            title="Users Per Country"
-                           statsType="users"
-                           dataType="perCountryData"
+                           dataType={{model: Model.User, modelData: UserData.PerCountryData}}
                            xLabel="Country"
                            yLabel="Users"
                            color="#1828E8"
@@ -84,8 +79,7 @@ const UserView: React.FC = (): ReactElement => {
                      <Col lg={4} sm={6}>
                         <BarChartContainer
                            title="Users Per Org"
-                           statsType="users"
-                           dataType="perOrgData"
+                           dataType={{model: Model.User, modelData: UserData.PerOrgData}}
                            xLabel="NGO"
                            yLabel="Users"
                            color="#2196f3"
@@ -96,8 +90,7 @@ const UserView: React.FC = (): ReactElement => {
                      <Col lg={4} sm={6}>
                         <BarChartContainer
                            title="Users Per Day"
-                           statsType="users"
-                           dataType="lastMonthBarChartData"
+                           dataType={{model: Model.User, modelData: UserData.LastMonthBarChartData}}
                            xLabel="Day"
                            yLabel="Users"
                            color="#228b22"
@@ -106,8 +99,7 @@ const UserView: React.FC = (): ReactElement => {
                      <Col lg={4} sm={6}>
                         <PieChartContainer
                            title="Gender Distribution"
-                           statsType="users"
-                           dataType="genderStats"
+                           dataType={{model: Model.User, modelData: UserData.GenderStats}}
                            colors={['#1828E8', '#228b22']}
                         />
                      </Col>
@@ -115,8 +107,7 @@ const UserView: React.FC = (): ReactElement => {
                      <Col lg={4} sm={6}>
                         <BarChartContainer
                            title="Users Per Month"
-                           statsType="users"
-                           dataType="lastYearBarChartData"
+                           dataType={{model: Model.User, modelData: UserData.LastYearBarChartData}}
                            xLabel="Month"
                            yLabel="Users"
                            color="#ff0000"

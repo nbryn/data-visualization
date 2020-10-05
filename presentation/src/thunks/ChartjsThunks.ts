@@ -12,63 +12,66 @@ import {
    fetchUsersLastYear,
    fetchUsersLastMonth,
 } from '../services/requests';
-import * as DataMappingService from '../services/DataMappingService';
+import * as DTOConverterService from '../services/DTOConverterService';
 import {ChartjsLastMonthData, ChartjsState, setChartjsData} from '../store/datamodels/Chartjs';
-import {LastMonthDTO, LastYearDTO, ServerDTO} from '../services/requests/DTO';
+import {LastMonthDTO, LastYearDTO, ServerDTO} from '../services/requests/DTOs';
 import {RootState} from '../store/index';
 
-export const updateChartjsData = (): ThunkAction<void, RootState, null, Action<string>> => async (dispatch) => {
+export const updateChartjsData = (): ThunkAction<void, RootState, null, Action<string>> => async (
+   dispatch
+) => {
    const result: ChartjsState = {} as ChartjsState;
 
-   result.usersTotal = await fetchTotalUsers();
+   await updateChartjsUserData(result);
+
    result.teamsTotal = await fetchTotalTeams();
    result.matchTotal = await fetchTotalMatches();
    result.meetingTotal = await fetchTotalMeetings();
 
-   const usersLastMonth: LastMonthDTO[] = await fetchUsersLastMonth();
-   const usersLastYear: LastYearDTO[] = await fetchUsersLastYear();
    const genderData: ServerDTO[] = await fetchUserGenderData();
 
    const teamsLastMonth: LastMonthDTO[] = await fetchTeamsLastMonth();
    const teamsLastYear: LastYearDTO[] = await fetchTeamsLastYear();
 
-   const usersLastMonthLineChart: ChartjsLastMonthData = DataMappingService.mapChartjsLastMonthData(
-      usersLastMonth,
-      true
-   );
-   const usersLastMonthBarChart: ChartjsLastMonthData = DataMappingService.mapChartjsLastMonthData(
-      usersLastMonth,
-      false
+   result.genderData = DTOConverterService.mapChartjsPieChartData(genderData);
+
+   const teamsLastMonthChartData: ChartjsLastMonthData = DTOConverterService.mapChartjsLastMonthData(
+      teamsLastMonth
    );
 
-   result.usersLastMonthLineChart = usersLastMonthLineChart;
-   result.usersLastWeekLineChart = usersLastMonthLineChart.lastWeek;
+   result.teamsLastMonthLineChart = teamsLastMonthChartData.lastMonth;
+   result.teamsLastMonthLineChart.data = teamsLastMonthChartData.aggregateDataMonth;
+   result.teamsLastWeekLineChart = teamsLastMonthChartData.lastWeek;
+   result.teamsLastWeekLineChart.data = teamsLastMonthChartData.aggregateDataWeek;
 
-   result.usersLastMonthBarChart = usersLastMonthBarChart;
-   result.usersLastWeekBarChart = usersLastMonthBarChart.lastWeek;
-   result.usersLastYearBarChart = DataMappingService.mapChartjsLastYearData(usersLastYear, false);
+   result.teamsLastMonthBarChart = teamsLastMonthChartData.lastMonth;
+   result.teamsLastWeekBarChart = teamsLastMonthChartData.lastWeek;
+   result.teamsLastYearBarChart = DTOConverterService.mapChartjsLastYearData(teamsLastYear, false);
 
-   result.usersLastYearLineChart = DataMappingService.mapChartjsLastYearData(usersLastYear, true);
-
-   result.genderData = DataMappingService.mapChartjsPieChartData(genderData);
-
-   const teamsLastMonthLineChart: ChartjsLastMonthData = DataMappingService.mapChartjsLastMonthData(
-      teamsLastMonth,
-      true
-   );
-   const teamsLastMonthBarChart: ChartjsLastMonthData = DataMappingService.mapChartjsLastMonthData(
-      teamsLastMonth,
-      false
-   );
-
-   result.teamsLastMonthLineChart = teamsLastMonthLineChart;
-   result.teamsLastWeekLineChart = teamsLastMonthLineChart.lastWeek;
-
-   result.teamsLastMonthBarChart = teamsLastMonthBarChart;
-   result.teamsLastWeekBarChart = teamsLastMonthBarChart.lastWeek;
-   result.teamsLastYearBarChart = DataMappingService.mapChartjsLastYearData(teamsLastYear, false);
-
-   result.teamsLastYearLineChart = DataMappingService.mapChartjsLastYearData(teamsLastYear, true);
+   result.teamsLastYearLineChart = DTOConverterService.mapChartjsLastYearData(teamsLastYear, true);
 
    dispatch(setChartjsData(result));
+};
+
+const updateChartjsUserData = async (chartjsData: ChartjsState) => {
+   chartjsData.usersTotal = await fetchTotalUsers();
+
+   const usersLastMonth: LastMonthDTO[] = await fetchUsersLastMonth();
+   const usersLastYear: LastYearDTO[] = await fetchUsersLastYear();
+
+   const usersLastMonthChartData: ChartjsLastMonthData = DTOConverterService.mapChartjsLastMonthData(
+      usersLastMonth
+   );
+
+   chartjsData.usersLastMonthLineChart = usersLastMonthChartData.lastMonth;
+   chartjsData.usersLastMonthLineChart.data = usersLastMonthChartData.aggregateDataMonth;
+   chartjsData.usersLastWeekLineChart = usersLastMonthChartData.lastWeek;
+   chartjsData.usersLastWeekLineChart.data = usersLastMonthChartData.aggregateDataWeek;
+
+   chartjsData.usersLastMonthBarChart = usersLastMonthChartData.lastMonth;
+   chartjsData.usersLastWeekBarChart = usersLastMonthChartData.lastWeek;
+
+   chartjsData.usersLastYearBarChart = DTOConverterService.mapChartjsLastYearData(usersLastYear, false);
+
+   chartjsData.usersLastYearLineChart = DTOConverterService.mapChartjsLastYearData(usersLastYear, true);
 };

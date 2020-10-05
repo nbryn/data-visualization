@@ -13,9 +13,9 @@ export type ChartjsData = {
 };
 
 export type ChartjsLastMonthData = {
-   labels: string[];
-   data: number[];
-   counter: number;
+   aggregateDataMonth: number[];
+   aggregateDataWeek: number[];
+   lastMonth: ChartjsData;
    lastWeek: ChartjsData;
 };
 
@@ -33,7 +33,7 @@ export function setChartjsData(data: ChartjsState): ChartjsAction {
 }
 
 // Reducers
-export default function (state = {}, action: ChartjsAction) {
+export default function (state = initialChartjsState, action: ChartjsAction): ChartjsState {
    switch (action.type) {
       case UPDATE_CHARTJS_DATA:
          return Object.assign({}, state, {

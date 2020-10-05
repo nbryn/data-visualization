@@ -57,7 +57,13 @@ type Props = {
    valueIcon: string;
 };
 
-const KPICard: React.FC<Props> = ({value, text, updateIcon, updateIconText, valueIcon}: Props): ReactElement => {
+const KPICard: React.FC<Props> = ({
+   value,
+   text,
+   updateIcon,
+   updateIconText,
+   valueIcon,
+}: Props): ReactElement => {
    const classes = useStyles();
    return (
       <div className={classes.card}>

@@ -18,7 +18,7 @@ export function setMainViewData(data: MainState): MainAction {
 }
 
 // Reducers
-export default function (state = {}, action: MainAction) {
+export default function (state = initialMainState, action: MainAction): MainState {
    switch (action.type) {
       case UPDATE_MAIN_VIEW_DATA:
          return Object.assign({}, state, {

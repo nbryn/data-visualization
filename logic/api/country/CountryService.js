@@ -6,7 +6,10 @@ import {fetchTeamsByCurrency} from '../../../data/mappers/TeamMapper';
 import * as UserMapper from '../../../data/mappers/UserMapper';
 import {calculateMatchesPerTeam} from '../match/MatchService';
 
-const countries = countryCodes.customList('countryNameEn', '{countryCode} {countryNameEn}: {countryCallingCode}');
+const countries = countryCodes.customList(
+   'countryNameEn',
+   '{countryCode} {countryNameEn}: {countryCallingCode}'
+);
 
 export async function calculateUsersPerCountry() {
    const tempUsersPerCountry = await UserMapper.fetchUsersPerCountry();

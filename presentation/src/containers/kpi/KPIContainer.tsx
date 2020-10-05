@@ -1,26 +1,22 @@
 import React, {ReactElement, useEffect, useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import {useSelector} from 'react-redux';
 
+import {Data} from '../../store/datamodels/types';
 import {getCurrentTime} from '../../util/Date';
 import KPICard from '../../components/kpi/KPICard';
 import {RootState} from '../../store/index';
 
 type Props = {
    title: string;
-   fetchData?: Function;
-   statsType: string;
-   total: string;
+   data: Data;
    icon: string;
 };
 
-export const KPIContainer: React.FC<Props> = ({title, fetchData, statsType, total, icon}: Props): ReactElement => {
+export const KPIContainer: React.FC<Props> = ({title, data, icon}: Props): ReactElement => {
    const [lastUpdate, setLastUpdate] = useState<string>('');
-   const data: any = useSelector<RootState, number>((state) => state[statsType][total]);
-
-   const dispatch = useDispatch();
+   const count: number = useSelector<RootState, number>((state) => state[data.model][data.modelData]);
 
    useEffect(() => {
-      if (fetchData) dispatch(fetchData());
       setLastUpdate(getCurrentTime());
    }, []);
 
@@ -28,7 +24,7 @@ export const KPIContainer: React.FC<Props> = ({title, fetchData, statsType, tota
       <KPICard
          valueIcon={icon}
          text={title}
-         value={data}
+         value={count}
          updateIcon="fa fa-refresh"
          updateIconText={`Last Update: ${lastUpdate}`}
       />

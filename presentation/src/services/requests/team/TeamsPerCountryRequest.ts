@@ -1,5 +1,5 @@
 import {fetchFromServer} from '../Fetch';
-import {ServerDTO} from '../DTO';
+import {ServerDTO} from '../DTOs';
 
 export const fetchTeamsPerCountry = async (): Promise<ServerDTO[]> => {
    const data = `query {
@@ -11,7 +11,11 @@ export const fetchTeamsPerCountry = async (): Promise<ServerDTO[]> => {
         }
       }`;
 
-   const response: ServerDTO[] = await fetchFromServer<ServerDTO[]>('generalCountryData', data, 'teamsCountry');
+   const response: ServerDTO[] = await fetchFromServer<ServerDTO[]>(
+      'generalCountryData',
+      data,
+      'teamsCountry'
+   );
 
    return response;
 };

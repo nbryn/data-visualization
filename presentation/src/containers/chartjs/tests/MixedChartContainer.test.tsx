@@ -16,7 +16,7 @@ const secondDataType = ChartjsData.TeamsLastYearLineChart;
 
 const mockStore = createStore(() => ({
    chartjs: {
-      groupsLastYearLineChart: {
+      teamsLastYearLineChart: {
          labels: ['Feb', 'Mar', 'Apr'],
          data: [0, 1, 2],
          counter: 3,

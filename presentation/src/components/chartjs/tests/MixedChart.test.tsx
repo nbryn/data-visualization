@@ -3,8 +3,10 @@ import {render, screen} from '@testing-library/react';
 
 import MixedChart, {ChartProps} from '../MixedChart';
 
+const text = 'MixedChart';
+
 jest.mock('react-chartjs-2', () => ({
-   Bar: () => <div>BarChart </div>,
+   Bar: () => <div>{text} </div>,
 }));
 
 const labels = ['January', 'February'];
@@ -33,6 +35,6 @@ describe('MixedChart.test.jsx', () => {
    it('renders a chart', () => {
       renderMixedChart();
 
-      expect(screen.getByText('BarChart')).toBeTruthy();
+      expect(screen.getByText(text)).toBeTruthy();
    });
 });

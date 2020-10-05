@@ -8,6 +8,7 @@ import {
    ChartjsPieChartContainer,
    KPIContainer,
 } from '../../containers';
+import {ChartjsData, Model} from '../../store/datamodels/types';
 import * as ChartjsThunks from '../../thunks/ChartjsThunks';
 import Header from '../../components/navigation/Header';
 import Sidebar from '../../components/navigation/Sidebar';
@@ -30,32 +31,28 @@ const MainView: React.FC = (): ReactElement => {
                      <Col lg={3} sm={6}>
                         <KPIContainer
                            title="Total Users"
-                           statsType="chartjs"
-                           total="usersTotal"
+                           data={{model: Model.Chartjs, modelData: ChartjsData.UsersTotal}}
                            icon="pe-7s-user text-warning"
                         />
                      </Col>
                      <Col lg={3} sm={6}>
                         <KPIContainer
                            title="Total Teams"
-                           statsType="chartjs"
-                           total="teamsTotal"
+                           data={{model: Model.Chartjs, modelData: ChartjsData.TeamsTotal}}
                            icon="pe-7s-users text-info"
                         />
                      </Col>
                      <Col lg={3} sm={6}>
                         <KPIContainer
                            title="Total Matches"
-                           statsType="chartjs"
-                           total="matchTotal"
+                           data={{model: Model.Chartjs, modelData: ChartjsData.MatchTotal}}
                            icon="pe-7s-graph1 text-danger"
                         />
                      </Col>
                      <Col lg={3} sm={6}>
                         <KPIContainer
                            title="Total Meetings"
-                           statsType="chartjs"
-                           total="meetingTotal"
+                           data={{model: Model.Chartjs, modelData: ChartjsData.MeetingTotal}}
                            icon="pe-7s-graph1 text-danger"
                         />
                      </Col>
@@ -66,21 +63,29 @@ const MainView: React.FC = (): ReactElement => {
                         <ChartjsLineChartContainer
                            title="Users"
                            color="#553FBF"
-                           dataTypes={['usersLastWeekLineChart', 'usersLastMonthLineChart', 'usersLastYearLineChart']}
+                           data={[
+                              ChartjsData.UsersLastWeekLineChart,
+                              ChartjsData.UsersLastMonthLineChart,
+                              ChartjsData.UsersLastYearLineChart,
+                           ]}
                         />
                      </Col>
                      <Col lg={4} md={8}>
                         <ChartjsBarChartContainer
                            title="Users"
                            color="#E6373A"
-                           dataTypes={['usersLastWeekBarChart', 'usersLastMonthBarChart', 'usersLastYearBarChart']}
+                           data={[
+                              ChartjsData.UsersLastWeekBarChart,
+                              ChartjsData.UsersLastMonthBarChart,
+                              ChartjsData.UsersLastYearBarChart,
+                           ]}
                         />
                      </Col>
                      <Col lg={4} md={8}>
                         <ChartjsMixedChartContainer
-                           firstDataType="usersLastYearLineChart"
+                           firstDataType={ChartjsData.UsersLastYearLineChart}
                            firstChartTitle="Users"
-                           secondDataType="teamsLastYearLineChart"
+                           secondDataType={ChartjsData.TeamsLastYearLineChart}
                            secondChartTitle="Teams"
                         />
                      </Col>
@@ -91,21 +96,29 @@ const MainView: React.FC = (): ReactElement => {
                         <ChartjsLineChartContainer
                            title="Teams"
                            color="#52A5EE"
-                           dataTypes={['teamsLastWeekLineChart', 'teamsLastMonthLineChart', 'teamsLastYearLineChart']}
+                           data={[
+                              ChartjsData.TeamsLastWeekLineChart,
+                              ChartjsData.TeamsLastMonthLineChart,
+                              ChartjsData.TeamsLastYearLineChart,
+                           ]}
                         />
                      </Col>
                      <Col lg={4} m={8}>
                         <ChartjsBarChartContainer
                            title="Teams"
                            color="#22B324"
-                           dataTypes={['teamsLastWeekBarChart', 'teamsLastMonthBarChart', 'teamsLastYearBarChart']}
+                           data={[
+                              ChartjsData.TeamsLastWeekBarChart,
+                              ChartjsData.TeamsLastMonthBarChart,
+                              ChartjsData.TeamsLastYearBarChart,
+                           ]}
                         />
                      </Col>
 
                      <Col lg={4} m={8}>
                         <ChartjsPieChartContainer
                            title="Gender Distribution"
-                           dataType="genderData"
+                           dataType={ChartjsData.GenderData}
                            backgroundColor={['#e30c32', '#427d23']}
                            hoverBackgroundColor={['#e30c32', '#427d23']}
                         />

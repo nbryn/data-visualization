@@ -1,6 +1,7 @@
 import {useDispatch} from 'react-redux';
 import React, {ReactElement} from 'react';
 
+import {Model, TeamData} from '../../store/datamodels/types';
 import {
    BarChartContainer,
    KPIContainer,
@@ -8,7 +9,6 @@ import {
    LineChartContainer,
    PieChartContainer,
 } from '../../containers';
-
 import * as Thunks from '../../thunks/TeamThunks';
 import Header from '../../components/navigation/Header';
 import Sidebar from '../../components/navigation/Sidebar';
@@ -31,32 +31,28 @@ const TeamView: React.FC = (): ReactElement => {
                      <Col lg={3} sm={6}>
                         <KPIContainer
                            title="Total Teams"
-                           statsType="teams"
-                           total="total"
+                           data={{model: Model.Team, modelData: TeamData.Total}}
                            icon="pe-7s-graph1 text-danger"
                         />
                      </Col>
                      <Col lg={3} sm={6}>
                         <KPITodayContainer
-                           statsType="teams"
-                           countData="todayCount"
-                           dateData="todayDate"
+                           data={{model: Model.Team, modelData: TeamData.TodayCount}}
+                           dateData={TeamData.TodayCount}
                            icon="pe-7s-graph1 text-danger"
                         />
                      </Col>
                      <Col lg={3} sm={6}>
                         <KPIContainer
                            title="Last Year"
-                           statsType="teams"
-                           total="lastYearCount"
+                           data={{model: Model.Team, modelData: TeamData.LastYearCount}}
                            icon="pe-7s-graph1 text-danger"
                         />
                      </Col>
                      <Col lg={3} sm={6}>
                         <KPIContainer
                            title="Last Month"
-                           statsType="teams"
-                           total="lastMonthCount"
+                           data={{model: Model.Team, modelData: TeamData.LastMonthCount}}
                            icon="pe-7s-users text-info"
                         />
                      </Col>
@@ -66,8 +62,7 @@ const TeamView: React.FC = (): ReactElement => {
                      <Col lg={4} sm={6}>
                         <LineChartContainer
                            title="Total Teams"
-                           statsType="teams"
-                           dataType="lastYearLineChartData"
+                           dataType={{model: Model.Team, modelData: TeamData.LastYearLineChartData}}
                            xLabel="Months"
                            yLabel="Teams"
                            color="#228b22"
@@ -76,8 +71,7 @@ const TeamView: React.FC = (): ReactElement => {
                      <Col lg={4} sm={6}>
                         <BarChartContainer
                            title="Teams Per Country"
-                           statsType="teams"
-                           dataType="perCountryData"
+                           dataType={{model: Model.Team, modelData: TeamData.PerCountryData}}
                            xLabel="Country"
                            yLabel="Teams"
                            color="#1828E8"
@@ -86,8 +80,7 @@ const TeamView: React.FC = (): ReactElement => {
                      <Col lg={4} sm={6}>
                         <BarChartContainer
                            title="Teams Per Org"
-                           statsType="teams"
-                           dataType="perOrgData"
+                           dataType={{model: Model.Team, modelData: TeamData.PerOrgData}}
                            xLabel="Org"
                            yLabel="Teams"
                            color="#ff0000"
@@ -98,8 +91,7 @@ const TeamView: React.FC = (): ReactElement => {
                      <Col lg={4} sm={6}>
                         <BarChartContainer
                            title="Teams Last Month"
-                           statsType="teams"
-                           dataType="lastMonthBarChartData"
+                           dataType={{model: Model.Team, modelData: TeamData.LastMonthBarChartData}}
                            xLabel="Day"
                            yLabel="Teams"
                            color="#228b22"
@@ -108,16 +100,14 @@ const TeamView: React.FC = (): ReactElement => {
                      <Col lg={4} sm={6}>
                         <PieChartContainer
                            title="Team Size"
-                           statsType="teams"
-                           dataType="teamSizeStats"
+                           dataType={{model: Model.Team, modelData: TeamData.TeamSizeStats}}
                            colors={['#a4de6c', '#67b6ed', '#8884d8', '#ff0000', '#2196f3', '#228b22']}
                         />
                      </Col>
                      <Col lg={4} sm={6}>
                         <BarChartContainer
                            title="Teams Last Year"
-                           statsType="teams"
-                           dataType="lastYearBarChartData"
+                           dataType={{model: Model.Team, modelData: TeamData.LastYearBarChartData}}
                            xLabel="Month"
                            yLabel="Teams"
                            color="#2196f3"

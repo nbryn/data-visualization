@@ -24,7 +24,7 @@ export interface OrgTeamDataAction {
 type TeamActions = TeamViewAction | TeamSearchAction | OrgTeamDataAction;
 
 // Reducers
-export default function (state = {}, action: TeamActions) {
+export default function (state = initialTeamState, action: TeamActions): TeamState {
    switch (action.type) {
       case UPDATE_TEAM_VIEW_DATA:
          return Object.assign({}, state, {

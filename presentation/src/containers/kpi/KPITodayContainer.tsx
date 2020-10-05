@@ -1,22 +1,22 @@
 import React, {ReactElement, useEffect, useState} from 'react';
 import {useSelector} from 'react-redux';
 
+import {Data} from '../../store/datamodels/types';
 import {getCurrentTime} from '../../util/Date';
 import KPICard from '../../components/kpi/KPICard';
 import {RootState} from '../../store/index';
 
 type Props = {
-   statsType: string;
-   countData: string;
+   data: Data;
    dateData: string;
    icon: string;
 };
 
-export const KPITodayContainer: React.FC<Props> = ({statsType, countData, dateData, icon}: Props): ReactElement => {
+export const KPITodayContainer: React.FC<Props> = ({data, dateData, icon}: Props): ReactElement => {
    const [lastUpdate, setLastUpdate] = useState<string>('');
-   const count: number = useSelector<RootState, number>((state) => state[statsType][countData]);
+   const count: number = useSelector<RootState, number>((state) => state[data.model][data.modelData]);
 
-   const date: string = useSelector<RootState, string>((state) => state[statsType][dateData]);
+   const date: string = useSelector<RootState, string>((state) => state[data.model][dateData]);
 
    useEffect(() => {
       setLastUpdate(getCurrentTime());

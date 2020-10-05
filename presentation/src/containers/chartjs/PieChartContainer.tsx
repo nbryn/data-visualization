@@ -4,6 +4,7 @@ import {makeStyles} from '@material-ui/core/styles';
 import React, {ReactElement} from 'react';
 import {useSelector} from 'react-redux';
 
+import {ChartjsData} from '../../store/datamodels/types';
 import {ChartjsPieData} from '../../store/datamodels/Chartjs';
 import PieChart from '../../components/chartjs/PieChart';
 import {RootState} from '../../store/index';
@@ -21,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
 
 type Props = {
    title: string;
-   dataType: string;
+   dataType: ChartjsData;
    backgroundColor: string[];
    hoverBackgroundColor: string[];
 };
@@ -34,7 +35,9 @@ export const ChartjsPieChartContainer: React.FC<Props> = ({
 }: Props): ReactElement => {
    const classes = useStyles();
 
-   const {data, labels}: ChartjsPieData = useSelector<RootState, ChartjsPieData>((state) => state.chartjs[dataType]);
+   const {data, labels}: ChartjsPieData = useSelector<RootState, ChartjsPieData>(
+      (state) => state.chartjs[dataType]
+   );
 
    return (
       <Card className={classes.wrapper}>

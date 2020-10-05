@@ -4,7 +4,8 @@ import {makeStyles} from '@material-ui/core/styles';
 import React, {ReactElement, useEffect, useState} from 'react';
 import {useSelector} from 'react-redux';
 
-import {ChartjsData} from '../../store/datamodels/Chartjs';
+import {ChartjsData} from '../../store/datamodels/types';
+import {ChartjsData as ChartjsChartData} from '../../store/datamodels/Chartjs';
 import {Interval, resolveInterval} from './types';
 import LineChart from '../../components/chartjs/LineChart';
 import {RootState} from '../../store/index';
@@ -22,26 +23,26 @@ const useStyles = makeStyles((theme) => ({
 
 type Props = {
    title: string;
-   dataTypes: string[];
+   data: ChartjsData[];
    color: string;
 };
 
-export const ChartjsLineChartContainer: React.FC<Props> = ({title, dataTypes, color}: Props): ReactElement => {
+export const ChartjsLineChartContainer: React.FC<Props> = ({title, data, color}: Props): ReactElement => {
    const classes = useStyles();
    const {WEEK, MONTH, YEAR} = Interval;
 
    const [period, setPeriod] = useState<Interval>(YEAR);
-   const [chartData, setChartData] = useState<ChartjsData>({
+   const [chartData, setChartData] = useState<ChartjsChartData>({
       labels: [],
       counter: 0,
       data: [],
    });
 
-   const lastWeek = useSelector<RootState, ChartjsData>((state) => state.chartjs[dataTypes[0]]);
+   const lastWeek = useSelector<RootState, ChartjsChartData>((state) => state.chartjs[data[0]]);
 
-   const lastMonth = useSelector<RootState, ChartjsData>((state) => state.chartjs[dataTypes[1]]);
+   const lastMonth = useSelector<RootState, ChartjsChartData>((state) => state.chartjs[data[1]]);
 
-   const lastYear = useSelector<RootState, ChartjsData>((state) => state.chartjs[dataTypes[2]]);
+   const lastYear = useSelector<RootState, ChartjsChartData>((state) => state.chartjs[data[2]]);
 
    const handleChangeInterval = (event: React.ChangeEvent<HTMLInputElement>): void => {
       const interval: Interval = resolveInterval(event.target.value);
@@ -55,7 +56,7 @@ export const ChartjsLineChartContainer: React.FC<Props> = ({title, dataTypes, co
       }
    };
 
-   const updateData = (interval: Interval, chartData: ChartjsData): void => {
+   const updateData = (interval: Interval, chartData: ChartjsChartData): void => {
       setPeriod(interval);
 
       setChartData({

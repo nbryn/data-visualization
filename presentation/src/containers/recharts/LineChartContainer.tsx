@@ -4,6 +4,7 @@ import {makeStyles} from '@material-ui/core/styles';
 import React, {ReactElement} from 'react';
 import {useSelector} from 'react-redux';
 
+import {Data} from '../../store/datamodels/types';
 import {ChartData} from '../../store/datamodels/General';
 import LineChart from '../../components/recharts/LineChart';
 import {RootState} from '../../store/index';
@@ -17,8 +18,7 @@ const useStyles = makeStyles((theme) => ({
 
 type Props = {
    title: string;
-   statsType: string;
-   dataType: string;
+   dataType: Data;
    xLabel: string;
    yLabel: string;
    color: string;
@@ -26,7 +26,6 @@ type Props = {
 
 export const LineChartContainer: React.FC<Props> = ({
    title,
-   statsType,
    dataType,
    xLabel,
    yLabel,
@@ -34,7 +33,9 @@ export const LineChartContainer: React.FC<Props> = ({
 }: Props): ReactElement => {
    const classes = useStyles();
 
-   const data: ChartData[] = useSelector<RootState, ChartData[]>((state) => state[statsType][dataType]);
+   const data: ChartData[] = useSelector<RootState, ChartData[]>(
+      (state) => state[dataType.model][dataType.modelData]
+   );
 
    const yLabelConfig: LabelProps = {
       value: yLabel,

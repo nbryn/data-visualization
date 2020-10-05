@@ -17,7 +17,7 @@ import {
    AccountViewDTO,
    MatchViewDTO,
 } from '../services/requests';
-import * as DataMappingService from '../services/DataMappingService';
+import * as DTOConverterService from '../services/DTOConverterService';
 import {fetchAccountData} from '../services/requests/account/AccountViewDataRequest';
 import {fetchMatchViewData} from '../services/requests/match/MatchViewDataRequest';
 import {fetchMatchesPerCountry} from '../services/requests/match/MatchesPerCountryRequest';
@@ -26,12 +26,14 @@ import {loginUser, logoutUser, updateEngagementViewData} from '../store/datamode
 import {MatchState, setMatchViewData} from '../store/datamodels/Match';
 import {RootState} from '../store/index';
 import {removeTokenFromLocalStorage, setTokenInLocalStorage} from '../util/Token';
-import {ServerDTO, UserDTO} from '../services/requests/DTO';
+import {ServerDTO, UserDTO} from '../services/requests/DTOs';
 
 import {MainState, setMainViewData} from '../store/datamodels/Main';
 import {UserContextValue} from '../store/UserContext';
 
-export const updateMatchViewData = (): ThunkAction<void, RootState, null, Action<string>> => async (dispatch) => {
+export const updateMatchViewData = (): ThunkAction<void, RootState, null, Action<string>> => async (
+   dispatch
+) => {
    const result: MatchState = {} as MatchState;
 
    const matchViewData: MatchViewDTO = await fetchMatchViewData();
@@ -39,27 +41,29 @@ export const updateMatchViewData = (): ThunkAction<void, RootState, null, Action
 
    const {matchTotal, matchesLastMonth, matchesLastYear, matchesPerTeam, meetingsPerMatch} = matchViewData;
 
-   const {todayCount, todayDate} = DataMappingService.mapDataForToday(matchesLastMonth);
+   const {todayCount, todayDate} = DTOConverterService.mapDataForToday(matchesLastMonth);
 
    result.totalData = matchTotal;
    result.todayCount = todayCount;
    result.todayDate = todayDate;
 
-   result.lastMonthCount = DataMappingService.getTotalNumberInPeriod(matchesLastMonth);
-   result.lastYearCount = DataMappingService.getTotalNumberInPeriod(matchesLastYear);
+   result.lastMonthCount = DTOConverterService.getTotalNumberInPeriod(matchesLastMonth);
+   result.lastYearCount = DTOConverterService.getTotalNumberInPeriod(matchesLastYear);
 
-   result.lastYearData = DataMappingService.mapLastYearData(matchesLastYear, true);
-   result.lastMonthBarChartData = DataMappingService.mapLastMonthData(matchesLastMonth);
-   result.lastYearBarChartData = DataMappingService.mapLastYearData(matchesLastYear, false);
+   result.lastYearData = DTOConverterService.mapLastYearData(matchesLastYear, true);
+   result.lastMonthBarChartData = DTOConverterService.mapLastMonthData(matchesLastMonth);
+   result.lastYearBarChartData = DTOConverterService.mapLastYearData(matchesLastYear, false);
 
-   result.perTeamData = DataMappingService.mapGeneralChartData(matchesPerTeam);
-   result.perCountryData = DataMappingService.mapGeneralChartData(matchCountryData);
-   result.meetingsPerMatchData = DataMappingService.mapGeneralChartData(meetingsPerMatch);
+   result.perTeamData = DTOConverterService.mapGeneralChartData(matchesPerTeam);
+   result.perCountryData = DTOConverterService.mapGeneralChartData(matchCountryData);
+   result.meetingsPerMatchData = DTOConverterService.mapGeneralChartData(meetingsPerMatch);
 
    dispatch(setMatchViewData(result));
 };
 
-export const updateAccountViewData = (): ThunkAction<void, RootState, null, Action<string>> => async (dispatch) => {
+export const updateAccountViewData = (): ThunkAction<void, RootState, null, Action<string>> => async (
+   dispatch
+) => {
    const result: AccountState = {} as AccountState;
 
    const AccountData: AccountViewDTO = await fetchAccountData();
@@ -81,18 +85,20 @@ export const updateAccountViewData = (): ThunkAction<void, RootState, null, Acti
    result.mostMeetings = teamWithMostMeetings;
    result.dollarEventCount = dollarEventCount;
 
-   result.eventsLastYearLineChartData = DataMappingService.mapLastYearData(eventsLastYear, true);
-   result.eventsLastMonthData = DataMappingService.mapLastMonthData(eventsLastMonth);
-   result.eventsLastYearBarChartData = DataMappingService.mapLastYearData(eventsLastYear, false);
+   result.eventsLastYearLineChartData = DTOConverterService.mapLastYearData(eventsLastYear, true);
+   result.eventsLastMonthData = DTOConverterService.mapLastMonthData(eventsLastMonth);
+   result.eventsLastYearBarChartData = DTOConverterService.mapLastYearData(eventsLastYear, false);
 
-   result.currencyData = DataMappingService.mapGeneralChartData(currencyData);
-   result.meetingsPerTeam = DataMappingService.mapGeneralChartData(meetingData);
-   result.teamDollarEventData = DataMappingService.mapGeneralChartData(teamDollarEventData);
+   result.currencyData = DTOConverterService.mapGeneralChartData(currencyData);
+   result.meetingsPerTeam = DTOConverterService.mapGeneralChartData(meetingData);
+   result.teamDollarEventData = DTOConverterService.mapGeneralChartData(teamDollarEventData);
 
    dispatch(setAccountViewData(result));
 };
 
-export const updateMainViewData = (): ThunkAction<void, RootState, null, Action<string>> => async (dispatch) => {
+export const updateMainViewData = (): ThunkAction<void, RootState, null, Action<string>> => async (
+   dispatch
+) => {
    const result: MainState = {} as MainState;
 
    result.usersTotal = await fetchTotalUsers();
@@ -101,25 +107,27 @@ export const updateMainViewData = (): ThunkAction<void, RootState, null, Action<
    result.meetingTotal = await fetchTotalMeetings();
 
    const usersLastYear = await fetchUsersLastYear();
-   result.usersLastYearLineChartData = DataMappingService.mapLastYearData(usersLastYear, true);
-   result.usersLastYearBarChartData = DataMappingService.mapLastYearData(usersLastYear, false);
+   result.usersLastYearLineChartData = DTOConverterService.mapLastYearData(usersLastYear, true);
+   result.usersLastYearBarChartData = DTOConverterService.mapLastYearData(usersLastYear, false);
 
    const teamsLastYear = await fetchTeamsLastYear();
-   result.teamsLastYearData = DataMappingService.mapLastYearData(teamsLastYear, true);
+   result.teamsLastYearData = DTOConverterService.mapLastYearData(teamsLastYear, true);
 
    const matchesLastYear = await fetchMatchesLastYear();
-   result.matchesLastYearData = DataMappingService.mapLastYearData(matchesLastYear, true);
+   result.matchesLastYearData = DTOConverterService.mapLastYearData(matchesLastYear, true);
 
    const teamsLastMonth = await fetchTeamsLastMonth();
-   result.teamsLastMonthData = DataMappingService.mapLastMonthData(teamsLastMonth);
+   result.teamsLastMonthData = DTOConverterService.mapLastMonthData(teamsLastMonth);
 
    const userGenderStats = await fetchUserGenderData();
-   result.userGenderStats = DataMappingService.mapGeneralChartData(userGenderStats);
+   result.userGenderStats = DTOConverterService.mapGeneralChartData(userGenderStats);
 
    dispatch(setMainViewData(result));
 };
 
-export const setEngagementViewData = (): ThunkAction<void, RootState, null, Action<string>> => async (dispatch) => {
+export const setEngagementViewData = (): ThunkAction<void, RootState, null, Action<string>> => async (
+   dispatch
+) => {
    const engagementData = {
       groupEngagement: null,
       userEngagement: null,

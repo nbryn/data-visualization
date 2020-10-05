@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState, ReactElement} from 'react';
 
 import {User} from './datamodels/General';
 
@@ -16,7 +16,7 @@ type Props = {
    children: React.ReactNode;
 };
 
-export const UserContextProvider = ({children}: Props) => {
+export const UserContextProvider = ({children}: Props): ReactElement => {
    const [user, setCurrentUser] = useState<User>(null);
 
    const setUser = (user: User) => {
@@ -36,7 +36,7 @@ export const UserContextProvider = ({children}: Props) => {
    return <UserContext.Provider value={{user, setUser}}>{children}</UserContext.Provider>;
 };
 
-export const useUserContext = () => {
+export const useUserContext = (): UserContextValue => {
    const context = useContext(UserContext);
    return context;
 };

@@ -1,5 +1,5 @@
 import {fetchFromServer} from '../Fetch';
-import {LastMonthDTO} from '../DTO';
+import {LastMonthDTO} from '../DTOs';
 
 export const fetchUsersLastMonth = async (): Promise<LastMonthDTO[]> => {
    const data = `query {
@@ -14,7 +14,11 @@ export const fetchUsersLastMonth = async (): Promise<LastMonthDTO[]> => {
       }
     }
   }`;
-   const response: LastMonthDTO[] = await fetchFromServer<LastMonthDTO[]>('userStats', data, 'usersLastMonth');
+   const response: LastMonthDTO[] = await fetchFromServer<LastMonthDTO[]>(
+      'userStats',
+      data,
+      'usersLastMonth'
+   );
 
    return response;
 };

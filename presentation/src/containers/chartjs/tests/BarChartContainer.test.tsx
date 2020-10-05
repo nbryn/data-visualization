@@ -2,8 +2,9 @@ import * as redux from 'react-redux';
 import {createStore} from 'redux';
 import React from 'react';
 
-import {render, screen} from '../../../test-utils';
+import {ChartjsData} from '../../../store/datamodels/types';
 import {ChartjsBarChartContainer} from '../BarChartContainer';
+import {render, screen} from '../../../test-utils';
 import {setChartjsData} from '../../../store/datamodels/Chartjs';
 
 const useSelectorSpy = jest.spyOn(redux, 'useSelector');
@@ -40,7 +41,11 @@ const renderBarChartContainer = (store?: any) =>
       <ChartjsBarChartContainer
          title={title}
          color={color}
-         dataTypes={['usersLastYearBarChart', 'usersLastMonthBarChart', 'usersLastYearBarChart']}
+         data={[
+            ChartjsData.UsersLastYearBarChart,
+            ChartjsData.UsersLastMonthBarChart,
+            ChartjsData.UsersLastYearBarChart,
+         ]}
       />,
       {store}
    );

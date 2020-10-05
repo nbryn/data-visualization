@@ -18,7 +18,7 @@ const AccountView: React.FC = (): ReactElement => {
       <div className="wrapper">
          <Sidebar />
          <div id="main-panel" className="main-panel">
-            <Header title="account" />
+            <Header title="Account" />
             <div className="content">
                <Grid fluid>
                   <Row>
@@ -56,8 +56,10 @@ const AccountView: React.FC = (): ReactElement => {
                      <Col lg={4} sm={6}>
                         <LineChartContainer
                            title="Total Events"
-                           statsType="account"
-                           dataType="eventsLastYearLineChartData"
+                           dataType={{
+                              model: Model.Account,
+                              modelData: AccountData.EventsLastYearLineChartData,
+                           }}
                            xLabel="Months"
                            yLabel="Events"
                            color="#228b22"
@@ -66,8 +68,7 @@ const AccountView: React.FC = (): ReactElement => {
                      <Col lg={4} sm={6}>
                         <BarChartContainer
                            title="Most Meetings"
-                           statsType="account"
-                           dataType="meetingsPerTeam"
+                           dataType={{model: Model.Account, modelData: AccountData.MeetingsPerTeam}}
                            xLabel="Team Name"
                            yLabel="Meetings"
                            color="#1828E8"
@@ -76,8 +77,7 @@ const AccountView: React.FC = (): ReactElement => {
                      <Col lg={4} sm={6}>
                         <BarChartContainer
                            title="Team Dollar Data"
-                           statsType="account"
-                           dataType="teamDollarEventData"
+                           dataType={{model: Model.Account, modelData: AccountData.TeamDollarEventData}}
                            xLabel="Team Name"
                            yLabel="Amount"
                            color="#2196f3"
@@ -89,8 +89,10 @@ const AccountView: React.FC = (): ReactElement => {
                      <Col lg={4} sm={6}>
                         <BarChartContainer
                            title="Events Per Month"
-                           statsType="account"
-                           dataType="eventsLastYearBarChartData"
+                           dataType={{
+                              model: Model.Account,
+                              modelData: AccountData.EventsLastYearBarChartData,
+                           }}
                            xLabel="Month"
                            yLabel="Events"
                            color="#8918E8"
@@ -99,8 +101,7 @@ const AccountView: React.FC = (): ReactElement => {
                      <Col lg={4} sm={6}>
                         <BarChartContainer
                            title="Events Per Day"
-                           statsType="account"
-                           dataType="eventsLastMonthData"
+                           dataType={{model: Model.Account, modelData: AccountData.EventsLastMonthData}}
                            xLabel="Day"
                            yLabel="events"
                            color="#ff0000"
@@ -109,8 +110,7 @@ const AccountView: React.FC = (): ReactElement => {
                      <Col lg={4} sm={6}>
                         <BarChartContainer
                            title="Currencies"
-                           statsType="account"
-                           dataType="currencyData"
+                           dataType={{model: Model.Account, modelData: AccountData.CurrencyData}}
                            color="#2196f3"
                            xLabel="Currency"
                            yLabel="Amount"

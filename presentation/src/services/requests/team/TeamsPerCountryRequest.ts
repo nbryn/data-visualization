@@ -11,7 +11,11 @@ export const fetchTeamsPerCountry = async (): Promise<ServerDTO[]> => {
         }
       }`;
 
-   const response: ServerDTO[] = await fetchFromServer<ServerDTO[]>('generalCountryData', data, 'teamsCountry');
+   const response: ServerDTO[] = await fetchFromServer<ServerDTO[]>(
+      'generalCountryData',
+      data,
+      'teamsCountry'
+   );
 
    return response;
 };

@@ -38,11 +38,17 @@ export const ChartjsBarChartContainer: React.FC<Props> = ({title, color, data}: 
       data: [],
    });
 
-   const lastWeek: ChartjsChartData = useSelector<RootState, ChartjsChartData>((state) => state.chartjs[data[0]]);
+   const lastWeek: ChartjsChartData = useSelector<RootState, ChartjsChartData>(
+      (state) => state.chartjs[data[0]]
+   );
 
-   const lastMonth: ChartjsChartData = useSelector<RootState, ChartjsChartData>((state) => state.chartjs[data[1]]);
+   const lastMonth: ChartjsChartData = useSelector<RootState, ChartjsChartData>(
+      (state) => state.chartjs[data[1]]
+   );
 
-   const lastYear: ChartjsChartData = useSelector<RootState, ChartjsChartData>((state) => state.chartjs[data[2]]);
+   const lastYear: ChartjsChartData = useSelector<RootState, ChartjsChartData>(
+      (state) => state.chartjs[data[2]]
+   );
 
    const handleChangeInterval = (event: React.ChangeEvent<HTMLInputElement>): void => {
       const interval: Interval = resolveInterval(event.target.value);

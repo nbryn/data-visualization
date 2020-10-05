@@ -12,7 +12,11 @@ export const fetchEventsLastYear = async (): Promise<LastYearDTO[]> => {
         }  
   }`;
 
-   const response: LastYearDTO[] = await fetchFromServer<LastYearDTO[]>('accountData', data, 'eventsLastYear');
+   const response: LastYearDTO[] = await fetchFromServer<LastYearDTO[]>(
+      'accountData',
+      data,
+      'eventsLastYear'
+   );
 
    return response;
 };

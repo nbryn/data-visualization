@@ -13,9 +13,9 @@ export type ChartjsData = {
 };
 
 export type ChartjsLastMonthData = {
-   labels: string[];
-   data: number[];
-   counter: number;
+   aggregateDataMonth: number[];
+   aggregateDataWeek: number[];
+   lastMonth: ChartjsData;
    lastWeek: ChartjsData;
 };
 

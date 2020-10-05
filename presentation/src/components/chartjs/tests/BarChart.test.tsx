@@ -138,7 +138,9 @@ describe('BarChart.test.jsx', () => {
       it('stores the correct hoverBackGroundColor', () => {
          wrapper = renderBarChart();
 
-         expect(wrapper.find(Bar).props().data.datasets[0].hoverBackgroundColor).toEqual(hoverBackgroundColor);
+         expect(wrapper.find(Bar).props().data.datasets[0].hoverBackgroundColor).toEqual(
+            hoverBackgroundColor
+         );
       });
       it('stores the correct hoverBorderColor', () => {
          wrapper = renderBarChart();

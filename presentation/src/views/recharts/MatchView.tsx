@@ -56,8 +56,7 @@ const MatchView: React.FC = (): ReactElement => {
                      <Col lg={4} sm={6}>
                         <LineChartContainer
                            title="Total Matches"
-                           statsType="matches"
-                           dataType="lastYearData"
+                           dataType={{model: Model.Match, modelData: MatchData.LastYearData}}
                            xLabel="Months"
                            yLabel="Meetings"
                            color="#228b22"
@@ -66,8 +65,7 @@ const MatchView: React.FC = (): ReactElement => {
                      <Col lg={4} sm={6}>
                         <BarChartContainer
                            title="Matches Per Team"
-                           statsType="matches"
-                           dataType="perTeamData"
+                           dataType={{model: Model.Match, modelData: MatchData.PerTeamData}}
                            xLabel="Team"
                            yLabel="Matches"
                            color="#ff0000"
@@ -76,8 +74,7 @@ const MatchView: React.FC = (): ReactElement => {
                      <Col lg={4} sm={6}>
                         <BarChartContainer
                            title="Matches Per Country"
-                           statsType="matches"
-                           dataType="perCountryData"
+                           dataType={{model: Model.Match, modelData: MatchData.PerCountryData}}
                            xLabel="Country"
                            yLabel="Meetings"
                            color="#228b22"
@@ -89,8 +86,7 @@ const MatchView: React.FC = (): ReactElement => {
                      <Col lg={4} sm={6}>
                         <BarChartContainer
                            title="Matches Last Month"
-                           statsType="matches"
-                           dataType="lastMonthBarChartData"
+                           dataType={{model: Model.Match, modelData: MatchData.LastMonthBarChartData}}
                            xLabel="Day"
                            yLabel="Matches"
                            color="#1828E8"
@@ -100,8 +96,7 @@ const MatchView: React.FC = (): ReactElement => {
                      <Col lg={4} sm={6}>
                         <BarChartContainer
                            title="Matches Last Year"
-                           statsType="matches"
-                           dataType="lastYearBarChartData"
+                           dataType={{model: Model.Match, modelData: MatchData.LastYearBarChartData}}
                            xLabel="Month"
                            yLabel="Matches"
                            color="#8918E8"
@@ -110,8 +105,7 @@ const MatchView: React.FC = (): ReactElement => {
                      <Col lg={4} sm={6}>
                         <BarChartContainer
                            title="Matches With Most Meetings"
-                           statsType="matches"
-                           dataType="meetingsPerMatchData"
+                           dataType={{model: Model.Match, modelData: MatchData.MeetingsPerMatchData}}
                            xLabel="Match"
                            yLabel="Meetings"
                            color="#2196f3"

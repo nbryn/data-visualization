@@ -11,7 +11,11 @@ export const fetchMatchesPerCountry = async (): Promise<ServerDTO[]> => {
         }
       }`;
 
-   const response: ServerDTO[] = await fetchFromServer<ServerDTO[]>('generalCountryData', data, 'matchesCountry');
+   const response: ServerDTO[] = await fetchFromServer<ServerDTO[]>(
+      'generalCountryData',
+      data,
+      'matchesCountry'
+   );
 
    return response;
 };

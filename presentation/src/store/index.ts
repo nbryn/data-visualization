@@ -52,7 +52,11 @@ const ReactReduxDevTools =
    compose;
 
 if (window.navigator.userAgent.includes('Chrome')) {
-   store = createStore(rootReducer, initialState, compose(applyMiddleware(...middleWare), ReactReduxDevTools));
+   store = createStore(
+      rootReducer,
+      initialState,
+      compose(applyMiddleware(...middleWare), ReactReduxDevTools)
+   );
 } else {
    store = createStore(rootReducer, initialState, compose(applyMiddleware(...middleWare)));
 }

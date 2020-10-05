@@ -35,7 +35,9 @@ export const ChartjsPieChartContainer: React.FC<Props> = ({
 }: Props): ReactElement => {
    const classes = useStyles();
 
-   const {data, labels}: ChartjsPieData = useSelector<RootState, ChartjsPieData>((state) => state.chartjs[dataType]);
+   const {data, labels}: ChartjsPieData = useSelector<RootState, ChartjsPieData>(
+      (state) => state.chartjs[dataType]
+   );
 
    return (
       <Card className={classes.wrapper}>

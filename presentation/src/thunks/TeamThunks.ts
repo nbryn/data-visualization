@@ -1,7 +1,7 @@
 import {Action} from 'redux';
 import {ThunkAction} from 'redux-thunk';
 
-import * as DataMappingService from '../services/DataMappingService';
+import * as DTOConverterService from '../services/DTOConverterService';
 
 import {
    fetchDataForTeam,
@@ -23,7 +23,9 @@ import {
 import {RootState} from '../store/index';
 import {ServerDTO} from '../services/requests/DTOs';
 
-export const updateTeamViewData = (): ThunkAction<void, RootState, null, Action<string>> => async (dispatch) => {
+export const updateTeamViewData = (): ThunkAction<void, RootState, null, Action<string>> => async (
+   dispatch
+) => {
    const result: TeamState = {} as TeamState;
 
    const TeamData: TeamViewDTO = await fetchTeamViewData();
@@ -32,31 +34,31 @@ export const updateTeamViewData = (): ThunkAction<void, RootState, null, Action<
 
    const {teamCount, teamSize, teamsLastMonth, teamsLastYear} = TeamData;
 
-   const {todayDate, todayCount} = DataMappingService.mapDataForToday(teamsLastMonth);
+   const {todayDate, todayCount} = DTOConverterService.mapDataForToday(teamsLastMonth);
 
    result.total = teamCount;
    result.todayCount = todayCount;
    result.todayDate = todayDate;
-   result.lastMonthCount = DataMappingService.getTotalNumberInPeriod(teamsLastMonth);
-   result.lastYearCount = DataMappingService.getTotalNumberInPeriod(teamsLastYear);
+   result.lastMonthCount = DTOConverterService.getTotalNumberInPeriod(teamsLastMonth);
+   result.lastYearCount = DTOConverterService.getTotalNumberInPeriod(teamsLastYear);
 
-   result.lastYearLineChartData = DataMappingService.mapLastYearData(teamsLastYear, true);
-   result.lastYearBarChartData = DataMappingService.mapLastYearData(teamsLastYear, false);
-   result.lastMonthBarChartData = DataMappingService.mapLastMonthData(teamsLastMonth);
+   result.lastYearLineChartData = DTOConverterService.mapLastYearData(teamsLastYear, true);
+   result.lastYearBarChartData = DTOConverterService.mapLastYearData(teamsLastYear, false);
+   result.lastMonthBarChartData = DTOConverterService.mapLastMonthData(teamsLastMonth);
 
-   result.perCountryData = DataMappingService.mapGeneralChartData(teamsPerCountryData);
-   result.perOrgData = DataMappingService.mapGeneralChartData(teamsPerOrgData);
-   result.teamSizeStats = DataMappingService.mapGeneralChartData(teamSize);
+   result.perCountryData = DTOConverterService.mapGeneralChartData(teamsPerCountryData);
+   result.perOrgData = DTOConverterService.mapGeneralChartData(teamsPerOrgData);
+   result.teamSizeStats = DTOConverterService.mapGeneralChartData(teamSize);
 
    dispatch(setTeamViewData(result));
 };
 
-export const updateTeamSearchData = (team: string): ThunkAction<void, RootState, null, Action<string>> => async (
-   dispatch
-) => {
+export const updateTeamSearchData = (
+   team: string
+): ThunkAction<void, RootState, null, Action<string>> => async (dispatch) => {
    const dto: TeamDTO = await fetchDataForTeam(team);
 
-   const TeamData: TeamDataProp = DataMappingService.mapTeamSearchData(dto);
+   const TeamData: TeamDataProp = DTOConverterService.mapTeamSearchData(dto);
 
    dispatch(setTeamSearchData(TeamData));
 };
@@ -66,7 +68,7 @@ export const updateOrgTeamData = (org: string): ThunkAction<void, RootState, nul
 ) => {
    const dto: TeamDTO[] = await fetchTeamsByOrg(org);
 
-   const teamData: TeamData[] = DataMappingService.mapOrgTeamData(dto);
+   const teamData: TeamData[] = DTOConverterService.mapOrgTeamData(dto);
 
    console.log(teamData);
 

@@ -103,9 +103,17 @@ const TeamSearchView: React.FC = (): ReactElement => {
                   </Row>
 
                   <Row className={classes.groupInfo}>
-                     <Row className={classes.spinner}> {loading && !errorMessage && <CircularProgress />} </Row>
+                     <Row className={classes.spinner}>
+                        {' '}
+                        {loading && !errorMessage && <CircularProgress />}{' '}
+                     </Row>
                      {searchData.length > 0 && !errorMessage && !loading && (
-                        <InfoPage data={searchData} title="Group Info" columns={columns} column1={infoPageColumn} />
+                        <InfoPage
+                           data={searchData}
+                           title="Group Info"
+                           columns={columns}
+                           column1={infoPageColumn}
+                        />
                      )}
                   </Row>
                </Grid>

@@ -227,7 +227,9 @@ function calculateTimeSinceReg(registrationDate) {
    timeSinceReg.regDate = regDay + '/' + regMonthActual + '/' + regYear;
 
    timeSinceReg.monthsSinceReg =
-      currentDate.getMonth() - regDateObj.getMonth() + 12 * (currentDate.getFullYear() - regDateObj.getFullYear());
+      currentDate.getMonth() -
+      regDateObj.getMonth() +
+      12 * (currentDate.getFullYear() - regDateObj.getFullYear());
 
    const secondsSinceReg = (currentDate.getTime() - regDateObj.getTime()) / 1000;
    timeSinceReg.daysSinceReg = Math.floor(secondsSinceReg / (3600 * 24));

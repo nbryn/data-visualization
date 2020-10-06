@@ -39,7 +39,13 @@ export const updateMatchViewData = (): ThunkAction<void, RootState, null, Action
    const matchViewData: MatchViewDTO = await fetchMatchViewData();
    const matchCountryData: ServerDTO[] = await fetchMatchesPerCountry();
 
-   const {matchTotal, matchesLastMonth, matchesLastYear, matchesPerTeam, meetingsPerMatch} = matchViewData;
+   const {
+      matchTotal,
+      matchesLastMonth,
+      matchesLastYear,
+      matchesPerTeam,
+      meetingsPerMatch,
+   } = matchViewData;
 
    const {todayCount, todayDate} = DTOConverterService.mapDataForToday(matchesLastMonth);
 

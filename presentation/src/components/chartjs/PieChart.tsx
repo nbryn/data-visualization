@@ -1,3 +1,4 @@
+import CircularProgress from '@material-ui/core/CircularProgress';
 import {makeStyles} from '@material-ui/core/styles';
 import {Pie} from 'react-chartjs-2';
 import React from 'react';
@@ -32,16 +33,21 @@ const PieChart: React.FC<Props> = (props: Props) => {
 
    return (
       <>
-         <div className={classes.title}>
-            <h5>{props.title}</h5>
-         </div>
-         <Pie
-            data={chart}
-            options={{
-               responsive: true,
-               maintainAspectRatio: true,
-            }}
-         />
+         {props.data.length === 0 && <CircularProgress />}
+         {props.data.length > 0 && (
+            <>
+               <div className={classes.title}>
+                  <h5>{props.title}</h5>
+               </div>
+               <Pie
+                  data={chart}
+                  options={{
+                     responsive: true,
+                     maintainAspectRatio: true,
+                  }}
+               />
+            </>
+         )}
       </>
    );
 };

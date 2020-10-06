@@ -80,7 +80,7 @@ export const mapChartjsPieChartData = (data: ServerDTO[]): ChartjsPieData => {
 
 export const mapChartjsLastMonthData = (DTO: LastMonthDTO[]): ChartjsLastMonthData => {
    const chartData: ChartjsLastMonthData = {
-      aggregateDataMonth: [],
+      aggregateData: [],
       aggregateDataWeek: [],
       lastMonth: {
          labels: [],
@@ -94,10 +94,12 @@ export const mapChartjsLastMonthData = (DTO: LastMonthDTO[]): ChartjsLastMonthDa
       },
    };
 
-   chartData.lastMonth.labels = DTO.map((element: LastMonthDTO) => element.day.day + '\'' + element.day.month);
+   chartData.lastMonth.labels = DTO.map(
+      (element: LastMonthDTO) => element.day.day + '\'' + element.day.month
+   );
    chartData.lastMonth.data = DTO.map((element: LastMonthDTO) => {
       const counter = (chartData.lastMonth.counter += element.count);
-      chartData.aggregateDataMonth.push(counter);
+      chartData.aggregateData.push(counter);
 
       return element.count;
    });
@@ -118,11 +120,12 @@ export const mapChartjsLastMonthData = (DTO: LastMonthDTO[]): ChartjsLastMonthDa
    return chartData;
 };
 
-export const mapChartjsLastYearData = (data: LastYearDTO[], aggregate: boolean): ChartjsData => {
+export const mapChartjsLastYearData = (data: LastYearDTO[]): ChartjsData => {
    const lastYear: ChartjsData = {
       labels: [],
       data: [],
       counter: 0,
+      aggregateData: [],
    };
 
    lastYear.labels = data.map((element: LastYearDTO) => {
@@ -131,8 +134,9 @@ export const mapChartjsLastYearData = (data: LastYearDTO[], aggregate: boolean):
 
    lastYear.data = data.map((element: LastYearDTO) => {
       const counter = (lastYear.counter += element.count);
-      if (aggregate) return counter;
-      else return element.count;
+      lastYear.aggregateData?.push(counter);
+
+      return element.count;
    });
 
    return lastYear;

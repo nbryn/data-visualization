@@ -1,4 +1,5 @@
 import {Bar} from 'react-chartjs-2';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import React, {ReactElement} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 
@@ -116,12 +117,17 @@ const MixedChart: React.FC<Props> = ({firstChart, secondChart, labels}: Props): 
 
    return (
       <>
-         <div className={classes.title}>
-            <h5>
-               {firstChart.label} and {secondChart.label}
-            </h5>
-         </div>
-         <Bar data={data} options={options} />
+         {firstChart.data.length === 0 && <CircularProgress />}
+         {firstChart.data.length > 0 && (
+            <>
+               <div className={classes.title}>
+                  <h5>
+                     {firstChart.label} and {secondChart.label}
+                  </h5>
+               </div>
+               <Bar data={data} options={options} />
+            </>
+         )}
       </>
    );
 };

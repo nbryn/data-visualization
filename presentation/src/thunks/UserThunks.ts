@@ -1,7 +1,12 @@
 import {Action} from 'redux';
 import {ThunkAction} from 'redux-thunk';
 
-import {fetchUserViewData, fetchUsersPerCountry, fetchUsersPerOrg, UserViewDTO} from '../services/requests';
+import {
+   fetchUserViewData,
+   fetchUsersPerCountry,
+   fetchUsersPerOrg,
+   UserViewDTO,
+} from '../services/requests';
 import {setUserViewData, UserState} from '../store/datamodels/User';
 import * as DTOConverterService from '../services/DTOConverterService';
 import {RootState} from '../store/index';

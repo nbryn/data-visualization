@@ -63,9 +63,9 @@ export const updateTeamSearchData = (
    dispatch(setTeamSearchData(TeamData));
 };
 
-export const updateOrgTeamData = (org: string): ThunkAction<void, RootState, null, Action<string>> => async (
-   dispatch
-) => {
+export const updateOrgTeamData = (
+   org: string
+): ThunkAction<void, RootState, null, Action<string>> => async (dispatch) => {
    const dto: TeamDTO[] = await fetchTeamsByOrg(org);
 
    const teamData: TeamData[] = DTOConverterService.mapOrgTeamData(dto);

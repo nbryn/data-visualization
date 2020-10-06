@@ -41,19 +41,26 @@ export const mapLastMonthData = (data: LastMonthDTO[]): ChartData[] => {
    return lastMonthData;
 };
 
-export const mapLastYearData = (data: LastYearDTO[], aggregate: boolean): ChartData[] => {
+export const mapLastYearData = (data: LastYearDTO[]): Array<ChartData[]> => {
    let total = 0;
    let month, year: string;
+   const aggregateData: ChartData[] = [];
    const lastYear = data.map((element: LastYearDTO) => {
       year = element.year.toString().substring(2);
       month = convertNumberToMonth(element.month);
 
+      aggregateData.push({
+         name: month + "'" + year,
+         value: total += element.count,
+      });
+
       return {
-         name: month + '\'' + year,
-         value: aggregate ? (total += element.count) : element.count,
+         name: month + "'" + year,
+         value: element.count,
       };
    });
-   return lastYear;
+
+   return [lastYear, aggregateData];
 };
 
 export const getTotalNumberInPeriod = (data: IntervalDTO[]): number => {
@@ -95,7 +102,7 @@ export const mapChartjsLastMonthData = (DTO: LastMonthDTO[]): ChartjsLastMonthDa
    };
 
    chartData.lastMonth.labels = DTO.map(
-      (element: LastMonthDTO) => element.day.day + '\'' + element.day.month
+      (element: LastMonthDTO) => element.day.day + "'" + element.day.month
    );
    chartData.lastMonth.data = DTO.map((element: LastMonthDTO) => {
       const counter = (chartData.lastMonth.counter += element.count);
@@ -129,7 +136,7 @@ export const mapChartjsLastYearData = (data: LastYearDTO[]): ChartjsData => {
    };
 
    lastYear.labels = data.map((element: LastYearDTO) => {
-      return convertNumberToMonth(element.month) + '\'' + element.year.toString().substring(2);
+      return convertNumberToMonth(element.month) + "'" + element.year.toString().substring(2);
    });
 
    lastYear.data = data.map((element: LastYearDTO) => {

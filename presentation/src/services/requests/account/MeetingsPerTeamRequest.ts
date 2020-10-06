@@ -11,7 +11,11 @@ export const fetchMeetingsPerTeam = async (): Promise<ServerDTO[]> => {
         }  
   }`;
 
-   const response: ServerDTO[] = await fetchFromServer<ServerDTO[]>('accountData', data, 'mostMeetingData');
+   const response: ServerDTO[] = await fetchFromServer<ServerDTO[]>(
+      'accountData',
+      data,
+      'mostMeetingData'
+   );
 
    return response;
 };

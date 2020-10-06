@@ -1,4 +1,12 @@
-import {CartesianGrid, Line, LineChart as Chart, ResponsiveContainer, Tooltip, YAxis, XAxis} from 'recharts';
+import {
+   CartesianGrid,
+   Line,
+   LineChart as Chart,
+   ResponsiveContainer,
+   Tooltip,
+   YAxis,
+   XAxis,
+} from 'recharts';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import {makeStyles} from '@material-ui/core/styles';
 import React, {ReactElement} from 'react';

@@ -1,4 +1,12 @@
-import {BarChart as BChart, Bar, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis} from 'recharts';
+import {
+   BarChart as BChart,
+   Bar,
+   CartesianGrid,
+   ResponsiveContainer,
+   Tooltip,
+   XAxis,
+   YAxis,
+} from 'recharts';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import {makeStyles} from '@material-ui/core/styles';
 import React, {ReactElement} from 'react';
@@ -31,7 +39,7 @@ const BarChart: React.FC<ChartProps> = ({
 }: ChartProps): ReactElement => {
    const classes = useStyles();
    return (
-      <div>
+      <>
          <p className={classes.title}>{title}</p>
 
          {data.length === 0 ? (
@@ -56,7 +64,7 @@ const BarChart: React.FC<ChartProps> = ({
                </BChart>
             </ResponsiveContainer>
          )}
-      </div>
+      </>
    );
 };
 

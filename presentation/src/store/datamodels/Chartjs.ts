@@ -10,13 +10,14 @@ export type ChartjsData = {
    labels: string[];
    data: number[];
    counter: number;
+   aggregateData?: number[];
 };
 
 export type ChartjsLastMonthData = {
-   aggregateDataMonth: number[];
-   aggregateDataWeek: number[];
    lastMonth: ChartjsData;
    lastWeek: ChartjsData;
+   aggregateData: number[];
+   aggregateDataWeek?: number[];
 };
 
 export interface ChartjsAction {
@@ -65,25 +66,25 @@ export interface ChartjsState {
    meetingTotal: number;
 }
 
-const defaultData: ChartjsData = {
+export const defaultChartjsData: ChartjsData = {
    labels: [],
    data: [],
    counter: 0,
 };
 
 export const initialChartjsState: ChartjsState = {
-   teamsLastWeekBarChart: defaultData,
-   teamsLastMonthBarChart: defaultData,
-   teamsLastYearBarChart: defaultData,
-   teamsLastWeekLineChart: defaultData,
-   teamsLastMonthLineChart: defaultData,
-   teamsLastYearLineChart: defaultData,
-   usersLastMonthLineChart: defaultData,
-   usersLastWeekLineChart: defaultData,
-   usersLastYearLineChart: defaultData,
-   usersLastMonthBarChart: defaultData,
-   usersLastWeekBarChart: defaultData,
-   usersLastYearBarChart: defaultData,
+   teamsLastWeekBarChart: defaultChartjsData,
+   teamsLastMonthBarChart: defaultChartjsData,
+   teamsLastYearBarChart: defaultChartjsData,
+   teamsLastWeekLineChart: defaultChartjsData,
+   teamsLastMonthLineChart: defaultChartjsData,
+   teamsLastYearLineChart: defaultChartjsData,
+   usersLastMonthLineChart: defaultChartjsData,
+   usersLastWeekLineChart: defaultChartjsData,
+   usersLastYearLineChart: defaultChartjsData,
+   usersLastMonthBarChart: defaultChartjsData,
+   usersLastWeekBarChart: defaultChartjsData,
+   usersLastYearBarChart: defaultChartjsData,
    genderData: {
       labels: [],
       data: [],

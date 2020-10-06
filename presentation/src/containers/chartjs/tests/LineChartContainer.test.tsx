@@ -2,7 +2,7 @@ import * as redux from 'react-redux';
 import {createStore} from 'redux';
 import React from 'react';
 
-import {ChartjsData} from '../../../store/datamodels/types';
+import {ChartjsValues} from '../../../store/datamodels/types';
 import {render, screen} from '../../../test-utils';
 import {ChartjsLineChartContainer} from '../LineChartContainer';
 import {setChartjsData} from '../../../store/datamodels/Chartjs';
@@ -42,9 +42,9 @@ const renderLineChartContainer = (store?: any) =>
          title={title}
          color={color}
          data={[
-            ChartjsData.UsersLastYearLineChart,
-            ChartjsData.UsersLastMonthLineChart,
-            ChartjsData.UsersLastYearLineChart,
+            ChartjsValues.UsersLastYearLineChart,
+            ChartjsValues.UsersLastMonthLineChart,
+            ChartjsValues.UsersLastYearLineChart,
          ]}
       />,
       {store}

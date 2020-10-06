@@ -28,7 +28,12 @@ const Sidebar: React.FC = (): ReactElement => {
    };
 
    return (
-      <div id="sidebar" className="sidebar" data-color="black" data-image="../../assets/img/dashboard.png">
+      <div
+         id="sidebar"
+         className="sidebar"
+         data-color="black"
+         data-image="../../assets/img/dashboard.png"
+      >
          <div className="logo">
             <img src={Logo} />
          </div>

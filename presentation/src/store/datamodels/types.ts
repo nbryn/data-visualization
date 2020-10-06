@@ -9,7 +9,7 @@ export enum Model {
 
 export type Data = {
    model: Model;
-   modelData: AccountData | ChartjsData | MainData | MatchData | TeamData | UserData;
+   modelData: AccountData | ChartjsValues | MainData | MatchData | TeamData | UserData;
 };
 
 export enum AccountData {
@@ -25,9 +25,9 @@ export enum AccountData {
    TeamDollarEventData = 'teamDollarEventData',
 }
 
-export enum ChartjsData {
+export enum ChartjsValues {
    TeamsLastWeekBarChart = 'teamsLastWeekBarChart',
-   TeamsLastMonthBarChart = 'teamLastMonthBarChart',
+   TeamsLastMonthBarChart = 'teamsLastMonthBarChart',
    TeamsLastYearBarChart = 'teamsLastYearBarChart',
    TeamsLastWeekLineChart = 'teamsLastWeekLineChart',
    TeamsLastMonthLineChart = 'teamsLastMonthLineChart',

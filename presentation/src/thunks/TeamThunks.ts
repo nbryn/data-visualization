@@ -1,8 +1,6 @@
 import {Action} from 'redux';
 import {ThunkAction} from 'redux-thunk';
 
-import * as DTOConverterService from '../services/DTOConverterService';
-
 import {
    fetchDataForTeam,
    fetchTeamsPerCountry,
@@ -20,6 +18,8 @@ import {
    setTeamSearchData,
    setOrgTeamData,
 } from '../store/datamodels/Team';
+import * as DTOConverterService from '../services/DTOConverterService';
+import {ChartData} from '../store/datamodels/General';
 import {RootState} from '../store/index';
 import {ServerDTO} from '../services/requests/DTOs';
 
@@ -42,8 +42,11 @@ export const updateTeamViewData = (): ThunkAction<void, RootState, null, Action<
    result.lastMonthCount = DTOConverterService.getTotalNumberInPeriod(teamsLastMonth);
    result.lastYearCount = DTOConverterService.getTotalNumberInPeriod(teamsLastYear);
 
-   result.lastYearLineChartData = DTOConverterService.mapLastYearData(teamsLastYear, true);
-   result.lastYearBarChartData = DTOConverterService.mapLastYearData(teamsLastYear, false);
+   const lastYearChartData: Array<ChartData[]> = DTOConverterService.mapLastYearData(teamsLastYear);
+
+   result.lastYearBarChartData = lastYearChartData[0];
+   result.lastYearLineChartData = lastYearChartData[1];
+
    result.lastMonthBarChartData = DTOConverterService.mapLastMonthData(teamsLastMonth);
 
    result.perCountryData = DTOConverterService.mapGeneralChartData(teamsPerCountryData);
@@ -63,9 +66,9 @@ export const updateTeamSearchData = (
    dispatch(setTeamSearchData(TeamData));
 };
 
-export const updateOrgTeamData = (org: string): ThunkAction<void, RootState, null, Action<string>> => async (
-   dispatch
-) => {
+export const updateOrgTeamData = (
+   org: string
+): ThunkAction<void, RootState, null, Action<string>> => async (dispatch) => {
    const dto: TeamDTO[] = await fetchTeamsByOrg(org);
 
    const teamData: TeamData[] = DTOConverterService.mapOrgTeamData(dto);

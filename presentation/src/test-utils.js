@@ -9,7 +9,11 @@ jest.mock('react-router-dom');
 
 function render(
    ui,
-   {initialState = initialReducerState, store = createStore(rootReducer, initialState), ...renderOptions} = {}
+   {
+      initialState = initialReducerState,
+      store = createStore(rootReducer, initialState),
+      ...renderOptions
+   } = {}
 ) {
    function Wrapper({children}) {
       return <Provider store={store}>{children}</Provider>;

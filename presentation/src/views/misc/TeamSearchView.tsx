@@ -38,7 +38,9 @@ const TeamSearchView: React.FC = (): ReactElement => {
    const [errorMessage, setErrorMessage] = useState<string>('');
    const [searchString, setSearchString] = useState<string>('');
 
-   const searchData: TeamDataProp = useSelector<RootState, TeamDataProp>((state) => state.teams.searchData);
+   const searchData: TeamDataProp = useSelector<RootState, TeamDataProp>(
+      (state) => state.teams.searchData
+   );
 
    const dispatch = useDispatch();
 

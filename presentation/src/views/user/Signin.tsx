@@ -2,7 +2,7 @@ import {Card} from '@material-ui/core';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import {makeStyles} from '@material-ui/core/styles';
 import React, {ReactElement, useEffect, useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {useHistory} from 'react-router-dom';
 
 import * as Thunks from '../../thunks/Thunks';

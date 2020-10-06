@@ -18,6 +18,7 @@ import {
    MatchViewDTO,
 } from '../services/requests';
 import * as DTOConverterService from '../services/DTOConverterService';
+import {ChartData} from '../store/datamodels/General';
 import {fetchAccountData} from '../services/requests/account/AccountViewDataRequest';
 import {fetchMatchViewData} from '../services/requests/match/MatchViewDataRequest';
 import {fetchMatchesPerCountry} from '../services/requests/match/MatchesPerCountryRequest';
@@ -39,7 +40,13 @@ export const updateMatchViewData = (): ThunkAction<void, RootState, null, Action
    const matchViewData: MatchViewDTO = await fetchMatchViewData();
    const matchCountryData: ServerDTO[] = await fetchMatchesPerCountry();
 
-   const {matchTotal, matchesLastMonth, matchesLastYear, matchesPerTeam, meetingsPerMatch} = matchViewData;
+   const {
+      matchTotal,
+      matchesLastMonth,
+      matchesLastYear,
+      matchesPerTeam,
+      meetingsPerMatch,
+   } = matchViewData;
 
    const {todayCount, todayDate} = DTOConverterService.mapDataForToday(matchesLastMonth);
 
@@ -50,9 +57,10 @@ export const updateMatchViewData = (): ThunkAction<void, RootState, null, Action
    result.lastMonthCount = DTOConverterService.getTotalNumberInPeriod(matchesLastMonth);
    result.lastYearCount = DTOConverterService.getTotalNumberInPeriod(matchesLastYear);
 
-   result.lastYearData = DTOConverterService.mapLastYearData(matchesLastYear, true);
+   const lastYearChartData = DTOConverterService.mapLastYearData(matchesLastYear);
+   result.lastYearBarChartData = lastYearChartData[0];
+   result.lastYearData = lastYearChartData[1];
    result.lastMonthBarChartData = DTOConverterService.mapLastMonthData(matchesLastMonth);
-   result.lastYearBarChartData = DTOConverterService.mapLastYearData(matchesLastYear, false);
 
    result.perTeamData = DTOConverterService.mapGeneralChartData(matchesPerTeam);
    result.perCountryData = DTOConverterService.mapGeneralChartData(matchCountryData);
@@ -85,9 +93,11 @@ export const updateAccountViewData = (): ThunkAction<void, RootState, null, Acti
    result.mostMeetings = teamWithMostMeetings;
    result.dollarEventCount = dollarEventCount;
 
-   result.eventsLastYearLineChartData = DTOConverterService.mapLastYearData(eventsLastYear, true);
+   const eventsLastYearChartData = DTOConverterService.mapLastYearData(eventsLastYear);
+
+   result.eventsLastYearBarChartData = eventsLastYearChartData[0];
+   result.eventsLastYearLineChartData = eventsLastYearChartData[1];
    result.eventsLastMonthData = DTOConverterService.mapLastMonthData(eventsLastMonth);
-   result.eventsLastYearBarChartData = DTOConverterService.mapLastYearData(eventsLastYear, false);
 
    result.currencyData = DTOConverterService.mapGeneralChartData(currencyData);
    result.meetingsPerTeam = DTOConverterService.mapGeneralChartData(meetingData);
@@ -107,14 +117,17 @@ export const updateMainViewData = (): ThunkAction<void, RootState, null, Action<
    result.meetingTotal = await fetchTotalMeetings();
 
    const usersLastYear = await fetchUsersLastYear();
-   result.usersLastYearLineChartData = DTOConverterService.mapLastYearData(usersLastYear, true);
-   result.usersLastYearBarChartData = DTOConverterService.mapLastYearData(usersLastYear, false);
+
+   const usersLastYearChartData: Array<ChartData[]> = DTOConverterService.mapLastYearData(usersLastYear);
+
+   result.usersLastYearBarChartData = usersLastYearChartData[0];
+   result.usersLastYearLineChartData = usersLastYearChartData[1];
 
    const teamsLastYear = await fetchTeamsLastYear();
-   result.teamsLastYearData = DTOConverterService.mapLastYearData(teamsLastYear, true);
+   result.teamsLastYearData = DTOConverterService.mapLastYearData(teamsLastYear)[0];
 
    const matchesLastYear = await fetchMatchesLastYear();
-   result.matchesLastYearData = DTOConverterService.mapLastYearData(matchesLastYear, true);
+   result.matchesLastYearData = DTOConverterService.mapLastYearData(matchesLastYear)[0];
 
    const teamsLastMonth = await fetchTeamsLastMonth();
    result.teamsLastMonthData = DTOConverterService.mapLastMonthData(teamsLastMonth);

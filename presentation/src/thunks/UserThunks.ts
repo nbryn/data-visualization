@@ -1,7 +1,12 @@
 import {Action} from 'redux';
 import {ThunkAction} from 'redux-thunk';
 
-import {fetchUserViewData, fetchUsersPerCountry, fetchUsersPerOrg, UserViewDTO} from '../services/requests';
+import {
+   fetchUserViewData,
+   fetchUsersPerCountry,
+   fetchUsersPerOrg,
+   UserViewDTO,
+} from '../services/requests';
 import {setUserViewData, UserState} from '../store/datamodels/User';
 import * as DTOConverterService from '../services/DTOConverterService';
 import {RootState} from '../store/index';
@@ -26,8 +31,10 @@ export const updateUserViewData = (): ThunkAction<void, RootState, null, Action<
    result.lastMonthCount = DTOConverterService.getTotalNumberInPeriod(usersLastMonth);
    result.lastYearCount = DTOConverterService.getTotalNumberInPeriod(usersLastYear);
 
-   result.lastYearLineChartData = DTOConverterService.mapLastYearData(usersLastYear, true);
-   result.lastYearBarChartData = DTOConverterService.mapLastYearData(usersLastYear, false);
+   const lastYearChartData = DTOConverterService.mapLastYearData(usersLastYear);
+
+   result.lastYearBarChartData = lastYearChartData[0];
+   result.lastYearLineChartData = lastYearChartData[1];
    result.lastMonthBarChartData = DTOConverterService.mapLastMonthData(usersLastMonth);
 
    result.perCountryData = DTOConverterService.mapGeneralChartData(userCountryData);

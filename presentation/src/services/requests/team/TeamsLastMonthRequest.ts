@@ -15,7 +15,11 @@ export const fetchTeamsLastMonth = async (): Promise<LastMonthDTO[]> => {
         }
     }`;
 
-   const response: LastMonthDTO[] = await fetchFromServer<LastMonthDTO[]>('teamData', data, 'teamsLastMonth');
+   const response: LastMonthDTO[] = await fetchFromServer<LastMonthDTO[]>(
+      'teamData',
+      data,
+      'teamsLastMonth'
+   );
 
    return response;
 };

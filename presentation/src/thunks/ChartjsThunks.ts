@@ -40,15 +40,18 @@ export const updateChartjsData = (): ThunkAction<void, RootState, null, Action<s
    );
 
    result.teamsLastMonthLineChart = teamsLastMonthChartData.lastMonth;
-   result.teamsLastMonthLineChart.data = teamsLastMonthChartData.aggregateDataMonth;
+   result.teamsLastMonthLineChart.data = teamsLastMonthChartData.aggregateData;
    result.teamsLastWeekLineChart = teamsLastMonthChartData.lastWeek;
-   result.teamsLastWeekLineChart.data = teamsLastMonthChartData.aggregateDataWeek;
+   result.teamsLastWeekLineChart.data = teamsLastMonthChartData.aggregateDataWeek!;
 
    result.teamsLastMonthBarChart = teamsLastMonthChartData.lastMonth;
    result.teamsLastWeekBarChart = teamsLastMonthChartData.lastWeek;
-   result.teamsLastYearBarChart = DTOConverterService.mapChartjsLastYearData(teamsLastYear, false);
 
-   result.teamsLastYearLineChart = DTOConverterService.mapChartjsLastYearData(teamsLastYear, true);
+   const teamsLastYearChartData = DTOConverterService.mapChartjsLastYearData(teamsLastYear);
+
+   result.teamsLastYearBarChart = teamsLastYearChartData;
+   result.teamsLastYearLineChart = teamsLastYearChartData;
+   result.teamsLastYearLineChart.data = teamsLastYearChartData.aggregateData!;
 
    dispatch(setChartjsData(result));
 };
@@ -64,14 +67,16 @@ const updateChartjsUserData = async (chartjsData: ChartjsState) => {
    );
 
    chartjsData.usersLastMonthLineChart = usersLastMonthChartData.lastMonth;
-   chartjsData.usersLastMonthLineChart.data = usersLastMonthChartData.aggregateDataMonth;
+   chartjsData.usersLastMonthLineChart.data = usersLastMonthChartData.aggregateData;
    chartjsData.usersLastWeekLineChart = usersLastMonthChartData.lastWeek;
-   chartjsData.usersLastWeekLineChart.data = usersLastMonthChartData.aggregateDataWeek;
+   chartjsData.usersLastWeekLineChart.data = usersLastMonthChartData.aggregateDataWeek!;
 
    chartjsData.usersLastMonthBarChart = usersLastMonthChartData.lastMonth;
    chartjsData.usersLastWeekBarChart = usersLastMonthChartData.lastWeek;
 
-   chartjsData.usersLastYearBarChart = DTOConverterService.mapChartjsLastYearData(usersLastYear, false);
+   const usersLastYearChartData = DTOConverterService.mapChartjsLastYearData(usersLastYear);
 
-   chartjsData.usersLastYearLineChart = DTOConverterService.mapChartjsLastYearData(usersLastYear, true);
+   chartjsData.usersLastYearBarChart = usersLastYearChartData;
+   chartjsData.usersLastYearLineChart = usersLastYearChartData;
+   chartjsData.usersLastYearLineChart.data = usersLastYearChartData.aggregateData!;
 };

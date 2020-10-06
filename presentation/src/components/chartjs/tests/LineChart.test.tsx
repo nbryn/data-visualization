@@ -22,7 +22,7 @@ const pointBorderWidth = 1;
 const pointHoverRadius = 2;
 const data = [2, 3, 4, 5, 6, 7];
 const counter = 13265487;
-const {WEEK, MONTH, YEAR} = Interval;
+const {WEEK} = Interval;
 
 const renderLineChart = () =>
    render(

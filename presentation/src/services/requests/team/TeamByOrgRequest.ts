@@ -9,7 +9,7 @@ export const fetchTeamsByOrg = async (org: string): Promise<TeamDTO[]> => {
             regDate   
             currency
             lastMatch           
-            boxBalance
+            balance
             matchesTotal
             perMeeting
             events

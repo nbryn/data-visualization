@@ -149,6 +149,7 @@ async function retrieveTeamData(group) {
    return {
       id: group._id,
       regDate: regDate,
+      name: group.name,
       type: group.groupType,
       org: group.ngoState,
       lastMatch: lastMatchDate,
@@ -156,7 +157,7 @@ async function retrieveTeamData(group) {
       matchesTotal: group.meetings.length,
       perMeeting: group.amountPerShare,
       meetings: totalShares,
-      boxBalance,
+      balance: boxBalance,
       events: events,
       members,
       owner: owners[0],

@@ -124,10 +124,10 @@ export const updateMainViewData = (): ThunkAction<void, RootState, null, Action<
    result.usersLastYearLineChartData = usersLastYearChartData[1];
 
    const teamsLastYear = await fetchTeamsLastYear();
-   result.teamsLastYearData = DTOConverterService.mapLastYearData(teamsLastYear)[0];
+   result.teamsLastYearData = DTOConverterService.mapLastYearData(teamsLastYear)[1];
 
    const matchesLastYear = await fetchMatchesLastYear();
-   result.matchesLastYearData = DTOConverterService.mapLastYearData(matchesLastYear)[0];
+   result.matchesLastYearData = DTOConverterService.mapLastYearData(matchesLastYear)[1];
 
    const teamsLastMonth = await fetchTeamsLastMonth();
    result.teamsLastMonthData = DTOConverterService.mapLastMonthData(teamsLastMonth);

@@ -31,7 +31,7 @@ export const TeamSchema = gql`
       type: String
       org: String
       lastMatch: String
-      boxBalance: Float
+      balance: Float
       matchesTotal: Float
       perMeeting: Float
       events: Float

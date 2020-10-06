@@ -8,7 +8,7 @@ export const fetchDataForTeam = async (team: string): Promise<TeamDTO> => {
         regDate
         currency
         lastMatch
-        boxBalance
+        balance
         matchesTotal
         perMeeting
         events

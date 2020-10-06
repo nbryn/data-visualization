@@ -38,12 +38,10 @@ const OrgView: React.FC = (): ReactElement => {
 
    const data: TeamData[] = useSelector<RootState, TeamData[]>((state) => state.teams.orgTeamData);
 
-   console.log(data);
-
    const dispatch = useDispatch();
 
    useEffect(() => {
-      dispatch(TeamThunks.updateOrgTeamData('"FHIDO"'));
+      dispatch(TeamThunks.updateOrgTeamData('"Tv-Stars"'));
    }, []);
 
    const {SearchBar} = Search;
@@ -71,7 +69,7 @@ const OrgView: React.FC = (): ReactElement => {
    const columns: ColumnDescription[] = [
       {
          dataField: 'name',
-         text: 'Name',
+         text: 'Team',
       },
 
       {
@@ -109,13 +107,13 @@ const OrgView: React.FC = (): ReactElement => {
                                  <Row>
                                     <Col lg={10} md={8} sm={6}>
                                        <h4>
-                                          <b>NGO Search</b>
+                                          <b>ORG Search</b>
                                        </h4>
                                     </Col>
                                  </Row>
                                  <Row>
                                     <Row className={classes.searchBar}>
-                                       <SearchBar {...props.searchProps} placeholder="NGO" />
+                                       <SearchBar {...props.searchProps} placeholder="ORG: Tv-Stars" />
                                     </Row>
                                     <Col lg={6} md={6} sm={6}>
                                        <BootstrapTable

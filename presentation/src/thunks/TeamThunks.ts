@@ -73,7 +73,5 @@ export const updateOrgTeamData = (
 
    const teamData: TeamData[] = DTOConverterService.mapOrgTeamData(dto);
 
-   console.log(teamData);
-
    dispatch(setOrgTeamData(teamData));
 };

@@ -2,7 +2,7 @@ import * as redux from 'react-redux';
 import {createStore} from 'redux';
 import React from 'react';
 
-import {ChartjsData} from '../../../store/datamodels/types';
+import {ChartjsValues} from '../../../store/datamodels/types';
 import {ChartjsMixedChartContainer} from '../MixedChartContainer';
 import {render, screen} from '../../../test-utils';
 import {setChartjsData} from '../../../store/datamodels/Chartjs';
@@ -11,8 +11,8 @@ const useSelectorSpy = jest.spyOn(redux, 'useSelector');
 
 const firstTitle = 'TestTitle';
 const secondTitle = 'TesterTitle';
-const firstDataType = ChartjsData.UsersLastYearLineChart;
-const secondDataType = ChartjsData.TeamsLastYearLineChart;
+const firstDataType = ChartjsValues.UsersLastYearLineChart;
+const secondDataType = ChartjsValues.TeamsLastYearLineChart;
 
 const mockStore = createStore(() => ({
    chartjs: {

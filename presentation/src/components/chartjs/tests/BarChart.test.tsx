@@ -1,5 +1,6 @@
 import {Bar} from 'react-chartjs-2';
 import React from 'react';
+import {render, screen, fireEvent, within} from '@testing-library/react';
 import {shallow, ShallowWrapper} from 'enzyme';
 
 import BarChart from '../BarChart';
@@ -17,12 +18,12 @@ const hoverBorderColor = 'rgba(75,192,192,4)';
 const dataMock = [2, 3, 4, 5, 6, 7];
 const counter = 10;
 
-const mockEvent = {
-   currentTarget: {},
-} as React.ChangeEvent<HTMLInputElement>;
-
-const renderBarChart = (interval?: Interval, data?: number[]): ShallowWrapper => {
-   return shallow(
+const renderBarChart = (
+   testingLibrary = false,
+   interval?: Interval,
+   data?: number[]
+): ShallowWrapper => {
+   const shallowWrapper = shallow(
       <BarChart
          updateInterval={updateIntervalMock}
          labels={labels}
@@ -37,6 +38,26 @@ const renderBarChart = (interval?: Interval, data?: number[]): ShallowWrapper =>
          currentInterval={interval || Interval.WEEK}
       />
    );
+
+   if (testingLibrary) {
+      render(
+         <BarChart
+            updateInterval={updateIntervalMock}
+            labels={labels}
+            label={label}
+            backgroundColor={backgroundColor}
+            borderColor={borderColor}
+            borderWidth={borderWidth}
+            hoverBackgroundColor={hoverBackgroundColor}
+            hoverBorderColor={hoverBorderColor}
+            data={data || dataMock}
+            counter={counter}
+            currentInterval={interval || Interval.WEEK}
+         />
+      );
+   }
+
+   return shallowWrapper;
 };
 
 afterEach(() => {
@@ -48,8 +69,11 @@ let wrapper: ShallowWrapper;
 describe('BarChart.test.jsx', () => {
    describe('funtions are called correctly', () => {
       it('calls updateInterval', () => {
-         wrapper = renderBarChart();
-         wrapper.find(TextField).props().onChange!(mockEvent);
+         renderBarChart(true);
+
+         fireEvent.mouseDown(screen.getByRole('button'));
+         const listbox = within(screen.getByRole('listbox'));
+         fireEvent.click(listbox.getByText(/Last Month/i));
 
          expect(updateIntervalMock).toHaveBeenCalled();
       });
@@ -78,21 +102,21 @@ describe('BarChart.test.jsx', () => {
          expect(disabled).toBe(false);
       });
       it('month option is disabled when interval = month', () => {
-         wrapper = renderBarChart(Interval.MONTH);
+         wrapper = renderBarChart(false, Interval.MONTH);
 
          const disabled = wrapper.find(TextField).childAt(1).props().disabled;
 
          expect(disabled).toBe(true);
       });
       it('week option is enabled when interval = month', () => {
-         wrapper = renderBarChart(Interval.MONTH);
+         wrapper = renderBarChart(false, Interval.MONTH);
 
          const disabled = wrapper.find(TextField).childAt(0).props().disabled;
 
          expect(disabled).toBe(false);
       });
       it('year option is enabled when interval = month', () => {
-         wrapper = renderBarChart(Interval.MONTH);
+         wrapper = renderBarChart(false, Interval.MONTH);
 
          const disabled = wrapper.find(TextField).childAt(2).props().disabled;
 

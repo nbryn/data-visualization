@@ -2,7 +2,7 @@ import * as redux from 'react-redux';
 import {createStore} from 'redux';
 import React from 'react';
 
-import {ChartjsData} from '../../../store/datamodels/types';
+import {ChartjsValues} from '../../../store/datamodels/types';
 import {render, screen} from '../../../test-utils';
 import {ChartjsPieChartContainer} from '../PieChartContainer';
 import {setChartjsData} from '../../../store/datamodels/Chartjs';
@@ -10,7 +10,7 @@ import {setChartjsData} from '../../../store/datamodels/Chartjs';
 const useSelectorSpy = jest.spyOn(redux, 'useSelector');
 
 const title = 'TestTitle';
-const dataType = ChartjsData.GenderData;
+const dataType = ChartjsValues.GenderData;
 const backgroundColor = ['red', 'black'];
 const hoverBackgroundColor = ['red', 'black'];
 

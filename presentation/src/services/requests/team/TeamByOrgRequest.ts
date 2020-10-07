@@ -18,11 +18,11 @@ export const fetchTeamsByOrg = async (org: string): Promise<TeamDTO[]> => {
               firstName
               lastName
             }
-            admin{
+            coach{
               firstName
               lastName
             }
-            members                      
+            players                      
       }
       }
       }`;

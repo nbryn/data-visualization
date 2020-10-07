@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
       fontSize: 20,
       marginBottom: 10,
    },
-   groupInfo: {
+   teamInfo: {
       marginTop: 30,
    },
    spinner: {
@@ -64,7 +64,7 @@ const TeamSearchView: React.FC = (): ReactElement => {
    const columns: ColumnDescription[] = [
       {
          dataField: 'name',
-         text: 'Members',
+         text: 'Players',
       },
    ];
 
@@ -73,7 +73,7 @@ const TeamSearchView: React.FC = (): ReactElement => {
          <Sidebar />
 
          <div id="main-panel" className="main-panel">
-            <Header title="Group Search" />
+            <Header title="Team Search" />
             <div className="content">
                <Grid fluid>
                   <Row>
@@ -88,7 +88,7 @@ const TeamSearchView: React.FC = (): ReactElement => {
                               <ControlLabel className={classes.searchText}>Search</ControlLabel>
                               <FormControl
                                  type="text"
-                                 placeholder="Group Name"
+                                 placeholder="Team Name"
                                  name="searchString"
                                  value={searchString}
                                  onChange={(event: React.ChangeEvent) => {
@@ -104,7 +104,7 @@ const TeamSearchView: React.FC = (): ReactElement => {
                      </Col>
                   </Row>
 
-                  <Row className={classes.groupInfo}>
+                  <Row className={classes.teamInfo}>
                      <Row className={classes.spinner}>
                         {' '}
                         {loading && !errorMessage && <CircularProgress />}{' '}
@@ -112,7 +112,7 @@ const TeamSearchView: React.FC = (): ReactElement => {
                      {searchData.length > 0 && !errorMessage && !loading && (
                         <InfoPage
                            data={searchData}
-                           title="Group Info"
+                           title="Team Info"
                            columns={columns}
                            column1={infoPageColumn}
                         />

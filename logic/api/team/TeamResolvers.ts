@@ -3,8 +3,7 @@ import * as TeamMapper from '../../../data/mappers/TeamMapper';
 import * as TeamService from './TeamService';
 import {actionRunner} from '../../util/ActionRunner';
 import {Error} from '../../util/Error';
-import {Team} from '../../entities/Team';
-import {CountDTO, LastMonthDTO, LastYearDTO} from '../../util/DTOs';
+import {CountDTO, LastMonthDTO, LastYearDTO, TeamDTO} from '../../util/DTOs';
 
 export const teamResolvers = {
    Query: {
@@ -12,8 +11,8 @@ export const teamResolvers = {
       teamEngagement: () => ({}),
       orgTeamData: (obj: any, args: any) => ({obj, args}),
       teamActivity: async () => ({}),
-      teamSearch: async (obj: any, args: any): Promise<Partial<Team>> => {
-         return actionRunner(async () => {
+      teamSearch: async (obj: any, args: any): Promise<TeamDTO> => {
+         return actionRunner<TeamDTO>(async () => {
             const teamData = await TeamService.listTeamData(args.input.team);
 
             return teamData;
@@ -95,8 +94,8 @@ export const teamResolvers = {
             return activeTeams;
          });
       },
-      matchFrequency: async () => {
-         return actionRunner(async () => {
+      matchFrequency: async (): Promise<CountDTO[]> => {
+         return actionRunner<CountDTO[]>(async () => {
             const matchFrequency = TeamService.calculateMatchFrequency();
 
             return matchFrequency;
@@ -111,8 +110,8 @@ export const teamResolvers = {
       },
    },
    OrgTeamData: {
-      teamData: async (obj: any, args: any) => {
-         return actionRunner(async () => {
+      teamData: async (obj: any, args: any): Promise<TeamDTO[]> => {
+         return actionRunner<TeamDTO[]>(async () => {
             const orgTeamData = await TeamService.listTeamsByOrg(args.org);
 
             return orgTeamData;

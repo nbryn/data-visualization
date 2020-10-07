@@ -5,13 +5,13 @@ export type Name = {
 
 export type TeamDTO = {
    [key: string]: string | number | Name | Name[];
-   admin: Name;
+   coach: Name;
    perMeeting: number;
-   boxBalance: number;
+   balance: number;
    currency: string;
    lastMatch: string;
    name: string;
-   members: Name[];
+   players: Name[];
    owner: Name;
    registrationDate: string;
    totalMatches: number;

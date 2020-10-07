@@ -3,13 +3,13 @@ import {Document, Schema} from 'mongoose';
 import {Team} from './Team';
 import {TeamReport} from './TeamReport';
 import {Match} from './Match';
-import {TeamMember} from './TeamMember';
+import {Player} from './Player';
 
 export interface TeamEvent extends Document {
    Team: Team;
    account: TeamReport;
    meeting: Match;
-   member: TeamMember;
+   member: Player;
    registrationDate: Date;
    amount: number;
    currency: string;

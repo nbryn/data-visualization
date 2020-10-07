@@ -1,6 +1,6 @@
 import * as FinanceMapper from '../../../data/mappers/FinanceMapper';
 import * as MatchMapper from '../../../data/mappers/MatchMapper';
-import * as TeamMemberMapper from '../../../data/mappers/TeamMemberMapper';
+import * as TeamMemberMapper from '../../../data/mappers/PlayerMapper';
 import * as TeamMapper from '../../../data/mappers/TeamMapper';
 import * as UserMapper from '../../../data/mappers/UserMapper';
 
@@ -16,8 +16,8 @@ export async function listTeamsByOrg(org) {
    const generalTeamData = await TeamMapper.fetchTeamsByOrg(org);
 
    const allTeamData = await Promise.all(
-      generalTeamData.map(async (group) => {
-         const teamData = retrieveTeamData(group);
+      generalTeamData.map(async (team) => {
+         const teamData = retrieveTeamData(team);
 
          return teamData;
       })
@@ -54,7 +54,7 @@ export async function calculateMatchFrequency() {
    let teamEngagement = [];
 
    const testTeamData = {
-      value: 'Test Groups',
+      value: 'Test teams',
       count: testTeams,
    };
 
@@ -92,7 +92,7 @@ export async function generateMatchOverview() {
       if (daysSinceReg < 14) {
          supposedMatches = 1;
       } else {
-         //Groups have 1, 2, 3 or 4 weeks between Matchs
+         //teams have 1, 2, 3 or 4 weeks between Matchs
          switch (element.MatchWeeksBetween) {
             case 1:
                supposedMatches = monthsSinceReg * 4;
@@ -106,7 +106,7 @@ export async function generateMatchOverview() {
             case 4:
                supposedMatches = monthsSinceReg * 1;
                break;
-            // For groups where weeksBetween is not set
+            // For teams where weeksBetween is not set
             default:
                supposedMatches = monthsSinceReg * 2;
                break;
@@ -128,40 +128,40 @@ export async function generateMatchOverview() {
 
 // ---- Helper Functions ---- //
 
-async function retrieveTeamData(group) {
-   const accountData = await FinanceMapper.fetchReportDataByTeamId(group._id);
-   const events = await FinanceMapper.fetchEventCountByTeam(group._id);
-   const lastMatchData = await MatchMapper.fetchMatchById(group.meetings[group.meetings.length - 1]);
-   const memberIDs = await TeamMemberMapper.fetchAllMemberIDsByTeam(group._id);
-   const adminIDs = await TeamMemberMapper.fetchUserIDByRole('ADMINISTRATOR', group._id);
-   const ownerIDs = await TeamMemberMapper.fetchUserIDByRole('OWNER', group._id);
+async function retrieveTeamData(team) {
+   const accountData = await FinanceMapper.fetchReportDataByTeamId(team._id);
+   const events = await FinanceMapper.fetchEventCountByTeam(team._id);
+   const lastMatchData = await MatchMapper.fetchMatchById(team.meetings[team.meetings.length - 1]);
+   const memberIDs = await TeamMemberMapper.fetchAllPlayerIdsByTeam(team._id);
+   const coachIDs = await TeamMemberMapper.fetchUserIDByRole('ADMINISTRATOR', team._id);
+   const ownerIDs = await TeamMemberMapper.fetchUserIDByRole('OWNER', team._id);
 
    const lastMatchDate = extractLastMatchDate(lastMatchData);
 
-   const members = await mapIDtoUser(memberIDs);
-   const admins = await mapIDtoUser(adminIDs);
+   const players = await mapIDtoUser(memberIDs);
+   const coaches = await mapIDtoUser(coachIDs);
    const owners = await mapIDtoUser(ownerIDs);
 
-   const regDate = extractRegDate(group.registrationDate);
+   const regDate = extractRegDate(team.registrationDate);
 
    const {totalShares, boxBalance} = accountData[0];
 
    return {
-      id: group._id,
+      id: team._id,
       regDate: regDate,
-      name: group.name,
-      type: group.groupType,
-      org: group.ngoState,
+      name: team.name,
+      type: team.teamType,
+      org: team.ngoState,
       lastMatch: lastMatchDate,
-      currency: group.currency,
-      matchesTotal: group.meetings.length,
-      perMeeting: group.amountPerShare,
+      currency: team.currency,
+      matchesTotal: team.meetings.length,
+      perMeeting: team.amountPerShare,
       meetings: totalShares,
       balance: boxBalance,
       events: events,
-      members,
+      players: players,
       owner: owners[0],
-      admin: admins[1] || admins[0],
+      coach: coaches[1] || coaches[0],
    };
 }
 

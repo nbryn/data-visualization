@@ -5,7 +5,7 @@ import {TeamReport, TeamReportSchema} from '../logic/entities/TeamReport';
 import {TeamEvent, TeamEventSchema} from '../logic/entities/TeamEvent';
 import {Match, MatchSchema} from '../logic/entities/Match';
 import {TeamMeeting, TeamMeetingSchema} from '../logic/entities/TeamMeeting';
-import {TeamMember, TeamMemberSchema} from '../logic/entities/TeamMember';
+import {Player, PlayerSchema} from '../logic/entities/Player';
 import {Team, TeamSchema} from '../logic/entities/Team';
 import {User, UserSchema} from '../logic/entities/User';
 
@@ -13,7 +13,7 @@ export let TeamReportModel: mongoose.Model<TeamReport, {}>;
 export let TeamEventModel: mongoose.Model<TeamEvent, {}>;
 export let MatchModel: mongoose.Model<Match, {}>;
 export let TeamMeetingModel: mongoose.Model<TeamMeeting, {}>;
-export let TeamMemberModel: mongoose.Model<TeamMember, {}>;
+export let PlayerModel: mongoose.Model<Player, {}>;
 export let TeamModel: mongoose.Model<Team, {}>;
 export let UserModel: mongoose.Model<User, {}>;
 
@@ -36,7 +36,7 @@ export async function connectToDB(): Promise<void> {
       TeamEventModel = connection.model('TeamEvent', TeamEventSchema);
       MatchModel = connection.model('Match', MatchSchema);
       TeamMeetingModel = connection.model('TeamMeeting', TeamMeetingSchema);
-      TeamMemberModel = connection.model('TeamMember', TeamMemberSchema);
+      PlayerModel = connection.model('TeamMember', PlayerSchema);
       TeamModel = connection.model('Team', TeamSchema);
       UserModel = connection.model('User', UserSchema);
    } catch (err) {

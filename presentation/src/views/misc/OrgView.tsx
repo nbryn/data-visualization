@@ -62,7 +62,7 @@ const OrgView: React.FC = (): ReactElement => {
    const columnsInfoPageMembers: ColumnDescription[] = [
       {
          dataField: 'name',
-         text: 'Members',
+         text: 'Players',
       },
    ];
 
@@ -74,7 +74,7 @@ const OrgView: React.FC = (): ReactElement => {
 
       {
          dataField: 'admin',
-         text: 'Admin',
+         text: 'Coach',
       },
       {
          dataField: 'owner',
@@ -137,7 +137,7 @@ const OrgView: React.FC = (): ReactElement => {
                      {selectedTeamData.length > 0 && (
                         <InfoPage
                            data={selectedTeamData}
-                           title="Group Info"
+                           title="Team Info"
                            columns={columnsInfoPageMembers}
                            column1={infoPageColumn}
                         />

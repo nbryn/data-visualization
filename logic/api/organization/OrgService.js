@@ -1,6 +1,6 @@
 import fetchAllUsers from '../../../data/mappers/UserMapper';
 import {fetchTeamMembersPerOrg} from '../../../data/mappers/TeamMapper';
-import {fetchAllTeamMembers} from '../../../data/mappers/TeamMemberMapper';
+import {fetchAllTeamMembers} from '../../../data/mappers/PlayerMapper';
 
 export async function calculateTeamsPerUser() {
    //   return await fetchGroupMemberByUser();

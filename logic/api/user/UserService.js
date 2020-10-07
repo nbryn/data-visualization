@@ -1,5 +1,5 @@
 import {fetchAllGroups} from '../../../data/mappers/TeamMapper';
-import {fetchAllGroupMembers} from '../../../data/mappers/TeamMemberMapper';
+import {fetchAllGroupMembers} from '../../../data/mappers/PlayerMapper';
 import fetchAllUsers from '../../../data/mappers/UserMapper';
 
 export async function calculateActiveUsers() {

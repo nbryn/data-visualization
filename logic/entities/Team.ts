@@ -1,7 +1,7 @@
 import {Document, Schema} from 'mongoose';
 
 import {Match} from './Match';
-import {TeamMember} from './TeamMember';
+import {Player} from './Player';
 
 export enum TeamState {
    CREATING = 'CREATING',
@@ -20,7 +20,7 @@ export interface Team extends Document {
    ngoOrganization: string;
    state: TeamState;
    meetings: Match[];
-   members: TeamMember[];
+   members: Player[];
 }
 
 export const TeamSchema = new Schema({
@@ -35,5 +35,5 @@ export const TeamSchema = new Schema({
       default: TeamState.CREATING,
    },
    meetings: [{type: Schema.Types.ObjectId, ref: 'match'}],
-   members: [{type: Schema.Types.ObjectId, ref: 'teammember'}],
+   members: [{type: Schema.Types.ObjectId, ref: 'teammembers'}],
 });

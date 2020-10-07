@@ -51,7 +51,7 @@ export async function fetchTeamByName(groupName: string): Promise<Team[]> {
    const team = await TeamModel.find({name: groupName});
 
    if (team.length < 1) {
-      throw new Error('Group not found');
+      throw new Error('Team not found');
    }
 
    return team;

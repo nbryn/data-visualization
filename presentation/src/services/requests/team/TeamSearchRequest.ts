@@ -17,11 +17,11 @@ export const fetchDataForTeam = async (team: string): Promise<TeamDTO> => {
           firstName
           lastName
         }
-        admin {
+        coach {
           firstName
           lastName
         }
-        members
+        players
       }
   
       ... on Error {

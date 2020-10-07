@@ -153,9 +153,9 @@ export const mapTeamSearchData = (data: TeamDTO): TeamDataProp => {
    const TeamData = Object.keys(data).map((info: string) => {
       if (info === 'owner') {
          return data[info].firstName + ' ' + data.owner.lastName;
-      } else if (info === 'admin') {
-         return data[info].firstName + ' ' + data.admin.lastName;
-      } else if (info === 'members') {
+      } else if (info === 'coach') {
+         return data[info].firstName + ' ' + data.coach.lastName;
+      } else if (info === 'players') {
          return data[info].map((member: Name) => {
             return {
                name: member.firstName + ' ' + member.lastName,
@@ -176,10 +176,10 @@ export const mapOrgTeamData = (data: TeamDTO[]): TeamData[] => {
       return {
          id: id++,
          ...element,
-         admin: element.admin.firstName + ' ' + element.admin.lastName,
+         coach: element.coach.firstName + ' ' + element.coach.lastName,
          owner: element.owner.firstName + ' ' + element.owner.lastName,
-         members: element.members.map((member: Name) => ({
-            name: member.firstName + ' ' + member.lastName,
+         players: element.players.map((player: Name) => ({
+            name: player.firstName + ' ' + player.lastName,
          })) as unknown,
       };
    });

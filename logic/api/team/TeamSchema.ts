@@ -37,8 +37,8 @@ export const TeamSchema = gql`
       events: Float
       meetings: Float
       owner: User
-      admin: User
-      members: JSON
+      coach: User
+      players: JSON
    }
 
    type Activity {

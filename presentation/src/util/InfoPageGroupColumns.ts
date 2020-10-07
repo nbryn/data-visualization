@@ -8,5 +8,5 @@ export const infoPageColumn: string[] = [
    'Total Events',
    'Total Meetings',
    'Owner',
-   'Admin',
+   'Coach',
 ];

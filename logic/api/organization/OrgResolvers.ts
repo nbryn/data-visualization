@@ -12,16 +12,7 @@ export const orgResolvers = {
          return actionRunner(async () => {
             const result = await fetchTeamData('$ngoOrganization');
 
-            const teamsPerOrg = result
-               .map((element) => {
-                  return {
-                     name: element._id,
-                     count: element.count,
-                  };
-               })
-               .sort((a, b) => a.count - b.count);
-
-            return teamsPerOrg;
+            return result;
          });
       },
       usersPerOrg: async (): Promise<CountDTO[]> => {

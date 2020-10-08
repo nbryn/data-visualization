@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-import {CountDTO, LastMonthDTO, LastYearDTO} from '../../logic/util/DTOs';
+import {CountDTO, LastMonthDTO, LastYearDTO, OrgTeamCountDTO} from '../../logic/util/DTOs';
 import {Error} from '../../logic/util/Error';
 import {Team, TeamState} from '../../logic/entities/Team';
 import {TeamModel} from '../connection';
@@ -11,7 +11,7 @@ export async function fetchTeamById(id: string): Promise<Team | null> {
    return team;
 }
 
-export async function fetchTeamData(groupBy: string): Promise<any[]> {
+export async function fetchTeamData(groupBy: string): Promise<CountDTO[]> {
    const teamData = await TeamModel.aggregate([
       {
          $match: {state: 'ACTIVE'},
@@ -23,32 +23,37 @@ export async function fetchTeamData(groupBy: string): Promise<any[]> {
          },
       },
       {
-         $sort: {count: -1},
+         $sort: {count: 1},
       },
    ]);
 
-   return teamData;
+   const result = teamData.map((x) => ({
+      name: x._id,
+      count: x.count,
+   }));
+
+   return result;
 }
 
-export async function fetchTeamMembersPerOrg(): Promise<Team[]> {
-   const teamMembersPerOrg = await TeamModel.aggregate([
+export async function fetchOrgPlayerCount(): Promise<OrgTeamCountDTO[]> {
+   const playersPerOrg = await TeamModel.aggregate([
       {
          $match: {state: 'ACTIVE'},
       },
       {
          $group: {
             _id: '$ngoOrganization',
-            count: {$sum: 1},
-            groups: {$push: {groupSize: {$size: '$members'}}},
+            numberOfTeams: {$sum: 1},
+            teams: {$push: {size: {$size: '$members'}}},
          },
       },
    ]);
 
-   return teamMembersPerOrg;
+   return playersPerOrg;
 }
 
-export async function fetchTeamByName(groupName: string): Promise<Team[]> {
-   const team = await TeamModel.find({name: groupName});
+export async function fetchTeamByName(teamName: string): Promise<Team[]> {
+   const team = await TeamModel.find({name: teamName});
 
    if (team.length < 1) {
       throw new Error('Team not found');
@@ -68,16 +73,16 @@ export async function fetchTeamSizeData(): Promise<CountDTO[]> {
    const temp = await TeamModel.aggregate([
       {
          $group: {
-            _id: {groupSize: {$size: '$members'}},
+            _id: {size: {$size: '$members'}},
             count: {$sum: 1},
          },
       },
    ]);
 
    const teamSizeData = temp
-      .filter((element) => element._id.groupSize > 6 && element.count > 2)
+      .filter((element) => element._id.size > 6 && element.count > 2)
       .map((element) => ({
-         name: element._id.groupSize,
+         name: element._id.size,
          count: element.count,
       }));
 
@@ -111,7 +116,7 @@ export async function fetchTeamsByOrg(org: string): Promise<Team[]> {
    return teamsOrg;
 }
 
-export async function fetchTeamsByCurrency(currency: string): Promise<number> {
+export async function fetchTeamCountByCurrency(currency: string): Promise<number> {
    const teamsWithCurrency = await TeamModel.find({state: TeamState.ACTIVE, currency}).count();
 
    return teamsWithCurrency;
@@ -171,16 +176,14 @@ export async function fetchTeamsLastMonth(): Promise<LastMonthDTO[]> {
       {$sort: {_id: 1}},
    ]);
 
-   const signups = dbResult.map((element) => {
-      return {
-         day: {
-            year: element._id.year,
-            month: element._id.month,
-            day: element._id.day,
-         },
-         count: element.count,
-      };
-   });
+   const signups = dbResult.map((element) => ({
+      day: {
+         year: element._id.year,
+         month: element._id.month,
+         day: element._id.day,
+      },
+      count: element.count,
+   }));
 
    return signups;
 }
@@ -208,13 +211,11 @@ export async function fetchTeamsLastYear(): Promise<LastYearDTO[]> {
    ]);
 
    const teams = dbResult
-      .map((element: any) => {
-         return {
-            year: element._id.year,
-            month: element._id.month,
-            count: element.count,
-         };
-      })
+      .map((element: any) => ({
+         year: element._id.year,
+         month: element._id.month,
+         count: element.count,
+      }))
       .sort((el1, el2) => el1.year - el2.year);
 
    return teams;

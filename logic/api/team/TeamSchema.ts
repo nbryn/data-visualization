@@ -17,12 +17,6 @@ export const TeamSchema = gql`
       matchesActual: Float
    }
 
-   type TeamEngagement {
-      teamsActive: Float
-      matchFrequency: [PerValue]
-      teamMatchData: [TeamMatchData]
-   }
-
    type Team {
       id: String
       name: String
@@ -41,17 +35,6 @@ export const TeamSchema = gql`
       players: JSON
    }
 
-   type Activity {
-      last300Days: [Float]
-      last200Days: [Float]
-      last105Days: [Float]
-   }
-
-   type TeamActivity {
-      matchActivity: Activity
-      meetingActivity: Activity
-   }
-
    type OrgTeamData {
       teamData(org: String!): [Team]
    }
@@ -64,9 +47,7 @@ export const TeamSchema = gql`
 
    extend type Query {
       teamData: TeamData
-      teamEngagement: TeamEngagement
       teamSearch(input: TeamSearchInput!): TeamSearch
       orgTeamData: OrgTeamData
-      teamActivity: TeamActivity
    }
 `;

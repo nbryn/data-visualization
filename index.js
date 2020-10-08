@@ -35,7 +35,15 @@ const resolvers = merge(
 );
 
 const schema = makeExecutableSchema({
-   typeDefs: [DefaultSchema, AccountSchema, TeamSchema, MatchSchema, UserSchema, OrgSchema, CountrySchema],
+   typeDefs: [
+      DefaultSchema,
+      AccountSchema,
+      TeamSchema,
+      MatchSchema,
+      UserSchema,
+      OrgSchema,
+      CountrySchema,
+   ],
    resolvers,
 });
 

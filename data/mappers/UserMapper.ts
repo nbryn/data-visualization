@@ -1,5 +1,6 @@
 import moment from 'moment';
 
+import {CountDTO, LastMonthDTO, LastYearDTO} from '../../logic/util/DTOs';
 import {Error} from '../../logic/util/Error';
 import {UserModel} from '../connection';
 import {User, UserState} from '../../logic/entities/User';
@@ -24,7 +25,7 @@ export async function validateLogin(args: any): Promise<User | Error> {
    }
 }
 
-export async function fetchUserById(id: string) {
+export async function fetchUserById(id: string): Promise<User | null> {
    const user = await UserModel.findById(id);
 
    return user;
@@ -71,7 +72,7 @@ export async function fetchUsersWithPhone(): Promise<User[]> {
    return usersUsersWithPhone;
 }
 
-export async function fetchGenderStats() {
+export async function fetchGenderStats(): Promise<CountDTO[]> {
    const genderStats = await UserModel.aggregate([
       {
          $match: {
@@ -86,17 +87,15 @@ export async function fetchGenderStats() {
       },
    ]);
 
-   const genders = genderStats.map((element) => {
-      return {
-         name: element._id,
-         count: element.count,
-      };
-   });
+   const genders = genderStats.map((element) => ({
+      name: element._id,
+      count: element.count,
+   }));
 
    return genders;
 }
 
-export async function fetchUsersPerCountry(): Promise<User[]> {
+export async function fetchUsersGroupedByPhoneCode(): Promise<CountDTO[]> {
    const usersPerCountry = await UserModel.aggregate([
       {
          $match: {state: 'ACTIVE'},
@@ -112,19 +111,24 @@ export async function fetchUsersPerCountry(): Promise<User[]> {
       },
    ]);
 
-   return usersPerCountry;
+   const result = usersPerCountry.map((x) => ({
+      name: x._id,
+      count: x.count,
+   }));
+
+   return result;
 }
 
-export async function fetchNumberOfUsersFrom(country: string): Promise<number> {
+export async function fetchUserCountByPhoneCode(phoneCode: string): Promise<number> {
    const usersCountry = await UserModel.find({
       state: UserState.ACTIVE,
-      phoneCode: country,
+      phoneCode: phoneCode,
    }).count();
 
    return usersCountry;
 }
 
-export async function fetchUsersLastMonth() {
+export async function fetchUsersLastMonth(): Promise<LastMonthDTO[]> {
    const since = moment('2020-02-01').subtract(30, 'days').toDate();
 
    const dbResult = await UserModel.aggregate([
@@ -147,21 +151,19 @@ export async function fetchUsersLastMonth() {
       {$sort: {_id: 1}},
    ]);
 
-   const users = dbResult.map((element) => {
-      return {
-         day: {
-            year: element._id.year,
-            month: element._id.month,
-            day: element._id.day,
-         },
-         count: element.count,
-      };
-   });
+   const users = dbResult.map((element) => ({
+      day: {
+         year: element._id.year,
+         month: element._id.month,
+         day: element._id.day,
+      },
+      count: element.count,
+   }));
 
    return users;
 }
 
-export async function fetchUsersLastYear() {
+export async function fetchUsersLastYear(): Promise<LastYearDTO[]> {
    const since = moment('2020-02-01').subtract(365, 'days').toDate();
 
    const dbResult = await UserModel.aggregate([
@@ -183,15 +185,13 @@ export async function fetchUsersLastYear() {
       {$sort: {_id: 1}},
    ]);
 
-   const users = dbResult
-      .map((element: any) => {
-         return {
-            year: element._id.year,
-            month: element._id.month,
-            count: element.count,
-         };
-      })
-      .sort((el1, el2) => el1.year - el2.year);
+   const users = dbResult.map((element) => {
+      return {
+         year: element._id.year,
+         month: element._id.month,
+         count: element.count,
+      };
+   });
 
    return users;
 }

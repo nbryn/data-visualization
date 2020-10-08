@@ -12,7 +12,6 @@ export * from './team/TeamSearchRequest';
 export * from './team/TotalTeamsRequest';
 export * from './team/TeamsPerCountryRequest';
 export * from './team/TeamsPerOrgRequest';
-export * from './team/TeamEngagementRequest';
 export * from './team/TeamViewDataRequest';
 export * from './team/TeamViewDTO';
 

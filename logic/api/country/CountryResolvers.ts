@@ -1,7 +1,7 @@
+import * as CountryService from './CountryService';
 import {fetchTeamData} from '../../../data/mappers/TeamMapper';
 import {actionRunner} from '../../util/ActionRunner';
 import {CountDTO} from '../../util/DTOs';
-const CountryService = require('./CountryService');
 
 export const countryResolvers = {
    Query: {
@@ -11,16 +11,7 @@ export const countryResolvers = {
    GeneralCountryData: {
       teamsCountry: async (): Promise<CountDTO[]> => {
          return actionRunner<CountDTO[]>(async () => {
-            const result = await fetchTeamData('$country');
-
-            const teamsCountry = result
-               .map((element) => {
-                  return {
-                     name: element._id,
-                     count: element.count,
-                  };
-               })
-               .sort((a, b) => a.count - b.count);
+            const teamsCountry = await fetchTeamData('$country');
 
             return teamsCountry;
          });
@@ -36,16 +27,16 @@ export const countryResolvers = {
          return actionRunner<CountDTO[]>(async () => {
             const matchesPerCountry: CountDTO[] = await CountryService.calculateMatchesPerCountry();
 
-            return matchesPerCountry.sort((a, b) => a.count - b.count);
+            return matchesPerCountry;
          });
       },
    },
    CountryData: {
       country: async (obj: any, args: any): Promise<CountDTO[]> => {
          return actionRunner<CountDTO[]>(async () => {
-            const groups = await CountryService.calculateNumberOfTeamPerCountry(args.country);
+            const groups = await CountryService.calculateTeamCountByCountry(args.country);
 
-            const users = await CountryService.calculateNumberOfUsers(args.country);
+            const users = await CountryService.calculateUserCountByCountry(args.country);
 
             return {
                groups,

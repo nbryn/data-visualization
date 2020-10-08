@@ -1,7 +1,6 @@
 // Actions
 const LOGIN_USER = 'LOGIN_USER';
 const LOGOUT_USER = 'LOGOUT_USER';
-const UPDATE_ENGAGEMENT_VIEW_DATA = 'UPDATE_ENGAGEMENT_VIEW_DATA';
 
 // Actions Types
 export interface LoginAction {
@@ -14,12 +13,7 @@ export interface LogoutAction {
    payload: null;
 }
 
-export interface UpdateEngagementViewDataAction {
-   type: string;
-   payload: any;
-}
-
-type GeneralAction = LoginAction | LogoutAction | UpdateEngagementViewDataAction;
+type GeneralAction = LoginAction | LogoutAction;
 
 // Action Creators
 export function loginUser(data: User): LoginAction {
@@ -36,15 +30,8 @@ export function logoutUser(data: any = null): LogoutAction {
    };
 }
 
-export function updateEngagementViewData(data: any): UpdateEngagementViewDataAction {
-   return {
-      type: typeof UPDATE_ENGAGEMENT_VIEW_DATA,
-      payload: data,
-   };
-}
-
 // Reducers
-export default function (state = {}, action: GeneralAction) {
+export default function (state = initialGeneralState, action: GeneralAction): GeneralState {
    switch (action.type) {
       case LOGIN_USER:
          return Object.assign({}, state, {
@@ -53,10 +40,6 @@ export default function (state = {}, action: GeneralAction) {
       case LOGOUT_USER:
          return Object.assign({}, state, {
             currentUser: action.payload,
-         });
-      case UPDATE_ENGAGEMENT_VIEW_DATA:
-         return Object.assign({}, state, {
-            engagementData: action.payload,
          });
       default:
          return state;
@@ -84,10 +67,8 @@ export type User = {
 
 export interface GeneralState {
    currentUser: User;
-   engagementData: Array<any>;
 }
 
 export const initialGeneralState: GeneralState = {
    currentUser: null,
-   engagementData: [],
 };

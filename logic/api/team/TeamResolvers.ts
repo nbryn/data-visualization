@@ -1,4 +1,3 @@
-import * as TeamActivityService from './TeamActivityService';
 import * as TeamMapper from '../../../data/mappers/TeamMapper';
 import * as TeamService from './TeamService';
 import {actionRunner} from '../../util/ActionRunner';
@@ -8,9 +7,7 @@ import {CountDTO, LastMonthDTO, LastYearDTO, TeamDTO} from '../../util/DTOs';
 export const teamResolvers = {
    Query: {
       teamData: () => ({}),
-      teamEngagement: () => ({}),
       orgTeamData: (obj: any, args: any) => ({obj, args}),
-      teamActivity: async () => ({}),
       teamSearch: async (obj: any, args: any): Promise<TeamDTO> => {
          return actionRunner<TeamDTO>(async () => {
             const teamData = await TeamService.listTeamData(args.input.team);
@@ -24,22 +21,6 @@ export const teamResolvers = {
          if (obj instanceof Error) return 'Error';
 
          return 'Team';
-      },
-   },
-   TeamActivity: {
-      matchActivity: async (): Promise<number[]> => {
-         return actionRunner<number[]>(async () => {
-            const last105Days = await TeamActivityService.calculateTeamActivitySince(105);
-
-            return last105Days;
-         });
-      },
-      meetingActivity: async () => {
-         return actionRunner(async () => {
-            const groupTotal = await TeamActivityService.calculateShareoutActivitySince(105);
-
-            return groupTotal;
-         });
       },
    },
    TeamData: {
@@ -76,36 +57,6 @@ export const teamResolvers = {
             const teamsLastYear = await TeamMapper.fetchTeamsLastYear();
 
             return teamsLastYear;
-         });
-      },
-   },
-   TeamEngagement: {
-      teamsActive: async (): Promise<number> => {
-         return actionRunner<number>(async () => {
-            const allTeams = await TeamMapper.fetchAllTeams();
-            let activeTeams = 0;
-
-            allTeams.forEach((team) => {
-               if (team.members.length > 6) {
-                  activeTeams++;
-               }
-            });
-
-            return activeTeams;
-         });
-      },
-      matchFrequency: async (): Promise<CountDTO[]> => {
-         return actionRunner<CountDTO[]>(async () => {
-            const matchFrequency = TeamService.calculateMatchFrequency();
-
-            return matchFrequency;
-         });
-      },
-      teamMatchData: async () => {
-         return actionRunner(async () => {
-            const matchData = await TeamService.generateMatchOverview();
-
-            return matchData;
          });
       },
    },

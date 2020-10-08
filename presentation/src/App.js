@@ -9,7 +9,6 @@ import './assets/sass/dashboard.scss?v=1.3.0';
 import './assets/fonts/pe-icon-7-stroke.css';
 
 import ChartsjMainView from './views/chartjs/MainView';
-import EngagementView from './views/recharts/EngagementView';
 import ErrorBoundary from './components/common/ErrorBoundary';
 import AccountView from './views/recharts/AccountView';
 import TeamSearchView from './views/misc/TeamSearchView';
@@ -38,7 +37,6 @@ class App extends Component {
                         <SecureRoute exact path="/dashboard" component={ChartsjMainView} />
 
                         <SecureRoute exact path="/overview" component={RechartsMainView} />
-                        <SecureRoute exact path="/engagement" component={EngagementView} />
                         <SecureRoute exact path="/accounts" component={AccountView} />
                         <SecureRoute exact path="/teams" component={TeamView} />
                         <SecureRoute exact path="/matches" component={MatchView} />

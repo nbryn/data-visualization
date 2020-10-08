@@ -1,6 +1,8 @@
 export type CountDTO = {
    name: string;
    count: number;
+   id?: string;
+   currency?: string;
 };
 
 type Day = {
@@ -49,4 +51,14 @@ export type TeamDTO = {
    players: UserDTO[];
    owner: UserDTO;
    coach: UserDTO;
+};
+
+export type PlayerCount = {
+   size: number;
+};
+
+export type OrgTeamCountDTO = {
+   _id: string;
+   numberOfTeams: number;
+   teams: PlayerCount[];
 };

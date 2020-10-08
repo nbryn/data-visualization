@@ -13,7 +13,6 @@ import {
    fetchUsersLastYear,
    fetchLogin,
    fetchActiveUserData,
-   fetchTeamEngagementData,
    AccountViewDTO,
    MatchViewDTO,
 } from '../services/requests';
@@ -23,7 +22,7 @@ import {fetchAccountData} from '../services/requests/account/AccountViewDataRequ
 import {fetchMatchViewData} from '../services/requests/match/MatchViewDataRequest';
 import {fetchMatchesPerCountry} from '../services/requests/match/MatchesPerCountryRequest';
 import {AccountState, setAccountViewData} from '../store/datamodels/Account';
-import {loginUser, logoutUser, updateEngagementViewData} from '../store/datamodels/General';
+import {loginUser, logoutUser} from '../store/datamodels/General';
 import {MatchState, setMatchViewData} from '../store/datamodels/Match';
 import {RootState} from '../store/index';
 import {removeTokenFromLocalStorage, setTokenInLocalStorage} from '../util/Token';
@@ -136,22 +135,6 @@ export const updateMainViewData = (): ThunkAction<void, RootState, null, Action<
    result.userGenderStats = DTOConverterService.mapGeneralChartData(userGenderStats);
 
    dispatch(setMainViewData(result));
-};
-
-export const setEngagementViewData = (): ThunkAction<void, RootState, null, Action<string>> => async (
-   dispatch
-) => {
-   const engagementData = {
-      groupEngagement: null,
-      userEngagement: null,
-   };
-
-   const groupData = await fetchTeamEngagementData();
-   engagementData.groupEngagement = groupData.groupEngagement;
-
-   engagementData.userEngagement = await fetchActiveUserData();
-
-   dispatch(updateEngagementViewData(engagementData));
 };
 
 export const login = (

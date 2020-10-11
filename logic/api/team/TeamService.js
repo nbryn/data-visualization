@@ -1,6 +1,6 @@
 import * as FinanceMapper from '../../../data/mappers/FinanceMapper';
 import * as MatchMapper from '../../../data/mappers/MatchMapper';
-import * as TeamMemberMapper from '../../../data/mappers/PlayerMapper';
+import * as PlayerMapper from '../../../data/mappers/PlayerMapper';
 import * as TeamMapper from '../../../data/mappers/TeamMapper';
 import * as UserMapper from '../../../data/mappers/UserMapper';
 
@@ -29,12 +29,12 @@ export async function listTeamsByOrg(org) {
 // ---- Helper Functions ---- //
 
 async function retrieveTeamData(team) {
-   const accountData = await FinanceMapper.fetchReportDataByTeamId(team._id);
+   const accountData = await FinanceMapper.fetchReportDataByTeam(team._id);
    const events = await FinanceMapper.fetchEventCountByTeam(team._id);
    const lastMatchData = await MatchMapper.fetchMatchById(team.meetings[team.meetings.length - 1]);
-   const memberIDs = await TeamMemberMapper.fetchAllPlayerIdsByTeam(team._id);
-   const coachIDs = await TeamMemberMapper.fetchUserIDByRole('ADMINISTRATOR', team._id);
-   const ownerIDs = await TeamMemberMapper.fetchUserIDByRole('OWNER', team._id);
+   const memberIDs = await PlayerMapper.fetchAllPlayerIdsByTeam(team._id);
+   const coachIDs = await PlayerMapper.fetchUserIDByRole('ADMINISTRATOR', team._id);
+   const ownerIDs = await PlayerMapper.fetchUserIDByRole('OWNER', team._id);
 
    const lastMatchDate = extractLastMatchDate(lastMatchData);
 

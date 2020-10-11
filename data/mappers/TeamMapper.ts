@@ -62,8 +62,7 @@ export async function fetchTeamByName(teamName: string): Promise<Team[]> {
    return team;
 }
 
-//Only field fetched is member id's
-export async function fetchAllTeams(): Promise<Team[]> {
+export async function fetchAllTeamsWithPlayerIds(): Promise<Team[]> {
    const teams = await TeamModel.find({state: TeamState.ACTIVE}, {projection: {_id: 1, members: 1}});
 
    return teams;
@@ -99,10 +98,10 @@ export async function fetchTeamMatchData(): Promise<Team[]> {
    const teamMatchData = await TeamModel.aggregate([
       {
          $lookup: {
-            from: 'groupmeetings',
+            from: 'matches',
             localField: '_id',
             foreignField: 'group',
-            as: 'meetings',
+            as: 'matches',
          },
       },
    ]);
@@ -225,7 +224,7 @@ export async function fetchTeamEventData(): Promise<any[]> {
    const teamEventData = await TeamModel.aggregate([
       {
          $lookup: {
-            from: 'groupaccounts',
+            from: 'teamreports',
             localField: '_id',
             foreignField: 'group',
             as: 'shares',

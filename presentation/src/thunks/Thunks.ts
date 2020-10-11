@@ -12,7 +12,6 @@ import {
    fetchTotalUsers,
    fetchUsersLastYear,
    fetchLogin,
-   fetchActiveUserData,
    AccountViewDTO,
    MatchViewDTO,
 } from '../services/requests';

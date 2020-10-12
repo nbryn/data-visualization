@@ -8,7 +8,6 @@ export const UserSchema = gql`
 
    type UserStats {
       userCount: Float!
-      usersActive: Float
       usersLastMonth: [NumberDay]
       usersLastYear: [NumberMonth]
       userGenderStats: [Count]

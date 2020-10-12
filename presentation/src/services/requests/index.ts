@@ -21,7 +21,6 @@ export * from './match/MatchesLastYearRequest';
 export * from './match/MatchViewDTO';
 export * from './match/TotalMatchRequest';
 
-export * from './user/ActiveUsersRequest';
 export * from './user/UsersPerCountryRequest';
 export * from './user/UsersPerOrgRequest';
 export * from './user/UserViewDataRequest';

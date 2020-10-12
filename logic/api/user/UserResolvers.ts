@@ -1,6 +1,5 @@
 import * as UserMapper from '../../../data/mappers/UserMapper';
 import {actionRunner} from '../../util/ActionRunner';
-import {calculateActiveUsers} from './UserService';
 import {User} from '../../entities/User';
 import {CountDTO, LastMonthDTO, LastYearDTO} from '../../util/DTOs';
 
@@ -15,13 +14,6 @@ export const userResolvers = {
             const userCount = await UserMapper.fetchUserCount();
 
             return userCount;
-         });
-      },
-      usersActive: async (): Promise<number> => {
-         return actionRunner(async () => {
-            const activeUsers = await calculateActiveUsers();
-
-            return activeUsers;
          });
       },
       usersLastMonth: async (): Promise<LastMonthDTO[]> => {

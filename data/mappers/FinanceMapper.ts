@@ -124,7 +124,7 @@ export async function fetchDollarEventData(): Promise<CountDTO[]> {
    return result;
 }
 
-export async function fetchReportDataByTeamId(teamId: string): Promise<TeamReport[]> {
+export async function fetchReportDataByTeam(teamId: string): Promise<TeamReport[]> {
    // @ts-ignore
    const reportData = await TeamReportModel.find({group: teamId});
 

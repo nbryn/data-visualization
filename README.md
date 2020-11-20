@@ -17,7 +17,7 @@ The app is deployed to Heroku and can be accessed using the link below.
 
 ## Heroku
 * Link: <link> http://statsboard.herokuapp.com/</link>
-* Username: test@test.org - Or make your own account
+* Username: test@test.org
 * Password: 123456 
 * As the app is deployed to Heroku's free tier it might have a load time of up to two minutes
 

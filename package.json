@@ -39,7 +39,7 @@
       "graphql-tools": "^4.0.6",
       "graphql-type-json": "^0.3.1",
       "iso-country-currency": "^0.5.1",
-      "lodash": "^4.17.15",
+      "lodash": "^4.17.21",
       "moment": "^2.24.0",
       "mongoose": "^5.7.12",
       "ts-node": "^9.0.0",

@@ -13,24 +13,16 @@ The app was originally implemented using JavaScript but converted to TypeScript.
 <img  src="https://user-images.githubusercontent.com/44057369/94737853-d5039600-036e-11eb-940b-f04b9b172c4e.png"  width="85%" height="400"/> 
 </p>
 
-The app is deployed to Heroku and can be accessed using the link below.
-
-## Heroku
-* Link: <link> http://statsboard.herokuapp.com/</link>
-* Username: test@test.org
-* Password: 123456 
-* As the app is deployed to Heroku's free tier it might have a load time of up to two minutes
-
 ## Tech 
 * TypeScript - Strict syntactical superset of JavaScript which adds optional static typing to the language.
-* GraphQL - Query language which prioritizes giving clients exactly the data they request. 
+* GraphQL - Query language that prioritizes giving clients exactly the data they request. 
 * Travis CI - Hosted continuous integration service used to build and test software projects.
 * MongoDB - NoSQL Database used for storing and accessing data.
 * MongoDBAtlas - Cloud database service for applications using MongoDB.
 * Mongoose - Object Data Modeling library for MongoDB.
 * React - UI component library used as base for the frontend.
 * Redux - Used for state management and for making the app even more modular and functional.
-* React Testing Library - Helpers that enables testing React components without relying on implementation details.
+* React Testing Library - Helpers that enable testing React components without relying on implementation details.
 * Chart.js - Free open-source JavaScript library for data visualization.
 * Recharts - Free open-source JavaScript library for data visualization.
 * Apollo Server - Open-source GraphQL server.
